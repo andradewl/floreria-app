@@ -4,10 +4,12 @@ import Home from "./pages/Home";
 import Contacto from "./pages/Contacto";
 import Nosotros from "./pages/Nosotros";
 import Productos from "./pages/Productos";
+import Footer from "./components/Footer";
 
 function App() {
 
   return (
+
 
     <BrowserRouter>
 
@@ -19,7 +21,12 @@ function App() {
         <Route path="/Nosotros" Component={Nosotros}/>
         <Route path="/Contacto" Component={Contacto}/>
       </Routes>
+
+      <Footer/>
+
     </BrowserRouter>
+
+
 
   )
 }

@@ -7,17 +7,18 @@ import Typography from '@mui/material/Typography';
 import Menu from '@mui/material/Menu';
 import MenuIcon from '@mui/icons-material/Menu';
 import Container from '@mui/material/Container';
-import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
-import Tooltip from '@mui/material/Tooltip';
 import MenuItem from '@mui/material/MenuItem';
 import Logo from '../assets/LOGO.webp'
 import SearchIcon from '@mui/icons-material/Search';
 import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
 import Person2Icon from '@mui/icons-material/Person2';
+import '../styles/estilosCss.css'
 
-const pages = ['Inicio', 'Productos', 'Nosotros', 'Contacto'];
+
 const settings = ['Profile', 'Account', 'Dashboard', 'Logout'];
+
+import { Link  } from 'react-router-dom';
 
 function ResponsiveAppBar() {
   const [anchorElNav, setAnchorElNav] = React.useState<null | HTMLElement>(null);
@@ -26,9 +27,7 @@ function ResponsiveAppBar() {
   const handleOpenNavMenu = (event: React.MouseEvent<HTMLElement>) => {
     setAnchorElNav(event.currentTarget);
   };
-  const handleOpenUserMenu = (event: React.MouseEvent<HTMLElement>) => {
-    setAnchorElUser(event.currentTarget);
-  };
+
 
   const handleCloseNavMenu = () => {
     setAnchorElNav(null);
@@ -39,11 +38,15 @@ function ResponsiveAppBar() {
   };
 
   return (
-    <AppBar position="static"sx={{ backgroundColor: '#C8A2CB' }}>
+    <AppBar position="static"sx={{ backgroundColor: '#ffff', boxShadow:'none', padding:'30px' }}>
       <Container maxWidth="xl">
         <Toolbar disableGutters>
-          
-          
+          <img
+            src={Logo}
+            alt="Logo"
+            className='logo'
+          />
+
           <Box sx={{ flexGrow: 1, display: { xs: 'flex', md: 'none' } }}>
             <IconButton
               size="large"
@@ -53,7 +56,7 @@ function ResponsiveAppBar() {
               onClick={handleOpenNavMenu}
               color="inherit"
             >
-              <MenuIcon />
+              <MenuIcon color="disabled" style={{ fontSize: 30}}/>
             </IconButton>
             <Menu
               id="menu-appbar"
@@ -73,54 +76,85 @@ function ResponsiveAppBar() {
                 display: { xs: 'block', md: 'none' },
               }}
             >
-              {pages.map((page) => (
-                <MenuItem key={page} onClick={handleCloseNavMenu}>
-                  <Typography textAlign="center">{page}</Typography>
-                </MenuItem>
-              ))}
+              <MenuItem
+                component={Link}
+                to="/"
+                key="/" onClick={handleCloseNavMenu}>
+                  <Typography textAlign="center">Inicio</Typography>
+              </MenuItem>
+              <MenuItem
+                component={Link}
+                to="/Productos"
+                key="/Productos" onClick={handleCloseNavMenu}>
+                  <Typography textAlign="center">Productos</Typography>
+              </MenuItem>
+              <MenuItem
+                component={Link}
+                to="/Nosotros"
+                key="/Nosotros" onClick={handleCloseNavMenu}>
+                  <Typography textAlign="center">Nosotros</Typography>
+              </MenuItem>
+              <MenuItem
+                component={Link}
+                to="/Contacto"
+                key="/Contacto" onClick={handleCloseNavMenu}>
+                  <Typography textAlign="center">Contacto</Typography>
+              </MenuItem>
             </Menu>
           </Box>
-          <img
-        src={Logo}
-        alt="Logo"
-        style={{ width: '100px', height: '70px', marginRight: '1rem' }} // Ajusta el estilo según tus necesidades
-      />
-      <Typography
-        variant="h5"
-        noWrap
-        component="a"
-        href="#app-bar-with-responsive-menu"
-        sx={{
-          mr: 2,
-          display: { xs: 'flex', md: 'none' },
-          flexGrow: 1,
-          fontFamily: 'monospace',
-          fontWeight: 700,
-          letterSpacing: '.3rem',
-          color: 'inherit',
-          textDecoration: 'none',
-        }}
-      >
-        
-      </Typography>
-          <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' } }}>
-            {pages.map((page) => (
-              <Button
-                key={page}
+
+
+          <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex', justifyContent: 'center' } }}>
+            <Button
+                component={Link}
+                to="/"
+                variant="text"
                 onClick={handleCloseNavMenu}
-                sx={{ my: 2, color: 'white', display: 'block' }}
+                sx={{  my: 2, color: '#B42981', display: 'block', background:'#ffff', fontSize:'15px' }}
               >
-                {page}
-              </Button>
-            ))}
+                Inicio
+            </Button>
+            <Button
+                component={Link}
+                to="/Productos"
+                variant="text"
+                onClick={handleCloseNavMenu}
+                sx={{ my: 2, color: '#B42981', display: 'block', fontSize:'15px'}}
+              >
+                Productos
+            </Button>
+            <Button
+                component={Link}
+                to="/Nosotros"
+                variant="text"
+                onClick={handleCloseNavMenu}
+                sx={{ my: 2, color: '#B42981', display: 'block', fontSize:'15px'}}
+              >
+                Nosotros
+            </Button>
+            <Button
+                component={Link}
+                to="/Contacto"
+                variant="text"
+                onClick={handleCloseNavMenu}
+                sx={{ my: 2, color: '#B42981', display: 'block', fontSize:'15px'}}
+              >
+                Contacto
+            </Button>
           </Box>
 
+          <img
+            src={Logo}
+            alt="logoResponsive"
+            className='logoResponsive'
+          />
+
           <Box sx={{ flexGrow: 0 }}>
-                <SearchIcon color="disabled" sx={{padding:'3px'}}/>
-                <ShoppingCartIcon color="disabled" sx={{padding:'3px'}}/>
-                <Person2Icon color="disabled" sx={{padding:'3px'}}/>
+                <SearchIcon color="disabled" sx={{padding:'3px', fontSize: 30}}/>
+                <ShoppingCartIcon color="disabled" sx={{padding:'3px', fontSize: 30}}/>
+                <Person2Icon color="disabled" sx={{padding:'3px', fontSize: 30}}/>
             <Menu
-              sx={{ mt: '45px' }}
+              sx={{ mt: '45px'}}
               id="menu-appbar"
               anchorEl={anchorElUser}
               anchorOrigin={{

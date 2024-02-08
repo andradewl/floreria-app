@@ -1,0 +1,60 @@
+.logo {
+    width: 120px;
+    display: flex;
+}
+
+.logoResponsive {
+    width: 120px;
+    display: none; /* Por defecto, ocultar el ícono */
+}
+
+@media (max-width: 900px) {
+    .logo {
+      display: none; /* Ocultar el ícono en pantallas más pequeñas */
+    }
+}
+
+@media (max-width: 900px) {
+    .logoResponsive {
+        display: flex; /* Mostrar el ícono en dispositivos extra pequeños (xs) */
+        margin-right: 35%; /* Añadir un margen derecho */
+    }
+}
+
+@media (max-width: 760px) {
+    .logoResponsive {
+        margin-right: 30%; /* Añadir un margen derecho */
+    }
+}
+
+
+@media (max-width: 610px) {
+    .logoResponsive {
+        margin-right: 20%; /* Añadir un margen derecho */
+    }
+}
+
+
+@media (max-width: 540px) {
+    .logoResponsive {
+        margin-right: 15%; /* Añadir un margen derecho */
+    }
+}
+
+@media (max-width: 510px) {
+    .logoResponsive {
+        margin-right: 10%; /* Añadir un margen derecho */
+    }
+}
+
+@media (max-width: 431px) {
+    .logoResponsive {
+        margin-right: 5%; /* Añadir un margen derecho */
+    }
+}
+
+@media (max-width: 400px) {
+    .logoResponsive {
+        display: none; /* Ocultar el ícono en pantallas más pequeñas */
+    }
+}

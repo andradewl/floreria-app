@@ -14,4 +14,5 @@ export const myStylesCOmponents={
         width:'100%',
         backGroudColor:'#ffff'
     }
+
 }
