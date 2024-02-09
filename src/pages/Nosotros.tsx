@@ -1,6 +1,5 @@
 import { Container, Grid, Stack, Typography } from "@mui/material";
 import CheckIcon from '@mui/icons-material/Check';
-import React from "react";
 
 function Nosotros() {
   return (
