@@ -58,3 +58,7 @@
         display: none; /* Ocultar el ícono en pantallas más pequeñas */
     }
 }
+.customFont {
+    font-family: 'Satisfy', cursive;
+  }
+  
