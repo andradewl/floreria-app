@@ -1,3 +1,4 @@
+/* ************************************* LOGO ***************************************************** */
 .logo {
     width: 120px;
     display: flex;
@@ -5,21 +6,35 @@
 
 .logoResponsive {
     width: 120px;
-    display: none; /* Por defecto, ocultar el ícono */
+    display: none;
+}
+
+
+/* ************************************* PAGINA DE INICIO ***************************************************** */
+
+.gridContaineCenterAllr{
+    justify-content: center;
+    align-items: center
+}
+
+
+.h1banner{
+    font-size: 74px;
+    font-family: 'Archivo Black', sans-serif;
+    color: #ffff;
 }
 
 @media (max-width: 900px) {
     .logo {
       display: none; /* Ocultar el ícono en pantallas más pequeñas */
     }
-}
 
-@media (max-width: 900px) {
     .logoResponsive {
         display: flex; /* Mostrar el ícono en dispositivos extra pequeños (xs) */
         margin-right: 35%; /* Añadir un margen derecho */
     }
 }
+
 
 @media (max-width: 760px) {
     .logoResponsive {
@@ -60,5 +75,4 @@
 }
 .customFont {
     font-family: 'Satisfy', cursive;
-  }
-  
+}
