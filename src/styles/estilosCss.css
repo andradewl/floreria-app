@@ -24,6 +24,9 @@
     color: #ffff;
 }
 
+
+/* ************************************* Responbsivo ***************************************************** */
+
 @media (max-width: 900px) {
     .logo {
       display: none; /* Ocultar el ícono en pantallas más pequeñas */
