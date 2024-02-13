@@ -11,29 +11,45 @@ function Home(){
     return(
         <>
 
-        <Grid container spacing={2}  mr={3}>
+        <Grid container spacing={2}  sx={
+            {
+                marginRight:{
+                    xl:3,
+                    sm:0
+                }
+            }
+        }>
             <Grid  item xs={12} md={6} container
-             justifyContent="center" // Centra horizontalmente
-             alignItems="center" // Centra verticalmente
-            >
+                justifyContent="center" // Centra horizontalmente
+                alignItems="center">
                 <Grid pb={3} style={{backgroundColor:'#F898D8'}} >
-                    <Box p={2} textAlign="start" ml={4}>
+                    <Grid textAlign="start" sx={{
+                        padding:{
+                            xl:2,
+                            sm:0
+
+                        },
+                        marginLeft:{
+                            xl:4,
+                            sm:1
+                        }
+                    }}>
                         <Typography variant="h1" color="initial" fontSize='74px' fontFamily={'Archivo Black, sans-serif'} style={{color:'#ffff'}} >
                             Flores para toda ocasión
                         </Typography>
-                    </Box>
-                    <Box  p={2} textAlign="start" ml={4}>
+                    </Grid>
+                    <Grid  p={2} textAlign="start" ml={4}>
                         <Typography variant="h3" fontSize='29px' color="initial" fontFamily={'Archivo Black, sans-serif'} style={{color:'#ffff'}}>
                             Aqui lo encuentras
                         </Typography>
-                    </Box>
-                        <Box  p={2} textAlign="start" ml={4}>
-                            <Button
-                                style={{border:'2px solid #b42981', backgroundImage:'linear-gradient(to right, #FF6464 0%, #FF6464  51%, #FF81CE  100%)', margin: '10px', textTransform: 'uppercase', transition: '0.5s', color: 'white', borderStyle:'none', borderRadius:'50px', fontFamily:'Archivo Black, sans-serif', padding:'10px'                         }}
-                            >
-                                Registrate Ahora
-                            </Button>
-                        </Box>
+                    </Grid>
+                    <Grid  p={2} textAlign="start" ml={4}>
+                        <Button
+                            style={{border:'2px solid #b42981', backgroundImage:'linear-gradient(to right, #FF6464 0%, #FF6464  51%, #FF81CE  100%)', margin: '10px', textTransform: 'uppercase', transition: '0.5s', color: 'white', borderStyle:'none', borderRadius:'50px', fontFamily:'Archivo Black, sans-serif', padding:'10px'                         }}
+                        >
+                            Registrate Ahora
+                        </Button>
+                    </Grid>
                 </Grid>
             </Grid>
 
@@ -57,17 +73,31 @@ function Home(){
 
             <Grid>
                 <Grid container display={'flex'} style={{textAlign:'center'}} pl={8} pr={8} pb={4} pt={4}>
-                    <Grid item xs={12} sm={6} md={3} p={5}>
-                        <Box display={'flex'} style={{justifyContent:'center'}}>
+                    <Grid item xs={12} sm={6}  md={4} lg={3}
+                    sx={{
+                        padding:{
+                            xs:5,
+                            xl:0
+                        }
+                    }}
+                    >                        <Box display={'flex'} style={{justifyContent:'center'}}>
                             <Grid style={{backgroundImage:`url(${imageArregloMesa})`, backgroundSize:'cover', width:'205px', height:'205px', borderRadius:'50%'}}>
                             </Grid>
                         </Box>
                         <Box p={1}>
-                            <Typography variant="h6" color="initial" fontFamily={'Archivo Black, sans-serif'} style={{color:'#404040'}}>Arreglo de Mesa</Typography>
-
+                            <Button style={{border:'2px solid #b42981', backgroundImage:'linear-gradient(to right, #FF6464 0%, #FF6464  51%, #FF81CE  100%)', textTransform: 'uppercase', transition: '0.5s', color: 'white', borderStyle:'none', borderRadius:'50px', fontFamily:'Archivo Black, sans-serif', padding:'10px', width:'200px' }}>
+                                Arreglo de Mesa
+                            </Button>
                         </Box>
                     </Grid>
-                    <Grid item xs={12} sm={6} md={3} p={5}>
+                    <Grid item xs={12} sm={6}  md={4} lg={3}
+                    sx={{
+                        padding:{
+                            xs:5,
+                            xl:0
+                        }
+                    }}
+                    >
                         <Box display={'flex'} style={{justifyContent:'center'}}>
 
                             <Grid style={{backgroundImage:`url(${imageBoda})`, backgroundSize:'cover', width:'200px', height:'200px', borderRadius:'50%'}}>
@@ -75,10 +105,19 @@ function Home(){
                             </Grid>
                         </Box>
                         <Box p={1}>
-                            <Typography variant="h6" color="initial" fontFamily={'Archivo Black, sans-serif'} style={{color:'#404040'}}>Para Bodas</Typography>
+                            <Button style={{border:'2px solid #b42981', backgroundImage:'linear-gradient(to right, #FF6464 0%, #FF6464  51%, #FF81CE  100%)', textTransform: 'uppercase', transition: '0.5s', color: 'white', borderStyle:'none', borderRadius:'50px', fontFamily:'Archivo Black, sans-serif', padding:'10px', width:'200px' }}>
+                                Para Bodas
+                            </Button>
                         </Box>
                     </Grid>
-                    <Grid item xs={12} sm={6} md={3} p={5}>
+                    <Grid item xs={12} sm={6}  md={4} lg={3}
+                        sx={{
+                            padding:{
+                                xs:5,
+                                xl:0
+                            }
+                        }}
+                        >
                         <Box display={'flex'} style={{justifyContent:'center'}}>
 
                             <Grid style={{backgroundImage:`url(${imageParaElla})`, backgroundSize:'cover', width:'200px', height:'200px', borderRadius:'50%'}}>
@@ -86,60 +125,104 @@ function Home(){
                             </Grid>
                         </Box>
                         <Box p={1}>
-                            <Typography variant="h6" color="initial" fontFamily={'Archivo Black, sans-serif'} style={{color:'#404040'}}>Para Ella</Typography>
+                            <Button style={{border:'2px solid #b42981', backgroundImage:'linear-gradient(to right, #FF6464 0%, #FF6464  51%, #FF81CE  100%)', textTransform: 'uppercase', transition: '0.5s', color: 'white', borderStyle:'none', borderRadius:'50px', fontFamily:'Archivo Black, sans-serif', padding:'10px', width:'200px' }}>
+                                Para Ella
+                            </Button>
                         </Box>
 
                     </Grid>
-                    <Grid item xs={12} sm={6} md={3} p={5}>
+                    <Grid item xs={12} sm={6}  md={4} lg={3}
+                        sx={{
+                            padding:{
+                                xs:5,
+                                xl:0
+                            }
+                        }}
+                        >
                         <Box display={'flex'} style={{justifyContent:'center'}}>
                             <Grid style={{backgroundImage:`url(${imagerParaEl})`, backgroundSize:'cover', width:'200px', height:'200px', borderRadius:'50%'}}>
 
                             </Grid>
                         </Box>
                         <Box p={1}>
-                            <Typography variant="h6" color="initial" fontFamily={'Archivo Black, sans-serif'} style={{color:'#404040'}}>Para El</Typography>
+                            <Button style={{border:'2px solid #b42981', backgroundImage:'linear-gradient(to right, #FF6464 0%, #FF6464  51%, #FF81CE  100%)', textTransform: 'uppercase', transition: '0.5s', color: 'white', borderStyle:'none', borderRadius:'50px', fontFamily:'Archivo Black, sans-serif', padding:'10px', width:'200px' }}>
+                                Para El
+                            </Button>
                         </Box>
                     </Grid>
 
-                    <Grid item xs={12} sm={6} md={3} p={5}>
+                    <Grid item xs={12} sm={6}  md={4} lg={3}
+                        sx={{
+                            padding:{
+                                xs:5,
+                                xl:0
+                            }
+                        }}
+                        >
                         <Box display={'flex'} style={{justifyContent:'center'}}>
                             <Grid style={{backgroundImage:`url(${imageArregloMesa})`, backgroundSize:'cover', width:'200px', height:'200px', borderRadius:'5%'}}>
                             </Grid>
                         </Box>
-                        <Box p={1} style={{backgroundColor:'#ffdeff'}}  m={2} borderRadius={'15px'}>
-                            <Typography variant="h6"  fontFamily={'Archivo Black, sans-serif'} style={{color:'#6d2c6b'}}>Para El</Typography>
+                        <Box p={1}  borderRadius={'15px'} justifyContent={'center'}>
+                            <Button style={{border:'2px solid #b42981', backgroundImage:'linear-gradient(to right, #FF6464 0%, #FF6464  51%, #FF81CE  100%)', textTransform: 'uppercase', transition: '0.5s', color: 'white', borderStyle:'none', borderRadius:'50px', fontFamily:'Archivo Black, sans-serif', padding:'10px', width:'200px' }}>
+                                Para El
+                            </Button>
                         </Box>
                     </Grid>
-                    <Grid item xs={12} sm={6} md={3} p={5}>
-                        <Box display={'flex'} style={{justifyContent:'center'}}>
+                    <Grid item xs={12} sm={6}  md={4} lg={3}
+                        sx={{
+                            padding:{
+                                xs:5,
+                                xl:0
+                            }
+                        }}
+                        >                        <Box display={'flex'} style={{justifyContent:'center'}}>
 
                             <Grid style={{backgroundImage:`url(${imageBoda})`, backgroundSize:'cover', width:'200px', height:'200px', borderRadius:'50%'}}>
 
                             </Grid>
                         </Box>
-                        <Box p={1} style={{backgroundColor:'#ffdeff'}}  m={2} borderRadius={'15px'}>
-                            <Typography variant="h6" color="initial" fontFamily={'Archivo Black, sans-serif'} style={{color:'#6d2c6b'}}>Para Bodas</Typography>
+                        <Box p={1} borderRadius={'15px'}>
+                            <Button style={{border:'2px solid #b42981', backgroundImage:'linear-gradient(to right, #FF6464 0%, #FF6464  51%, #FF81CE  100%)', textTransform: 'uppercase', transition: '0.5s', color: 'white', borderStyle:'none', borderRadius:'50px', fontFamily:'Archivo Black, sans-serif', padding:'10px', width:'200px' }}>
+                                Para Bodas
+                            </Button>
                         </Box>
                     </Grid>
-                    <Grid item xs={12} sm={6} md={3} p={5}>
-                        <Box display={'flex'} style={{justifyContent:'center'}}>
+                    <Grid item xs={12} sm={6}  md={4} lg={3}
+                        sx={{
+                            padding:{
+                                xs:5,
+                                xl:0
+                            }
+                        }}
+                        >                        <Box display={'flex'} style={{justifyContent:'center'}}>
 
                             <Grid style={{backgroundImage:`url(${imageParaElla})`, backgroundSize:'cover', width:'200px', height:'200px'}}>
 
                             </Grid>
                         </Box>
-                        <Box p={1} style={{backgroundColor:'#ffdeff'}}  m={2} borderRadius={'15px'}>
-                            <Typography variant="h6" color="initial" fontFamily={'Archivo Black, sans-serif'} style={{color:'#404040'}}>Para Ella</Typography>
+                        <Box p={1} borderRadius={'15px'}>
+                            <Button style={{border:'2px solid #b42981', backgroundImage:'linear-gradient(to right, #FF6464 0%, #FF6464  51%, #FF81CE  100%)', textTransform: 'uppercase', transition: '0.5s', color: 'white', borderStyle:'none', borderRadius:'50px', fontFamily:'Archivo Black, sans-serif', padding:'10px', width:'200px' }}>
+                                Para Ella
+                            </Button>
                         </Box>
                     </Grid>
-                    <Grid item xs={12} sm={6} md={3} p={5}>
-                        <Box display={'flex'} style={{justifyContent:'center'}}>
+                    <Grid item xs={12} sm={6}  md={4} lg={3}
+                        sx={{
+                            padding:{
+                                xs:5,
+                                xl:0
+                            }
+                        }}
+                        >                        <Box display={'flex'} style={{justifyContent:'center'}}>
                             <Grid style={{backgroundImage:`url(${imagerParaEl})`, backgroundSize:'cover', width:'200px', height:'200px', borderRadius:'50%'}}>
 
                             </Grid>
                         </Box>
                         <Box p={1}>
-                            <Typography variant="h6" color="initial" fontFamily={'Archivo Black, sans-serif'} style={{color:'#404040'}}>Para El</Typography>
+                            <Button style={{border:'2px solid #b42981', backgroundImage:'linear-gradient(to right, #FF6464 0%, #FF6464  51%, #FF81CE  100%)', textTransform: 'uppercase', transition: '0.5s', color: 'white', borderStyle:'none', borderRadius:'50px', fontFamily:'Archivo Black, sans-serif', padding:'10px', width:'200px' }}>
+                                Para El
+                            </Button>
                         </Box>
                     </Grid>
                 </Grid>
@@ -185,25 +268,52 @@ function Home(){
                 <Grid container display={'flex'} style={{textAlign:'center'}}
                 sx={{
                     paddingLeft:{
-                        xs:15,
-                        sm:2
+                        xs:0,
+                        sm:2,
+                        xl:15
                     },
                     paddingRight:{
-                        xs:15,
-                        sm:0
+                        xs:0,
+                        sm:0,
+                        xl:15
                     },
                     paddingBottom:{
-                        xs:4
+                        xs:4,
+                        xl:15
                     },
                     paddingTop:{
-                        xs:4
+                        xs:4,
+                        xl:15
                     }
                 }} >
-                    <Grid item xs={12} md={6} lg={4} xl={3} p={5}
+                    <Grid item xs={12} sm={6}  md={4} lg={3}
                     sx={{
                         padding:{
                             xs:5,
-                            sm:1
+                            xl:0
+                        }
+                    }}
+                    >
+                        <Box display={'flex'} style={{justifyContent:'center'}}>
+                            <Grid style={{width:'215px', height:'235px'}}>
+                                <img src={imageArregloMesa} alt="" width={'100%'} height={'100%'} style={{ objectFit: 'cover'}}/>
+                            </Grid>
+                        </Box>
+                        <Box p={1}>
+                            <Typography variant="h6" color="initial" fontFamily={'Montserrat, sans-serif'} fontSize={16} textAlign={'start'} style={{color:'#404040', textAlign:'center'}}>Arreglo Multicolor</Typography>
+                            <Typography variant="h6" color="initial" fontFamily={'Archivo Black, sans-serif'} fontSize={16} textAlign={'start'} style={{color:'#404040', textAlign:'center' }}>$100.00</Typography>
+                        </Box>
+                        <Box >
+                            <Button style={{border:'2px solid #b42981', backgroundImage:'linear-gradient(to right, #FF6464 0%, #FF6464  51%, #FF81CE  100%)', textTransform: 'uppercase', transition: '0.5s', color: 'white', borderStyle:'none', borderRadius:'50px', fontFamily:'Archivo Black, sans-serif', padding:'10px', width:'200px' }}>
+                                Ver
+                            </Button>
+                        </Box>
+                    </Grid>
+                    <Grid item xs={12} sm={6} md={4} lg={3}
+                    sx={{
+                        padding:{
+                            xs:5,
+                            xl:0
                         }
                     }}
                     >
@@ -222,7 +332,14 @@ function Home(){
                             </Button>
                     </Box>
                     </Grid>
-                    <Grid item xs={12} md={6} lg={4} xl={3} p={5}>
+                    <Grid item xs={12} sm={6} md={4} lg={3}
+                    sx={{
+                        padding:{
+                            xs:5,
+                            xl:0
+                        }
+                    }}
+                    >
                         <Box display={'flex'} style={{justifyContent:'center'}}>
                             <Grid style={{width:'215px', height:'235px'}}>
                                 <img src={imageArregloMesa} alt="" width={'100%'} height={'100%'} style={{ objectFit: 'cover'}}/>
@@ -238,23 +355,14 @@ function Home(){
                             </Button>
                     </Box>
                     </Grid>
-                    <Grid item xs={12} md={6} lg={4} xl={3} p={5}>
-                        <Box display={'flex'} style={{justifyContent:'center'}}>
-                            <Grid style={{width:'215px', height:'235px'}}>
-                                <img src={imageArregloMesa} alt="" width={'100%'} height={'100%'} style={{ objectFit: 'cover'}}/>
-                            </Grid>
-                        </Box>
-                        <Box p={1}>
-                            <Typography variant="h6" color="initial" fontFamily={'Montserrat, sans-serif'} fontSize={16} textAlign={'start'} style={{color:'#404040', textAlign:'center'}}>Arreglo Multicolor</Typography>
-                            <Typography variant="h6" color="initial" fontFamily={'Archivo Black, sans-serif'} fontSize={16} textAlign={'start'} style={{color:'#404040', textAlign:'center' }}>$100.00</Typography>
-                        </Box>
-                        <Box >
-                            <Button style={{border:'2px solid #b42981', backgroundImage:'linear-gradient(to right, #FF6464 0%, #FF6464  51%, #FF81CE  100%)', textTransform: 'uppercase', transition: '0.5s', color: 'white', borderStyle:'none', borderRadius:'50px', fontFamily:'Archivo Black, sans-serif', padding:'10px', width:'200px' }}>
-                                Ver
-                            </Button>
-                    </Box>
-                    </Grid>
-                    <Grid item xs={12} md={6} lg={4} xl={3} p={5}>
+                    <Grid item xs={12} sm={6} md={4} lg={3}
+                    sx={{
+                        padding:{
+                            xs:5,
+                            xl:0
+                        }
+                    }}
+                    >
                         <Box display={'flex'} style={{justifyContent:'center'}}>
                             <Grid style={{width:'215px', height:'235px'}}>
                                 <img src={imageArregloMesa} alt="" width={'100%'} height={'100%'} style={{ objectFit: 'cover'}}/>
@@ -264,8 +372,8 @@ function Home(){
                             <Typography variant="h6" color="initial" fontFamily={'Montserrat, sans-serif'} fontSize={16} textAlign={'start'} style={{color:'#404040', textAlign:'center'}}>Arreglo Multicolor</Typography>
                         </Box>
                         <Box display={'flex'}>
-                        <Typography variant="h6" color="initial" fontFamily={'Archivo Black, sans-serif'} fontSize={16} textAlign={'start'} style={{color:'#404040', textAlign:'center', width:'50%', color:'red', textDecorationLine: 'line-through' }}>$100.00</Typography>
-                            <Typography variant="h6" color="initial" fontFamily={'Archivo Black, sans-serif'} fontSize={16} textAlign={'start'} style={{color:'#404040', textAlign:'center', width:'50%',color:'blue' }}>$83.00</Typography>
+                            <Typography variant="h6" color="initial" fontFamily={'Archivo Black, sans-serif'} fontSize={16} textAlign={'start'} style={{color:'red', textAlign:'center', width:'50%',  textDecorationLine: 'line-through' }}>$100.00</Typography>
+                            <Typography variant="h6" color="initial" fontFamily={'Archivo Black, sans-serif'} fontSize={16} textAlign={'start'} style={{color:'blue', textAlign:'center', width:'50%' }}>$83.00</Typography>
                         </Box>
                         <Box >
                             <Button style={{border:'2px solid #b42981', backgroundImage:'linear-gradient(to right, #FF6464 0%, #FF6464  51%, #FF81CE  100%)', textTransform: 'uppercase', transition: '0.5s', color: 'white', borderStyle:'none', borderRadius:'50px', fontFamily:'Archivo Black, sans-serif', padding:'10px', width:'200px' }}>
@@ -273,7 +381,15 @@ function Home(){
                             </Button>
                     </Box>
                     </Grid>
-                    <Grid item xs={12} md={6} lg={4} xl={3} p={5}>
+
+                    <Grid item xs={12} sm={6}  md={4} lg={3}
+                    sx={{
+                        padding:{
+                            xs:5,
+                            xl:0
+                        }
+                    }}
+                    >
                         <Box display={'flex'} style={{justifyContent:'center'}}>
                             <Grid style={{width:'215px', height:'235px'}}>
                                 <img src={imageArregloMesa} alt="" width={'100%'} height={'100%'} style={{ objectFit: 'cover'}}/>
@@ -289,7 +405,14 @@ function Home(){
                             </Button>
                     </Box>
                     </Grid>
-                    <Grid item xs={12} md={6} lg={4} xl={3} p={5}>
+                    <Grid item xs={12} sm={6} md={4} lg={3}
+                    sx={{
+                        padding:{
+                            xs:5,
+                            xl:0
+                        }
+                    }}
+                    >
                         <Box display={'flex'} style={{justifyContent:'center'}}>
                             <Grid style={{width:'215px', height:'235px'}}>
                                 <img src={imageArregloMesa} alt="" width={'100%'} height={'100%'} style={{ objectFit: 'cover'}}/>
@@ -305,7 +428,14 @@ function Home(){
                             </Button>
                     </Box>
                     </Grid>
-                    <Grid item xs={12} md={6} lg={4} xl={3} p={5}>
+                    <Grid item xs={12} sm={6} md={4} lg={3}
+                    sx={{
+                        padding:{
+                            xs:5,
+                            xl:0
+                        }
+                    }}
+                    >
                         <Box display={'flex'} style={{justifyContent:'center'}}>
                             <Grid style={{width:'215px', height:'235px'}}>
                                 <img src={imageArregloMesa} alt="" width={'100%'} height={'100%'} style={{ objectFit: 'cover'}}/>
@@ -321,7 +451,14 @@ function Home(){
                             </Button>
                     </Box>
                     </Grid>
-                    <Grid item xs={12} md={6} lg={4} xl={3} p={5}>
+                    <Grid item xs={12} sm={6} md={4} lg={3}
+                    sx={{
+                        padding:{
+                            xs:5,
+                            xl:0
+                        }
+                    }}
+                    >
                         <Box display={'flex'} style={{justifyContent:'center'}}>
                             <Grid style={{width:'215px', height:'235px'}}>
                                 <img src={imageArregloMesa} alt="" width={'100%'} height={'100%'} style={{ objectFit: 'cover'}}/>
@@ -331,8 +468,8 @@ function Home(){
                             <Typography variant="h6" color="initial" fontFamily={'Montserrat, sans-serif'} fontSize={16} textAlign={'start'} style={{color:'#404040', textAlign:'center'}}>Arreglo Multicolor</Typography>
                         </Box>
                         <Box display={'flex'}>
-                        <Typography variant="h6" color="initial" fontFamily={'Archivo Black, sans-serif'} fontSize={16} textAlign={'start'} style={{color:'#404040', textAlign:'center', width:'50%', color:'red', textDecorationLine: 'line-through' }}>$100.00</Typography>
-                            <Typography variant="h6" color="initial" fontFamily={'Archivo Black, sans-serif'} fontSize={16} textAlign={'start'} style={{color:'#404040', textAlign:'center', width:'50%',color:'blue' }}>$83.00</Typography>
+                            <Typography variant="h6" color="initial" fontFamily={'Archivo Black, sans-serif'} fontSize={16} textAlign={'start'} style={{color:'red', textAlign:'center', width:'50%',  textDecorationLine: 'line-through' }}>$100.00</Typography>
+                            <Typography variant="h6" color="initial" fontFamily={'Archivo Black, sans-serif'} fontSize={16} textAlign={'start'} style={{color:'blue', textAlign:'center', width:'50%' }}>$83.00</Typography>
                         </Box>
                         <Box >
                             <Button style={{border:'2px solid #b42981', backgroundImage:'linear-gradient(to right, #FF6464 0%, #FF6464  51%, #FF81CE  100%)', textTransform: 'uppercase', transition: '0.5s', color: 'white', borderStyle:'none', borderRadius:'50px', fontFamily:'Archivo Black, sans-serif', padding:'10px', width:'200px' }}>
@@ -340,7 +477,15 @@ function Home(){
                             </Button>
                     </Box>
                     </Grid>
-                    <Grid item xs={12} md={6} lg={4} xl={3} p={5}>
+
+                    <Grid item xs={12} sm={6}  md={4} lg={3}
+                    sx={{
+                        padding:{
+                            xs:5,
+                            xl:0
+                        }
+                    }}
+                    >
                         <Box display={'flex'} style={{justifyContent:'center'}}>
                             <Grid style={{width:'215px', height:'235px'}}>
                                 <img src={imageArregloMesa} alt="" width={'100%'} height={'100%'} style={{ objectFit: 'cover'}}/>
@@ -356,7 +501,14 @@ function Home(){
                             </Button>
                     </Box>
                     </Grid>
-                    <Grid item xs={12} md={6} lg={4}  xl={3} p={5}>
+                    <Grid item xs={12} sm={6} md={4} lg={3}
+                    sx={{
+                        padding:{
+                            xs:5,
+                            xl:0
+                        }
+                    }}
+                    >
                         <Box display={'flex'} style={{justifyContent:'center'}}>
                             <Grid style={{width:'215px', height:'235px'}}>
                                 <img src={imageArregloMesa} alt="" width={'100%'} height={'100%'} style={{ objectFit: 'cover'}}/>
@@ -372,7 +524,14 @@ function Home(){
                             </Button>
                     </Box>
                     </Grid>
-                    <Grid item xs={12} md={6} lg={4} xl={3} p={5}>
+                    <Grid item xs={12} sm={6} md={4} lg={3}
+                    sx={{
+                        padding:{
+                            xs:5,
+                            xl:0
+                        }
+                    }}
+                    >
                         <Box display={'flex'} style={{justifyContent:'center'}}>
                             <Grid style={{width:'215px', height:'235px'}}>
                                 <img src={imageArregloMesa} alt="" width={'100%'} height={'100%'} style={{ objectFit: 'cover'}}/>
@@ -388,7 +547,14 @@ function Home(){
                             </Button>
                     </Box>
                     </Grid>
-                    <Grid item xs={12} md={6} xl={3} p={5}>
+                    <Grid item xs={12} sm={6} md={4} lg={3}
+                    sx={{
+                        padding:{
+                            xs:5,
+                            xl:0
+                        }
+                    }}
+                    >
                         <Box display={'flex'} style={{justifyContent:'center'}}>
                             <Grid style={{width:'215px', height:'235px'}}>
                                 <img src={imageArregloMesa} alt="" width={'100%'} height={'100%'} style={{ objectFit: 'cover'}}/>
@@ -398,8 +564,8 @@ function Home(){
                             <Typography variant="h6" color="initial" fontFamily={'Montserrat, sans-serif'} fontSize={16} textAlign={'start'} style={{color:'#404040', textAlign:'center'}}>Arreglo Multicolor</Typography>
                         </Box>
                         <Box display={'flex'}>
-                        <Typography variant="h6" color="initial" fontFamily={'Archivo Black, sans-serif'} fontSize={16} textAlign={'start'} style={{color:'#404040', textAlign:'center', width:'50%', color:'red', textDecorationLine: 'line-through' }}>$100.00</Typography>
-                            <Typography variant="h6" color="initial" fontFamily={'Archivo Black, sans-serif'} fontSize={16} textAlign={'start'} style={{color:'#404040', textAlign:'center', width:'50%',color:'blue' }}>$83.00</Typography>
+                            <Typography variant="h6" color="initial" fontFamily={'Archivo Black, sans-serif'} fontSize={16} textAlign={'start'} style={{color:'red', textAlign:'center', width:'50%',  textDecorationLine: 'line-through' }}>$100.00</Typography>
+                            <Typography variant="h6" color="initial" fontFamily={'Archivo Black, sans-serif'} fontSize={16} textAlign={'start'} style={{color:'blue', textAlign:'center', width:'50%' }}>$83.00</Typography>
                         </Box>
                         <Box >
                             <Button style={{border:'2px solid #b42981', backgroundImage:'linear-gradient(to right, #FF6464 0%, #FF6464  51%, #FF81CE  100%)', textTransform: 'uppercase', transition: '0.5s', color: 'white', borderStyle:'none', borderRadius:'50px', fontFamily:'Archivo Black, sans-serif', padding:'10px', width:'200px' }}>
@@ -407,73 +573,7 @@ function Home(){
                             </Button>
                     </Box>
                     </Grid>
-                    <Grid item xs={12} md={6} xl={3} p={5}>
-                        <Box display={'flex'} style={{justifyContent:'center'}}>
-                            <Grid style={{width:'215px', height:'235px'}}>
-                                <img src={imageArregloMesa} alt="" width={'100%'} height={'100%'} style={{ objectFit: 'cover'}}/>
-                            </Grid>
-                        </Box>
-                        <Box p={1}>
-                            <Typography variant="h6" color="initial" fontFamily={'Montserrat, sans-serif'} fontSize={16} textAlign={'start'} style={{color:'#404040', textAlign:'center'}}>Arreglo Multicolor</Typography>
-                            <Typography variant="h6" color="initial" fontFamily={'Archivo Black, sans-serif'} fontSize={16} textAlign={'start'} style={{color:'#404040', textAlign:'center' }}>$100.00</Typography>
-                        </Box>
-                        <Box >
-                            <Button style={{border:'2px solid #b42981', backgroundImage:'linear-gradient(to right, #FF6464 0%, #FF6464  51%, #FF81CE  100%)', textTransform: 'uppercase', transition: '0.5s', color: 'white', borderStyle:'none', borderRadius:'50px', fontFamily:'Archivo Black, sans-serif', padding:'10px', width:'200px' }}>
-                                Ver
-                            </Button>
-                    </Box>
-                    </Grid>
-                    <Grid item xs={12} md={6} xl={3} p={5}>
-                        <Box display={'flex'} style={{justifyContent:'center'}}>
-                            <Grid style={{width:'215px', height:'235px'}}>
-                                <img src={imageArregloMesa} alt="" width={'100%'} height={'100%'} style={{ objectFit: 'cover'}}/>
-                            </Grid>
-                        </Box>
-                        <Box p={1}>
-                            <Typography variant="h6" color="initial" fontFamily={'Montserrat, sans-serif'} fontSize={16} textAlign={'start'} style={{color:'#404040', textAlign:'center'}}>Arreglo Multicolor</Typography>
-                            <Typography variant="h6" color="initial" fontFamily={'Archivo Black, sans-serif'} fontSize={16} textAlign={'start'} style={{color:'#404040', textAlign:'center' }}>$100.00</Typography>
-                        </Box>
-                        <Box >
-                            <Button style={{border:'2px solid #b42981', backgroundImage:'linear-gradient(to right, #FF6464 0%, #FF6464  51%, #FF81CE  100%)', textTransform: 'uppercase', transition: '0.5s', color: 'white', borderStyle:'none', borderRadius:'50px', fontFamily:'Archivo Black, sans-serif', padding:'10px', width:'200px' }}>
-                                Ver
-                            </Button>
-                    </Box>
-                    </Grid>
-                    <Grid item xs={12} md={6} xl={3} p={5}>
-                        <Box display={'flex'} style={{justifyContent:'center'}}>
-                            <Grid style={{width:'215px', height:'235px'}}>
-                                <img src={imageArregloMesa} alt="" width={'100%'} height={'100%'} style={{ objectFit: 'cover'}}/>
-                            </Grid>
-                        </Box>
-                        <Box p={1}>
-                            <Typography variant="h6" color="initial" fontFamily={'Montserrat, sans-serif'} fontSize={16} textAlign={'start'} style={{color:'#404040', textAlign:'center'}}>Arreglo Multicolor</Typography>
-                            <Typography variant="h6" color="initial" fontFamily={'Archivo Black, sans-serif'} fontSize={16} textAlign={'start'} style={{color:'#404040', textAlign:'center' }}>$100.00</Typography>
-                        </Box>
-                        <Box >
-                            <Button style={{border:'2px solid #b42981', backgroundImage:'linear-gradient(to right, #FF6464 0%, #FF6464  51%, #FF81CE  100%)', textTransform: 'uppercase', transition: '0.5s', color: 'white', borderStyle:'none', borderRadius:'50px', fontFamily:'Archivo Black, sans-serif', padding:'10px', width:'200px' }}>
-                                Ver
-                            </Button>
-                    </Box>
-                    </Grid>
-                    <Grid item xs={12} md={6} xl={3} p={5}>
-                        <Box display={'flex'} style={{justifyContent:'center'}}>
-                            <Grid style={{width:'215px', height:'235px'}}>
-                                <img src={imageArregloMesa} alt="" width={'100%'} height={'100%'} style={{ objectFit: 'cover'}}/>
-                            </Grid>
-                        </Box>
-                        <Box p={1}>
-                            <Typography variant="h6" color="initial" fontFamily={'Montserrat, sans-serif'} fontSize={16} textAlign={'start'} style={{color:'#404040', textAlign:'center'}}>Arreglo Multicolor</Typography>
-                        </Box>
-                        <Box display={'flex'}>
-                        <Typography variant="h6" color="initial" fontFamily={'Archivo Black, sans-serif'} fontSize={16} textAlign={'start'} style={{color:'#404040', textAlign:'center', width:'50%', color:'red', textDecorationLine: 'line-through' }}>$100.00</Typography>
-                            <Typography variant="h6" color="initial" fontFamily={'Archivo Black, sans-serif'} fontSize={16} textAlign={'start'} style={{color:'#404040', textAlign:'center', width:'50%',color:'blue' }}>$83.00</Typography>
-                        </Box>
-                        <Box >
-                            <Button style={{border:'2px solid #b42981', backgroundImage:'linear-gradient(to right, #FF6464 0%, #FF6464  51%, #FF81CE  100%)', textTransform: 'uppercase', transition: '0.5s', color: 'white', borderStyle:'none', borderRadius:'50px', fontFamily:'Archivo Black, sans-serif', padding:'10px', width:'200px' }}>
-                                Ver
-                            </Button>
-                    </Box>
-                    </Grid>
+                    
                 </Grid>
             </Grid>
 
