@@ -28,7 +28,7 @@ function ResponsiveAppBar() {
     setAnchorElNav(event.currentTarget);
   };
 
- 
+
   const handleCloseNavMenu = () => {
     setAnchorElNav(null);
   };
@@ -41,11 +41,9 @@ function ResponsiveAppBar() {
     <AppBar position="sticky" sx={{ backgroundColor: '#ffff', boxShadow:'none', padding:'15px 30px 15px 30px' }}>
       <Container maxWidth="xl">
         <Toolbar disableGutters>
-          <img
-            src={Logo}
+          <img src={Logo}
             alt="Logo"
-            className='logo'
-          />
+            className='logo' />
 
           <Box sx={{ flexGrow: 1, display: { xs: 'flex', md: 'none' } }}>
             <IconButton
