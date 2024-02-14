@@ -14,11 +14,12 @@ import SearchIcon from '@mui/icons-material/Search';
 import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
 import Person2Icon from '@mui/icons-material/Person2';
 import '../styles/estilosCss.css'
+import { Link  } from 'react-router-dom';
+import { Grid } from '@mui/material';
 
 
 const settings = ['Profile', 'Account', 'Dashboard', 'Logout'];
 
-import { Link  } from 'react-router-dom';
 
 function ResponsiveAppBar() {
   const [anchorElNav, setAnchorElNav] = React.useState<null | HTMLElement>(null);
@@ -27,7 +28,6 @@ function ResponsiveAppBar() {
   const handleOpenNavMenu = (event: React.MouseEvent<HTMLElement>) => {
     setAnchorElNav(event.currentTarget);
   };
-
 
   const handleCloseNavMenu = () => {
     setAnchorElNav(null);
@@ -40,14 +40,28 @@ function ResponsiveAppBar() {
   return (
     <AppBar position="sticky" sx={{ backgroundColor: '#ffff', boxShadow:'none', padding:'15px 30px 15px 30px' }}>
       <Container maxWidth="xl">
-        <Toolbar disableGutters>
-          <img
+        <Toolbar disableGutters
+
+        sx={{
+          display:{md:'flex'},
+          justifyContent: 'space-around',
+        }}
+        >
+
+          <Grid
+            sx={{
+              width: '150px',
+              display: { xs: 'none', md: 'flex' },
+            }}
+          >
+            <img
             src={Logo}
             alt="Logo"
-            className='logo'
+            style={{ width: '100%' }}
           />
+          </Grid>
 
-          <Box sx={{ flexGrow: 1, display: { xs: 'flex', md: 'none' } }}>
+          <Box  sx={{  display: { xs: 'flex', md: 'none' }}}>
             <IconButton
               size="large"
               aria-label="account of current user"
@@ -103,14 +117,13 @@ function ResponsiveAppBar() {
             </Menu>
           </Box>
 
-
-          <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex', justifyContent: 'center' } }}>
+          <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' }}}>
             <Button
                 component={Link}
                 to="/"
                 variant="text"
                 onClick={handleCloseNavMenu}
-                sx={{  my: 2, color: '#B42981', display: 'block', background:'#ffff', fontSize:'15px' }}
+                sx={{  m: 2, color: '#B42981', display: 'block', background:'#ffff', fontSize:'15px' }}
               >
                 Inicio
             </Button>
@@ -119,7 +132,7 @@ function ResponsiveAppBar() {
                 to="/Productos"
                 variant="text"
                 onClick={handleCloseNavMenu}
-                sx={{ my: 2, color: '#B42981', display: 'block', fontSize:'15px'}}
+                sx={{ m: 2, color: '#B42981', display: 'block', fontSize:'15px'}}
               >
                 Productos
             </Button>
@@ -128,7 +141,7 @@ function ResponsiveAppBar() {
                 to="/Nosotros"
                 variant="text"
                 onClick={handleCloseNavMenu}
-                sx={{ my: 2, color: '#B42981', display: 'block', fontSize:'15px'}}
+                sx={{ m: 2, color: '#B42981', display: 'block', fontSize:'15px'}}
               >
                 Nosotros
             </Button>
@@ -137,17 +150,26 @@ function ResponsiveAppBar() {
                 to="/Contacto"
                 variant="text"
                 onClick={handleCloseNavMenu}
-                sx={{ my: 2, color: '#B42981', display: 'block', fontSize:'15px'}}
+                sx={{ m: 2, color: '#B42981', display: 'block', fontSize:'15px'}}
               >
                 Contacto
             </Button>
           </Box>
 
-          <img
+          <Grid
+            sx={{
+              width: 150,
+              display: { xs: 'flex', md: 'none' },
+              justifyContent:{md:'center'}
+
+            }}
+          >
+            <img
             src={Logo}
-            alt="logoResponsive"
-            className='logoResponsive'
+            alt="Logo"
+            style={{ width: '100%' }}
           />
+          </Grid>
 
           <Box sx={{ flexGrow: 0 }}>
                 <SearchIcon color="disabled" sx={{padding:'3px', fontSize: 30}}/>
