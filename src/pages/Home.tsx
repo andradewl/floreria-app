@@ -1,15 +1,34 @@
-import {  Box, Button, Grid, Typography } from "@mui/material";
+import {  Box, Breadcrumbs, Button, Grid, Link, Paper, Typography } from "@mui/material";
 import banerIndex from '../assets/banerIndex.png'
 import imageArregloMesa from'../assets/secciones/imageArregloMesa.png'
 import imageBoda from'../assets/secciones/imageBoda.png'
 import imageParaElla from'../assets/secciones/imageParaElla.png'
 import imagerParaEl from'../assets/secciones/imagerParaEl.png'
+import one from'../assets/secciones/One.png'
+import two from'../assets/secciones/two.png'
+import three from '../assets/secciones/three.png'
+import condolencias from '../assets/secciones/Condolencias.webp'
 // Importa los estilos CSS de AOS
 import '../styles/fuentes.css'
 
 function Home(){
     return(
         <>
+        <Breadcrumbs maxItems={2} aria-label="breadcrumb" style={{paddingLeft:'50px'}}>
+            <Link underline="hover" color="inherit" href="#">
+                Home
+            </Link>
+            {/*  <Link underline="hover" color="inherit" href="#">
+                Catalog
+            </Link>
+            <Link underline="hover" color="inherit" href="#">
+                Accessories
+            </Link>
+            <Link underline="hover" color="inherit" href="#">
+                New Collection
+            </Link>
+            <Typography color="text.primary">Belts</Typography> */}
+        </Breadcrumbs>
 
         <Grid container spacing={2}  sx={
             {
@@ -34,7 +53,7 @@ function Home(){
                             sm:1
                         }
                     }}>
-                        <Typography variant="h1" color="initial" fontSize='74px' fontFamily={'Archivo Black, sans-serif'} style={{color:'#ffff'}} >
+                        <Typography variant="h1" color="initial" fontSize='74px'  style={{color:'#ffff'}} >
                             Flores para toda ocasión
                         </Typography>
                     </Grid>
@@ -230,13 +249,300 @@ function Home(){
                 </Grid>
             </Grid>
 
+
+            <Grid sx={{
+                paddingLeft:{
+                    xs:'10px',
+                    md:'50px'
+                },
+                paddingRight:{
+                    xs:'10px',
+                    md:'50px'
+
+                }
+            }}>
+                <Grid container display={'flex'} >
+                    <Grid item xs={12} sm={6} lg={4} xl={3} style={{textAlign:'center', justifyContent:'center', alignContent:'center'}}>
+                        <Box
+                            sx={{
+                                justifyContent:'center',
+                                maxWidth:'100%',
+                                display:'flex',
+                                position: 'relative',
+
+                            }}>
+                            <Grid sx={{
+                                backgroundImage:`url(${imageArregloMesa})`,
+                                backgroundSize:'cover',
+                                width:'100%',
+                                height:{
+                                    xs:'319px'
+                                }
+                            }}>
+                            </Grid>
+                            <Paper
+                                sx={{
+                                    position: 'absolute',
+                                    top: 0,
+                                    left: 0,
+                                    width: '100%',
+                                    height: '100%',
+                                    background: 'linear-gradient(to right, rgba(255, 100, 100, 0.7) 0%, rgba(255, 100, 100, 0.7) 51%, rgba(255, 129, 206, 0.7) 100%)',
+                                    display: 'flex',
+                                    justifyContent: 'center',
+                                    alignItems: 'center',
+                                    opacity: 0,
+                                    transition: 'opacity 0.3s ease',
+                                    '&:hover': {
+                                        opacity: 1,
+                                    },
+                                }}
+                            >
+                                <Typography variant="h4" color="initial" sx={{color:'white', fontFamily:'Archivo Black, sans-serif'}}>Arreglos</Typography>
+                            </Paper>
+                        </Box>
+                    </Grid>
+
+
+                    <Grid item xs={12} sm={6} lg={4} xl={3} style={{textAlign:'center', justifyContent:'center', alignContent:'center'}}>
+                        <Box
+                            sx={{
+                                justifyContent:'center',
+                                maxWidth:'100%',
+                                display:'flex',
+                                position: 'relative',
+
+                            }}>
+                            <Grid sx={{
+                                backgroundImage:`url(${one})`,
+                                backgroundSize:'cover',
+                                width:'100%',
+                                height:{
+                                    xs:'319px'
+                                }
+                            }}>
+                            </Grid>
+                           
+                        </Box>
+                    </Grid>
+
+
+                    <Grid item xs={12} sm={6} lg={4} xl={3} style={{textAlign:'center', justifyContent:'center', alignContent:'center'}}>
+                        <Box
+                            sx={{
+                                justifyContent:'center',
+                                maxWidth:'100%',
+                                display:'flex',
+                                position: 'relative',
+
+                            }}>
+                            <Grid sx={{
+                                backgroundImage:`url(${imageBoda})`,
+                                backgroundSize:'cover',
+                                width:'100%',
+                                height:{
+                                    xs:'319px'
+                                }
+                            }}>
+                            </Grid>
+                            <Paper
+                                sx={{
+                                    position: 'absolute',
+                                    top: 0,
+                                    left: 0,
+                                    width: '100%',
+                                    height: '100%',
+                                    background: 'linear-gradient(to right, rgba(255, 100, 100, 0.7) 0%, rgba(255, 100, 100, 0.7) 51%, rgba(255, 129, 206, 0.7) 100%)',
+                                    display: 'flex',
+                                    justifyContent: 'center',
+                                    alignItems: 'center',
+                                    opacity: 0,
+                                    transition: 'opacity 0.3s ease',
+                                    '&:hover': {
+                                        opacity: 1,
+                                    },
+                                }}
+                            >
+                                <Typography variant="h4" color="initial" sx={{color:'white', fontFamily:'Archivo Black, sans-serif'}}>Bodas</Typography>
+                            </Paper>
+                        </Box>
+                    </Grid>
+                    <Grid item xs={12} sm={6} lg={4} xl={3} style={{textAlign:'center', justifyContent:'center', alignContent:'center'}}>
+                        <Box
+                            sx={{
+                                justifyContent:'center',
+                                maxWidth:'100%',
+                                display:'flex',
+                                position: 'relative',
+
+                            }}>
+                            <Grid sx={{
+                                backgroundImage:`url(${imageParaElla})`,
+                                backgroundSize:'cover',
+                                width:'100%',
+                                height:{
+                                    xs:'319px'
+                                }
+                            }}>
+                            </Grid>
+                            <Paper
+                                sx={{
+                                    position: 'absolute',
+                                    top: 0,
+                                    left: 0,
+                                    width: '100%',
+                                    height: '100%',
+                                    background: 'linear-gradient(to right, rgba(255, 100, 100, 0.7) 0%, rgba(255, 100, 100, 0.7) 51%, rgba(255, 129, 206, 0.7) 100%)',
+                                    display: 'flex',
+                                    justifyContent: 'center',
+                                    alignItems: 'center',
+                                    opacity: 0,
+                                    transition: 'opacity 0.3s ease',
+                                    '&:hover': {
+                                        opacity: 1,
+                                    },
+                                }}
+                            >
+                                <Typography variant="h4" color="initial" sx={{color:'white', fontFamily:'Archivo Black, sans-serif'}}>Para ella</Typography>
+                            </Paper>
+                        </Box>
+                    </Grid>
+                    <Grid item xs={12} sm={6} lg={4} xl={3} style={{textAlign:'center', justifyContent:'center', alignContent:'center'}}>
+                        <Box
+                            sx={{
+                                justifyContent:'center',
+                                maxWidth:'100%',
+                                display:'flex',
+                                position: 'relative',
+
+                            }}>
+                            <Grid sx={{
+                                backgroundImage:`url(${imagerParaEl})`,
+                                backgroundSize:'cover',
+                                width:'100%',
+                                height:{
+                                    xs:'319px'
+                                }
+                            }}>
+                            </Grid>
+                            <Paper
+                                sx={{
+                                    position: 'absolute',
+                                    top: 0,
+                                    left: 0,
+                                    width: '100%',
+                                    height: '100%',
+                                    background: 'linear-gradient(to right, rgba(255, 100, 100, 0.7) 0%, rgba(255, 100, 100, 0.7) 51%, rgba(255, 129, 206, 0.7) 100%)',
+                                    display: 'flex',
+                                    justifyContent: 'center',
+                                    alignItems: 'center',
+                                    opacity: 0,
+                                    transition: 'opacity 0.3s ease',
+                                    '&:hover': {
+                                        opacity: 1,
+                                    },
+                                }}
+                            >
+                                <Typography variant="h4" color="initial" sx={{color:'white', fontFamily:'Archivo Black, sans-serif'}}>Para él</Typography>
+                            </Paper>
+                        </Box>
+                    </Grid>
+
+
+
+                    <Grid item xs={12} sm={6} lg={4} xl={3} style={{textAlign:'center', justifyContent:'center', alignContent:'center'}}>
+                        <Box
+                            sx={{
+                                justifyContent:'center',
+                                maxWidth:'100%',
+                                display:'flex',
+                                position: 'relative',
+
+                            }}>
+                            <Grid sx={{
+                                backgroundImage:`url(${two})`,
+                                backgroundSize:'cover',
+                                width:'100%',
+                                height:{
+                                    xs:'319px'
+                                }
+                            }}>
+                            </Grid>
+                        </Box>
+                    </Grid>
+
+                    <Grid item xs={12} sm={6} lg={4} xl={3} style={{textAlign:'center', justifyContent:'center', alignContent:'center'}}>
+                        <Box
+                            sx={{
+                                justifyContent:'center',
+                                maxWidth:'100%',
+                                display:'flex',
+                                position: 'relative',
+
+                            }}>
+                            <Grid sx={{
+                                backgroundImage:`url(${condolencias})`,
+                                backgroundSize:'cover',
+                                width:'100%',
+                                height:{
+                                    xs:'319px'
+                                }
+                            }}>
+                            </Grid>
+                            <Paper
+                                sx={{
+                                    position: 'absolute',
+                                    top: 0,
+                                    left: 0,
+                                    width: '100%',
+                                    height: '100%',
+                                    background: 'linear-gradient(to right, rgba(255, 100, 100, 0.7) 0%, rgba(255, 100, 100, 0.7) 51%, rgba(255, 129, 206, 0.7) 100%)',
+                                    display: 'flex',
+                                    justifyContent: 'center',
+                                    alignItems: 'center',
+                                    opacity: 0,
+                                    transition: 'opacity 0.3s ease',
+                                    '&:hover': {
+                                        opacity: 1,
+                                    },
+                                }}
+                            >
+                                <Typography variant="h4" color="initial" sx={{color:'white', fontFamily:'Archivo Black, sans-serif'}}>Condolencias</Typography>
+                            </Paper>
+                        </Box>
+                    </Grid>
+
+
+                    <Grid item xs={12} sm={6} lg={4} xl={3} style={{textAlign:'center', justifyContent:'center', alignContent:'center'}}>
+                        <Box
+                            sx={{
+                                justifyContent:'center',
+                                maxWidth:'100%',
+                                display:'flex',
+                                position: 'relative',
+
+                            }}>
+                            <Grid sx={{
+                                backgroundImage:`url(${three})`,
+                                backgroundSize:'cover',
+                                width:'100%',
+                                height:{
+                                    xs:'319px'
+                                }
+                            }}>
+                            </Grid>
+                        </Box>
+                    </Grid>
+
+                </Grid>
+            </Grid>
+
         </Grid>
 
-        <Grid container>
+        {/* <Grid container>
             <Grid item xs={12} style={{ position: 'relative', width: '100%', height: '400px' }}>
-                {/* Contenedor del banner */}
+              
                 <img src={banerIndex} alt="" style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
-                {/* Texto superpuesto */}
                 <Grid container style={{ position: 'absolute', top: '50%', left: '50%', transform: 'translate(-50%, -50%)', backgroundColor: 'rgba(224, 43, 86, 0.35)', padding: '50px', borderRadius: '5px', width: '100%', height: '100%' }}>
                     <Box style={{width:'100%'}} pl={10} pr={10}>
                         <Typography variant="h2" style={{ fontFamily: 'Archivo Black, sans-serif', color: '#ffff' }} >Fanaticos de las flores</Typography>
@@ -254,7 +560,7 @@ function Home(){
 
                 </Grid>
             </Grid>
-        </Grid>
+        </Grid> */}
 
 
         <Grid p={5}>

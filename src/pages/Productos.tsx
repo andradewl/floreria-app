@@ -1,6 +1,14 @@
+import { Grid } from "@mui/material"
+
 function Productos(){
     return(
-        <h1>Productos</h1>
+       <Grid>
+
+            <Grid>
+                
+            </Grid>
+        
+       </Grid>
     )
 }
 

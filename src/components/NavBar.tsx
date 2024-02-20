@@ -43,11 +43,11 @@ function ResponsiveAppBar() {
         <Toolbar disableGutters
 
         sx={{
-          display:{md:'flex'},
+          display:'flex',
           justifyContent: 'space-around',
         }}
         >
-
+          {/* Logo para escritorio */}
           <Grid
             sx={{
               width: '150px',
@@ -61,6 +61,9 @@ function ResponsiveAppBar() {
           />
           </Grid>
 
+
+
+          {/* Mennu movil */}
           <Box  sx={{  display: { xs: 'flex', md: 'none' }}}>
             <IconButton
               size="large"
@@ -117,7 +120,10 @@ function ResponsiveAppBar() {
             </Menu>
           </Box>
 
-          <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' }}}>
+
+          {/* Mennu escritrio */}
+
+          <Box sx={{display: { xs: 'none', md: 'flex' }}}>
             <Button
                 component={Link}
                 to="/"
