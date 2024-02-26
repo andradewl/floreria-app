@@ -43,11 +43,11 @@ function ResponsiveAppBar() {
         <Toolbar disableGutters
 
         sx={{
-          display:'flex',
+          display:{md:'flex'},
           justifyContent: 'space-around',
         }}
         >
-          {/* Logo para escritorio */}
+
           <Grid
             sx={{
               width: '150px',
@@ -61,9 +61,6 @@ function ResponsiveAppBar() {
           />
           </Grid>
 
-
-
-          {/* Mennu movil */}
           <Box  sx={{  display: { xs: 'flex', md: 'none' }}}>
             <IconButton
               size="large"
@@ -120,10 +117,7 @@ function ResponsiveAppBar() {
             </Menu>
           </Box>
 
-
-          {/* Mennu escritrio */}
-
-          <Box sx={{display: { xs: 'none', md: 'flex' }}}>
+          <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' }}}>
             <Button
                 component={Link}
                 to="/"
@@ -180,7 +174,9 @@ function ResponsiveAppBar() {
           <Box sx={{ flexGrow: 0 }}>
                 <SearchIcon color="disabled" sx={{padding:'3px', fontSize: 30}}/>
                 <ShoppingCartIcon color="disabled" sx={{padding:'3px', fontSize: 30}}/>
-                <Person2Icon color="disabled" sx={{padding:'3px', fontSize: 30}}/>
+                <Link to="/Usuario" style={{ textDecoration: 'none', color: 'inherit' }}>
+                    <Person2Icon color="disabled" sx={{padding:'3px', fontSize: 30}}/>
+                </Link>
             <Menu
               sx={{ mt: '45px'}}
               id="menu-appbar"
