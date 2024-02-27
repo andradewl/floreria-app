@@ -59,6 +59,5 @@ export default function EstatusEnvio() {
             </TableContainer>
         </Grid>
     </Grid>
-    
   );
 }

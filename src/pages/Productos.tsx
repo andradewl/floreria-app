@@ -11,62 +11,112 @@ import product8 from '../assets/productos/productEight.webp'
 import product9 from '../assets/productos/productnNain.webp'
 import product10 from '../assets/productos/productTen.jpg'
 import product11 from '../assets/productos/productEleven.webp'
-import { Box, Button, Grid, Typography, InputLabel, MenuItem, FormControl } from '@mui/material'
+import { Box, Button, Grid, Typography, InputLabel, MenuItem, FormControl, FormGroup, FormControlLabel, Checkbox } from '@mui/material'
 import { stylesComponents } from '../styles/stylesComponentes'
-import Select from '@mui/material/Select';
+import Select, { SelectChangeEvent } from '@mui/material/Select';
+import React from 'react'
 
 
 function Productos(){
+
+    const [age, setAge] = React.useState('')
+    const handleChange = (event: SelectChangeEvent) => {
+        setAge(event.target.value);
+    };
+
     return(
         <>
             <Grid container>
-                <Grid item xs={12} sx={{
-                    display:'flex',
-                    height:'40px',
-                    justifyContent:'end',
-                    paddingRight:'150px',
-                    fontFamily:'Archivo Black, sans-serif'
-                }}>
-                    <Box sx={stylesComponents.espaciadoOrdenFiltro}>Ordenar por</Box>
+                <Grid item xs={12} sx={stylesComponents.positionOfFilter}>
+                    <Box sx={stylesComponents.espaciadoOrdenFiltroTitulo}>Ordenar por</Box>
                     <Box sx={stylesComponents.espaciadoOrdenFiltro}>
-                    <FormControl fullWidth>
-                        <InputLabel id="demo-simple-select-label">Age</InputLabel>
-                        <Select
-                            labelId="demo-simple-select-label"
-                            id="demo-simple-select"
-                            label="Age"
-                        >
-                            <MenuItem value={10}>Ten</MenuItem>
-                            <MenuItem value={20}>Twenty</MenuItem>
-                            <MenuItem value={30}>Thirty</MenuItem>
-                        </Select>
-                    </FormControl>
+                        <FormControl sx={{ minWidth: 120 }} size="small">
+                            <InputLabel sx={{color:'#fffff'}}>Ordenar por precio</InputLabel>
+                            <Select
+                                id="demo-select-small"
+                                value={age}
+                                label="Precio"
+                                onChange={handleChange}
+                                sx={stylesComponents.botonFiltro}
+                            >
+                                <MenuItem value={'mayor'}>Mayor</MenuItem>
+                                <MenuItem value={'menor'}>Menor</MenuItem>
+                            </Select>
+                        </FormControl>
                     </Box>
                     <Box sx={stylesComponents.espaciadoOrdenFiltro}>
-                        <Button  sx={stylesComponents.botonFiltro}>
-                            Calificacion
-                        </Button>
-                    </Box>
+                        <FormControl sx={{ minWidth: 120 }} size="small">
+                            <InputLabel sx={{color:'#fffff'}}>Ordenar por calificacion</InputLabel>
+                            <Select
+                                id="demo-select-small"
+                                value={age}
+                                label="Calificasion"
+                                onChange={handleChange}
+                                sx={stylesComponents.botonFiltro}
+                            >
+                                <MenuItem value={5}>5 estrellas</MenuItem>
+                                <MenuItem value={4}>4 estrellas</MenuItem>
+                                <MenuItem value={3}>3 estrellas</MenuItem>
+                                <MenuItem value={2}>2 estrellas</MenuItem>
+                                <MenuItem value={1}>1 estrellas</MenuItem>
 
+                            </Select>
+                        </FormControl>
+                    </Box>
                 </Grid>
                 <Grid item xs={12}>
                     <Grid container>
-                        <Grid item md={3} xs={12}>
+                        <Grid item md={2} xs={12}>
                             <Grid sx={{paddingLeft:'40px', paddingTop:'40px'}} >
                                 <Typography variant="h1" color="initial" sx={{fontSize:'30px', fontFamily:'Archivo Black, sans-serif', color:'#B42981'}}>Filtros</Typography>
-                                <Grid>
+                                <Grid sx={{paddingLeft:'20px'}}>
+                                    <Grid>
+                                        <Typography variant="h6" color="initial">Tipo</Typography>
+                                        <FormGroup sx={{paddingLeft:'20px'}}>
+                                            <FormControlLabel control={<Checkbox defaultChecked />} label="Label" />
+                                            <FormControlLabel control={<Checkbox />} label="Rosas" />
+                                            <FormControlLabel control={<Checkbox />} label="Clavel" />
+                                            <FormControlLabel control={<Checkbox />} label="Tulipanes" />
+                                            <FormControlLabel control={<Checkbox />} label="Orquideas" />
+                                        </FormGroup>
+                                    </Grid>
+                                    <Grid>
+                                        <Typography variant="h6" color="initial">Promocion</Typography>
 
+                                    </Grid>
+                                    <Grid>
+                                        <Typography variant="h6" color="initial">Color</Typography>
+                                        <FormGroup sx={{paddingLeft:'20px'}}>
+                                            <FormControlLabel control={<Checkbox defaultChecked />} label="Rojo" />
+                                            <FormControlLabel control={<Checkbox />} label="Morado" />
+                                            <FormControlLabel control={<Checkbox />} label="Blanco" />
+                                            <FormControlLabel control={<Checkbox />} label="Azul" />
+                                            <FormControlLabel control={<Checkbox />} label="Rosa" />
+                                        </FormGroup>
+                                    </Grid>
+                                    <Grid>
+                                        <Typography variant="h6" color="initial">Mas Vendidos</Typography>
+
+                                    </Grid>
+                                    <Grid>
+                                        <Typography variant="h6" color="initial">Ocasion</Typography>
+                                        <FormGroup sx={{paddingLeft:'20px'}}>
+                                            <FormControlLabel control={<Checkbox defaultChecked />} label="Bodas" />
+                                            <FormControlLabel control={<Checkbox />} label="Para Ella" />
+                                            <FormControlLabel control={<Checkbox />} label="Para El" />
+                                            <FormControlLabel control={<Checkbox />} label="Bautisos" />
+                                            <FormControlLabel control={<Checkbox />} label="Velorios" />
+                                        </FormGroup>
+                                    </Grid>
                                 </Grid>
                             </Grid>
                             <Grid>
 
                             </Grid>
                         </Grid>
-                        <Grid item md={8}>
-
+                        <Grid item md={10}>
                             <Grid container sx={stylesComponents.ContenedorProductos}>
-
-                                <Grid item sm={12} md={6} lg={4} sx={stylesComponents.contenedorProducto}>
+                                <Grid item sm={12} md={6} lg={3} sx={stylesComponents.contenedorProducto}>
                                     <Box display={'flex'} style={{justifyContent:'center'}}>
                                         <Grid style={{width:'235px', height:'300px'}}>
                                             <img src={product1} alt="" width={'100%'} height={'100%'} style={{ objectFit: 'cover'}}/>
@@ -82,7 +132,7 @@ function Productos(){
                                         </Button>
                                     </Box>
                                 </Grid>
-                                <Grid item sm={12} md={6} lg={4} sx={stylesComponents.contenedorProducto}>
+                                <Grid item sm={12} md={6} lg={3} sx={stylesComponents.contenedorProducto}>
                                         <Box display={'flex'} style={{justifyContent:'center'}}>
                                             <Grid style={{width:'235px', height:'300px'}}>
                                                 <img src={product2} alt="" width={'100%'} height={'100%'} style={{ objectFit: 'cover'}}/>
@@ -98,7 +148,7 @@ function Productos(){
                                             </Button>
                                     </Box>
                                 </Grid>
-                                <Grid item sm={12} md={6} lg={4} sx={stylesComponents.contenedorProducto}>
+                                <Grid item sm={12} md={6} lg={3} sx={stylesComponents.contenedorProducto}>
                                     <Box display={'flex'} style={{justifyContent:'center'}}>
                                         <Grid style={{width:'235px', height:'300px'}}>
                                             <img src={product3} alt="" width={'100%'} height={'100%'} style={{ objectFit: 'cover'}}/>
@@ -114,7 +164,7 @@ function Productos(){
                                         </Button>
                                 </Box>
                                 </Grid>
-                                <Grid item sm={12} md={6} lg={4} sx={stylesComponents.contenedorProducto}>
+                                <Grid item sm={12} md={6} lg={3} sx={stylesComponents.contenedorProducto}>
                                     <Box display={'flex'} style={{justifyContent:'center'}}>
                                         <Grid style={{width:'235px', height:'300px'}}>
                                             <img src={product4} alt="" width={'100%'} height={'100%'} style={{ objectFit: 'cover'}}/>
@@ -134,7 +184,7 @@ function Productos(){
                                 </Box>
                                 </Grid>
 
-                                <Grid item sm={12} md={6} lg={4} sx={stylesComponents.contenedorProducto}>
+                                <Grid item sm={12} md={6} lg={3} sx={stylesComponents.contenedorProducto}>
                                     <Box display={'flex'} style={{justifyContent:'center'}}>
                                         <Grid style={{width:'235px', height:'300px'}}>
                                             <img src={product5} alt="" width={'100%'} height={'100%'} style={{ objectFit: 'cover'}}/>
@@ -150,7 +200,7 @@ function Productos(){
                                         </Button>
                                     </Box>
                                 </Grid>
-                                <Grid item sm={12} md={6} lg={4} sx={stylesComponents.contenedorProducto}>
+                                <Grid item sm={12} md={6} lg={3} sx={stylesComponents.contenedorProducto}>
                                         <Box display={'flex'} style={{justifyContent:'center'}}>
                                             <Grid style={{width:'235px', height:'300px'}}>
                                                 <img src={product6} alt="" width={'100%'} height={'100%'} style={{ objectFit: 'cover'}}/>
@@ -166,7 +216,7 @@ function Productos(){
                                             </Button>
                                     </Box>
                                 </Grid>
-                                <Grid item sm={12} md={6} lg={4} sx={stylesComponents.contenedorProducto}>
+                                <Grid item sm={12} md={6} lg={3} sx={stylesComponents.contenedorProducto}>
                                     <Box display={'flex'} style={{justifyContent:'center'}}>
                                         <Grid style={{width:'235px', height:'300px'}}>
                                             <img src={product7} alt="" width={'100%'} height={'100%'} style={{ objectFit: 'cover'}}/>
@@ -182,7 +232,7 @@ function Productos(){
                                         </Button>
                                 </Box>
                                 </Grid>
-                                <Grid item sm={12} md={6} lg={4} sx={stylesComponents.contenedorProducto}>
+                                <Grid item sm={12} md={6} lg={3} sx={stylesComponents.contenedorProducto}>
                                     <Box display={'flex'} style={{justifyContent:'center'}}>
                                         <Grid style={{width:'235px', height:'300px'}}>
                                             <img src={product8} alt="" width={'100%'} height={'100%'} style={{ objectFit: 'cover'}}/>
@@ -202,7 +252,7 @@ function Productos(){
                                 </Box>
                                 </Grid>
 
-                                <Grid item sm={12} md={6} lg={4} sx={stylesComponents.contenedorProducto}>
+                                <Grid item sm={12} md={6} lg={3} sx={stylesComponents.contenedorProducto}>
                                     <Box display={'flex'} style={{justifyContent:'center'}}>
                                         <Grid style={{width:'235px', height:'300px'}}>
                                             <img src={product9} alt="" width={'100%'} height={'100%'} style={{ objectFit: 'cover'}}/>
@@ -218,7 +268,7 @@ function Productos(){
                                         </Button>
                                     </Box>
                                 </Grid>
-                                <Grid item sm={12} md={6} lg={4} sx={stylesComponents.contenedorProducto}>
+                                <Grid item sm={12} md={6} lg={3} sx={stylesComponents.contenedorProducto}>
                                         <Box display={'flex'} style={{justifyContent:'center'}}>
                                             <Grid style={{width:'235px', height:'300px'}}>
                                                 <img src={product10} alt="" width={'100%'} height={'100%'} style={{ objectFit: 'cover'}}/>
@@ -234,7 +284,7 @@ function Productos(){
                                             </Button>
                                     </Box>
                                 </Grid>
-                                <Grid item sm={12} md={6} lg={4} sx={stylesComponents.contenedorProducto}>
+                                <Grid item sm={12} md={6} lg={3} sx={stylesComponents.contenedorProducto}>
                                     <Box display={'flex'} style={{justifyContent:'center'}}>
                                         <Grid style={{width:'235px', height:'300px'}}>
                                             <img src={product11} alt="" width={'100%'} height={'100%'} style={{ objectFit: 'cover'}}/>

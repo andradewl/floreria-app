@@ -205,9 +205,20 @@ export const stylesComponents = {
 
     //------------------------------Filtros------------------------------//
 
-    espaciadoOrdenFiltro:{
-        padding:'10px'
+    espaciadoOrdenFiltroTitulo:{
+        padding:'10px',
+        color:'#fffff',
+        display:{
+            md:'block',
+            xs:'none'
+        }
     },
+
+    espaciadoOrdenFiltro:{
+        padding:'10px',
+        color:'#fffff',
+    },
+
 
     botonFiltro:{
         border:'2px solid #b42981',
@@ -219,7 +230,22 @@ export const stylesComponents = {
         borderRadius:'50px',
         fontFamily:'Archivo Black, sans-serif',
         padding:'6px',
-        width:'170px'
+        width:'250px',
+    },
+
+
+    positionOfFilter:{
+        display:'flex',
+        height:'40px',
+        justifyContent:{
+            lg:'end',
+            sm:'center'
+        },
+        paddingRight:{
+            lg:'70px'
+        },
+        fontFamily:'Archivo Black, sans-serif'
+
     }
 
 
