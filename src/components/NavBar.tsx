@@ -55,9 +55,6 @@ function ResponsiveAppBar() {
             style={{ width: '100%' }}
           />
           </Grid>
-
-
-
           {/* Mennu movil */}
           <Box  sx={stylesComponents.boxMenuResponsive}>
             <IconButton
@@ -112,10 +109,6 @@ function ResponsiveAppBar() {
               </MenuItem>
             </Menu>
           </Box>
-
-
-          {/* Mennu escritrio */}
-
           <Box sx={stylesComponents.boxMenuDesk}>
             <Button
                 component={Link}

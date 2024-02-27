@@ -11,7 +11,7 @@ import product8 from '../assets/productos/productEight.webp'
 import product9 from '../assets/productos/productnNain.webp'
 import product10 from '../assets/productos/productTen.jpg'
 import product11 from '../assets/productos/productEleven.webp'
-import { Box, Button, Grid, Typography, InputLabel, MenuItem } from '@mui/material'
+import { Box, Button, Grid, Typography, InputLabel, MenuItem, FormControl } from '@mui/material'
 import { stylesComponents } from '../styles/stylesComponentes'
 import Select from '@mui/material/Select';
 
@@ -29,23 +29,18 @@ function Productos(){
                 }}>
                     <Box sx={stylesComponents.espaciadoOrdenFiltro}>Ordenar por</Box>
                     <Box sx={stylesComponents.espaciadoOrdenFiltro}>
+                    <FormControl fullWidth>
                         <InputLabel id="demo-simple-select-label">Age</InputLabel>
                         <Select
-                        labelId="demo-simple-select-label"
-                        id="demo-simple-select"
-                        label="Age"
-                        sx={stylesComponents.botonFiltro}
+                            labelId="demo-simple-select-label"
+                            id="demo-simple-select"
+                            label="Age"
                         >
-                        <MenuItem value="">
-                            <em>None</em>
-                        </MenuItem>
-                        <MenuItem value={10}>Ten</MenuItem>
-                        <MenuItem value={20}>Twenty</MenuItem>
-                        <MenuItem value={30}>Thirty</MenuItem>
+                            <MenuItem value={10}>Ten</MenuItem>
+                            <MenuItem value={20}>Twenty</MenuItem>
+                            <MenuItem value={30}>Thirty</MenuItem>
                         </Select>
-                        {/* <Button  sx={stylesComponents.botonFiltro}>
-                            Precio
-                        </Button> */}
+                    </FormControl>
                     </Box>
                     <Box sx={stylesComponents.espaciadoOrdenFiltro}>
                         <Button  sx={stylesComponents.botonFiltro}>
