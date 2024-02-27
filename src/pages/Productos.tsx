@@ -66,7 +66,7 @@ function Productos(){
                 </Grid>
                 <Grid item xs={12}>
                     <Grid container>
-                        <Grid item md={2} xs={12}>
+                        <Grid item md={2} xs={6}>
                             <Grid sx={{paddingLeft:'40px', paddingTop:'40px'}} >
                                 <Typography variant="h1" color="initial" sx={{fontSize:'30px', fontFamily:'Archivo Black, sans-serif', color:'#B42981'}}>Filtros</Typography>
                                 <Grid sx={{paddingLeft:'20px'}}>
@@ -114,7 +114,7 @@ function Productos(){
 
                             </Grid>
                         </Grid>
-                        <Grid item md={10}>
+                        <Grid item md={10} xs={6}>
                             <Grid container sx={stylesComponents.ContenedorProductos}>
                                 <Grid item sm={12} md={6} lg={3} sx={stylesComponents.contenedorProducto}>
                                     <Box display={'flex'} style={{justifyContent:'center'}}>
