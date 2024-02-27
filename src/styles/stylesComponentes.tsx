@@ -199,8 +199,12 @@ export const stylesComponents = {
             xs:2,
             sm:5,
             md:2,
-            xl:1
+            xl:0
         },
+    },
+    contenerdorImagenProducto:{
+        width:'200px',
+        height:'275px'
     },
 
     //------------------------------Filtros------------------------------//
@@ -215,7 +219,10 @@ export const stylesComponents = {
     },
 
     espaciadoOrdenFiltro:{
-        padding:'10px',
+        padding:{
+            xs:'5px',
+            md:'10px'
+        },
         color:'#fffff',
     },
 
@@ -230,7 +237,10 @@ export const stylesComponents = {
         borderRadius:'50px',
         fontFamily:'Archivo Black, sans-serif',
         padding:'6px',
-        width:'250px',
+        width:{
+            xs:'215px',
+            md:'250px'
+        },
     },
 
 
@@ -241,9 +251,7 @@ export const stylesComponents = {
             lg:'end',
             sm:'center'
         },
-        paddingRight:{
-            lg:'70px'
-        },
+
         fontFamily:'Archivo Black, sans-serif'
 
     }

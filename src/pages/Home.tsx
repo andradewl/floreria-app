@@ -223,7 +223,7 @@ function Home(){
 
                         <Grid item sm={12}  md={4} lg={3} sx={stylesComponents.contenedorProducto}>
                             <Box display={'flex'} style={{justifyContent:'center'}}>
-                                <Grid style={{width:'235px', height:'300px'}}>
+                                <Grid sx={stylesComponents.contenerdorImagenProducto}>
                                     <img src={product1} alt="" width={'100%'} height={'100%'} style={{ objectFit: 'cover'}}/>
                                 </Grid>
                             </Box>
@@ -239,7 +239,7 @@ function Home(){
                         </Grid>
                         <Grid item sm={12}  md={4} lg={3} sx={stylesComponents.contenedorProducto}>
                                 <Box display={'flex'} style={{justifyContent:'center'}}>
-                                    <Grid style={{width:'235px', height:'300px'}}>
+                                    <Grid sx={stylesComponents.contenerdorImagenProducto}>
                                         <img src={product2} alt="" width={'100%'} height={'100%'} style={{ objectFit: 'cover'}}/>
                                     </Grid>
                                 </Box>
@@ -255,7 +255,7 @@ function Home(){
                         </Grid>
                         <Grid item sm={12}  md={4} lg={3} sx={stylesComponents.contenedorProducto}>
                             <Box display={'flex'} style={{justifyContent:'center'}}>
-                                <Grid style={{width:'235px', height:'300px'}}>
+                                <Grid sx={stylesComponents.contenerdorImagenProducto}>
                                     <img src={product3} alt="" width={'100%'} height={'100%'} style={{ objectFit: 'cover'}}/>
                                 </Grid>
                             </Box>
@@ -271,7 +271,7 @@ function Home(){
                         </Grid>
                         <Grid item sm={12}  md={4} lg={3} sx={stylesComponents.contenedorProducto}>
                             <Box display={'flex'} style={{justifyContent:'center'}}>
-                                <Grid style={{width:'235px', height:'300px'}}>
+                                <Grid sx={stylesComponents.contenerdorImagenProducto}>
                                     <img src={product4} alt="" width={'100%'} height={'100%'} style={{ objectFit: 'cover'}}/>
                                 </Grid>
                             </Box>
@@ -290,7 +290,7 @@ function Home(){
                         </Grid>
                         <Grid item sm={12}  md={4} lg={3} sx={stylesComponents.contenedorProducto}>
                             <Box display={'flex'} style={{justifyContent:'center'}}>
-                                <Grid style={{width:'235px', height:'300px'}}>
+                                <Grid sx={stylesComponents.contenerdorImagenProducto}>
                                     <img src={product5} alt="" width={'100%'} height={'100%'} style={{ objectFit: 'cover'}}/>
                                 </Grid>
                             </Box>
@@ -306,7 +306,7 @@ function Home(){
                         </Grid>
                         <Grid item sm={12}  md={4} lg={3} sx={stylesComponents.contenedorProducto}>
                             <Box display={'flex'} style={{justifyContent:'center'}}>
-                                <Grid style={{width:'235px', height:'300px'}}>
+                                <Grid sx={stylesComponents.contenerdorImagenProducto}>
                                     <img src={product6} alt="" width={'100%'} height={'100%'} style={{ objectFit: 'cover'}}/>
                                 </Grid>
                             </Box>
@@ -322,7 +322,7 @@ function Home(){
                         </Grid>
                         <Grid item sm={12}  md={4} lg={3} sx={stylesComponents.contenedorProducto}>
                             <Box display={'flex'} style={{justifyContent:'center'}}>
-                                <Grid style={{width:'235px', height:'300px'}}>
+                                <Grid sx={stylesComponents.contenerdorImagenProducto}>
                                     <img src={product7} alt="" width={'100%'} height={'100%'} style={{ objectFit: 'cover'}}/>
                                 </Grid>
                             </Box>
@@ -338,7 +338,7 @@ function Home(){
                         </Grid>
                         <Grid item sm={12}  md={4} lg={3} sx={stylesComponents.contenedorProducto}>
                             <Box display={'flex'} style={{justifyContent:'center'}}>
-                                <Grid style={{width:'235px', height:'300px'}}>
+                                <Grid sx={stylesComponents.contenerdorImagenProducto}>
                                     <img src={product8} alt="" width={'100%'} height={'100%'} style={{ objectFit: 'cover'}}/>
                                 </Grid>
                             </Box>
@@ -357,7 +357,7 @@ function Home(){
                         </Grid>
                         <Grid item sm={12}  md={4} lg={3} sx={stylesComponents.contenedorProducto}>
                             <Box display={'flex'} style={{justifyContent:'center'}}>
-                                <Grid style={{width:'235px', height:'300px'}}>
+                                <Grid sx={stylesComponents.contenerdorImagenProducto}>
                                     <img src={product9} alt="" width={'100%'} height={'100%'} style={{ objectFit: 'cover'}}/>
                                 </Grid>
                             </Box>
@@ -373,7 +373,7 @@ function Home(){
                         </Grid>
                         <Grid item sm={12}  md={4} lg={3} sx={stylesComponents.contenedorProducto}>
                             <Box display={'flex'} style={{justifyContent:'center'}}>
-                                <Grid style={{width:'235px', height:'300px'}}>
+                                <Grid sx={stylesComponents.contenerdorImagenProducto}>
                                     <img src={product10} alt="" width={'100%'} height={'100%'} style={{ objectFit: 'cover'}}/>
                                 </Grid>
                             </Box>
@@ -389,7 +389,7 @@ function Home(){
                         </Grid>
                         <Grid item sm={12}  md={4} lg={3} sx={stylesComponents.contenedorProducto}>
                             <Box display={'flex'} style={{justifyContent:'center'}}>
-                                <Grid style={{width:'235px', height:'300px'}}>
+                                <Grid sx={stylesComponents.contenerdorImagenProducto}>
                                     <img src={product11} alt="" width={'100%'} height={'100%'} style={{ objectFit: 'cover'}}/>
                                 </Grid>
                             </Box>
@@ -406,7 +406,7 @@ function Home(){
 
                         <Grid item sm={12}  md={4} lg={3} sx={stylesComponents.contenedorProducto}>
                             <Box display={'flex'} style={{justifyContent:'center'}}>
-                                <Grid style={{width:'235px', height:'300px'}}>
+                                <Grid sx={stylesComponents.contenerdorImagenProducto}>
                                     <img src={product1} alt="" width={'100%'} height={'100%'} style={{ objectFit: 'cover'}}/>
                                 </Grid>
                             </Box>
@@ -422,7 +422,7 @@ function Home(){
                         </Grid>
                         <Grid item sm={12}  md={4} lg={3} sx={stylesComponents.contenedorProducto}>
                                 <Box display={'flex'} style={{justifyContent:'center'}}>
-                                    <Grid style={{width:'235px', height:'300px'}}>
+                                    <Grid sx={stylesComponents.contenerdorImagenProducto}>
                                         <img src={product2} alt="" width={'100%'} height={'100%'} style={{ objectFit: 'cover'}}/>
                                     </Grid>
                                 </Box>
@@ -438,7 +438,7 @@ function Home(){
                         </Grid>
                         <Grid item sm={12}  md={4} lg={3} sx={stylesComponents.contenedorProducto}>
                             <Box display={'flex'} style={{justifyContent:'center'}}>
-                                <Grid style={{width:'235px', height:'300px'}}>
+                                <Grid sx={stylesComponents.contenerdorImagenProducto}>
                                     <img src={product3} alt="" width={'100%'} height={'100%'} style={{ objectFit: 'cover'}}/>
                                 </Grid>
                             </Box>
@@ -454,7 +454,7 @@ function Home(){
                         </Grid>
                         <Grid item sm={12}  md={4} lg={3} sx={stylesComponents.contenedorProducto}>
                             <Box display={'flex'} style={{justifyContent:'center'}}>
-                                <Grid style={{width:'235px', height:'300px'}}>
+                                <Grid sx={stylesComponents.contenerdorImagenProducto}>
                                     <img src={product4} alt="" width={'100%'} height={'100%'} style={{ objectFit: 'cover'}}/>
                                 </Grid>
                             </Box>
@@ -473,7 +473,7 @@ function Home(){
                         </Grid>
                         <Grid item sm={12}  md={4} lg={3} sx={stylesComponents.contenedorProducto}>
                             <Box display={'flex'} style={{justifyContent:'center'}}>
-                                <Grid style={{width:'235px', height:'300px'}}>
+                                <Grid sx={stylesComponents.contenerdorImagenProducto}>
                                     <img src={product5} alt="" width={'100%'} height={'100%'} style={{ objectFit: 'cover'}}/>
                                 </Grid>
                             </Box>
@@ -489,7 +489,7 @@ function Home(){
                         </Grid>
                         <Grid item sm={12}  md={4} lg={3} sx={stylesComponents.contenedorProducto}>
                             <Box display={'flex'} style={{justifyContent:'center'}}>
-                                <Grid style={{width:'235px', height:'300px'}}>
+                                <Grid sx={stylesComponents.contenerdorImagenProducto}>
                                     <img src={product6} alt="" width={'100%'} height={'100%'} style={{ objectFit: 'cover'}}/>
                                 </Grid>
                             </Box>
@@ -505,7 +505,7 @@ function Home(){
                         </Grid>
                         <Grid item sm={12}  md={4} lg={3} sx={stylesComponents.contenedorProducto}>
                             <Box display={'flex'} style={{justifyContent:'center'}}>
-                                <Grid style={{width:'235px', height:'300px'}}>
+                                <Grid sx={stylesComponents.contenerdorImagenProducto}>
                                     <img src={product7} alt="" width={'100%'} height={'100%'} style={{ objectFit: 'cover'}}/>
                                 </Grid>
                             </Box>
@@ -521,7 +521,7 @@ function Home(){
                         </Grid>
                         <Grid item sm={12}  md={4} lg={3} sx={stylesComponents.contenedorProducto}>
                             <Box display={'flex'} style={{justifyContent:'center'}}>
-                                <Grid style={{width:'235px', height:'300px'}}>
+                                <Grid sx={stylesComponents.contenerdorImagenProducto}>
                                     <img src={product8} alt="" width={'100%'} height={'100%'} style={{ objectFit: 'cover'}}/>
                                 </Grid>
                             </Box>
@@ -540,7 +540,7 @@ function Home(){
                         </Grid>
                         <Grid item sm={12}  md={4} lg={3} sx={stylesComponents.contenedorProducto}>
                             <Box display={'flex'} style={{justifyContent:'center'}}>
-                                <Grid style={{width:'235px', height:'300px'}}>
+                                <Grid sx={stylesComponents.contenerdorImagenProducto}>
                                     <img src={product9} alt="" width={'100%'} height={'100%'} style={{ objectFit: 'cover'}}/>
                                 </Grid>
                             </Box>
@@ -556,7 +556,7 @@ function Home(){
                         </Grid>
                         <Grid item sm={12}  md={4} lg={3} sx={stylesComponents.contenedorProducto}>
                             <Box display={'flex'} style={{justifyContent:'center'}}>
-                                <Grid style={{width:'235px', height:'300px'}}>
+                                <Grid sx={stylesComponents.contenerdorImagenProducto}>
                                     <img src={product10} alt="" width={'100%'} height={'100%'} style={{ objectFit: 'cover'}}/>
                                 </Grid>
                             </Box>
@@ -572,7 +572,7 @@ function Home(){
                         </Grid>
                         <Grid item sm={12}  md={4} lg={3} sx={stylesComponents.contenedorProducto}>
                             <Box display={'flex'} style={{justifyContent:'center'}}>
-                                <Grid style={{width:'235px', height:'300px'}}>
+                                <Grid sx={stylesComponents.contenerdorImagenProducto}>
                                     <img src={product11} alt="" width={'100%'} height={'100%'} style={{ objectFit: 'cover'}}/>
                                 </Grid>
                             </Box>
@@ -590,7 +590,7 @@ function Home(){
 
                         <Grid item sm={12}  md={4} lg={3} sx={stylesComponents.contenedorProducto}>
                             <Box display={'flex'} style={{justifyContent:'center'}}>
-                                <Grid style={{width:'235px', height:'300px'}}>
+                                <Grid sx={stylesComponents.contenerdorImagenProducto}>
                                     <img src={product1} alt="" width={'100%'} height={'100%'} style={{ objectFit: 'cover'}}/>
                                 </Grid>
                             </Box>
@@ -606,7 +606,7 @@ function Home(){
                         </Grid>
                         <Grid item sm={12}  md={4} lg={3} sx={stylesComponents.contenedorProducto}>
                                 <Box display={'flex'} style={{justifyContent:'center'}}>
-                                    <Grid style={{width:'235px', height:'300px'}}>
+                                    <Grid sx={stylesComponents.contenerdorImagenProducto}>
                                         <img src={product2} alt="" width={'100%'} height={'100%'} style={{ objectFit: 'cover'}}/>
                                     </Grid>
                                 </Box>
@@ -622,7 +622,7 @@ function Home(){
                         </Grid>
                         <Grid item sm={12}  md={4} lg={3} sx={stylesComponents.contenedorProducto}>
                             <Box display={'flex'} style={{justifyContent:'center'}}>
-                                <Grid style={{width:'235px', height:'300px'}}>
+                                <Grid sx={stylesComponents.contenerdorImagenProducto}>
                                     <img src={product3} alt="" width={'100%'} height={'100%'} style={{ objectFit: 'cover'}}/>
                                 </Grid>
                             </Box>
@@ -638,7 +638,7 @@ function Home(){
                         </Grid>
                         <Grid item sm={12}  md={4} lg={3} sx={stylesComponents.contenedorProducto}>
                             <Box display={'flex'} style={{justifyContent:'center'}}>
-                                <Grid style={{width:'235px', height:'300px'}}>
+                                <Grid sx={stylesComponents.contenerdorImagenProducto}>
                                     <img src={product4} alt="" width={'100%'} height={'100%'} style={{ objectFit: 'cover'}}/>
                                 </Grid>
                             </Box>
@@ -657,7 +657,7 @@ function Home(){
                         </Grid>
                         <Grid item sm={12}  md={4} lg={3} sx={stylesComponents.contenedorProducto}>
                             <Box display={'flex'} style={{justifyContent:'center'}}>
-                                <Grid style={{width:'235px', height:'300px'}}>
+                                <Grid sx={stylesComponents.contenerdorImagenProducto}>
                                     <img src={product5} alt="" width={'100%'} height={'100%'} style={{ objectFit: 'cover'}}/>
                                 </Grid>
                             </Box>
@@ -673,7 +673,7 @@ function Home(){
                         </Grid>
                         <Grid item sm={12}  md={4} lg={3} sx={stylesComponents.contenedorProducto}>
                             <Box display={'flex'} style={{justifyContent:'center'}}>
-                                <Grid style={{width:'235px', height:'300px'}}>
+                                <Grid sx={stylesComponents.contenerdorImagenProducto}>
                                     <img src={product6} alt="" width={'100%'} height={'100%'} style={{ objectFit: 'cover'}}/>
                                 </Grid>
                             </Box>
@@ -689,7 +689,7 @@ function Home(){
                         </Grid>
                         <Grid item sm={12}  md={4} lg={3} sx={stylesComponents.contenedorProducto}>
                             <Box display={'flex'} style={{justifyContent:'center'}}>
-                                <Grid style={{width:'235px', height:'300px'}}>
+                                <Grid sx={stylesComponents.contenerdorImagenProducto}>
                                     <img src={product7} alt="" width={'100%'} height={'100%'} style={{ objectFit: 'cover'}}/>
                                 </Grid>
                             </Box>
@@ -705,7 +705,7 @@ function Home(){
                         </Grid>
                         <Grid item sm={12}  md={4} lg={3} sx={stylesComponents.contenedorProducto}>
                             <Box display={'flex'} style={{justifyContent:'center'}}>
-                                <Grid style={{width:'235px', height:'300px'}}>
+                                <Grid sx={stylesComponents.contenerdorImagenProducto}>
                                     <img src={product8} alt="" width={'100%'} height={'100%'} style={{ objectFit: 'cover'}}/>
                                 </Grid>
                             </Box>
@@ -724,7 +724,7 @@ function Home(){
                         </Grid>
                         <Grid item sm={12}  md={4} lg={3} sx={stylesComponents.contenedorProducto}>
                             <Box display={'flex'} style={{justifyContent:'center'}}>
-                                <Grid style={{width:'235px', height:'300px'}}>
+                                <Grid sx={stylesComponents.contenerdorImagenProducto}>
                                     <img src={product9} alt="" width={'100%'} height={'100%'} style={{ objectFit: 'cover'}}/>
                                 </Grid>
                             </Box>
@@ -740,7 +740,7 @@ function Home(){
                         </Grid>
                         <Grid item sm={12}  md={4} lg={3} sx={stylesComponents.contenedorProducto}>
                             <Box display={'flex'} style={{justifyContent:'center'}}>
-                                <Grid style={{width:'235px', height:'300px'}}>
+                                <Grid sx={stylesComponents.contenerdorImagenProducto}>
                                     <img src={product10} alt="" width={'100%'} height={'100%'} style={{ objectFit: 'cover'}}/>
                                 </Grid>
                             </Box>
@@ -756,7 +756,7 @@ function Home(){
                         </Grid>
                         <Grid item sm={12}  md={4} lg={3} sx={stylesComponents.contenedorProducto}>
                             <Box display={'flex'} style={{justifyContent:'center'}}>
-                                <Grid style={{width:'235px', height:'300px'}}>
+                                <Grid sx={stylesComponents.contenerdorImagenProducto}>
                                     <img src={product11} alt="" width={'100%'} height={'100%'} style={{ objectFit: 'cover'}}/>
                                 </Grid>
                             </Box>
@@ -775,7 +775,7 @@ function Home(){
 
                         <Grid item sm={12}  md={4} lg={3} sx={stylesComponents.contenedorProducto}>
                             <Box display={'flex'} style={{justifyContent:'center'}}>
-                                <Grid style={{width:'235px', height:'300px'}}>
+                                <Grid sx={stylesComponents.contenerdorImagenProducto}>
                                     <img src={product1} alt="" width={'100%'} height={'100%'} style={{ objectFit: 'cover'}}/>
                                 </Grid>
                             </Box>
@@ -791,7 +791,7 @@ function Home(){
                         </Grid>
                         <Grid item sm={12}  md={4} lg={3} sx={stylesComponents.contenedorProducto}>
                                 <Box display={'flex'} style={{justifyContent:'center'}}>
-                                    <Grid style={{width:'235px', height:'300px'}}>
+                                    <Grid sx={stylesComponents.contenerdorImagenProducto}>
                                         <img src={product2} alt="" width={'100%'} height={'100%'} style={{ objectFit: 'cover'}}/>
                                     </Grid>
                                 </Box>
@@ -807,7 +807,7 @@ function Home(){
                         </Grid>
                         <Grid item sm={12}  md={4} lg={3} sx={stylesComponents.contenedorProducto}>
                             <Box display={'flex'} style={{justifyContent:'center'}}>
-                                <Grid style={{width:'235px', height:'300px'}}>
+                                <Grid sx={stylesComponents.contenerdorImagenProducto}>
                                     <img src={product3} alt="" width={'100%'} height={'100%'} style={{ objectFit: 'cover'}}/>
                                 </Grid>
                             </Box>
@@ -823,7 +823,7 @@ function Home(){
                         </Grid>
                         <Grid item sm={12}  md={4} lg={3} sx={stylesComponents.contenedorProducto}>
                             <Box display={'flex'} style={{justifyContent:'center'}}>
-                                <Grid style={{width:'235px', height:'300px'}}>
+                                <Grid sx={stylesComponents.contenerdorImagenProducto}>
                                     <img src={product4} alt="" width={'100%'} height={'100%'} style={{ objectFit: 'cover'}}/>
                                 </Grid>
                             </Box>
@@ -842,7 +842,7 @@ function Home(){
                         </Grid>
                         <Grid item sm={12}  md={4} lg={3} sx={stylesComponents.contenedorProducto}>
                             <Box display={'flex'} style={{justifyContent:'center'}}>
-                                <Grid style={{width:'235px', height:'300px'}}>
+                                <Grid sx={stylesComponents.contenerdorImagenProducto}>
                                     <img src={product5} alt="" width={'100%'} height={'100%'} style={{ objectFit: 'cover'}}/>
                                 </Grid>
                             </Box>
@@ -858,7 +858,7 @@ function Home(){
                         </Grid>
                         <Grid item sm={12}  md={4} lg={3} sx={stylesComponents.contenedorProducto}>
                             <Box display={'flex'} style={{justifyContent:'center'}}>
-                                <Grid style={{width:'235px', height:'300px'}}>
+                                <Grid sx={stylesComponents.contenerdorImagenProducto}>
                                     <img src={product6} alt="" width={'100%'} height={'100%'} style={{ objectFit: 'cover'}}/>
                                 </Grid>
                             </Box>
@@ -874,7 +874,7 @@ function Home(){
                         </Grid>
                         <Grid item sm={12}  md={4} lg={3} sx={stylesComponents.contenedorProducto}>
                             <Box display={'flex'} style={{justifyContent:'center'}}>
-                                <Grid style={{width:'235px', height:'300px'}}>
+                                <Grid sx={stylesComponents.contenerdorImagenProducto}>
                                     <img src={product7} alt="" width={'100%'} height={'100%'} style={{ objectFit: 'cover'}}/>
                                 </Grid>
                             </Box>
@@ -890,7 +890,7 @@ function Home(){
                         </Grid>
                         <Grid item sm={12}  md={4} lg={3} sx={stylesComponents.contenedorProducto}>
                             <Box display={'flex'} style={{justifyContent:'center'}}>
-                                <Grid style={{width:'235px', height:'300px'}}>
+                                <Grid sx={stylesComponents.contenerdorImagenProducto}>
                                     <img src={product8} alt="" width={'100%'} height={'100%'} style={{ objectFit: 'cover'}}/>
                                 </Grid>
                             </Box>
@@ -909,7 +909,7 @@ function Home(){
                         </Grid>
                         <Grid item sm={12}  md={4} lg={3} sx={stylesComponents.contenedorProducto}>
                             <Box display={'flex'} style={{justifyContent:'center'}}>
-                                <Grid style={{width:'235px', height:'300px'}}>
+                                <Grid sx={stylesComponents.contenerdorImagenProducto}>
                                     <img src={product9} alt="" width={'100%'} height={'100%'} style={{ objectFit: 'cover'}}/>
                                 </Grid>
                             </Box>
@@ -925,7 +925,7 @@ function Home(){
                         </Grid>
                         <Grid item sm={12}  md={4} lg={3} sx={stylesComponents.contenedorProducto}>
                             <Box display={'flex'} style={{justifyContent:'center'}}>
-                                <Grid style={{width:'235px', height:'300px'}}>
+                                <Grid sx={stylesComponents.contenerdorImagenProducto}>
                                     <img src={product10} alt="" width={'100%'} height={'100%'} style={{ objectFit: 'cover'}}/>
                                 </Grid>
                             </Box>
@@ -939,11 +939,9 @@ function Home(){
                                 </Button>
                         </Box>
                         </Grid>
-                        <Grid item sm={12} md={4} lg={3}
-                        sx={stylesComponents.contenedorProducto}
-                        >
+                         <Grid item sm={12} md={4} lg={3} sx={stylesComponents.contenedorProducto}>
                             <Box display={'flex'} style={{justifyContent:'center'}}>
-                                <Grid style={{width:'235px', height:'300px'}}>
+                                <Grid sx={stylesComponents.contenerdorImagenProducto}>
                                     <img src={product11} alt="" width={'100%'} height={'100%'} style={{ objectFit: 'cover'}}/>
                                 </Grid>
                             </Box>
