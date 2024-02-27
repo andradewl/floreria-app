@@ -16,12 +16,8 @@ import FormDetaFac from "./pages/User/FormDetaFac";
 function App() {
 
   return (
-
-
     <BrowserRouter>
-
       <NavBar/>
-
       <Routes>
         <Route path="/" Component={Home} />
         <Route path="/Productos" Component={Productos}/>

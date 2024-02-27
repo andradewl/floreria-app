@@ -59,9 +59,7 @@ const Usuario = () => {
         </Tabs>
       </Grid>
       <Grid item xs={9} justifyContent="center">
-        
           {renderContent()}
-        
       </Grid>
     </Grid>
   );
