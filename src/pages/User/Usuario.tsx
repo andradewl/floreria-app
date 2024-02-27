@@ -12,7 +12,7 @@ import FormDetaFac from './FormDetaFac';
 const Usuario = () => {
   const [tabValue, setTabValue] = useState<number>(0);
 
-  const handleChange = (_: React.ChangeEvent<{}>, newValue: number) => {
+  const handleChange = (_: React.ChangeEvent<object>, newValue: number) => {
     setTabValue(newValue);
   };
 
