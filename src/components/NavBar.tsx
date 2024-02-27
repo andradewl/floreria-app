@@ -9,13 +9,14 @@ import MenuIcon from '@mui/icons-material/Menu';
 import Container from '@mui/material/Container';
 import Button from '@mui/material/Button';
 import MenuItem from '@mui/material/MenuItem';
-import Logo from '../assets/LOGO.webp'
+import Logo from '../assets/logo/LOGO.png'
 import SearchIcon from '@mui/icons-material/Search';
 import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
 import Person2Icon from '@mui/icons-material/Person2';
 import '../styles/estilosCss.css'
 import { Link  } from 'react-router-dom';
 import { Grid } from '@mui/material';
+import { stylesComponents } from '../styles/stylesComponentes';
 
 
 const settings = ['Profile', 'Account', 'Dashboard', 'Logout'];
@@ -38,15 +39,9 @@ function ResponsiveAppBar() {
   };
 
   return (
-    <AppBar position="sticky" sx={{ backgroundColor: '#ffff', boxShadow:'none', padding:'15px 30px 15px 30px' }}>
+    <AppBar  sx={stylesComponents.appBar}>
       <Container maxWidth="xl">
-        <Toolbar disableGutters
-
-        sx={{
-          display:'flex',
-          justifyContent: 'space-around',
-        }}
-        >
+        <Toolbar disableGutters sx={stylesComponents.toolbar}>
           {/* Logo para escritorio */}
           <Grid
             sx={{
@@ -64,7 +59,7 @@ function ResponsiveAppBar() {
 
 
           {/* Mennu movil */}
-          <Box  sx={{  display: { xs: 'flex', md: 'none' }}}>
+          <Box  sx={stylesComponents.boxMenuResponsive}>
             <IconButton
               size="large"
               aria-label="account of current user"
@@ -89,9 +84,7 @@ function ResponsiveAppBar() {
               }}
               open={Boolean(anchorElNav)}
               onClose={handleCloseNavMenu}
-              sx={{
-                display: { xs: 'block', md: 'none' },
-              }}
+              sx={stylesComponents.MenuResponsive}
             >
               <MenuItem
                 component={Link}
@@ -123,13 +116,13 @@ function ResponsiveAppBar() {
 
           {/* Mennu escritrio */}
 
-          <Box sx={{display: { xs: 'none', md: 'flex' }}}>
+          <Box sx={stylesComponents.boxMenuDesk}>
             <Button
                 component={Link}
                 to="/"
                 variant="text"
                 onClick={handleCloseNavMenu}
-                sx={{  m: 2, color: '#B42981', display: 'block', background:'#ffff', fontSize:'15px' }}
+                sx={stylesComponents.navigationButton}
               >
                 Inicio
             </Button>
@@ -138,7 +131,7 @@ function ResponsiveAppBar() {
                 to="/Productos"
                 variant="text"
                 onClick={handleCloseNavMenu}
-                sx={{ m: 2, color: '#B42981', display: 'block', fontSize:'15px'}}
+                sx={stylesComponents.navigationButton}
               >
                 Productos
             </Button>
@@ -147,7 +140,7 @@ function ResponsiveAppBar() {
                 to="/Nosotros"
                 variant="text"
                 onClick={handleCloseNavMenu}
-                sx={{ m: 2, color: '#B42981', display: 'block', fontSize:'15px'}}
+                sx={stylesComponents.navigationButton}
               >
                 Nosotros
             </Button>
@@ -156,31 +149,25 @@ function ResponsiveAppBar() {
                 to="/Contacto"
                 variant="text"
                 onClick={handleCloseNavMenu}
-                sx={{ m: 2, color: '#B42981', display: 'block', fontSize:'15px'}}
+                sx={stylesComponents.navigationButton}
               >
                 Contacto
             </Button>
           </Box>
 
-          <Grid
-            sx={{
-              width: 150,
-              display: { xs: 'flex', md: 'none' },
-              justifyContent:{md:'center'}
-
-            }}
-          >
+          {/* Logo para movil */}
+          <Grid sx={stylesComponents.logoResponsive} >
             <img
-            src={Logo}
-            alt="Logo"
-            style={{ width: '100%' }}
-          />
+              src={Logo}
+              alt="Logo"
+              style={{ width: '100%' }}
+            />
           </Grid>
 
           <Box sx={{ flexGrow: 0 }}>
-                <SearchIcon color="disabled" sx={{padding:'3px', fontSize: 30}}/>
-                <ShoppingCartIcon color="disabled" sx={{padding:'3px', fontSize: 30}}/>
-                <Person2Icon color="disabled" sx={{padding:'3px', fontSize: 30}}/>
+                <SearchIcon color="disabled" sx={stylesComponents.iconsMovile}/>
+                <ShoppingCartIcon color="disabled" sx={stylesComponents.iconsMovile}/>
+                <Person2Icon color="disabled" sx={stylesComponents.iconsMovile}/>
             <Menu
               sx={{ mt: '45px'}}
               id="menu-appbar"

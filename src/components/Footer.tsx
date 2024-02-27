@@ -5,18 +5,13 @@ import Grid from "@mui/material/Grid";
 import { Facebook, Instagram, Twitter } from "@mui/icons-material";
 import { Box } from "@mui/material";
 import Logo from '../assets/LOGO.webp'
+import { stylesComponents } from "../styles/stylesComponentes";
 
 
 function Footer(){
     return(
         <Box
-        component="footer"
-        sx={{
-            backgroundColor: '#dbb2da',
-            padding:'20px',
-            marginTop:'5px'
-            }}
-        >
+        component="footer" sx={stylesComponents.BoxFooter }>
             <Container maxWidth="lg">
             <Grid container spacing={5}>
                 <Grid item xs={12} sm={4}>
