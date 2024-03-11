@@ -12,6 +12,8 @@ import EstatusEnvio from "./pages/User/EstatusEnvio"
 import Ubicaciones from "./pages/User/Ubicaciones"
 import FormUbicaciones from "./pages/User/FormUbicaciones";
 import FormDetaFac from "./pages/User/FormDetaFac";
+import Login from "./pages/Login";
+import SigIn from "./pages/SigIn";
 
 function App() {
 
@@ -28,6 +30,8 @@ function App() {
         <Route path="/Ubicaciones" Component={Ubicaciones}/>
         <Route path="/FormUbicaciones" Component={FormUbicaciones}/>
         <Route path="/FormDetaFac" Component={FormDetaFac}/>
+        <Route path="/Login" Component={Login}/>
+        <Route path="/SigIn" Component={SigIn}/>
       </Routes>
 
       <Footer/>

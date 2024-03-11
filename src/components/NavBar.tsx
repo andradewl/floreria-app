@@ -160,7 +160,9 @@ function ResponsiveAppBar() {
           <Box sx={{ flexGrow: 0 }}>
                 <SearchIcon color="disabled" sx={stylesComponents.iconsMovile}/>
                 <ShoppingCartIcon color="disabled" sx={stylesComponents.iconsMovile}/>
-                <Person2Icon color="disabled" sx={stylesComponents.iconsMovile}/>
+                <Link to="/Usuario" style={{ textDecoration: 'none', color: 'inherit' }}>
+                    <Person2Icon color="disabled" sx={{padding:'3px', fontSize: 30}}/>
+                </Link>
             <Menu
               sx={{ mt: '45px'}}
               id="menu-appbar"
