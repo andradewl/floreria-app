@@ -68,7 +68,7 @@ function ProductId(){
 
     const [date, setDate] = React.useState<Dayjs | null>(dayjs());
     const [hora, sethora] = React.useState('');
-    const [productoExtra, setproductoExtra] = React.useState(null);
+    const [productoExtra, setproductoExtra] = React.useState({nombreProductoExtra:null, precioProductoExtra:null});
     const [dedicatoria, setDedicatoria] = React.useState(null);
 
     const [visibleProductoExtra, setvisibleProductoExtra] = React.useState(false) //muestra los productos extras
@@ -120,7 +120,7 @@ function ProductId(){
         setActiveStep((prevActiveStep) => prevActiveStep - 1);
     };
 
-    const handleDateValidation = (newDate: React.SetStateAction<dayjs.Dayjs | null>) => {
+    const handleDateValidation = (newDate) => {
         setDate(newDate);
         setVisibleHorarios(true)
         const formattedNewDate = newDate.format('DD-MM-YYYY');
@@ -200,7 +200,7 @@ function ProductId(){
     }
 
     const eliminarProducto = () =>{
-        setproductoExtra(undefined)
+        setproductoExtra({nombreProductoExtra:null, precioProductoExtra:null})
         setvisibleProductoExtra(false)
         setisProductoExtraEmpty(true)
         setChangeProductExtra(true)
