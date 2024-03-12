@@ -60,7 +60,19 @@ function ProductId(){
     id
     const theme = useTheme();
     const [activeStep, setActiveStep] = React.useState(0);
-    const [items, setItems] = React.useState([]);
+    const [items, setItems] = React.useState(
+        {
+            nombre: 'nombre',
+            precio:'precio',
+            fecha:dayjs().format('DD-MM-YYYY'),
+            hora: dayjs().format('HH:mm:ss'),
+            productoExtra:{
+                nombreProductoExtra: 'Sin producto Extra',
+                precioProductoExtra: 'Sin producto Extra'
+            },
+            dedicatoria: 'dedicatoria',
+        }
+    );
     const [visibleHora1, setVisibleHora1] = React.useState(true)
     const [visibleHora2, setVisibleHora2] = React.useState(true)
     const [visibleHora3, setVisibleHora3] = React.useState(true)
@@ -68,8 +80,10 @@ function ProductId(){
 
     const [date, setDate] = React.useState(dayjs());
     const [hora, sethora] = React.useState('');
-    const [productoExtra, setproductoExtra] = React.useState({nombreProductoExtra:null, precioProductoExtra:null});
-    const [dedicatoria, setDedicatoria] = React.useState(null);
+    const [productoExtra, setproductoExtra] = React.useState({
+        nombreProductoExtra: 'Sin producto extra',
+        precioProductoExtra: 0
+    });    const [dedicatoria, setDedicatoria] = React.useState(null);
 
     const [visibleProductoExtra, setvisibleProductoExtra] = React.useState(false) //muestra los productos extras
     const [isProductoExtraEmpty, setisProductoExtraEmpty] = React.useState(true) //comprueba si hay producto extra ya seleccionado
@@ -120,27 +134,26 @@ function ProductId(){
         setActiveStep((prevActiveStep) => prevActiveStep - 1);
     };
 
-    const handleDateValidation = (newDate: React.SetStateAction<dayjs.Dayjs | null>) => {
+    const handleDateValidation = (newDate) => {
         setDate(newDate);
-        setVisibleHorarios(true)
+        setVisibleHorarios(true);
+
         const formattedNewDate = newDate.format('DD-MM-YYYY');
         const today = dayjs().format('DD-MM-YYYY');
 
-        if(formattedNewDate === today){
-
+        if (formattedNewDate === today) {
             const horaEstablecida1 = dayjs('10:00:00', 'HH:mm:ss');
             const horaEstablecida2 = dayjs('12:00:00', 'HH:mm:ss');
             const horaEstablecida3 = dayjs('18:00:00', 'HH:mm:ss');
             const horaActual = dayjs();
 
-            horaActual.isBefore(horaEstablecida1) ? setVisibleHora1(true) : setVisibleHora1(false)
-            horaActual.isBefore(horaEstablecida2) ? setVisibleHora2(true) : setVisibleHora2(false)
-            horaActual.isBefore(horaEstablecida3) ? setVisibleHora3(true) : setVisibleHora3(false)
-
-        }else{
-            setVisibleHora1(true)
-            setVisibleHora2(true)
-            setVisibleHora3(true)
+            setVisibleHora1(horaActual.isBefore(horaEstablecida1));
+            setVisibleHora2(horaActual.isBefore(horaEstablecida2));
+            setVisibleHora3(horaActual.isBefore(horaEstablecida3));
+        } else {
+            setVisibleHora1(true);
+            setVisibleHora2(true);
+            setVisibleHora3(true);
         }
     };
 
@@ -161,12 +174,15 @@ function ProductId(){
 
     const guardarProductoExtra = (nombre: string, precio: number)=>{
 
-        const newProductoExtra = {
+        // const newProductoExtra = {
+        //     nombreProductoExtra: nombre,
+        //     precioProductoExtra: precio
+        // };
+
+        setproductoExtra({
             nombreProductoExtra: nombre,
             precioProductoExtra: precio
-        };
-
-        setproductoExtra(newProductoExtra);
+        });
         setvisibleProductoExtra(false)
         setisProductoExtraEmpty(false)
         setChangeProductExtra(false)
@@ -200,7 +216,7 @@ function ProductId(){
     }
 
     const eliminarProducto = () =>{
-        setproductoExtra({nombreProductoExtra:null, precioProductoExtra:null})
+        setproductoExtra({nombreProductoExtra:'Sin producto extra', precioProductoExtra:0})
         setvisibleProductoExtra(false)
         setisProductoExtraEmpty(true)
         setChangeProductExtra(true)
@@ -388,9 +404,9 @@ function ProductId(){
                                     label="Mensaje"
                                     variant="outlined"
                                     rows={4}
-
                                     multiline
                                     fullWidth
+                                    value={dedicatoria} // You can add this line to display the current value
                                     onChange={handleChangeDedicatoria}
                                 />
                             </Grid>
