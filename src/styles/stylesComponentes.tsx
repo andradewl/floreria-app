@@ -50,7 +50,8 @@ export const stylesComponents = {
     },
     iconsMovile:{
         padding:'3px',
-        fontSize: 30
+        fontSize: 30,
+        color:'blue'
     },
 
     //------------------------------Footer------------------------------//
@@ -109,7 +110,6 @@ export const stylesComponents = {
         padding:'10px',
         width:'200px'
     },
-
     //------------------------------Contenedor ocasiones------------------------------//
 
     megaContenedorOcasiones:{
@@ -199,7 +199,7 @@ export const stylesComponents = {
             xs:2,
             sm:5,
             md:2,
-            xl:0
+            xl:1
         },
     },
     contenerdorImagenProducto:{
@@ -236,9 +236,13 @@ export const stylesComponents = {
         borderStyle:'none',
         borderRadius:'50px',
         fontFamily:'Archivo Black, sans-serif',
+        fontSize:{
+            md:'12px',
+            xs:'9px'
+        },
         padding:'6px',
         width:{
-            xs:'215px',
+            xs:'100%',
             md:'250px'
         },
     },

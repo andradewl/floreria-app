@@ -1,65 +1,73 @@
 
-import product1 from '../assets/productos/productOne.jpg'
-import product2 from '../assets/productos/productTwo.webp'
-
-import product3 from '../assets/productos/productThree.jpg'
-import product4 from '../assets/productos/productFor.webp'
-import product5 from '../assets/productos/productFive.jpg'
-import product6 from '../assets/productos/productSix.jpg'
-import product7 from '../assets/productos/productsEVEN.jpg'
-import product8 from '../assets/productos/productEight.webp'
-import product9 from '../assets/productos/productnNain.webp'
-import product10 from '../assets/productos/productTen.jpg'
-import product11 from '../assets/productos/productEleven.webp'
-import { Box, Button, Grid, Typography, InputLabel, MenuItem, FormControl, FormGroup, FormControlLabel, Checkbox } from '@mui/material'
-import { stylesComponents } from '../styles/stylesComponentes'
+import product1 from '../../assets/productos/productOne.jpg'
+import product2 from '../../assets/productos/productTwo.webp'
+import product3 from '../../assets/productos/productThree.jpg'
+import product4 from '../../assets/productos/productFor.webp'
+import product5 from '../../assets/productos/productFive.jpg'
+import product6 from '../../assets/productos/productSix.jpg'
+import product7 from '../../assets/productos/productsEVEN.jpg'
+import product8 from '../../assets/productos/productEight.webp'
+import product9 from '../../assets/productos/productnNain.webp'
+import product10 from '../../assets/productos/productTen.jpg'
+import product11 from '../../assets/productos/productEleven.webp'
+import { Box, Button, Grid, Typography, MenuItem, FormControl, FormGroup, FormControlLabel, Checkbox } from '@mui/material'
+import { stylesComponents } from '../../styles/stylesComponentes'
 import Select, { SelectChangeEvent } from '@mui/material/Select';
 import React from 'react'
+import { Link } from 'react-router-dom'
 
 
 function Productos(){
 
-    const [age, setAge] = React.useState('')
-    const handleChange = (event: SelectChangeEvent) => {
-        setAge(event.target.value);
+    const [precio, setPrecio] = React.useState('')
+    const [calificacion, setCalificacion] = React.useState('')
+
+    const handleChangePrecio = (event: SelectChangeEvent) => {
+        setPrecio(event.target.value);
     };
+    const handleChangeCalificacion = (event: SelectChangeEvent) => {
+        setCalificacion(event.target.value);
+    };
+
 
     return(
         <>
             <Grid container>
                 <Grid item xs={12} sx={stylesComponents.positionOfFilter}>
-                    <Box sx={stylesComponents.espaciadoOrdenFiltroTitulo}>Ordenar por</Box>
                     <Box sx={stylesComponents.espaciadoOrdenFiltro}>
-                        <FormControl sx={{ minWidth: 120 }} size="small">
-                            <InputLabel sx={{color:'#fffff'}}>Ordenar por precio</InputLabel>
+                        <FormControl sx={{ minWidth: 'auto' }}>
                             <Select
-                                id="demo-select-small"
-                                value={age}
-                                label="Precio"
-                                onChange={handleChange}
-                                sx={stylesComponents.botonFiltro}
-                            >
-                                <MenuItem value={'mayor'}>Mayor</MenuItem>
+                            value={precio}
+                            onChange={handleChangePrecio}
+                            displayEmpty
+                            inputProps={{ 'aria-label': 'Without label' }}
+                            sx={stylesComponents.botonFiltro}>
+                                <MenuItem value="">
+                                    <em>Ordenar por Precio</em>
+                                </MenuItem>
+                                <MenuItem value={'mayor'} sx={{ fontize:'20px'}}>Mayor</MenuItem>
                                 <MenuItem value={'menor'}>Menor</MenuItem>
                             </Select>
                         </FormControl>
+
                     </Box>
                     <Box sx={stylesComponents.espaciadoOrdenFiltro}>
-                        <FormControl sx={{ minWidth: 120 }} size="small">
-                            <InputLabel sx={{color:'#fffff'}}>Ordenar por calificacion</InputLabel>
+                        <FormControl sx={{ minWidth: 'auto' }}>
                             <Select
-                                id="demo-select-small"
-                                value={age}
-                                label="Calificasion"
-                                onChange={handleChange}
-                                sx={stylesComponents.botonFiltro}
+                            value={calificacion}
+                            onChange={handleChangeCalificacion}
+                            displayEmpty
+                            inputProps={{ 'aria-label': 'Without label' }}
+                            sx={stylesComponents.botonFiltro}
                             >
+                                <MenuItem value="">
+                                    <em>Ordenar por calificacion</em>
+                                </MenuItem>
                                 <MenuItem value={5}>5 estrellas</MenuItem>
                                 <MenuItem value={4}>4 estrellas</MenuItem>
                                 <MenuItem value={3}>3 estrellas</MenuItem>
                                 <MenuItem value={2}>2 estrellas</MenuItem>
                                 <MenuItem value={1}>1 estrellas</MenuItem>
-
                             </Select>
                         </FormControl>
                     </Box>
@@ -111,7 +119,6 @@ function Productos(){
                                 </Grid>
                             </Grid>
                             <Grid>
-
                             </Grid>
                         </Grid>
                         <Grid item md={10} xs={8}>
@@ -127,7 +134,9 @@ function Productos(){
                                         <Typography variant="h6" color="initial" fontFamily={'Archivo Black, sans-serif'} fontSize={16} textAlign={'start'} style={{color:'#404040', textAlign:'center' }}>$100.00</Typography>
                                     </Box>
                                     <Box >
-                                        <Button  sx={stylesComponents.button}>
+                                        <Button sx={stylesComponents.button} component={Link}
+                                            to="/Producto/1"
+                                        >
                                             Ver
                                         </Button>
                                     </Box>
@@ -143,14 +152,17 @@ function Productos(){
                                             <Typography variant="h6" color="initial" fontFamily={'Archivo Black, sans-serif'} fontSize={16} textAlign={'start'} style={{color:'#404040', textAlign:'center' }}>$100.00</Typography>
                                         </Box>
                                         <Box >
-                                            <Button style={{border:'2px solid #b42981', backgroundImage:'linear-gradient(to right, #FF6464 0%, #FF6464  51%, #FF81CE  100%)', textTransform: 'uppercase', transition: '0.5s', color: 'white', borderStyle:'none', borderRadius:'50px', fontFamily:'Archivo Black, sans-serif', padding:'10px', width:'200px' }}>
-                                                Ver
-                                            </Button>
+                                        <Button sx={stylesComponents.button}
+                                            component={Link}
+                                            to="/Producto/2"
+                                        >
+                                            Ver
+                                        </Button>
                                     </Box>
                                 </Grid>
                                 <Grid item sm={12} md={6} lg={3} sx={stylesComponents.contenedorProducto}>
                                     <Box display={'flex'} style={{justifyContent:'center'}}>
-                                       <Grid style={{width:'200px', height:'275px'}}>
+                                        <Grid style={{width:'200px', height:'275px'}}>
                                             <img src={product3} alt="" width={'100%'} height={'100%'} style={{ objectFit: 'cover'}}/>
                                         </Grid>
                                     </Box>
@@ -159,14 +171,14 @@ function Productos(){
                                         <Typography variant="h6" color="initial" fontFamily={'Archivo Black, sans-serif'} fontSize={16} textAlign={'start'} style={{color:'#404040', textAlign:'center' }}>$100.00</Typography>
                                     </Box>
                                     <Box >
-                                        <Button style={{border:'2px solid #b42981', backgroundImage:'linear-gradient(to right, #FF6464 0%, #FF6464  51%, #FF81CE  100%)', textTransform: 'uppercase', transition: '0.5s', color: 'white', borderStyle:'none', borderRadius:'50px', fontFamily:'Archivo Black, sans-serif', padding:'10px', width:'200px' }}>
+                                        <Button sx={stylesComponents.button}>
                                             Ver
                                         </Button>
                                 </Box>
                                 </Grid>
                                 <Grid item sm={12} md={6} lg={3} sx={stylesComponents.contenedorProducto}>
                                     <Box display={'flex'} style={{justifyContent:'center'}}>
-                                       <Grid style={{width:'200px', height:'275px'}}>
+                                        <Grid style={{width:'200px', height:'275px'}}>
                                             <img src={product4} alt="" width={'100%'} height={'100%'} style={{ objectFit: 'cover'}}/>
                                         </Grid>
                                     </Box>
@@ -178,7 +190,7 @@ function Productos(){
                                         <Typography variant="h6" color="initial" fontFamily={'Archivo Black, sans-serif'} fontSize={16} textAlign={'start'} style={{color:'blue', textAlign:'center', width:'50%' }}>$83.00</Typography>
                                     </Box>
                                     <Box >
-                                        <Button style={{border:'2px solid #b42981', backgroundImage:'linear-gradient(to right, #FF6464 0%, #FF6464  51%, #FF81CE  100%)', textTransform: 'uppercase', transition: '0.5s', color: 'white', borderStyle:'none', borderRadius:'50px', fontFamily:'Archivo Black, sans-serif', padding:'10px', width:'200px' }}>
+                                        <Button sx={stylesComponents.button}>
                                             Ver
                                         </Button>
                                 </Box>
@@ -186,7 +198,7 @@ function Productos(){
 
                                 <Grid item sm={12} md={6} lg={3} sx={stylesComponents.contenedorProducto}>
                                     <Box display={'flex'} style={{justifyContent:'center'}}>
-                                       <Grid style={{width:'200px', height:'275px'}}>
+                                        <Grid style={{width:'200px', height:'275px'}}>
                                             <img src={product5} alt="" width={'100%'} height={'100%'} style={{ objectFit: 'cover'}}/>
                                         </Grid>
                                     </Box>
@@ -195,7 +207,7 @@ function Productos(){
                                         <Typography variant="h6" color="initial" fontFamily={'Archivo Black, sans-serif'} fontSize={16} textAlign={'start'} style={{color:'#404040', textAlign:'center' }}>$100.00</Typography>
                                     </Box>
                                     <Box >
-                                        <Button style={{border:'2px solid #b42981', backgroundImage:'linear-gradient(to right, #FF6464 0%, #FF6464  51%, #FF81CE  100%)', textTransform: 'uppercase', transition: '0.5s', color: 'white', borderStyle:'none', borderRadius:'50px', fontFamily:'Archivo Black, sans-serif', padding:'10px', width:'200px' }}>
+                                        <Button sx={stylesComponents.button}>
                                             Ver
                                         </Button>
                                     </Box>
@@ -211,14 +223,14 @@ function Productos(){
                                             <Typography variant="h6" color="initial" fontFamily={'Archivo Black, sans-serif'} fontSize={16} textAlign={'start'} style={{color:'#404040', textAlign:'center' }}>$100.00</Typography>
                                         </Box>
                                         <Box >
-                                            <Button style={{border:'2px solid #b42981', backgroundImage:'linear-gradient(to right, #FF6464 0%, #FF6464  51%, #FF81CE  100%)', textTransform: 'uppercase', transition: '0.5s', color: 'white', borderStyle:'none', borderRadius:'50px', fontFamily:'Archivo Black, sans-serif', padding:'10px', width:'200px' }}>
+                                            <Button sx={stylesComponents.button}>
                                                 Ver
                                             </Button>
                                     </Box>
                                 </Grid>
                                 <Grid item sm={12} md={6} lg={3} sx={stylesComponents.contenedorProducto}>
                                     <Box display={'flex'} style={{justifyContent:'center'}}>
-                                       <Grid style={{width:'200px', height:'275px'}}>
+                                        <Grid style={{width:'200px', height:'275px'}}>
                                             <img src={product7} alt="" width={'100%'} height={'100%'} style={{ objectFit: 'cover'}}/>
                                         </Grid>
                                     </Box>
@@ -227,14 +239,14 @@ function Productos(){
                                         <Typography variant="h6" color="initial" fontFamily={'Archivo Black, sans-serif'} fontSize={16} textAlign={'start'} style={{color:'#404040', textAlign:'center' }}>$100.00</Typography>
                                     </Box>
                                     <Box >
-                                        <Button style={{border:'2px solid #b42981', backgroundImage:'linear-gradient(to right, #FF6464 0%, #FF6464  51%, #FF81CE  100%)', textTransform: 'uppercase', transition: '0.5s', color: 'white', borderStyle:'none', borderRadius:'50px', fontFamily:'Archivo Black, sans-serif', padding:'10px', width:'200px' }}>
+                                        <Button sx={stylesComponents.button}>
                                             Ver
                                         </Button>
                                 </Box>
                                 </Grid>
                                 <Grid item sm={12} md={6} lg={3} sx={stylesComponents.contenedorProducto}>
                                     <Box display={'flex'} style={{justifyContent:'center'}}>
-                                       <Grid style={{width:'200px', height:'275px'}}>
+                                        <Grid style={{width:'200px', height:'275px'}}>
                                             <img src={product8} alt="" width={'100%'} height={'100%'} style={{ objectFit: 'cover'}}/>
                                         </Grid>
                                     </Box>
@@ -246,7 +258,7 @@ function Productos(){
                                         <Typography variant="h6" color="initial" fontFamily={'Archivo Black, sans-serif'} fontSize={16} textAlign={'start'} style={{color:'blue', textAlign:'center', width:'50%' }}>$83.00</Typography>
                                     </Box>
                                     <Box >
-                                        <Button style={{border:'2px solid #b42981', backgroundImage:'linear-gradient(to right, #FF6464 0%, #FF6464  51%, #FF81CE  100%)', textTransform: 'uppercase', transition: '0.5s', color: 'white', borderStyle:'none', borderRadius:'50px', fontFamily:'Archivo Black, sans-serif', padding:'10px', width:'200px' }}>
+                                        <Button sx={stylesComponents.button}>
                                             Ver
                                         </Button>
                                 </Box>
@@ -263,7 +275,7 @@ function Productos(){
                                         <Typography variant="h6" color="initial" fontFamily={'Archivo Black, sans-serif'} fontSize={16} textAlign={'start'} style={{color:'#404040', textAlign:'center' }}>$100.00</Typography>
                                     </Box>
                                     <Box >
-                                        <Button style={{border:'2px solid #b42981', backgroundImage:'linear-gradient(to right, #FF6464 0%, #FF6464  51%, #FF81CE  100%)', textTransform: 'uppercase', transition: '0.5s', color: 'white', borderStyle:'none', borderRadius:'50px', fontFamily:'Archivo Black, sans-serif', padding:'10px', width:'200px' }}>
+                                        <Button sx={stylesComponents.button}>
                                             Ver
                                         </Button>
                                     </Box>
@@ -279,14 +291,14 @@ function Productos(){
                                             <Typography variant="h6" color="initial" fontFamily={'Archivo Black, sans-serif'} fontSize={16} textAlign={'start'} style={{color:'#404040', textAlign:'center' }}>$100.00</Typography>
                                         </Box>
                                         <Box >
-                                            <Button style={{border:'2px solid #b42981', backgroundImage:'linear-gradient(to right, #FF6464 0%, #FF6464  51%, #FF81CE  100%)', textTransform: 'uppercase', transition: '0.5s', color: 'white', borderStyle:'none', borderRadius:'50px', fontFamily:'Archivo Black, sans-serif', padding:'10px', width:'200px' }}>
+                                            <Button sx={stylesComponents.button}>
                                                 Ver
                                             </Button>
                                     </Box>
                                 </Grid>
                                 <Grid item sm={12} md={6} lg={3} sx={stylesComponents.contenedorProducto}>
                                     <Box display={'flex'} style={{justifyContent:'center'}}>
-                                       <Grid style={{width:'200px', height:'275px'}}>
+                                        <Grid style={{width:'200px', height:'275px'}}>
                                             <img src={product11} alt="" width={'100%'} height={'100%'} style={{ objectFit: 'cover'}}/>
                                         </Grid>
                                     </Box>
@@ -295,7 +307,7 @@ function Productos(){
                                         <Typography variant="h6" color="initial" fontFamily={'Archivo Black, sans-serif'} fontSize={16} textAlign={'start'} style={{color:'#404040', textAlign:'center' }}>$100.00</Typography>
                                     </Box>
                                     <Box >
-                                        <Button style={{border:'2px solid #b42981', backgroundImage:'linear-gradient(to right, #FF6464 0%, #FF6464  51%, #FF81CE  100%)', textTransform: 'uppercase', transition: '0.5s', color: 'white', borderStyle:'none', borderRadius:'50px', fontFamily:'Archivo Black, sans-serif', padding:'10px', width:'200px' }}>
+                                        <Button sx={stylesComponents.button}>
                                             Ver
                                         </Button>
                                 </Box>

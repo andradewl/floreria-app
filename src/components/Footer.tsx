@@ -4,7 +4,7 @@ import Link from "@mui/material/Link";
 import Grid from "@mui/material/Grid";
 import { Facebook, Instagram, Twitter } from "@mui/icons-material";
 import { Box } from "@mui/material";
-import Logo from '../assets/LOGO.webp'
+import Logo from '../assets/logo.png'
 import { stylesComponents } from "../styles/stylesComponentes";
 
 
