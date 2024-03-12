@@ -66,7 +66,7 @@ function ProductId(){
     const [visibleHora3, setVisibleHora3] = React.useState(true)
     const [visibleHorarios, setVisibleHorarios] = React.useState(false)
 
-    const [date, setDate] = React.useState<Dayjs | null>(dayjs());
+    const [date, setDate] = React.useState(dayjs());
     const [hora, sethora] = React.useState('');
     const [productoExtra, setproductoExtra] = React.useState({nombreProductoExtra:null, precioProductoExtra:null});
     const [dedicatoria, setDedicatoria] = React.useState(null);
@@ -108,7 +108,7 @@ function ProductId(){
         setDedicatoria(event.target.value);
     };
 
-    const handleChangehour = (event) => {
+    const handleChangehour = (event: { target: { value: React.SetStateAction<string>; }; }) => {
         sethora(event.target.value);
     };
 
@@ -120,7 +120,7 @@ function ProductId(){
         setActiveStep((prevActiveStep) => prevActiveStep - 1);
     };
 
-    const handleDateValidation = (newDate) => {
+    const handleDateValidation = (newDate: React.SetStateAction<dayjs.Dayjs | null>) => {
         setDate(newDate);
         setVisibleHorarios(true)
         const formattedNewDate = newDate.format('DD-MM-YYYY');
