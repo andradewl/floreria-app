@@ -52,12 +52,12 @@ const steps = [
 ];
 
 
+
+
 function ProductId(){
     const { id } = useParams();
 
-
     id
-
     const theme = useTheme();
     const [activeStep, setActiveStep] = React.useState(0);
     const [items, setItems] = React.useState([]);
@@ -68,8 +68,8 @@ function ProductId(){
 
     const [date, setDate] = React.useState<Dayjs | null>(dayjs());
     const [hora, sethora] = React.useState('');
-    const [productoExtra, setproductoExtra] = React.useState();
-    const [dedicatoria, setDedicatoria] = React.useState();
+    const [productoExtra, setproductoExtra] = React.useState(null);
+    const [dedicatoria, setDedicatoria] = React.useState(null);
 
     const [visibleProductoExtra, setvisibleProductoExtra] = React.useState(false) //muestra los productos extras
     const [isProductoExtraEmpty, setisProductoExtraEmpty] = React.useState(true) //comprueba si hay producto extra ya seleccionado
@@ -102,6 +102,8 @@ function ProductId(){
     }, [items]);
 
 
+
+
     const handleChangeDedicatoria = (event) => {
         setDedicatoria(event.target.value);
     };
@@ -118,7 +120,7 @@ function ProductId(){
         setActiveStep((prevActiveStep) => prevActiveStep - 1);
     };
 
-    const handleDateValidation = (newDate) => {
+    const handleDateValidation = (newDate: React.SetStateAction<dayjs.Dayjs | null>) => {
         setDate(newDate);
         setVisibleHorarios(true)
         const formattedNewDate = newDate.format('DD-MM-YYYY');
@@ -156,7 +158,22 @@ function ProductId(){
         }
     }
 
-    const guardarDatos =(nombre, precio)=>{
+
+    const guardarProductoExtra = (nombre: string, precio: number)=>{
+
+        const newProductoExtra = {
+            nombreProductoExtra: nombre,
+            precioProductoExtra: precio
+        };
+
+        setproductoExtra(newProductoExtra);
+        setvisibleProductoExtra(false)
+        setisProductoExtraEmpty(false)
+        setChangeProductExtra(false)
+    }
+
+
+    const guardarDatos =(nombre: string, precio: number)=>{
         const newItem = {
             nombre: nombre,
             precio:precio,
@@ -175,20 +192,6 @@ function ProductId(){
         console.log(newItem)
         setItems([...items, newItem])
     }
-
-    const guardarProductoExtra = (nombre, precio)=>{
-
-        const newProductoExtra = {
-            nombreProductoExtra:nombre,
-            precioProductoExtra:precio
-        };
-
-        setproductoExtra(newProductoExtra)
-        setvisibleProductoExtra(false)
-        setisProductoExtraEmpty(false)
-        setChangeProductExtra(false)
-    }
-
 
 
     const canbiarProductoExtra= () =>{
@@ -385,7 +388,7 @@ function ProductId(){
                                     label="Mensaje"
                                     variant="outlined"
                                     rows={4}
-                                    
+
                                     multiline
                                     fullWidth
                                     onChange={handleChangeDedicatoria}
@@ -405,7 +408,6 @@ function ProductId(){
 
 
                                 }
-                                
                             </Grid>
                         </Grid>
                     </Grid>
