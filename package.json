@@ -17,12 +17,10 @@
     "@mui/material": "^5.15.11",
     "@mui/x-date-pickers": "^6.19.6",
     "aos": "^3.0.0-beta.6",
-<<<<<<< HEAD
+
     "dayjs": "^1.11.10",
     "firebase": "^10.7.2",
-=======
-    "firebase": "^10.8.1",
->>>>>>> 99c62788bb4944c2b1928e7a2cbbecaaa1f64a6e
+
     "localforage": "^1.10.0",
     "match-sorter": "^6.3.3",
     "react": "^18.2.0",

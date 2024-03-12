@@ -14,7 +14,6 @@ import FormUbicaciones from "./pages/User/FormUbicaciones";
 import FormDetaFac from "./pages/User/FormDetaFac";
 import ProductId from "./pages/Products/ProductId";
 import shoppingCart from "./pages/shoppingCart/shoppingCart";
-
 import Login from "./pages/Login";
 import SigIn from "./pages/SigIn";
 

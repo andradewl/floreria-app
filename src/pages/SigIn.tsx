@@ -13,14 +13,14 @@ import {
 
 import { Visibility, VisibilityOff } from "@mui/icons-material";
 
-import { addUser } from "../config/apifirebase";
+// import { addUser } from "../config/apifirebase";
 
 export default function SignIn() {
   const [nombreUser, setNombreUser] = useState<string>("");
   const [apellidoUser, setApellidoUser] = useState<string>("");
   const [emailUser, setEmailUser] = useState<string>("");
   const [passwordUser, setPasswordUser] = useState<string>("");
-  
+
   const [showPassword, setShowPassword] = useState(false);
 
   const newUserName = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -48,7 +48,7 @@ export default function SignIn() {
   };
 
   const addNewUser = () => {
-    addUser(nombreUser, apellidoUser, emailUser, passwordUser);
+    // addUser(nombreUser, apellidoUser, emailUser, passwordUser);
   };
 
   return (
