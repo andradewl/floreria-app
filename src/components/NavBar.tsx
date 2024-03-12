@@ -162,7 +162,9 @@ function ResponsiveAppBar() {
                 <Link to="/shoppingCart">
                   <ShoppingCartIcon sx={stylesComponents.iconsMovile} />
                 </Link>
-                <Person2Icon color="disabled" sx={stylesComponents.iconsMovile}/>
+                <Link to="/Usuario" style={{ textDecoration: 'none', color: 'inherit' }}>
+                    <Person2Icon color="disabled" sx={{padding:'3px', fontSize: 30}}/>
+                </Link>
             <Menu
               sx={{ mt: '45px'}}
               id="menu-appbar"

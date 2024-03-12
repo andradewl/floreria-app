@@ -21,10 +21,17 @@ import product9 from '../assets/productos/productnNain.webp'
 import product10 from '../assets/productos/productTen.jpg'
 import product11 from '../assets/productos/productEleven.webp'
 
+import { useNavigate } from 'react-router-dom'
 import '../styles/fuentes.css'
 import { stylesComponents } from "../styles/stylesComponentes";
 
 function Home(){
+    const navigate = useNavigate(); // Cambia a useNavigate
+
+    const handleNuevoClick = () => {
+      // Redirige a la página 'FormUbicaciones' al hacer clic en "Nueva"
+      navigate('/Login');
+    };
     return(
         <>
             <Breadcrumbs maxItems={2} aria-label="breadcrumb" style={{paddingLeft:'50px'}}>
@@ -64,7 +71,8 @@ function Home(){
                             </Typography>
                         </Grid>
                         <Grid pt={10} textAlign="start">
-                            <Button sx={stylesComponents.buttonBanners}>
+                            <Button onClick={handleNuevoClick}
+                            sx={stylesComponents.buttonBanners}>
                                 Registrate Ahora
                             </Button>
                         </Grid>

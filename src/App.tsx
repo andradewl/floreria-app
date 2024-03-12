@@ -15,6 +15,8 @@ import FormDetaFac from "./pages/User/FormDetaFac";
 import ProductId from "./pages/Products/ProductId";
 import shoppingCart from "./pages/shoppingCart/shoppingCart";
 
+import Login from "./pages/Login";
+import SigIn from "./pages/SigIn";
 
 function App() {
 
@@ -33,6 +35,8 @@ function App() {
         <Route path="/FormUbicaciones" Component={FormUbicaciones}/>
         <Route path="/FormDetaFac" Component={FormDetaFac}/>
         <Route path="/shoppingCart" Component={shoppingCart}/>
+        <Route path="/Login" Component={Login}/>
+        <Route path="/SigIn" Component={SigIn}/>
       </Routes>
 
       <Footer/>
