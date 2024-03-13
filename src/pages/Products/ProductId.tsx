@@ -17,7 +17,7 @@ import { useTheme } from '@mui/material/styles';
 import MobileStepper from '@mui/material/MobileStepper';
 import KeyboardArrowLeft from '@mui/icons-material/KeyboardArrowLeft';
 import KeyboardArrowRight from '@mui/icons-material/KeyboardArrowRight';
-import dayjs from 'dayjs';
+import dayjs, { Dayjs } from 'dayjs';
 
 
 const steps = [
@@ -81,16 +81,10 @@ function ProductId(){
     const [visibleHora2, setVisibleHora2] = React.useState(true)
     const [visibleHora3, setVisibleHora3] = React.useState(true)
     const [visibleHorarios, setVisibleHorarios] = React.useState(false)
-
     const [date, setDate] = React.useState(dayjs());
     const [hora, sethora] = React.useState('');
-    const [productoExtra, setproductoExtra] = React.useState({
-        nombreProductoExtra: 'Sin producto extra',
-        precioProductoExtra: 0
-    });
-
-    const [dedicatoria, setDedicatoria] = React.useState(null);
-
+    const [productoExtra, setproductoExtra] = React.useState({nombreProductoExtra: 'Sin producto extra',precioProductoExtra: 0});
+    const [dedicatoria, setDedicatoria] = React.useState('');
     const [visibleProductoExtra, setvisibleProductoExtra] = React.useState(false) //muestra los productos extras
     const [isProductoExtraEmpty, setisProductoExtraEmpty] = React.useState(true) //comprueba si hay producto extra ya seleccionado
     const [changeProductExtra, setChangeProductExtra] = React.useState(true) //comprueba si hay producto extra ya seleccionado
@@ -98,10 +92,8 @@ function ProductId(){
 
     const maxSteps = steps.length;
 
-
-
     React.useEffect(() => {
-        const algunDatoPresente = !!productoExtra && !!dedicatoria && !!hora && productoExtra.nombreProductoExtra !='Sin producto extra' && productoExtra.precioProductoExtra != 0;
+        const algunDatoPresente = !!productoExtra && dedicatoria != '' && !!hora && productoExtra.nombreProductoExtra !='Sin producto extra' && productoExtra.precioProductoExtra != 0;
 
         if (algunDatoPresente) {
             setHabilitarDesabilitarBottonCompra(true)
@@ -109,6 +101,7 @@ function ProductId(){
             setHabilitarDesabilitarBottonCompra(false)
         }
     }, [productoExtra, dedicatoria, hora]);
+
 
     React.useEffect(() => {
         const algunDatoPresente = !!items
@@ -123,8 +116,40 @@ function ProductId(){
 
 
 
+    React.useEffect(() => {
+        setDedicatoria(dedicatoria)
+        console.log(dedicatoria)
+    }, [dedicatoria]);
 
-    const handleChangeDedicatoria = (event) => {
+
+    // React.useEffect(() => {
+
+    //     const formattedNewDate = date.format('DD-MM-YYYY');
+    //     const today = dayjs().format('DD-MM-YYYY');
+
+    //     if (formattedNewDate === today) {
+    //         const horaEstablecida1 = dayjs('10:00:00', 'HH:mm:ss');
+    //         const horaEstablecida2 = dayjs('12:00:00', 'HH:mm:ss');
+    //         const horaEstablecida3 = dayjs('18:00:00', 'HH:mm:ss');
+    //         const horaActual = dayjs();
+
+    //         setVisibleHora1(horaActual.isBefore(horaEstablecida1));
+    //         setVisibleHora2(horaActual.isBefore(horaEstablecida2));
+    //         setVisibleHora3(horaActual.isBefore(horaEstablecida3));
+    //     } else {
+    //         setVisibleHora1(true);
+    //         setVisibleHora2(true);
+    //         setVisibleHora3(true);
+    //     }
+    //     setDate(date)
+    //     setVisibleHorarios(true);
+
+    // }, [date]);
+
+
+
+
+    const handleChangeDedicatoria = (event: { target: { value: React.SetStateAction<string>; }; }) => {
         setDedicatoria(event.target.value);
     };
 
@@ -140,18 +165,17 @@ function ProductId(){
         setActiveStep((prevActiveStep) => prevActiveStep - 1);
     };
 
-    const handleDateValidation = (newDate) => {
-        setDate(newDate);
-        setVisibleHorarios(true);
+    const handleDateValidation = (newDate: Dayjs) => {
 
-        const formattedNewDate = newDate.format('DD-MM-YYYY');
-        const today = dayjs().format('DD-MM-YYYY');
+        const formattedNewDate = newDate;
+        const today = dayjs();
 
         if (formattedNewDate === today) {
             const horaEstablecida1 = dayjs('10:00:00', 'HH:mm:ss');
             const horaEstablecida2 = dayjs('12:00:00', 'HH:mm:ss');
             const horaEstablecida3 = dayjs('18:00:00', 'HH:mm:ss');
             const horaActual = dayjs();
+            console.log(horaActual.isBefore(horaEstablecida1), horaActual.isBefore(horaEstablecida2),horaActual.isBefore(horaEstablecida3))
 
             setVisibleHora1(horaActual.isBefore(horaEstablecida1));
             setVisibleHora2(horaActual.isBefore(horaEstablecida2));
@@ -161,6 +185,9 @@ function ProductId(){
             setVisibleHora2(true);
             setVisibleHora3(true);
         }
+
+        setDate(newDate);
+        setVisibleHorarios(true);
     };
 
     const handleVisibleProductoExtra = () =>{
@@ -285,7 +312,7 @@ function ProductId(){
                                     <DemoContainer components={['DatePicker']} sx={{justifyContent:'center', width:'100%'}}>
                                         <DatePicker sx={{justifyContent:'center', width:'100%'}}
                                             value={date}
-                                            onChange={handleDateValidation}
+                                            onChange={()=>handleDateValidation(date)}
                                             disablePast
                                         />
                                     </DemoContainer >
@@ -412,8 +439,8 @@ function ProductId(){
                                     rows={4}
                                     multiline
                                     fullWidth
-                                    value={dedicatoria} // You can add this line to display the current value
-                                    onChange={handleChangeDedicatoria}
+                                    value={dedicatoria} // Muestra el valor actual de dedicatoria en el TextField
+                                    onChange={handleChangeDedicatoria} //
                                 />
                             </Grid>
                             <Grid>
