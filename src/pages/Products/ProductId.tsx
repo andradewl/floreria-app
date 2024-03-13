@@ -101,7 +101,7 @@ function ProductId(){
 
 
     React.useEffect(() => {
-        const algunDatoPresente = !!productoExtra && !!dedicatoria && !!hora && productoExtra.nombreProductoExtra !='Sin producto extra' && productoExtra.nombreProductoExtra != 0;
+        const algunDatoPresente = !!productoExtra && !!dedicatoria && !!hora && productoExtra.nombreProductoExtra !='Sin producto extra' && productoExtra.precioProductoExtra != 0;
 
         if (algunDatoPresente) {
             setHabilitarDesabilitarBottonCompra(true)
