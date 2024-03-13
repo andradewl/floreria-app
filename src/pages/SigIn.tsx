@@ -12,9 +12,7 @@ import {
 } from "@mui/material";
 
 import { Visibility, VisibilityOff } from "@mui/icons-material";
-
-// import { addUser } from "../config/apifirebase";
-
+import { addUser } from "../config/apiFirebase";
 export default function SignIn() {
   const [nombreUser, setNombreUser] = useState<string>("");
   const [apellidoUser, setApellidoUser] = useState<string>("");
@@ -48,7 +46,7 @@ export default function SignIn() {
   };
 
   const addNewUser = () => {
-    // addUser(nombreUser, apellidoUser, emailUser, passwordUser);
+     addUser(nombreUser, apellidoUser, emailUser, passwordUser);
   };
 
   return (
