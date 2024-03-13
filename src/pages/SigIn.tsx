@@ -46,7 +46,7 @@ export default function SignIn() {
   };
 
   const addNewUser = () => {
-     addUser(nombreUser, apellidoUser, emailUser, passwordUser);
+    addUser(nombreUser, apellidoUser, emailUser, passwordUser);
   };
 
   return (

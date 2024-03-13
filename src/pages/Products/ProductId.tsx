@@ -17,7 +17,7 @@ import { useTheme } from '@mui/material/styles';
 import MobileStepper from '@mui/material/MobileStepper';
 import KeyboardArrowLeft from '@mui/icons-material/KeyboardArrowLeft';
 import KeyboardArrowRight from '@mui/icons-material/KeyboardArrowRight';
-import dayjs, { Dayjs } from 'dayjs';
+import dayjs from 'dayjs';
 
 
 const steps = [
@@ -58,21 +58,25 @@ function ProductId(){
     const { id } = useParams();
 
     id
+
+
+    interface Item {
+        nombre: string;
+        precio: number;
+        fecha: string;
+        hora: string;
+        productoExtra: {
+            nombreProductoExtra: string;
+            precioProductoExtra: number | string;
+        };
+        dedicatoria: string | null;
+    }
+
+
+
     const theme = useTheme();
     const [activeStep, setActiveStep] = React.useState(0);
-    const [items, setItems] = React.useState(
-        {
-            nombre: 'nombre',
-            precio:'precio',
-            fecha:dayjs().format('DD-MM-YYYY'),
-            hora: dayjs().format('HH:mm:ss'),
-            productoExtra:{
-                nombreProductoExtra: 'Sin producto Extra',
-                precioProductoExtra: 'Sin producto Extra'
-            },
-            dedicatoria: 'dedicatoria',
-        }
-    );
+    const [items, setItems] = React.useState<Item[]>([]);
     const [visibleHora1, setVisibleHora1] = React.useState(true)
     const [visibleHora2, setVisibleHora2] = React.useState(true)
     const [visibleHora3, setVisibleHora3] = React.useState(true)
@@ -83,7 +87,9 @@ function ProductId(){
     const [productoExtra, setproductoExtra] = React.useState({
         nombreProductoExtra: 'Sin producto extra',
         precioProductoExtra: 0
-    });    const [dedicatoria, setDedicatoria] = React.useState(null);
+    });
+
+    const [dedicatoria, setDedicatoria] = React.useState(null);
 
     const [visibleProductoExtra, setvisibleProductoExtra] = React.useState(false) //muestra los productos extras
     const [isProductoExtraEmpty, setisProductoExtraEmpty] = React.useState(true) //comprueba si hay producto extra ya seleccionado
@@ -95,7 +101,7 @@ function ProductId(){
 
 
     React.useEffect(() => {
-        const algunDatoPresente = !!productoExtra && !!dedicatoria && !!hora;
+        const algunDatoPresente = !!productoExtra && !!dedicatoria && !!hora && productoExtra.nombreProductoExtra !='Sin producto extra' && productoExtra.nombreProductoExtra != 0;
 
         if (algunDatoPresente) {
             setHabilitarDesabilitarBottonCompra(true)
@@ -190,12 +196,12 @@ function ProductId(){
 
 
     const guardarDatos =(nombre: string, precio: number)=>{
-        const newItem = {
+        const newItem: Item = {
             nombre: nombre,
-            precio:precio,
-            fecha:date.format('DD-MM-YYYY'),
+            precio: precio,
+            fecha: date.format('DD-MM-YYYY'),
             hora: hora,
-            productoExtra:productoExtra ? {
+            productoExtra: productoExtra ? {
                 nombreProductoExtra: productoExtra.nombreProductoExtra,
                 precioProductoExtra: productoExtra.precioProductoExtra
             } : {
@@ -205,8 +211,8 @@ function ProductId(){
             dedicatoria: dedicatoria,
         };
 
-        console.log(newItem)
-        setItems([...items, newItem])
+        console.log(newItem);
+        setItems([...items, newItem]);
     }
 
 
