@@ -1,22 +1,11 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
-/* eslint-disable @typescript-eslint/no-explicit-any */
+
 import React from 'react'
 import {TextField,FormControl,InputLabel, Select,MenuItem,Grid,Typography,FormControlLabel, Checkbox } from '@mui/material'
 import { CarritoDeCompra } from "../../interfaces/interfaces"
-import { PayPalButtons, FUNDING  } from '@paypal/react-paypal-js'
-// import { PayPalButton } from "react-paypal-botón-v2";
-
+import { PayPalButtons  } from '@paypal/react-paypal-js'
 import { CreateOrderData } from '@paypal/paypal-js';
 
-// const shippingAddress = {
-//     recipient_name: "John Doe",
-//     line1: "123 Shipping St",
-//     line2: "Apt 101",
-//     city: "San Jose",
-//     state: "CA",
-//     postal_code: "95131",
-//     country_code: "US",
-// };
 
 function shopProducts() {
 
@@ -42,7 +31,7 @@ function shopProducts() {
     React.useEffect(() => {
         const storedItems = localStorage.getItem('Productos');
         const dinero = precioApAGAR()
-
+        
 
         if (storedItems && dinero) {
             const parsedItems: CarritoDeCompra[] = JSON.parse(storedItems);

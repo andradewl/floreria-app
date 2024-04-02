@@ -181,7 +181,7 @@ function Home(){
                     </Typography>
                     <Typography variant="h4" color="initial" fontSize='17px' fontFamily={'Archivo Black, sans-serif'} style={{color:'#000000'}} p={2}>
                         En Flores Rickys encontrarás lo que necesitas para cada ocasión con ofertas.
-
+f
                     </Typography>
                 </Grid>
 
@@ -216,29 +216,6 @@ function Home(){
                 </Grid>
 
             </Grid>
-
-            {/* <Grid container>
-                <Grid item xs={12} style={{ position: 'relative', width: '100%', height: '400px' }}>
-                    <img src={banerIndex} alt="" style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
-                    <Grid container style={{ position: 'absolute', top: '50%', left: '50%', transform: 'translate(-50%, -50%)', backgroundColor: 'rgba(224, 43, 86, 0.35)', padding: '50px', borderRadius: '5px', width: '100%', height: '100%' }}>
-                        <Box style={{width:'100%'}} pl={10} pr={10}>
-                            <Typography variant="h2" style={{ fontFamily: 'Archivo Black, sans-serif', color: '#ffff' }} >Fanaticos de las flores</Typography>
-                        </Box>
-                        <Box style={{width:'100%'}} pl={10} pr={10}>
-                            <Typography variant="h5" style={{ fontFamily: 'Archivo Black, sans-serif', color: '#ffff' }}>Flores y globos especiales</Typography>
-                        </Box>
-                        <Box  p={2} textAlign="end" ml={4} >
-                                <Button
-                                    style={{border:'2px solid #b42981', backgroundImage:'linear-gradient(to right, #FF6464 0%, #FF6464  51%, #FF81CE  100%)', margin: '10px', textTransform: 'uppercase', transition: '0.5s', color: 'white', borderStyle:'none', borderRadius:'50px', fontFamily:'Archivo Black, sans-serif', padding:'10px'                         }}
-                                >
-                                    Registrate Ahora
-                                </Button>
-                        </Box>
-
-                    </Grid>
-                </Grid>
-            </Grid> */}
-
 
             <Grid p={5}>
                 <Grid style={{textAlign:'center', padding:'8px'}} >
