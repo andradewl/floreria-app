@@ -1,12 +1,9 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 
 import * as React from 'react';
 
 import { Box, Grid, Rating, Typography, Button, TextField, FormControl, InputLabel, Select, MenuItem } from '@mui/material';
 import { useParams } from 'react-router-dom';
-import product1 from '../../assets/productos/productTen.jpg'
-import product2 from '../../assets/productos/productTwo.webp'
-import product3 from '../../assets/productos/productThree.jpg'
-import product4 from '../../assets/productos/productFor.webp'
 import { stylesComponents } from '../../styles/stylesComponentes';
 import { DemoContainer } from '@mui/x-date-pickers/internals/demo';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
@@ -17,66 +14,20 @@ import { useTheme } from '@mui/material/styles';
 import MobileStepper from '@mui/material/MobileStepper';
 import KeyboardArrowLeft from '@mui/icons-material/KeyboardArrowLeft';
 import KeyboardArrowRight from '@mui/icons-material/KeyboardArrowRight';
-import dayjs, { Dayjs } from 'dayjs';
+import dayjs, { Dayjs } from 'dayjs'; // Asegúrate de importar Dayjs desde 'dayjs'
+import { getProductById, getProductsExtraByIds } from '../../config/apiFirebase';
+import { Flower, CarritoDeCompra, ProductoExtra } from '../../interfaces/interfaces'
 
-
-const steps = [
-    {
-        id:1,
-        label: 'Pastel chocolate',
-        description: `For each ad campaign that you create, you can control how much
-                you're willing to spend on clicks and conversions, which networks
-                and geographical locations you want your ads to show on, and more.`,
-            imgPath: 'https://imgs.search.brave.com/Tcr_CWql6Gru8J0EcIRLwXES2FmoWUBvh71Wr1b0TTo/rs:fit:860:0:0/g:ce/aHR0cHM6Ly93d3cu/ZG9sY2kuY29tLm14/L2Nkbi9zaG9wL2Zp/bGVzL1BBU1RFTC1D/SE9DTy1CSVRFUy1E/b2xjaV84Ny5qcGc_/dj0xNjk1ODY1MDQz/JndpZHRoPTUzMw',
-            price: 130.10
-    },
-    {
-        id:2,
-        label: 'Pastel Fresa',
-        description:'An ad group contains one or more ads which target a shared set of keywords.',
-        imgPath:
-        'https://imgs.search.brave.com/O-kIzeI6I7VGbu_7UYFFgKi6GITG8zaQ652lLwRRrng/rs:fit:860:0:0/g:ce/aHR0cHM6Ly9hcmFu/emF6dS5jb20vd3At/Y29udGVudC91cGxv/YWRzLzIwMjAvMDQv/UGFzdGVsLXZhaW5p/bGxhLWZyZXNhLTEu/d2VicA',
-        price: 110.10
-
-    },
-    {
-        id:3,
-        label: 'Chocoflan',
-        description: `Try out different ad text to see what brings in the most customers,
-                and learn how to enhance your ads using features like ad extensions.
-                If you run into any problems with your ads, find out how to tell if
-                they're running and how to resolve approval issues.`,
-        imgPath:'https://imgs.search.brave.com/N93yJaAo1bJbtlGn3OJB90ZiKSQ5xVl0ejn1o92ouz4/rs:fit:860:0:0/g:ce/aHR0cHM6Ly93d3cu/ZG9sY2kuY29tLm14/L2Nkbi9zaG9wL2Zp/bGVzL1BBU1RFTC1J/TVBPU0lCTEUtRG9s/Y2lfOTMuanBnP3Y9/MTY5NTg2NTE3NCZ3/aWR0aD0xNDQ1',
-        price: 90.10,
-    },
-];
-
-
-
+import { setLocalStorage, getLocalStorage } from '../../config/LocalStorage'
 
 function ProductId(){
     const { id } = useParams();
-
-    id
-
-
-    interface Item {
-        nombre: string;
-        precio: number;
-        fecha: string;
-        hora: string;
-        productoExtra: {
-            nombreProductoExtra: string;
-            precioProductoExtra: number | string;
-        };
-        dedicatoria: string | null;
-    }
-
-
-
     const theme = useTheme();
+
+    const [product, setProduct] = React.useState<Flower | null>(null);
     const [activeStep, setActiveStep] = React.useState(0);
-    const [items, setItems] = React.useState<Item[]>([]);
+    const [carritoDeCompra, setCarritoDeCompra] = React.useState<CarritoDeCompra[]>([]);
+
     const [visibleHora1, setVisibleHora1] = React.useState(true)
     const [visibleHora2, setVisibleHora2] = React.useState(true)
     const [visibleHora3, setVisibleHora3] = React.useState(true)
@@ -84,16 +35,29 @@ function ProductId(){
     const [date, setDate] = React.useState(dayjs());
     const [hora, sethora] = React.useState('');
     const [productoExtra, setproductoExtra] = React.useState({nombreProductoExtra: 'Sin producto extra',precioProductoExtra: 0});
-    const [dedicatoria, setDedicatoria] = React.useState('');
+    const [dedicatoria, setDedicatoria] = React.useState('sin dedicatorias');
     const [visibleProductoExtra, setvisibleProductoExtra] = React.useState(false) //muestra los productos extras
     const [isProductoExtraEmpty, setisProductoExtraEmpty] = React.useState(true) //comprueba si hay producto extra ya seleccionado
     const [changeProductExtra, setChangeProductExtra] = React.useState(true) //comprueba si hay producto extra ya seleccionado
     const [habilitarDesabilitarBottonCompra, setHabilitarDesabilitarBottonCompra] = React.useState(false)
+    const [productosExtra, setProductosExtras] = React.useState<ProductoExtra[]>([]);
 
-    const maxSteps = steps.length;
+    let maxSteps = productosExtra.length
 
     React.useEffect(() => {
-        const algunDatoPresente = !!productoExtra && dedicatoria != '' && !!hora && productoExtra.nombreProductoExtra !='Sin producto extra' && productoExtra.precioProductoExtra != 0;
+        getDataCarShopping()
+        fetchProduct()
+    }, []);
+
+
+    React.useEffect(() => {
+        maxSteps = productosExtra.length;
+        console.log(maxSteps)
+    }, [productosExtra]);
+
+    React.useEffect(() => {
+        // const algunDatoPresente = !!productoExtra && dedicatoria != '' && !!hora && productoExtra.nombreProductoExtra !='Sin producto extra' && productoExtra.precioProductoExtra != 0;
+        const algunDatoPresente = !!hora;
 
         if (algunDatoPresente) {
             setHabilitarDesabilitarBottonCompra(true)
@@ -103,54 +67,62 @@ function ProductId(){
     }, [productoExtra, dedicatoria, hora]);
 
 
-    React.useEffect(() => {
-        const algunDatoPresente = !!items
+    // React.useEffect(() => {
+    //     const algunDatoPresente = carritoDeCompra.length > 0;
 
-        if (algunDatoPresente) {
-            localStorage.setItem('Productos', JSON.stringify(items));
-
-        } else {
-            console.log('error en prodcuto')
-        }
-    }, [items]);
-
-
+    //     if (algunDatoPresente) {
+    //         setLocalStorage('Productos', carritoDeCompra)
+    //         // localStorage.setItem('Productos', JSON.stringify(items));
+    //     }
+    // }, [carritoDeCompra]);
 
     React.useEffect(() => {
         setDedicatoria(dedicatoria)
         console.log(dedicatoria)
     }, [dedicatoria]);
 
+    const fetchProducExtra = async (dataProductsExtra:[]) =>{
+        const data= await getProductsExtraByIds(dataProductsExtra)
+        console.log(data)
+        setProductosExtras(data);
+    }
 
-    // React.useEffect(() => {
 
-    //     const formattedNewDate = date.format('DD-MM-YYYY');
-    //     const today = dayjs().format('DD-MM-YYYY');
+    const getDataCarShopping=()=>{
+        const localstoorageArray = getLocalStorage('Productos')
+        setCarritoDeCompra(localstoorageArray)
+    }
 
-    //     if (formattedNewDate === today) {
-    //         const horaEstablecida1 = dayjs('10:00:00', 'HH:mm:ss');
-    //         const horaEstablecida2 = dayjs('12:00:00', 'HH:mm:ss');
-    //         const horaEstablecida3 = dayjs('18:00:00', 'HH:mm:ss');
-    //         const horaActual = dayjs();
-
-    //         setVisibleHora1(horaActual.isBefore(horaEstablecida1));
-    //         setVisibleHora2(horaActual.isBefore(horaEstablecida2));
-    //         setVisibleHora3(horaActual.isBefore(horaEstablecida3));
-    //     } else {
-    //         setVisibleHora1(true);
-    //         setVisibleHora2(true);
-    //         setVisibleHora3(true);
+    // const fetchProduct = async () => {
+    //     const idProducto=String(id)
+    //     const productData = await getProductById(idProducto);
+    //     console.log(productData?.productosExtra)
+    //     if(productData?.productosExtra){
+    //         fetchProducExtra(productData.productosExtra)
     //     }
-    //     setDate(date)
-    //     setVisibleHorarios(true);
+    //     setProduct(productData);
+    // };
 
-    // }, [date]);
-
-
-
+    const fetchProduct = async () => {
+        try {
+            const idProducto=String(id)
+            const productData = await getProductById(idProducto);
+            console.log(productData?.productosExtra)
+            if(productData?.productosExtra){
+                fetchProducExtra(productData.productosExtra)
+            }
+            setProduct(productData);
+        } catch (error) {
+            console.error('Error fetching flowers:', error);
+        }
+    };
 
     const handleChangeDedicatoria = (event: { target: { value: React.SetStateAction<string>; }; }) => {
-        setDedicatoria(event.target.value);
+        if(event.target.value == ''){
+            setDedicatoria('sin dedicatorias');
+        }else{
+            setDedicatoria(event.target.value);
+        }
     };
 
     const handleChangehour = (event: { target: { value: React.SetStateAction<string>; }; }) => {
@@ -165,29 +137,34 @@ function ProductId(){
         setActiveStep((prevActiveStep) => prevActiveStep - 1);
     };
 
-    const handleDateValidation = (newDate: Dayjs) => {
+    const handleDateValidation = (newDate: Dayjs | null) => {
+        if (newDate) {
+            const formattedNewDate = newDate.format('DD-MM-YYYY');
+            const today = dayjs().format('DD-MM-YYYY');
+            console.log(formattedNewDate === today )
 
-        const formattedNewDate = newDate;
-        const today = dayjs();
+            if (formattedNewDate === today) {
+                const horaEstablecida1 = dayjs('10:00:00', 'HH:mm:ss');
+                const horaEstablecida2 = dayjs('12:00:00', 'HH:mm:ss');
+                const horaEstablecida3 = dayjs('18:00:00', 'HH:mm:ss');
+                const horaActual = dayjs();
+                console.log(horaActual.isBefore(horaEstablecida1), horaActual.isBefore(horaEstablecida2),horaActual.isBefore(horaEstablecida3))
 
-        if (formattedNewDate === today) {
-            const horaEstablecida1 = dayjs('10:00:00', 'HH:mm:ss');
-            const horaEstablecida2 = dayjs('12:00:00', 'HH:mm:ss');
-            const horaEstablecida3 = dayjs('18:00:00', 'HH:mm:ss');
-            const horaActual = dayjs();
-            console.log(horaActual.isBefore(horaEstablecida1), horaActual.isBefore(horaEstablecida2),horaActual.isBefore(horaEstablecida3))
+                setVisibleHora1(horaActual.isBefore(horaEstablecida1));
+                setVisibleHora2(horaActual.isBefore(horaEstablecida2));
+                setVisibleHora3(horaActual.isBefore(horaEstablecida3));
+            } else {
+                setVisibleHora1(true);
+                setVisibleHora2(true);
+                setVisibleHora3(true);
+            }
 
-            setVisibleHora1(horaActual.isBefore(horaEstablecida1));
-            setVisibleHora2(horaActual.isBefore(horaEstablecida2));
-            setVisibleHora3(horaActual.isBefore(horaEstablecida3));
-        } else {
-            setVisibleHora1(true);
-            setVisibleHora2(true);
-            setVisibleHora3(true);
+            setDate(newDate);
+            setVisibleHorarios(true);
+
+
         }
 
-        setDate(newDate);
-        setVisibleHorarios(true);
     };
 
     const handleVisibleProductoExtra = () =>{
@@ -222,10 +199,13 @@ function ProductId(){
     }
 
 
-    const guardarDatos =(nombre: string, precio: number)=>{
-        const newItem: Item = {
+    const guardarDatosConDescuento =(id:string,nombre: string, precio: number, descuento: number, imagen:string)=>{
+        const newItem: CarritoDeCompra = {
+            id:id,
             nombre: nombre,
             precio: precio,
+            descuento:descuento,
+            imagen:imagen,
             fecha: date.format('DD-MM-YYYY'),
             hora: hora,
             productoExtra: productoExtra ? {
@@ -233,13 +213,77 @@ function ProductId(){
                 precioProductoExtra: productoExtra.precioProductoExtra
             } : {
                 nombreProductoExtra: 'Sin producto Extra',
-                precioProductoExtra: 'Sin producto Extra'
+                precioProductoExtra: 0
+            },
+            dedicatoria:dedicatoria
+        };
+
+        const existingProductIndex = carritoDeCompra.findIndex(item => item.id === newItem.id);
+
+
+
+        if (existingProductIndex !== -1) {
+            console.log('El producto ya está en el carrito.');
+
+            // Reemplazar el objeto existente con el nuevo objeto completo
+            const updatedCarritoDeCompra = [...carritoDeCompra];
+            updatedCarritoDeCompra[existingProductIndex] = newItem;
+
+            setCarritoDeCompra(updatedCarritoDeCompra);
+            setLocalStorage('Productos', updatedCarritoDeCompra);
+        } else {
+            console.log('Agregando producto al carrito...');
+            // Si el producto no está en el carrito, lo agregamos
+            const updatedCarritoDeCompra = [...carritoDeCompra, newItem];
+            setCarritoDeCompra(updatedCarritoDeCompra);
+            setLocalStorage('Productos', updatedCarritoDeCompra);
+        }
+
+        // console.log(newItem);
+        // const updateCarritoDeCompra = [...carritoDeCompra, newItem];
+        // setLocalStorage('Productos', updateCarritoDeCompra)
+        // getDataCarShopping()
+
+    }
+
+    const guardarDatos =(id:string,nombre: string, precio: number, imagen:string)=>{
+        const newItem: CarritoDeCompra = {
+            id:id,
+            nombre: nombre,
+            precio: precio,
+            descuento:0,
+            imagen:imagen,
+            fecha: date.format('DD-MM-YYYY'),
+            hora: hora,
+            productoExtra: productoExtra ? {
+                nombreProductoExtra: productoExtra.nombreProductoExtra,
+                precioProductoExtra: productoExtra.precioProductoExtra
+            } : {
+                nombreProductoExtra: 'Sin producto Extra',
+                precioProductoExtra: 0
             },
             dedicatoria: dedicatoria,
         };
 
-        console.log(newItem);
-        setItems([...items, newItem]);
+
+        const existingProductIndex = carritoDeCompra.findIndex(item => item.id === newItem.id);
+
+        if (existingProductIndex !== -1) {
+            console.log('El producto ya está en el carrito.');
+
+            // Reemplazar el objeto existente con el nuevo objeto completo
+            const updatedCarritoDeCompra = [...carritoDeCompra];
+            updatedCarritoDeCompra[existingProductIndex] = newItem;
+
+            setCarritoDeCompra(updatedCarritoDeCompra);
+            setLocalStorage('Productos', updatedCarritoDeCompra);
+        } else {
+            console.log('Agregando producto al carrito...');
+            // Si el producto no está en el carrito, lo agregamos
+            const updatedCarritoDeCompra = [...carritoDeCompra, newItem];
+            setCarritoDeCompra(updatedCarritoDeCompra);
+            setLocalStorage('Productos', updatedCarritoDeCompra);
+        }
     }
 
 
@@ -255,53 +299,74 @@ function ProductId(){
         setChangeProductExtra(true)
     }
 
+    if (!product) {
+        return <div>Loading...</div>;
+    }
+
     return(
         <>
             <Grid p={5}>
                 <Grid container>
                     <Grid item md={6} xs={12} sx={{justifyContent:'center', textAlign:'-webkit-center'}}>
                         <Grid sx={{width:{xs:'270px', md:'350px'}, height:{xs:'390px', md:'450px'}}}>
-                            <img src={product1} alt="" width={'100%'} height={'100%'} style={{ objectFit: 'cover'}}/>
+                            <img src={product.imagen} alt="" width={'100%'} height={'100%'} style={{ objectFit: 'cover'}}/>
                         </Grid>
                         <Grid display={'flex'}  sx={{justifyContent:'center'}}>
                             <Grid sx={{width:{xs:'70px', md:'120px'}, height:{xs:'70px', md:'120px'}}} p={1}>
-                                <img src={product1} alt="" width={'100%'} height={'100%'} style={{ objectFit: 'cover'}}/>
+                                <img src={product.imagen} alt="" width={'100%'} height={'100%'} style={{ objectFit: 'cover'}}/>
                             </Grid>
                             <Grid sx={{width:{xs:'70px', md:'120px'}, height:{xs:'70px', md:'120px'}}} p={1}>
-                                <img src={product1} alt="" width={'100%'} height={'100%'} style={{ objectFit: 'cover'}}/>
+                                <img src={product.imagen} alt="" width={'100%'} height={'100%'} style={{ objectFit: 'cover'}}/>
                             </Grid>
                             <Grid sx={{width:{xs:'70px', md:'120px'}, height:{xs:'70px', md:'120px'}}} p={1}>
-                                <img src={product1} alt="" width={'100%'} height={'100%'} style={{ objectFit: 'cover'}}/>
+                                <img src={product.imagen} alt="" width={'100%'} height={'100%'} style={{ objectFit: 'cover'}}/>
                             </Grid>
                             <Grid sx={{width:{xs:'70px', md:'120px'}, height:{xs:'70px', md:'120px'}}} p={1}>
-                                <img src={product1} alt="" width={'100%'} height={'100%'} style={{ objectFit: 'cover'}}/>
+                                <img src={product.imagen} alt="" width={'100%'} height={'100%'} style={{ objectFit: 'cover'}}/>
                             </Grid>
                             <Grid sx={{width:{xs:'70px', md:'120px'}, height:{xs:'70px', md:'120px'}}} p={1}>
-                                <img src={product1} alt="" width={'100%'} height={'100%'} style={{ objectFit: 'cover'}}/>
+                                <img src={product.imagen} alt="" width={'100%'} height={'100%'} style={{ objectFit: 'cover'}}/>
                             </Grid>
                         </Grid>
                     </Grid>
                     <Grid item md={6} xs={12} sx={{ paddingLeft:{md:10, xs:0}, paddingRight:{md:10, xs:0} }}>
                         <Grid>
-                            <Typography variant="h4" color="initial" sx={{fontFamily:'Archivo Black, sans-serif', color:'#B42981'}} p={1}>Nombre flor/Arreglo</Typography>
+                            <Typography variant="h4" color="initial" sx={{fontFamily:'Archivo Black, sans-serif', color:'#B42981'}} p={1}>{product.nombre}</Typography>
                         </Grid>
-                        <Grid>
+                        {/* <Grid>
                             <Typography variant="h6" color="initial"
                                 p={1}>17% - off</Typography>
-                        </Grid>
-                        <Grid>
-                            <Typography variant="subtitle1" color="initial" p={1}>
-                                <Box display={'flex'}>
-                                    <Typography variant="h6" color="initial" fontFamily={'Archivo Black, sans-serif'} fontSize={16} style={{color:'red', textAlign:'start', width:'50%',  textDecorationLine: 'line-through' }}>$100.00</Typography>
-                                    <Typography variant="h6" color="initial" fontFamily={'Archivo Black, sans-serif'} fontSize={16} style={{color:'blue', textAlign:'end', width:'50%' }}>$83.00</Typography>
-                                </Box>
-                            </Typography>
-                        </Grid>
+                        </Grid> */}
+
+                        {
+                            product.descuento ?
+                            (
+                                <Grid>
+                                    <Typography variant="subtitle1" color="initial" p={1}>
+                                        <Box display={'flex'}>
+                                            <Typography variant="h6" color="initial" fontFamily={'Archivo Black, sans-serif'} fontSize={16} style={{color:'red', textAlign:'start', width:'50%',  textDecorationLine: 'line-through' }}>${product.precio}</Typography>
+                                            <Typography variant="h6" color="initial" fontFamily={'Archivo Black, sans-serif'} fontSize={16} style={{color:'blue', textAlign:'end', width:'50%' }}>${product.descuento}</Typography>
+                                        </Box>
+                                    </Typography>
+                                </Grid>
+                            )
+                            :
+                            (
+                                <Grid>
+                                    <Typography variant="subtitle1" color="initial" p={1}>
+                                        <Box display={'flex'}>
+                                            <Typography variant="h6" color="initial" fontFamily={'Archivo Black, sans-serif'} fontSize={16} style={{color:'red', textAlign:'start', width:'50%',  textDecorationLine: 'line-through' }}>${product.precio}</Typography>
+                                        </Box>
+                                    </Typography>
+                                </Grid>
+                            )
+                        }
+
                         <Grid>
                             <Rating name="read-only" value={4} readOnly />
                         </Grid>
                         <Grid>
-                            <Typography variant="subtitle1" color="initial" p={1}>Lorem ipsum dolor, sit amet consectetur adipisicing elit. Fugiat, reiciendis deserunt recusandae nulla nisi qui veniam minima amet maxime repudiandae, quasi, sint aut nemo quibusdam vel fuga hic! Dicta, eligendi!</Typography>
+                            <Typography variant="subtitle1" color="initial" p={1}>{product.descripcion}</Typography>
                         </Grid>
 
                         <Grid sx={{paddingTop:{  md:2, xs:1}}}>
@@ -312,7 +377,7 @@ function ProductId(){
                                     <DemoContainer components={['DatePicker']} sx={{justifyContent:'center', width:'100%'}}>
                                         <DatePicker sx={{justifyContent:'center', width:'100%'}}
                                             value={date}
-                                            onChange={()=>handleDateValidation(date)}
+                                            onChange={(newDate)=>handleDateValidation(newDate)}
                                             disablePast
                                         />
                                     </DemoContainer >
@@ -338,96 +403,102 @@ function ProductId(){
                                 }
                             </Grid>
 
-                            {changeProductExtra ?
-                                (
-                                    <>
-                                        <Grid  m={2}>
-                                            { visibleProductoExtra ?
-                                                (
-                                                    <Typography component={Button} variant="h6" color="#B42981" fontSize={'16px'} onClick={handleVisibleProductoExtra2}>Cancelar</Typography>
-                                                ):(
-                                                    <Typography component={Button} variant="h6" color="#B42981" fontSize={'16px'} onClick={handleVisibleProductoExtra}>Añadir Producto Extra</Typography>
-                                                )
-                                            }
-                                        </Grid>
-                                        {visibleProductoExtra &&
-                                            <Grid m={2} sx={{textAlign:'-webkit-center'}}>
-                                                <Grid sx={{ Width: '100%', flexGrow: 1 }}>
-                                                    <Grid  xs={12}>
-                                                        <Box sx={{ maxWidth: 390, flexGrow: 1 }}>
-                                                            <Box
-                                                                sx={{
-                                                                display: 'flex',
-                                                                }}
-                                                            >
-                                                                <Typography variant="h6" color="initial" fontFamily={'Archivo Black, sans-serif'} fontSize={16} style={{textAlign:'center', width:'50%'}}>{steps[activeStep].label}</Typography>
-                                                                <Typography variant="h6" color="initial" fontFamily={'Archivo Black, sans-serif'} fontSize={16} style={{color:'red', textAlign:'center', width:'50%' }}>${steps[activeStep].price}</Typography>
-
-                                                            </Box>
-                                                            <Box sx={{ height: {md:300, xs:250}, maxWidth: {md:300, xs:250}, width: '100%', pr: 3, pb: 3, m:3 }}>
-                                                                <img src={`${steps[activeStep].imgPath}`} alt=""  width={'100%'} height={'100%'} style={{ objectFit: 'cover'}}/>
-
-                                                                <Button sx={stylesComponents.button} onClick={() =>  guardarProductoExtra(steps[activeStep].label, steps[activeStep].price) }>
-                                                                    Añadir
-                                                                </Button>
-
-                                                            </Box>
-                                                            <MobileStepper
-                                                                variant="text"
-                                                                steps={maxSteps}
-                                                                position="static"
-                                                                activeStep={activeStep}
-                                                                nextButton={
-                                                                <Button
-                                                                    size="small"
-                                                                    onClick={handleNext}
-                                                                    disabled={activeStep === maxSteps - 1}
-                                                                >
-                                                                    Next
-                                                                    {theme.direction === 'rtl' ? (
-                                                                    <KeyboardArrowLeft />
-                                                                    ) : (
-                                                                    <KeyboardArrowRight />
-                                                                    )}
-                                                                </Button>
-                                                                }
-                                                                backButton={
-                                                                <Button size="small" onClick={handleBack} disabled={activeStep === 0}>
-                                                                    {theme.direction === 'rtl' ? (
-                                                                    <KeyboardArrowRight />
-                                                                    ) : (
-                                                                    <KeyboardArrowLeft />
-                                                                    )}
-                                                                    Back
-                                                                </Button>
-                                                                }
-                                                            />
-                                                        </Box>
-
-
-                                                    </Grid>
-
+                            {
+                                productosExtra.length > 0 &&
+                                <>
+                                    {changeProductExtra ?
+                                        (
+                                            <>
+                                                <Grid  m={2}>
+                                                    { visibleProductoExtra ?
+                                                        (
+                                                            <Typography component={Button} variant="h6" color="#B42981" fontSize={'16px'} onClick={handleVisibleProductoExtra2}>Cancelar</Typography>
+                                                        ):(
+                                                            <Typography component={Button} variant="h6" color="#B42981" fontSize={'16px'} onClick={handleVisibleProductoExtra}>Añadir Producto Extra</Typography>
+                                                        )
+                                                    }
                                                 </Grid>
-                                            </Grid>
-                                        }
-                                    </>
-                                ):(
-                                    <>
-                                        <Grid  m={2}>
-                                            <Typography variant="h6" component={Button} color="#B42981" fontSize={'16px'} onClick={canbiarProductoExtra}>Cambiar producto extra</Typography>
-                                            <Typography variant="h6" component={Button} color="#B42981" fontSize={'16px'} onClick={eliminarProducto}>Eliminar producto extra</Typography>
+                                                {visibleProductoExtra &&
+                                                    <Grid m={2} sx={{textAlign:'-webkit-center'}}>
+                                                        <Grid sx={{ Width: '100%', flexGrow: 1 }}>
+                                                            <Grid  xs={12}>
+                                                                <Box sx={{ maxWidth: 390, flexGrow: 1 }}>
+                                                                    <Box
+                                                                        sx={{
+                                                                        display: 'flex',
+                                                                        }}
+                                                                    >
+                                                                        <Typography variant="h6" color="initial" fontFamily={'Archivo Black, sans-serif'} fontSize={16} style={{textAlign:'center', width:'50%'}}>{productosExtra[activeStep].nombre}</Typography>
+                                                                        <Typography variant="h6" color="initial" fontFamily={'Archivo Black, sans-serif'} fontSize={16} style={{color:'red', textAlign:'center', width:'50%' }}>${productosExtra[activeStep].precio}</Typography>
 
-                                            <Typography variant="h6" color="initial">
-                                                {productoExtra.nombreProductoExtra}
-                                            </Typography>
+                                                                    </Box>
+                                                                    <Box sx={{ height: {md:300, xs:250}, maxWidth: {md:300, xs:250}, width: '100%', pr: 3, pb: 3, m:3 }}>
+                                                                        <img src={`${productosExtra[activeStep].imagen}`} alt=""  width={'100%'} height={'100%'} style={{ objectFit: 'cover'}}/>
 
-                                            <Typography variant="h6" color="initial">
-                                                {productoExtra.precioProductoExtra}
-                                            </Typography>
-                                        </Grid>
-                                    </>
-                                )
+                                                                        <Button sx={stylesComponents.button} onClick={() =>  guardarProductoExtra(productosExtra[activeStep].nombre, productosExtra[activeStep].precio) }>
+                                                                            Añadir
+                                                                        </Button>
+
+                                                                    </Box>
+                                                                    <MobileStepper
+                                                                        variant="text"
+                                                                        steps={maxSteps}
+                                                                        position="static"
+                                                                        activeStep={activeStep}
+                                                                        nextButton={
+                                                                        <Button
+                                                                            size="small"
+                                                                            onClick={handleNext}
+                                                                            disabled={activeStep == maxSteps - 1}
+                                                                        >
+                                                                            Next
+                                                                            {theme.direction === 'rtl' ? (
+                                                                            <KeyboardArrowLeft />
+                                                                            ) : (
+                                                                            <KeyboardArrowRight />
+                                                                            )}
+                                                                        </Button>
+                                                                        }
+                                                                        backButton={
+                                                                        <Button size="small" onClick={handleBack} disabled={activeStep == 0}>
+                                                                            {theme.direction === 'rtl' ? (
+                                                                            <KeyboardArrowRight />
+                                                                            ) : (
+                                                                            <KeyboardArrowLeft />
+                                                                            )}
+                                                                            Back
+                                                                        </Button>
+                                                                        }
+                                                                    />
+                                                                </Box>
+
+
+                                                            </Grid>
+
+                                                        </Grid>
+                                                    </Grid>
+                                                }
+                                            </>
+                                        ):(
+                                            <>
+                                                <Grid  m={2}>
+                                                    <Typography variant="h6" component={Button} color="#B42981" fontSize={'16px'} onClick={canbiarProductoExtra}>Cambiar producto extra</Typography>
+                                                    <Typography variant="h6" component={Button} color="#B42981" fontSize={'16px'} onClick={eliminarProducto}>Eliminar producto extra</Typography>
+
+                                                    <Typography variant="h6" color="initial">
+                                                        {productoExtra.nombreProductoExtra}
+                                                    </Typography>
+
+                                                    <Typography variant="h6" color="initial">
+                                                        {productoExtra.precioProductoExtra}
+                                                    </Typography>
+                                                </Grid>
+                                            </>
+                                        )
+                                    }
+                                </>
                             }
+
 
 
                             <Grid m={2}>
@@ -446,9 +517,19 @@ function ProductId(){
                             <Grid>
 
                                 {habilitarDesabilitarBottonCompra ? (
-                                    <Button sx={stylesComponents.button} onClick={()=>guardarDatos("nombre flor", 83.00)} >
-                                        Añadir al carrito
-                                    </Button>
+                                        product.descuento ? (
+                                            <Button sx={stylesComponents.button} onClick={()=>guardarDatosConDescuento(product.id,product.nombre, product.precio, product.descuento, product.imagen)} >
+                                                Añadir al carrito
+                                            </Button>
+                                        )
+                                        :
+                                        (
+                                            <Button sx={stylesComponents.button} onClick={()=>guardarDatos(product.id,product.nombre, product.precio, product.imagen)} >
+                                                Añadir al carrito
+                                            </Button>
+                                        )
+
+
                                 ):(
                                     <Button sx={stylesComponents.button} disabled >
                                         Añadir al carrito
@@ -475,7 +556,7 @@ function ProductId(){
                         <Grid item sm={12}  md={4} lg={3} sx={stylesComponents.contenedorProducto}>
                             <Box display={'flex'} style={{justifyContent:'center'}}>
                                 <Grid sx={stylesComponents.contenerdorImagenProducto}>
-                                    <img src={product1} alt="" width={'100%'} height={'100%'} style={{ objectFit: 'cover'}}/>
+                                    <img src={product.imagen} alt="" width={'100%'} height={'100%'} style={{ objectFit: 'cover'}}/>
                                 </Grid>
                             </Box>
                             <Box p={1}>
@@ -491,7 +572,7 @@ function ProductId(){
                         <Grid item sm={12}  md={4} lg={3} sx={stylesComponents.contenedorProducto}>
                                 <Box display={'flex'} style={{justifyContent:'center'}}>
                                     <Grid sx={stylesComponents.contenerdorImagenProducto}>
-                                        <img src={product2} alt="" width={'100%'} height={'100%'} style={{ objectFit: 'cover'}}/>
+                                        <img src={product.imagen} alt="" width={'100%'} height={'100%'} style={{ objectFit: 'cover'}}/>
                                     </Grid>
                                 </Box>
                                 <Box p={1}>
@@ -507,7 +588,7 @@ function ProductId(){
                         <Grid item sm={12}  md={4} lg={3} sx={stylesComponents.contenedorProducto}>
                             <Box display={'flex'} style={{justifyContent:'center'}}>
                                 <Grid sx={stylesComponents.contenerdorImagenProducto}>
-                                    <img src={product3} alt="" width={'100%'} height={'100%'} style={{ objectFit: 'cover'}}/>
+                                    <img src={product.imagen} alt="" width={'100%'} height={'100%'} style={{ objectFit: 'cover'}}/>
                                 </Grid>
                             </Box>
                             <Box p={1}>
@@ -523,7 +604,7 @@ function ProductId(){
                         <Grid item sm={12}  md={4} lg={3} sx={stylesComponents.contenedorProducto}>
                             <Box display={'flex'} style={{justifyContent:'center'}}>
                                 <Grid sx={stylesComponents.contenerdorImagenProducto}>
-                                    <img src={product4} alt="" width={'100%'} height={'100%'} style={{ objectFit: 'cover'}}/>
+                                    <img src={product.imagen} alt="" width={'100%'} height={'100%'} style={{ objectFit: 'cover'}}/>
                                 </Grid>
                             </Box>
                             <Box p={1}>

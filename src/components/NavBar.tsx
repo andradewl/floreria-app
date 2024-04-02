@@ -17,7 +17,7 @@ import '../styles/estilosCss.css'
 import { Link  } from 'react-router-dom';
 import { Grid } from '@mui/material';
 import { stylesComponents } from '../styles/stylesComponentes';
-
+import { UserLogin } from '../interfaces/interfaces';
 
 const settings = ['Profile', 'Account', 'Dashboard', 'Logout'];
 
@@ -25,6 +25,9 @@ const settings = ['Profile', 'Account', 'Dashboard', 'Logout'];
 function ResponsiveAppBar() {
   const [anchorElNav, setAnchorElNav] = React.useState<null | HTMLElement>(null);
   const [anchorElUser, setAnchorElUser] = React.useState<null | HTMLElement>(null);
+  const [userLogin, setUserLogin] = React.useState<UserLogin>();
+
+
 
   const handleOpenNavMenu = (event: React.MouseEvent<HTMLElement>) => {
     setAnchorElNav(event.currentTarget);
@@ -38,14 +41,41 @@ function ResponsiveAppBar() {
     setAnchorElUser(null);
   };
 
+  const handleLogOut = () => {
+  
+    sessionStorage.removeItem("userlogIn")
+    sessionStorage.removeItem("credentials")
+
+    window.location.reload();
+
+
+  };
+
+  
+
+  React.useEffect(()=>{
+    const storedUserCredentials = sessionStorage.getItem('credentials');
+    const storedUserName = sessionStorage.getItem('userlogIn');
+
+    if (storedUserCredentials && storedUserName) {
+      // Si se encuentran datos en sessionStorage, parsea el JSON
+      const userCredential = JSON.parse(storedUserCredentials);
+      const userInfo = JSON.parse(storedUserName);
+
+      console.log(userCredential.email, userInfo.email);
+      setUserLogin(userInfo)
+
+    }
+  },[])
+
   return (
-    <AppBar  sx={stylesComponents.appBar}>
+    <AppBar  sx={stylesComponents.appBar} >
       <Container maxWidth="xl">
         <Toolbar disableGutters sx={stylesComponents.toolbar}>
           {/* Logo para escritorio */}
           <Grid
             sx={{
-              width: '150px',
+              width: '90px',
               display: { xs: 'none', md: 'flex' },
             }}
           >
@@ -146,6 +176,15 @@ function ResponsiveAppBar() {
               >
                 Contacto
             </Button>
+            <Button
+                component={Link}
+                to="/shoppingCart"
+                variant="text"
+                onClick={handleCloseNavMenu}
+                sx={stylesComponents.navigationButton}
+              >
+                Carrito
+            </Button>
           </Box>
 
           {/* Logo para movil */}
@@ -157,13 +196,41 @@ function ResponsiveAppBar() {
             />
           </Grid>
 
-          <Box sx={{ flexGrow: 0 }}>
+
+          <Grid sx={{ flexGrow: 0,display:{md:'flex', xs:'none'}, alignItems :'center' }}>
+
+            {
+              userLogin ? (
+                <Button
+                  
+                  variant="text"
+                  onClick={handleLogOut}
+                  sx={stylesComponents.navigationButton}
+                >
+                  {userLogin.name}
+                </Button>
+              ):(
+                <Button
+                  component={Link}
+                  to="/Login"
+                  variant="text"
+                  onClick={handleCloseNavMenu}
+                  sx={stylesComponents.navigationButton}
+                >
+                  LogIn
+                </Button>
+              )
+            }
+            <SearchIcon color="disabled" sx={stylesComponents.iconsMovile}/>
+          </Grid>
+
+          <Grid sx={{ flexGrow: 0,display:{md:'none', xs:'flex'} }}>
                 <SearchIcon color="disabled" sx={stylesComponents.iconsMovile}/>
                 <Link to="/shoppingCart">
                   <ShoppingCartIcon sx={stylesComponents.iconsMovile} />
                 </Link>
                 <Link to="/Usuario" style={{ textDecoration: 'none', color: 'inherit' }}>
-                    <Person2Icon color="disabled" sx={{padding:'3px', fontSize: 30}}/>
+                    <Person2Icon color="disabled" sx={stylesComponents.iconsMovile}/>
                 </Link>
             <Menu
               sx={{ mt: '45px'}}
@@ -187,7 +254,7 @@ function ResponsiveAppBar() {
                 </MenuItem>
               ))}
             </Menu>
-          </Box>
+          </Grid>
         </Toolbar>
       </Container>
     </AppBar>

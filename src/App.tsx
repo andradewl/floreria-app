@@ -15,32 +15,50 @@ import FormDetaFac from "./pages/User/FormDetaFac";
 import ProductId from "./pages/Products/ProductId";
 import shoppingCart from "./pages/shoppingCart/shoppingCart";
 import Login from "./pages/Login";
-import SigIn from "./pages/SigIn";
+import SignIn from "./pages/SignIn";
+
+import shopProducts from "./pages/ShopProduct/shopProducts";
+import { PayPalScriptProvider } from "@paypal/react-paypal-js";
+
+
 
 function App() {
 
+  const initialOptions = {
+    "clientId":"Ac5z9jFzq7vM1OfhlHDJca7sGVhMmyfXSQeSwJE0nxoXboxS_6hSVVy1ownxLWjmXD89Ad66Ql3ivC2V",
+    "currency":"MXN",
+    "intent":"capture"
+  }
+
   return (
-    <BrowserRouter>
-      <NavBar/>
-      <Routes>
-        <Route path="/" Component={Home} />
-        <Route path="/Productos" Component={Productos}/>
-        <Route path="/Producto/:id" Component={ProductId}/>
-        <Route path="/Nosotros" Component={Nosotros}/>
-        <Route path="/Contacto" Component={Contacto}/>
-        <Route path="/Usuario" Component={Usuario}/>
-        <Route path="/EstatusEnvio" Component={EstatusEnvio}/>
-        <Route path="/Ubicaciones" Component={Ubicaciones}/>
-        <Route path="/FormUbicaciones" Component={FormUbicaciones}/>
-        <Route path="/FormDetaFac" Component={FormDetaFac}/>
-        <Route path="/shoppingCart" Component={shoppingCart}/>
-        <Route path="/Login" Component={Login}/>
-        <Route path="/SigIn" Component={SigIn}/>
-      </Routes>
+    <PayPalScriptProvider options={initialOptions}>
+      <BrowserRouter>
 
-      <Footer/>
+        <NavBar/>
 
-    </BrowserRouter>
+        <Routes>
+          <Route path="/" Component={Home} />
+          <Route path="/Productos" Component={Productos}/>
+          <Route path="/Producto/:id" Component={ProductId}/>
+          <Route path="/Nosotros" Component={Nosotros}/>
+          <Route path="/Contacto" Component={Contacto}/>
+          <Route path="/Usuario/:id" Component={Usuario}/>
+          <Route path="/EstatusEnvio" Component={EstatusEnvio}/>
+          <Route path="/Ubicaciones" Component={Ubicaciones}/>
+          <Route path="/FormUbicaciones" Component={FormUbicaciones}/>
+          <Route path="/FormDetaFac" Component={FormDetaFac}/>
+          <Route path="/shoppingCart" Component={shoppingCart}/>
+          <Route path="/Login" Component={Login}/>
+          <Route path="/SignIn" Component={ SignIn }/>
+          <Route path="/shopProducts" Component={shopProducts}/>
+
+        </Routes>
+
+        <Footer/>
+
+      </BrowserRouter>
+    </PayPalScriptProvider>
+
   )
 }
 

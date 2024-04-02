@@ -5,8 +5,8 @@ export const stylesComponents = {
     appBar:{
         backgroundColor: '#ffff',
         boxShadow:'none',
-        padding:'15px 30px 15px 30px',
-        position:"sticky"
+        position:"sticky",
+        height:'0px'
     },
     toolbar:{
         display:'flex',
@@ -51,7 +51,7 @@ export const stylesComponents = {
     iconsMovile:{
         padding:'3px',
         fontSize: 30,
-        color:'blue'
+        color:'purple'
     },
 
     //------------------------------Footer------------------------------//
@@ -108,7 +108,7 @@ export const stylesComponents = {
         borderRadius:'50px',
         fontFamily:'Archivo Black, sans-serif',
         padding:'10px',
-        width:'200px'
+        width:'100%'
     },
     //------------------------------Contenedor ocasiones------------------------------//
 
@@ -175,36 +175,47 @@ export const stylesComponents = {
         paddingLeft:{
             xs:0,
             sm:3,
-            md:6,
-            xl:15
+            md:10,
+            xl:20
         },
         paddingRight:{
             xs:0,
             sm:3,
-            md:6,
-            xl:15
+            md:10,
+            xl:20
         },
         paddingBottom:{
             xs:4,
-            xl:15
+            xl:3
         },
         paddingTop:{
             xs:4,
-            xl:15
+            xl:3
         }
     },
 
     contenedorProducto:{
-        padding:{
-            xs:2,
-            sm:5,
-            md:2,
-            xl:1
-        },
+        paddingLeft:1,
+        paddingRight:1,
+        paddingButtom:5,
+        paddingTop:5
     },
     contenerdorImagenProducto:{
-        width:'200px',
-        height:'275px'
+        width:{
+            xs:'250px',
+            md:'350px',
+            lg:'210px',
+            xl:'250px'
+
+        },
+        height:{
+            xs:'250px',
+            md:'350px',
+            lg:'210px',
+            xl:'250px'
+        },
+        display:'flex',
+        position: 'relative',
     },
 
     //------------------------------Filtros------------------------------//

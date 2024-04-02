@@ -1,32 +1,46 @@
 
-import product1 from '../../assets/productos/productOne.jpg'
-import product2 from '../../assets/productos/productTwo.webp'
-import product3 from '../../assets/productos/productThree.jpg'
-import product4 from '../../assets/productos/productFor.webp'
-import product5 from '../../assets/productos/productFive.jpg'
-import product6 from '../../assets/productos/productSix.jpg'
-import product7 from '../../assets/productos/productsEVEN.jpg'
-import product8 from '../../assets/productos/productEight.webp'
-import product9 from '../../assets/productos/productnNain.webp'
-import product10 from '../../assets/productos/productTen.jpg'
-import product11 from '../../assets/productos/productEleven.webp'
-import { Box, Button, Grid, Typography, MenuItem, FormControl, FormGroup, FormControlLabel, Checkbox } from '@mui/material'
+import React from 'react'
+import { Box, Grid, Typography, MenuItem, FormControl, FormGroup, FormControlLabel, Checkbox } from '@mui/material'
 import { stylesComponents } from '../../styles/stylesComponentes'
 import Select, { SelectChangeEvent } from '@mui/material/Select';
-import React from 'react'
-import { Link } from 'react-router-dom'
-
+import { useNavigate } from 'react-router-dom';
+import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
+import RemoveRedEyeIcon from '@mui/icons-material/RemoveRedEye';
+import { Flower } from '../../interfaces/interfaces'
+import { getProducts } from '../../config/apiFirebase'
 
 function Productos(){
 
+    const navigate = useNavigate()
+
+
     const [precio, setPrecio] = React.useState('')
     const [calificacion, setCalificacion] = React.useState('')
+    const [flores, setFlores] = React.useState<Flower[]>([]);
+
+    React.useEffect(()=>{
+        fetchFlores()
+    },[])
+
+    const fetchFlores = async () => {
+        try {
+            const flowersData = await getProducts();
+            console.log(flowersData)
+            setFlores(flowersData);
+        } catch (error) {
+            console.error('Error fetching flowers:', error);
+        }
+    };
 
     const handleChangePrecio = (event: SelectChangeEvent) => {
         setPrecio(event.target.value);
     };
     const handleChangeCalificacion = (event: SelectChangeEvent) => {
         setCalificacion(event.target.value);
+    };
+
+    const handleRedirectToProductId = (id:string) => {
+        navigate('/Producto/'+id);
     };
 
 
@@ -123,196 +137,109 @@ function Productos(){
                         </Grid>
                         <Grid item md={10} xs={8}>
                             <Grid container sx={stylesComponents.ContenedorProductos}>
-                                <Grid item sm={12} md={6} lg={3} sx={stylesComponents.contenedorProducto}>
-                                    <Box display={'flex'} style={{justifyContent:'center'}}>
-                                        <Grid style={{width:'200px', height:'275px'}}>
-                                            <img src={product1} alt="" width={'100%'} height={'100%'} style={{ objectFit: 'cover'}}/>
-                                        </Grid>
-                                    </Box>
-                                    <Box p={1}>
-                                        <Typography variant="h6" color="initial" fontFamily={'Montserrat, sans-serif'} fontSize={16} textAlign={'start'} style={{color:'#404040', textAlign:'center'}} >Arreglo Multicolor</Typography>
-                                        <Typography variant="h6" color="initial" fontFamily={'Archivo Black, sans-serif'} fontSize={16} textAlign={'start'} style={{color:'#404040', textAlign:'center' }}>$100.00</Typography>
-                                    </Box>
-                                    <Box >
-                                        <Button sx={stylesComponents.button} component={Link}
-                                            to="/Producto/1"
-                                        >
-                                            Ver
-                                        </Button>
-                                    </Box>
-                                </Grid>
-                                <Grid item sm={12} md={6} lg={3} sx={stylesComponents.contenedorProducto}>
+                                {flores && flores.map((item) => (
+                                    <Grid item sm={12} md={6} lg={3} sx={stylesComponents.contenedorProducto}>
                                         <Box display={'flex'} style={{justifyContent:'center'}}>
-                                            <Grid style={{width:'200px', height:'275px'}}>
-                                                <img src={product2} alt="" width={'100%'} height={'100%'} style={{ objectFit: 'cover'}}/>
+                                            <Grid sx={stylesComponents.contenerdorImagenProducto} onClick={()=>handleRedirectToProductId(item.id)}>
+                                                <img src={item.imagen} alt="" width={'100%'} height={'100%'} style={{ objectFit: 'cover', position:'relative'}} />
+                                                <Grid width={'100%'} height={'100%'} sx={{position: 'absolute', textAling:'left', padding:'2px' }}>
+                                                    <Box sx={{ backgroundColor:'#ef8f61', width:'50%', color:'white', borderRadius:'5px', fontSize:'20px' }}>
+                                                        !Oferta¡
+                                                    </Box>
+                                                </Grid>
                                             </Grid>
                                         </Box>
-                                        <Box p={1}>
-                                            <Typography variant="h6" color="initial" fontFamily={'Montserrat, sans-serif'} fontSize={16} textAlign={'start'} style={{color:'#404040', textAlign:'center'}}>Arreglo Multicolor</Typography>
-                                            <Typography variant="h6" color="initial" fontFamily={'Archivo Black, sans-serif'} fontSize={16} textAlign={'start'} style={{color:'#404040', textAlign:'center' }}>$100.00</Typography>
-                                        </Box>
-                                        <Box >
-                                        <Button sx={stylesComponents.button}
-                                            component={Link}
-                                            to="/Producto/2"
-                                        >
-                                            Ver
-                                        </Button>
-                                    </Box>
-                                </Grid>
-                                <Grid item sm={12} md={6} lg={3} sx={stylesComponents.contenedorProducto}>
-                                    <Box display={'flex'} style={{justifyContent:'center'}}>
-                                        <Grid style={{width:'200px', height:'275px'}}>
-                                            <img src={product3} alt="" width={'100%'} height={'100%'} style={{ objectFit: 'cover'}}/>
-                                        </Grid>
-                                    </Box>
-                                    <Box p={1}>
-                                        <Typography variant="h6" color="initial" fontFamily={'Montserrat, sans-serif'} fontSize={16} textAlign={'start'} style={{color:'#404040', textAlign:'center'}}>Arreglo Multicolor</Typography>
-                                        <Typography variant="h6" color="initial" fontFamily={'Archivo Black, sans-serif'} fontSize={16} textAlign={'start'} style={{color:'#404040', textAlign:'center' }}>$100.00</Typography>
-                                    </Box>
-                                    <Box >
-                                        <Button sx={stylesComponents.button}>
-                                            Ver
-                                        </Button>
-                                </Box>
-                                </Grid>
-                                <Grid item sm={12} md={6} lg={3} sx={stylesComponents.contenedorProducto}>
-                                    <Box display={'flex'} style={{justifyContent:'center'}}>
-                                        <Grid style={{width:'200px', height:'275px'}}>
-                                            <img src={product4} alt="" width={'100%'} height={'100%'} style={{ objectFit: 'cover'}}/>
-                                        </Grid>
-                                    </Box>
-                                    <Box p={1}>
-                                        <Typography variant="h6" color="initial" fontFamily={'Montserrat, sans-serif'} fontSize={16} textAlign={'start'} style={{color:'#404040', textAlign:'center'}}>Arreglo Multicolor</Typography>
-                                    </Box>
-                                    <Box display={'flex'}>
-                                        <Typography variant="h6" color="initial" fontFamily={'Archivo Black, sans-serif'} fontSize={16} textAlign={'start'} style={{color:'red', textAlign:'center', width:'50%',  textDecorationLine: 'line-through' }}>$100.00</Typography>
-                                        <Typography variant="h6" color="initial" fontFamily={'Archivo Black, sans-serif'} fontSize={16} textAlign={'start'} style={{color:'blue', textAlign:'center', width:'50%' }}>$83.00</Typography>
-                                    </Box>
-                                    <Box >
-                                        <Button sx={stylesComponents.button}>
-                                            Ver
-                                        </Button>
-                                </Box>
-                                </Grid>
 
-                                <Grid item sm={12} md={6} lg={3} sx={stylesComponents.contenedorProducto}>
-                                    <Box display={'flex'} style={{justifyContent:'center'}}>
-                                        <Grid style={{width:'200px', height:'275px'}}>
-                                            <img src={product5} alt="" width={'100%'} height={'100%'} style={{ objectFit: 'cover'}}/>
-                                        </Grid>
-                                    </Box>
-                                    <Box p={1}>
-                                        <Typography variant="h6" color="initial" fontFamily={'Montserrat, sans-serif'} fontSize={16} textAlign={'start'} style={{color:'#404040', textAlign:'center'}} >Arreglo Multicolor</Typography>
-                                        <Typography variant="h6" color="initial" fontFamily={'Archivo Black, sans-serif'} fontSize={16} textAlign={'start'} style={{color:'#404040', textAlign:'center' }}>$100.00</Typography>
-                                    </Box>
-                                    <Box >
-                                        <Button sx={stylesComponents.button}>
-                                            Ver
-                                        </Button>
-                                    </Box>
-                                </Grid>
-                                <Grid item sm={12} md={6} lg={3} sx={stylesComponents.contenedorProducto}>
-                                        <Box display={'flex'} style={{justifyContent:'center'}}>
-                                           <Grid style={{width:'200px', height:'275px'}}>
-                                                <img src={product6} alt="" width={'100%'} height={'100%'} style={{ objectFit: 'cover'}}/>
-                                            </Grid>
-                                        </Box>
-                                        <Box p={1}>
-                                            <Typography variant="h6" color="initial" fontFamily={'Montserrat, sans-serif'} fontSize={16} textAlign={'start'} style={{color:'#404040', textAlign:'center'}}>Arreglo Multicolor</Typography>
-                                            <Typography variant="h6" color="initial" fontFamily={'Archivo Black, sans-serif'} fontSize={16} textAlign={'start'} style={{color:'#404040', textAlign:'center' }}>$100.00</Typography>
-                                        </Box>
-                                        <Box >
-                                            <Button sx={stylesComponents.button}>
-                                                Ver
-                                            </Button>
-                                    </Box>
-                                </Grid>
-                                <Grid item sm={12} md={6} lg={3} sx={stylesComponents.contenedorProducto}>
-                                    <Box display={'flex'} style={{justifyContent:'center'}}>
-                                        <Grid style={{width:'200px', height:'275px'}}>
-                                            <img src={product7} alt="" width={'100%'} height={'100%'} style={{ objectFit: 'cover'}}/>
-                                        </Grid>
-                                    </Box>
-                                    <Box p={1}>
-                                        <Typography variant="h6" color="initial" fontFamily={'Montserrat, sans-serif'} fontSize={16} textAlign={'start'} style={{color:'#404040', textAlign:'center'}}>Arreglo Multicolor</Typography>
-                                        <Typography variant="h6" color="initial" fontFamily={'Archivo Black, sans-serif'} fontSize={16} textAlign={'start'} style={{color:'#404040', textAlign:'center' }}>$100.00</Typography>
-                                    </Box>
-                                    <Box >
-                                        <Button sx={stylesComponents.button}>
-                                            Ver
-                                        </Button>
-                                </Box>
-                                </Grid>
-                                <Grid item sm={12} md={6} lg={3} sx={stylesComponents.contenedorProducto}>
-                                    <Box display={'flex'} style={{justifyContent:'center'}}>
-                                        <Grid style={{width:'200px', height:'275px'}}>
-                                            <img src={product8} alt="" width={'100%'} height={'100%'} style={{ objectFit: 'cover'}}/>
-                                        </Grid>
-                                    </Box>
-                                    <Box p={1}>
-                                        <Typography variant="h6" color="initial" fontFamily={'Montserrat, sans-serif'} fontSize={16} textAlign={'start'} style={{color:'#404040', textAlign:'center'}}>Arreglo Multicolor</Typography>
-                                    </Box>
-                                    <Box display={'flex'}>
-                                        <Typography variant="h6" color="initial" fontFamily={'Archivo Black, sans-serif'} fontSize={16} textAlign={'start'} style={{color:'red', textAlign:'center', width:'50%',  textDecorationLine: 'line-through' }}>$100.00</Typography>
-                                        <Typography variant="h6" color="initial" fontFamily={'Archivo Black, sans-serif'} fontSize={16} textAlign={'start'} style={{color:'blue', textAlign:'center', width:'50%' }}>$83.00</Typography>
-                                    </Box>
-                                    <Box >
-                                        <Button sx={stylesComponents.button}>
-                                            Ver
-                                        </Button>
-                                </Box>
-                                </Grid>
+                                        {
+                                            item.descuento ?
+                                            (
+                                                <>
+                                                    <Grid
+                                                    container
+                                                    sx={{
+                                                        width: '100%',
+                                                        justifyContent: 'center',
+                                                        textAlign: 'center',
+                                                        padding: '2px'
+                                                    }}
+                                                    >
+                                                        <Grid sx={{width:{xs:'300px', md:'400px', lg:'200px'}}}>
+                                                            <Box sx={{ padding: {xs:'10px', lg:'2px'} }}>
+                                                                <Box sx={{justifyContent:'center', textAlign:'center', padding:'2px'}} >
+                                                                    <FavoriteBorderIcon sx={{width:'50%', justifyContent:'center', textAlign:'center'}}/>
+                                                                    <RemoveRedEyeIcon sx={{width:'50%', justifyContent:'center', textAlign:'center'}}/>
+                                                                </Box>
+                                                                <Box sx={{ justifyContent:'center', textAlign:'center', padding:'2px'}} onClick={()=>handleRedirectToProductId(item.id)}>
+                                                                    <Typography variant="h6" color="initial" fontFamily={'Montserrat, sans-serif'} fontSize={16} textAlign={'center'} style={{color:'#404040', textAlign:'center'}}>{item.nombre}</Typography>
+                                                                </Box>
+                                                                <Box sx={{display:'flex',justifyContent:'center', textAlign:'center', padding:'2px'}}>
+                                                                    <Typography variant="h6" color="initial" fontFamily={'Archivo Black, sans-serif'} fontSize={16} textAlign={'center'} style={{color:'#404040', textAlign:'center', width:'50%',  textDecorationLine: 'line-through' }}>${item.precio}</Typography>
+                                                                    <Typography variant="h6" color="initial" fontFamily={'Archivo Black, sans-serif'} fontSize={16} textAlign={'center'} style={{color:'black', textAlign:'center', width:'50%' }}>${item.descuento}</Typography>
+                                                                </Box>
+                                                            </Box>
+                                                        </Grid>
 
-                                <Grid item sm={12} md={6} lg={3} sx={stylesComponents.contenedorProducto}>
-                                    <Box display={'flex'} style={{justifyContent:'center'}}>
-                                       <Grid style={{width:'200px', height:'275px'}}>
-                                            <img src={product9} alt="" width={'100%'} height={'100%'} style={{ objectFit: 'cover'}}/>
-                                        </Grid>
-                                    </Box>
-                                    <Box p={1}>
-                                        <Typography variant="h6" color="initial" fontFamily={'Montserrat, sans-serif'} fontSize={16} textAlign={'start'} style={{color:'#404040', textAlign:'center'}} >Arreglo Multicolor</Typography>
-                                        <Typography variant="h6" color="initial" fontFamily={'Archivo Black, sans-serif'} fontSize={16} textAlign={'start'} style={{color:'#404040', textAlign:'center' }}>$100.00</Typography>
-                                    </Box>
-                                    <Box >
-                                        <Button sx={stylesComponents.button}>
-                                            Ver
-                                        </Button>
-                                    </Box>
-                                </Grid>
-                                <Grid item sm={12} md={6} lg={3} sx={stylesComponents.contenedorProducto}>
-                                        <Box display={'flex'} style={{justifyContent:'center'}}>
-                                           <Grid style={{width:'200px', height:'275px'}}>
-                                                <img src={product10} alt="" width={'100%'} height={'100%'} style={{ objectFit: 'cover'}}/>
-                                            </Grid>
-                                        </Box>
-                                        <Box p={1}>
-                                            <Typography variant="h6" color="initial" fontFamily={'Montserrat, sans-serif'} fontSize={16} textAlign={'start'} style={{color:'#404040', textAlign:'center'}}>Arreglo Multicolor</Typography>
-                                            <Typography variant="h6" color="initial" fontFamily={'Archivo Black, sans-serif'} fontSize={16} textAlign={'start'} style={{color:'#404040', textAlign:'center' }}>$100.00</Typography>
-                                        </Box>
-                                        <Box >
-                                            <Button sx={stylesComponents.button}>
-                                                Ver
-                                            </Button>
-                                    </Box>
-                                </Grid>
-                                <Grid item sm={12} md={6} lg={3} sx={stylesComponents.contenedorProducto}>
-                                    <Box display={'flex'} style={{justifyContent:'center'}}>
-                                        <Grid style={{width:'200px', height:'275px'}}>
-                                            <img src={product11} alt="" width={'100%'} height={'100%'} style={{ objectFit: 'cover'}}/>
-                                        </Grid>
-                                    </Box>
-                                    <Box p={1}>
-                                        <Typography variant="h6" color="initial" fontFamily={'Montserrat, sans-serif'} fontSize={16} textAlign={'start'} style={{color:'#404040', textAlign:'center'}}>Arreglo Multicolor</Typography>
-                                        <Typography variant="h6" color="initial" fontFamily={'Archivo Black, sans-serif'} fontSize={16} textAlign={'start'} style={{color:'#404040', textAlign:'center' }}>$100.00</Typography>
-                                    </Box>
-                                    <Box >
-                                        <Button sx={stylesComponents.button}>
-                                            Ver
-                                        </Button>
-                                </Box>
-                                </Grid>
+                                                    </Grid>
+                                                </>
+                                            )
+                                            :
+                                            (
+                                                <Grid
+                                                    container
+                                                    sx={{
+                                                        width: '100%',
+                                                        justifyContent: 'center',
+                                                        textAlign: 'center',
+                                                        padding: '2px'
+                                                    }}
+                                                >
+                                                    <Grid
+                                                        sx={{width:{xs:'300px', md:'400px', lg:'200px'}}}
+                                                    >
+                                                        <Box sx={{ padding: {xs:'10px', lg:'2px'} }}>
+                                                            <Box sx={{ justifyContent: 'center', textAlign: 'center' }}>
+                                                                <FavoriteBorderIcon sx={{ width: '50%' }} />
+                                                                <RemoveRedEyeIcon sx={{ width: '50%' }} />
+                                                            </Box>
+                                                            <Box
+                                                                sx={{
+                                                                    justifyContent: 'center',
+                                                                    textAlign: 'center',
+                                                                }}
+                                                            >
+                                                                <Typography
+                                                                    variant="h6"
+                                                                    color="initial"
+                                                                    fontFamily="Montserrat, sans-serif"
+                                                                    fontSize={16}
+                                                                    textAlign="center"
+                                                                    style={{ color: '#404040' }}
+                                                                >
+                                                                {item.nombre}
+                                                                </Typography>
+                                                            </Box>
+                                                            <Box sx={{ justifyContent: 'center', textAlign: 'center', padding: '2px' }}>
+                                                                <Typography
+                                                                    variant="h6"
+                                                                    color="initial"
+                                                                    fontFamily="Archivo Black, sans-serif"
+                                                                    fontSize={16}
+                                                                    textAlign="center"
+                                                                    style={{ color: '#404040' }}
+                                                                >
+                                                                ${item.precio}
+                                                                </Typography>
+                                                            </Box>
+                                                        </Box>
+                                                    </Grid>
+                                                </Grid>
 
+                                            )
+
+                                        }
+
+                                    </Grid>
+                                ))}
                             </Grid>
                         </Grid>
                     </Grid>

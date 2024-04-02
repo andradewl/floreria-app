@@ -13,7 +13,13 @@ import {
 
 import { Visibility, VisibilityOff } from "@mui/icons-material";
 import { addUser } from "../config/apiFirebase";
-export default function SignIn() {
+
+import { useNavigate } from 'react-router-dom';
+
+
+function SignIn() {
+
+  const navigate = useNavigate()
   const [nombreUser, setNombreUser] = useState<string>("");
   const [apellidoUser, setApellidoUser] = useState<string>("");
   const [emailUser, setEmailUser] = useState<string>("");
@@ -46,12 +52,22 @@ export default function SignIn() {
   };
 
   const addNewUser = () => {
-    addUser(nombreUser, apellidoUser, emailUser, passwordUser);
-  };
+    addUser(nombreUser, apellidoUser, emailUser, passwordUser)
+    .then((result) => {
+        alert("Usuario Registrado con éxito, ya puede iniciar sesión");
+        console.log(result);
+        navigate('/Login'); // Assuming navigate is defined and used for routing
+    })
+    .catch((error) => {
+        console.error("Failed to add user:", error);
+        alert("Ha ocurrido un error, intente de nuevo");
+    });
+};
+
 
   return (
     <Container maxWidth="sm">
-      <Grid container spacing={2}>
+      <Grid container spacing={2} pt={15} pb={7}>
         <Grid item xs={12}>
           <Typography
             variant="h4"
@@ -163,3 +179,5 @@ export default function SignIn() {
     </Container>
   );
 }
+
+export default SignIn
