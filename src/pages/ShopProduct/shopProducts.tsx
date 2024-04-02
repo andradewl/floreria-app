@@ -19,7 +19,7 @@ function shopProducts() {
         telefono: ''
     });
     // eslint-disable-next-line react-hooks/rules-of-hooks
-    const [item, setItems] = React.useState<CarritoDeCompra[]>([]);
+    const [, setItems] = React.useState<CarritoDeCompra[]>([]);
     // eslint-disable-next-line react-hooks/rules-of-hooks
     const [totalNumerico, setTotalNumerico] = React.useState<number>(0);
     // eslint-disable-next-line react-hooks/rules-of-hooks
@@ -31,7 +31,7 @@ function shopProducts() {
     React.useEffect(() => {
         const storedItems = localStorage.getItem('Productos');
         const dinero = precioApAGAR()
-        
+
 
         if (storedItems && dinero) {
             const parsedItems: CarritoDeCompra[] = JSON.parse(storedItems);
@@ -91,7 +91,7 @@ function shopProducts() {
         });
     };
 
-    const createOrder = async (data: CreateOrderData) => {
+    const createOrder = async (_data: CreateOrderData) => {
         const dinero = precioApAGAR()
         return fetch(`${servelUrl}/api/orders`, {
             method: "POST",
