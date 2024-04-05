@@ -19,6 +19,7 @@ import SignIn from "./pages/SignIn";
 
 import shopProducts from "./pages/ShopProduct/shopProducts";
 import { PayPalScriptProvider } from "@paypal/react-paypal-js";
+import React from "react";
 
 
 
@@ -30,6 +31,7 @@ function App() {
     "intent":"capture"
   }
 
+ 
   return (
     <PayPalScriptProvider options={initialOptions}>
       <BrowserRouter>

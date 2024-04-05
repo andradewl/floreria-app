@@ -1,16 +1,25 @@
+/* eslint-disable react-hooks/rules-of-hooks */
 /* eslint-disable @typescript-eslint/no-unused-vars */
 
 import React from 'react'
-import {TextField,FormControl,InputLabel, Select,MenuItem,Grid,Typography,FormControlLabel, Checkbox } from '@mui/material'
+import {TextField,FormControl,InputLabel, Select,MenuItem,Grid,Typography } from '@mui/material'
 import { CarritoDeCompra } from "../../interfaces/interfaces"
-import { PayPalButtons  } from '@paypal/react-paypal-js'
+import { PayPalButtons, FUNDING   } from '@paypal/react-paypal-js'
 import { CreateOrderData } from '@paypal/paypal-js';
-
+import { useState, useEffect } from 'react';
+import { Elements } from '@stripe/react-stripe-js';
+import { loadStripe, Stripe } from '@stripe/stripe-js';
+import CheckoutForm from '../../components/CheckoutForm';
 
 function shopProducts() {
 
-    const servelUrl = "http://localhost:8888";
-    // eslint-disable-next-line react-hooks/rules-of-hooks
+    const servelUrl = "https://serve-paypal.vercel.app/";
+
+    const [, setItems] = React.useState<CarritoDeCompra[]>([]);
+    const [totalNumerico, setTotalNumerico] = React.useState<number>(0);
+    const [totalEnvio, settotalEnvio] =  React.useState<number>(0);
+
+
     const [formData, setFormData] =React.useState({
         nombre: '',
         genero: '',
@@ -18,27 +27,46 @@ function shopProducts() {
         email: '',
         telefono: ''
     });
-    // eslint-disable-next-line react-hooks/rules-of-hooks
-    const [, setItems] = React.useState<CarritoDeCompra[]>([]);
-    // eslint-disable-next-line react-hooks/rules-of-hooks
-    const [totalNumerico, setTotalNumerico] = React.useState<number>(0);
-    // eslint-disable-next-line react-hooks/rules-of-hooks
-    const [totalEnvio, settotalEnvio] = React.useState<number>(500);
+    const [stripePromise, setStripePromise] = useState<Promise<Stripe | null> | null>(null);
+    const [clientSecret, setClientSecret] = useState<string | null>(null);
 
+    useEffect(() => {
+        fetch("http://localhost:4002/config").then(async (r) => {
+            const { publishableKey } = await r.json();
+            if (publishableKey) {
+                setStripePromise(loadStripe(publishableKey) as Promise<Stripe | null>);
+            } else {
+                setStripePromise(null);
+            }
+        });
+    }, []);
 
+    useEffect(() => {
+        fetch(" http://localhost:4002/create-payment-intent", {
+            method: "POST",
+            body: JSON.stringify({
+                payment_method_config_id: "pmc_1P1hdNJA4oGedNG85UP0Ar7G",
+            }),
+        }).then(async (result) => {
+            const { clientSecret } = await result.json();
+            setClientSecret(clientSecret);
+        });
+    }, []);
 
     // eslint-disable-next-line react-hooks/rules-of-hooks
     React.useEffect(() => {
         const storedItems = localStorage.getItem('Productos');
+        const storedItemsEnvio = localStorage.getItem('envio');
+
         const dinero = precioApAGAR()
 
-
-        if (storedItems && dinero) {
+        if (storedItems && dinero && storedItemsEnvio) {
             const parsedItems: CarritoDeCompra[] = JSON.parse(storedItems);
             console.log(parsedItems)
-            // totalConSinDescuent(parsedItems)
-            setTotalNumerico(dinero)
+            const ItemsEnvio = parseFloat(storedItemsEnvio);
+            setTotalNumerico(dinero+ItemsEnvio)
             setItems(parsedItems)
+            settotalEnvio(ItemsEnvio)
         }
     }, [])
 
@@ -52,9 +80,6 @@ function shopProducts() {
     }
 
 
-    const handleCheckboxChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-        event.target.checked ? settotalEnvio(totalNumerico+ 0): settotalEnvio(totalNumerico+500);
-    };
 
     const handleChange = (e: { target: { name: string; value: unknown; }; }) => {
         const { name, value } = e.target;
@@ -73,7 +98,7 @@ function shopProducts() {
         return fetch(`${servelUrl}/api/orders/${data.orderID}/capture`, {
             method: "POST",
             headers: {
-                "Content-Type": "application/json",
+            "Content-Type": "application/json",
             },
         })
         .then((response) => {
@@ -84,36 +109,42 @@ function shopProducts() {
         })
         .then((result) => {
             console.log("Pago exitoso", result);
-          // Aquí puedes realizar acciones adicionales después de un pago exitoso
+            // Aquí puedes realizar acciones adicionales después de un pago exitoso
         })
         .catch((error) => {
             console.error("Error al capturar el pago:", error.message);
         });
     };
 
+
     const createOrder = async (_data: CreateOrderData) => {
-        const dinero = precioApAGAR()
+        const dinero = precioApAGAR();
+
         return fetch(`${servelUrl}/api/orders`, {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",
             },
-
             body: JSON.stringify({
-                cart: {
-                    id: "YOUR_PRODUCT_ID",
-                    descripcion:"Productos Floreria Rickys",
-                    quantity:dinero
-                },
-                application_context: {
-                    shipping_preference: 'NO_SHIPPING',
-                    user_action: 'PAY_NOW',
+            purchase_units: [
+                {
+                    amount: {
+                        value: dinero,
+                        currency_code: 'MXN'
+                    },
+
                 }
-            }),
+            ],
+            cart: {
+                id: "YOUR_PRODUCT_ID",
+                descripcion: "Productos Floreria Rickys",
+                quantity: dinero
+            },
+            })
 
         }).then((response) => {
             if (!response.ok) {
-                throw new Error("Error al crear la orden.");
+            throw new Error("Error al crear la orden.");
             }
             return response.json();
         }).then((order) => {
@@ -123,6 +154,7 @@ function shopProducts() {
             console.error("Error al crear la orden:", error.message);
         });
     };
+
 
 
     return (
@@ -211,10 +243,6 @@ function shopProducts() {
 
 
                         </Grid>
-
-
-
-
                         <Grid item xs={12} md={6}  p={4}>
                             <Grid>
                                 <Typography variant="h4" gutterBottom>
@@ -301,15 +329,22 @@ function shopProducts() {
                             <Typography variant="h6" color="initial">Resumen de compra</Typography>
                             <Typography variant="h6" color="initial">Productos: ${totalNumerico}</Typography>
                             <Typography variant="h6" color="initial">Envio: ${totalEnvio}</Typography>
-                            <FormControlLabel control={<Checkbox onChange={handleCheckboxChange}/>} label="Recoge en tienda" />
                             <Typography variant="h6" color="initial">Total: ${totalNumerico + totalEnvio}</Typography>
-                            <Grid sx={{textAlign:'center'}}>
-                                <PayPalButtons
-                                    createOrder={(data) => createOrder(data)}
-                                    onApprove={(data) => onApprove(data)}
-                                />
-                            </Grid>
 
+
+                            <h1>React Stripe and the Payment Element</h1>
+                            {clientSecret && stripePromise && (
+                                <Elements stripe={stripePromise} options={{ clientSecret }}>
+                                    <CheckoutForm />
+                                </Elements>
+                            )}
+
+
+                            <PayPalButtons
+                                createOrder={(data) => createOrder(data)}
+                                onApprove={(data) => onApprove(data)}
+                                fundingSource={FUNDING.PAYPAL}
+                            />
 
                         </Grid>
                     </Grid>

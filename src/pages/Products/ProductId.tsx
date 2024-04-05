@@ -41,6 +41,9 @@ function ProductId(){
     const [changeProductExtra, setChangeProductExtra] = React.useState(true) //comprueba si hay producto extra ya seleccionado
     const [habilitarDesabilitarBottonCompra, setHabilitarDesabilitarBottonCompra] = React.useState(false)
     const [productosExtra, setProductosExtras] = React.useState<ProductoExtra[]>([]);
+    const [cantidadProducto, setcantidadProducto] = React.useState(0);
+    // const [cantidadProductoExtra, setcantidadProductoExtra] = React.useState(0);
+
 
     let maxSteps = productosExtra.length
 
@@ -57,7 +60,7 @@ function ProductId(){
 
     React.useEffect(() => {
         // const algunDatoPresente = !!productoExtra && dedicatoria != '' && !!hora && productoExtra.nombreProductoExtra !='Sin producto extra' && productoExtra.precioProductoExtra != 0;
-        const algunDatoPresente = !!hora;
+        const algunDatoPresente = !!hora && cantidadProducto!=0;
 
         if (algunDatoPresente) {
             setHabilitarDesabilitarBottonCompra(true)
@@ -65,16 +68,6 @@ function ProductId(){
             setHabilitarDesabilitarBottonCompra(false)
         }
     }, [productoExtra, dedicatoria, hora]);
-
-
-    // React.useEffect(() => {
-    //     const algunDatoPresente = carritoDeCompra.length > 0;
-
-    //     if (algunDatoPresente) {
-    //         setLocalStorage('Productos', carritoDeCompra)
-    //         // localStorage.setItem('Productos', JSON.stringify(items));
-    //     }
-    // }, [carritoDeCompra]);
 
     React.useEffect(() => {
         setDedicatoria(dedicatoria)
@@ -92,16 +85,6 @@ function ProductId(){
         const localstoorageArray = getLocalStorage('Productos')
         setCarritoDeCompra(localstoorageArray)
     }
-
-    // const fetchProduct = async () => {
-    //     const idProducto=String(id)
-    //     const productData = await getProductById(idProducto);
-    //     console.log(productData?.productosExtra)
-    //     if(productData?.productosExtra){
-    //         fetchProducExtra(productData.productosExtra)
-    //     }
-    //     setProduct(productData);
-    // };
 
     const fetchProduct = async () => {
         try {
@@ -128,6 +111,18 @@ function ProductId(){
     const handleChangehour = (event: { target: { value: React.SetStateAction<string>; }; }) => {
         sethora(event.target.value);
     };
+
+    const HandlecantidadProducto = (event: React.ChangeEvent<HTMLInputElement>) => {
+        const newValue = parseInt(event.target.value, 10); // Parseamos el valor a un número entero
+        console.log("FLOR",newValue)
+        setcantidadProducto(newValue);
+    }
+
+    // const HandlecantidadProductoExtra = (event: React.ChangeEvent<HTMLInputElement>) => {
+    //     const newValue = parseInt(event.target.value, 10); // Parseamos el valor a un número entero
+    //     console.log("Producto extra", newValue)
+    //     setcantidadProductoExtra(newValue);
+    // }
 
     const handleNext = () => {
         setActiveStep((prevActiveStep) => prevActiveStep + 1);
@@ -184,14 +179,9 @@ function ProductId(){
 
     const guardarProductoExtra = (nombre: string, precio: number)=>{
 
-        // const newProductoExtra = {
-        //     nombreProductoExtra: nombre,
-        //     precioProductoExtra: precio
-        // };
-
         setproductoExtra({
             nombreProductoExtra: nombre,
-            precioProductoExtra: precio
+            precioProductoExtra: precio,
         });
         setvisibleProductoExtra(false)
         setisProductoExtraEmpty(false)
@@ -208,42 +198,41 @@ function ProductId(){
             imagen:imagen,
             fecha: date.format('DD-MM-YYYY'),
             hora: hora,
+            cantidad:cantidadProducto,
             productoExtra: productoExtra ? {
                 nombreProductoExtra: productoExtra.nombreProductoExtra,
-                precioProductoExtra: productoExtra.precioProductoExtra
+                precioProductoExtra: productoExtra.precioProductoExtra,
+
             } : {
                 nombreProductoExtra: 'Sin producto Extra',
-                precioProductoExtra: 0
+                precioProductoExtra: 0,
             },
             dedicatoria:dedicatoria
         };
 
-        const existingProductIndex = carritoDeCompra.findIndex(item => item.id === newItem.id);
+        console.log('Agregando producto al carrito...');
+        // Si el producto no está en el carrito, lo agregamos
+        const updatedCarritoDeCompra = [...carritoDeCompra, newItem];
+        setCarritoDeCompra(updatedCarritoDeCompra);
+        setLocalStorage('Productos', updatedCarritoDeCompra);
 
+        // const existingProductIndex = carritoDeCompra.findIndex(item => item.id === newItem.id);
+        // if (existingProductIndex !== -1) {
+        //     console.log('El producto ya está en el carrito.');
 
+        //     // Reemplazar el objeto existente con el nuevo objeto completo
+        //     const updatedCarritoDeCompra = [...carritoDeCompra];
+        //     updatedCarritoDeCompra[existingProductIndex] = newItem;
 
-        if (existingProductIndex !== -1) {
-            console.log('El producto ya está en el carrito.');
-
-            // Reemplazar el objeto existente con el nuevo objeto completo
-            const updatedCarritoDeCompra = [...carritoDeCompra];
-            updatedCarritoDeCompra[existingProductIndex] = newItem;
-
-            setCarritoDeCompra(updatedCarritoDeCompra);
-            setLocalStorage('Productos', updatedCarritoDeCompra);
-        } else {
-            console.log('Agregando producto al carrito...');
-            // Si el producto no está en el carrito, lo agregamos
-            const updatedCarritoDeCompra = [...carritoDeCompra, newItem];
-            setCarritoDeCompra(updatedCarritoDeCompra);
-            setLocalStorage('Productos', updatedCarritoDeCompra);
-        }
-
-        // console.log(newItem);
-        // const updateCarritoDeCompra = [...carritoDeCompra, newItem];
-        // setLocalStorage('Productos', updateCarritoDeCompra)
-        // getDataCarShopping()
-
+        //     setCarritoDeCompra(updatedCarritoDeCompra);
+        //     setLocalStorage('Productos', updatedCarritoDeCompra);
+        // } else {
+        //     console.log('Agregando producto al carrito...');
+        //     // Si el producto no está en el carrito, lo agregamos
+        //     const updatedCarritoDeCompra = [...carritoDeCompra, newItem];
+        //     setCarritoDeCompra(updatedCarritoDeCompra);
+        //     setLocalStorage('Productos', updatedCarritoDeCompra);
+        // }
     }
 
     const guardarDatos =(id:string,nombre: string, precio: number, imagen:string)=>{
@@ -255,35 +244,41 @@ function ProductId(){
             imagen:imagen,
             fecha: date.format('DD-MM-YYYY'),
             hora: hora,
+            cantidad:cantidadProducto,
             productoExtra: productoExtra ? {
                 nombreProductoExtra: productoExtra.nombreProductoExtra,
-                precioProductoExtra: productoExtra.precioProductoExtra
+                precioProductoExtra: productoExtra.precioProductoExtra,
             } : {
                 nombreProductoExtra: 'Sin producto Extra',
-                precioProductoExtra: 0
+                precioProductoExtra: 0,
             },
             dedicatoria: dedicatoria,
         };
 
+        console.log('Agregando producto al carrito...');
+        // Si el producto no está en el carrito, lo agregamos
+        const updatedCarritoDeCompra = [...carritoDeCompra, newItem];
+        setCarritoDeCompra(updatedCarritoDeCompra);
+        setLocalStorage('Productos', updatedCarritoDeCompra);
 
-        const existingProductIndex = carritoDeCompra.findIndex(item => item.id === newItem.id);
+        // const existingProductIndex = carritoDeCompra.findIndex(item => item.id === newItem.id);
 
-        if (existingProductIndex !== -1) {
-            console.log('El producto ya está en el carrito.');
+        // if (existingProductIndex !== -1) {
+        //     console.log('El producto ya está en el carrito.');
 
-            // Reemplazar el objeto existente con el nuevo objeto completo
-            const updatedCarritoDeCompra = [...carritoDeCompra];
-            updatedCarritoDeCompra[existingProductIndex] = newItem;
+        //     // Reemplazar el objeto existente con el nuevo objeto completo
+        //     const updatedCarritoDeCompra = [...carritoDeCompra];
+        //     updatedCarritoDeCompra[existingProductIndex] = newItem;
 
-            setCarritoDeCompra(updatedCarritoDeCompra);
-            setLocalStorage('Productos', updatedCarritoDeCompra);
-        } else {
-            console.log('Agregando producto al carrito...');
-            // Si el producto no está en el carrito, lo agregamos
-            const updatedCarritoDeCompra = [...carritoDeCompra, newItem];
-            setCarritoDeCompra(updatedCarritoDeCompra);
-            setLocalStorage('Productos', updatedCarritoDeCompra);
-        }
+        //     setCarritoDeCompra(updatedCarritoDeCompra);
+        //     setLocalStorage('Productos', updatedCarritoDeCompra);
+        // } else {
+        //     console.log('Agregando producto al carrito...');
+        //     // Si el producto no está en el carrito, lo agregamos
+        //     const updatedCarritoDeCompra = [...carritoDeCompra, newItem];
+        //     setCarritoDeCompra(updatedCarritoDeCompra);
+        //     setLocalStorage('Productos', updatedCarritoDeCompra);
+        // }
     }
 
 
@@ -305,39 +300,17 @@ function ProductId(){
 
     return(
         <>
-            <Grid p={5}>
+            <Grid sx={{ paddingTop:10, paddingLeft:{xs:5, md:8, lg:25}, paddingRight:{xs:5, md:8, lg:25} }}>
                 <Grid container>
-                    <Grid item md={6} xs={12} sx={{justifyContent:'center', textAlign:'-webkit-center'}}>
-                        <Grid sx={{width:{xs:'270px', md:'350px'}, height:{xs:'390px', md:'450px'}}}>
-                            <img src={product.imagen} alt="" width={'100%'} height={'100%'} style={{ objectFit: 'cover'}}/>
-                        </Grid>
-                        <Grid display={'flex'}  sx={{justifyContent:'center'}}>
-                            <Grid sx={{width:{xs:'70px', md:'120px'}, height:{xs:'70px', md:'120px'}}} p={1}>
-                                <img src={product.imagen} alt="" width={'100%'} height={'100%'} style={{ objectFit: 'cover'}}/>
-                            </Grid>
-                            <Grid sx={{width:{xs:'70px', md:'120px'}, height:{xs:'70px', md:'120px'}}} p={1}>
-                                <img src={product.imagen} alt="" width={'100%'} height={'100%'} style={{ objectFit: 'cover'}}/>
-                            </Grid>
-                            <Grid sx={{width:{xs:'70px', md:'120px'}, height:{xs:'70px', md:'120px'}}} p={1}>
-                                <img src={product.imagen} alt="" width={'100%'} height={'100%'} style={{ objectFit: 'cover'}}/>
-                            </Grid>
-                            <Grid sx={{width:{xs:'70px', md:'120px'}, height:{xs:'70px', md:'120px'}}} p={1}>
-                                <img src={product.imagen} alt="" width={'100%'} height={'100%'} style={{ objectFit: 'cover'}}/>
-                            </Grid>
-                            <Grid sx={{width:{xs:'70px', md:'120px'}, height:{xs:'70px', md:'120px'}}} p={1}>
-                                <img src={product.imagen} alt="" width={'100%'} height={'100%'} style={{ objectFit: 'cover'}}/>
-                            </Grid>
-                        </Grid>
+                    <Grid item md={5} xs={12} sx={{justifyContent:'center'}}>
+                        {/* <Grid sx={{width:{xs:'270px', md:'350px'}, height:{xs:'390px', md:'450px'}}}> */}
+                            <img src={product.imagen} alt="" style={{ width:'100%', height:'auto' }}/>
+                        {/* </Grid> */}
                     </Grid>
-                    <Grid item md={6} xs={12} sx={{ paddingLeft:{md:10, xs:0}, paddingRight:{md:10, xs:0} }}>
+                    <Grid item md={7} xs={12} sx={{ paddingLeft:{lg: 5, md:2, xs:0}, paddingRight:{md:5, xs:0} }}>
                         <Grid>
                             <Typography variant="h4" color="initial" sx={{fontFamily:'Archivo Black, sans-serif', color:'#B42981'}} p={1}>{product.nombre}</Typography>
                         </Grid>
-                        {/* <Grid>
-                            <Typography variant="h6" color="initial"
-                                p={1}>17% - off</Typography>
-                        </Grid> */}
-
                         {
                             product.descuento ?
                             (
@@ -370,6 +343,16 @@ function ProductId(){
                         </Grid>
 
                         <Grid sx={{paddingTop:{  md:2, xs:1}}}>
+                            <Grid m={2}>
+                                <Typography variant="h6" color="#B42981" fontSize={'16px'}>Cantidad</Typography>
+                                <TextField
+                                    label="Cantidad"
+                                    type="number"
+                                    fullWidth
+                                    onChange={HandlecantidadProducto}
+
+                                />
+                            </Grid>
 
                             <Grid m={2}>
                                 <Typography variant="h6" color="#B42981" fontSize={'16px'}>Elije una Fecha y hora de entrega</Typography>
@@ -434,8 +417,7 @@ function ProductId(){
                                                                     </Box>
                                                                     <Box sx={{ height: {md:300, xs:250}, maxWidth: {md:300, xs:250}, width: '100%', pr: 3, pb: 3, m:3 }}>
                                                                         <img src={`${productosExtra[activeStep].imagen}`} alt=""  width={'100%'} height={'100%'} style={{ objectFit: 'cover'}}/>
-
-                                                                        <Button sx={stylesComponents.button} onClick={() =>  guardarProductoExtra(productosExtra[activeStep].nombre, productosExtra[activeStep].precio) }>
+                                                                        <Button sx={stylesComponents.button} onClick={() =>  guardarProductoExtra(productosExtra[activeStep].nombre, productosExtra[activeStep].precio ) }>
                                                                             Añadir
                                                                         </Button>
 

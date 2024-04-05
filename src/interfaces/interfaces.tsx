@@ -35,6 +35,7 @@ interface carritoDeCompra {
     imagen:string;
     fecha: string;
     hora: string;
+    cantidad:number;
     productoExtra: {
         nombreProductoExtra: string;
         precioProductoExtra: number;

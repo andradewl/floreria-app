@@ -15,6 +15,8 @@ function ShoppingCart(){
 
 
     React.useEffect(() => {
+        localStorage.setItem('envio',JSON.stringify(500));
+
         const storedItems = localStorage.getItem('Productos');
         if (storedItems) {
             const parsedItems: CarritoDeCompra[] = JSON.parse(storedItems);
@@ -29,9 +31,8 @@ function ShoppingCart(){
     React.useEffect(() => {
         let sumaTotal = 0;
             items.forEach((item) => {
-                sumaTotal += item.precio+ item.productoExtra.precioProductoExtra;
+                sumaTotal += (item.precio * item.cantidad)+( item.productoExtra.precioProductoExtra);
             })
-
             setTotalNumerico(sumaTotal);
     }, [items]);
 
@@ -46,8 +47,10 @@ function ShoppingCart(){
 
     const handleCheckboxChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         if(event.target.checked){
+            localStorage.setItem('envio', JSON.stringify(0) );
             settotalEnvio(0)
         }else{
+            localStorage.setItem('envio',JSON.stringify(500));
             settotalEnvio(500)
         }
         // setChecked(event.target.checked);
@@ -102,7 +105,7 @@ function ShoppingCart(){
                                                     <Typography variant="h6" color="initial" fontSize={17}>{item.nombre}</Typography>
                                                     <Typography variant="h6" color="initial" fontSize={17}>Fecha y hora de entrega: {item.fecha}, {item.hora}</Typography>
                                                     <Button onClick={() => eliminarItem(item.id)}>
-                                                        Elimirnar
+                                                        Eliminar
                                                     </Button>
                                                 </Grid>
                                             </Grid>
@@ -110,13 +113,13 @@ function ShoppingCart(){
                                         </Grid>
                                         <Grid m={1}>
                                             <Typography variant="h6" sx={{color:'#979797de'}} fontSize={14}>Dedicatoria: {item.dedicatoria}</Typography>
-                                            <Typography variant="h6"  sx={{color:'#979797de'}} fontSize={14}>Producto Extra: {item.productoExtra.nombreProductoExtra}</Typography>
+                                            <Typography variant="h6"  sx={{color:'#979797de'}} fontSize={14}>Producto Extra: {item.productoExtra.nombreProductoExtra} ${item.productoExtra.precioProductoExtra }</Typography>
                                         </Grid>
 
                                     </Grid>
 
                                     <Grid item xs={2}>
-                                        <Typography variant="h6" color="initial">$ {item.precio + item.productoExtra.precioProductoExtra} </Typography>
+                                        <Typography variant="h6" color="initial">x{item.cantidad} $ {(item.precio*item.cantidad) + item.productoExtra.precioProductoExtra} </Typography>
                                     </Grid>
                                 </Grid>
 
