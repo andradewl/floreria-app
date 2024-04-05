@@ -13,7 +13,7 @@ import CheckoutForm from '../../components/CheckoutForm';
 
 function shopProducts() {
 
-    const servelUrl = "https://serve-paypal.vercel.app/";
+    const servelUrl = "https://serve-paypal.vercel.app";
 
     const [, setItems] = React.useState<CarritoDeCompra[]>([]);
     const [totalNumerico, setTotalNumerico] = React.useState<number>(0);
