@@ -31,7 +31,7 @@ function shopProducts() {
     const [clientSecret, setClientSecret] = useState<string | null>(null);
 
     useEffect(() => {
-        fetch("http://localhost:4002/config").then(async (r) => {
+        fetch("https://server-stripe-chi.vercel.app/config").then(async (r) => {
             const { publishableKey } = await r.json();
             if (publishableKey) {
                 setStripePromise(loadStripe(publishableKey) as Promise<Stripe | null>);
@@ -42,7 +42,7 @@ function shopProducts() {
     }, []);
 
     useEffect(() => {
-        fetch(" http://localhost:4002/create-payment-intent", {
+        fetch("https://server-stripe-chi.vercel.app/create-payment-intent", {
             method: "POST",
             body: JSON.stringify({
                 payment_method_config_id: "pmc_1P1hdNJA4oGedNG85UP0Ar7G",
