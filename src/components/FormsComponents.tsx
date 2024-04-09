@@ -155,17 +155,27 @@ function shopProducts() {
                 const { id } = paymentMethod as PaymentMethod;
                 console.log(id)
 
-                const response = await axios.post('https://stripe-server-m8z2d4e67-brayans-projects-0e2df9ae.vercel.app/payment', {
-                    amount: 1000, // Monto en centavos (por ejemplo, $10.00)
-                    id,
-                })
+                const response = await fetch('https://stripe-server-blue.vercel.app/payment', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        amount: 1000, // Monto en centavos (por ejemplo, $10.00)
+                        id,
+                    }),
+                });
 
-                console.log(response)
+                if (!response.ok) {
+                    throw new Error('Error al procesar la solicitud');
+                }
 
+                const responseData = await response.json();
+                console.log(responseData)
 
-                if(response){
+                if(responseData){
 
-                    const result = await stripe.confirmCardPayment(response.data.paymentIntent, {payment_method: id});
+                    const result = await stripe.confirmCardPayment(responseData.data.paymentIntent, {payment_method: id});
 
                     if (result.error) {
                         console.error("error pago",result.error.message);
