@@ -8,7 +8,7 @@ import './styles/estilosCss.css'
 ReactDOM.createRoot(document.getElementById('root')!).render(
   <React.StrictMode>
     <ThemeConfig>
-      <App />
+        <App />
     </ThemeConfig>
   </React.StrictMode>,
 )

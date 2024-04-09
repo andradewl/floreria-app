@@ -19,6 +19,7 @@ import SignIn from "./pages/SignIn";
 
 import shopProducts from "./pages/ShopProduct/shopProducts";
 import { PayPalScriptProvider } from "@paypal/react-paypal-js";
+import Completeion from "./pages/ShopProduct/Completeion";
 
 
 
@@ -52,6 +53,7 @@ function App() {
           <Route path="/Login" Component={Login}/>
           <Route path="/SignIn" Component={ SignIn }/>
           <Route path="/shopProducts" Component={shopProducts}/>
+          <Route path="/Completeion" Component={ Completeion }/>
 
         </Routes>
 

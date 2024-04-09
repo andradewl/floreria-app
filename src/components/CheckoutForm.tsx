@@ -6,6 +6,8 @@ export default function CheckoutForm() {
     const stripe = useStripe();
     const elements = useElements();
 
+
+
     const [message, setMessage] = useState("");
     const [isProcessing, setIsProcessing] = useState(false);
 
@@ -23,8 +25,7 @@ export default function CheckoutForm() {
         const { error } = await stripe.confirmPayment({
             elements,
             confirmParams: {
-                // Make sure to change this to your payment completion page
-                return_url: `${window.location.origin}/completion`,
+                return_url: `http://localhost:5173/shopProducts`,
             },
         });
 
@@ -39,14 +40,14 @@ export default function CheckoutForm() {
 
     return (
         <form id="payment-form" onSubmit={handleSubmit}>
-        <PaymentElement id="payment-element" />
-        <button disabled={isProcessing || !stripe || !elements} id="submit">
-            <span id="button-text">
-            {isProcessing ? "Processing ... " : "Pay now"}
-            </span>
-        </button>
-        {/* Show any error or success messages */}
-        {message && <div id="payment-message">{message}</div>}
+            <PaymentElement id="payment-element" />
+            <button disabled={isProcessing || !stripe || !elements} id="submit">
+                <span id="button-text">
+                {isProcessing ? "Processing ... " : "Pay now"}
+                </span>
+            </button>
+            {/* Show any error or success messages */}
+            {message && <div id="payment-message">{message}</div>}
         </form>
     );
 }
