@@ -62,7 +62,39 @@ interface userLogin {
     email: string;
 }
 
+
+interface Pedido {
+    facturacion: {
+        nombre: string;
+        apellido: string;
+        direccion: string;
+        colonia: string;
+        ciudad: string;
+        estado: string;
+        cp: string;
+        email: string;
+        telefono: string;
+    };
+    datosEnvio: {
+        nombre: string;
+        apellido: string;
+        direccion: string;
+        colonia: string;
+        ciudad: string;
+        estado: string;
+        cp: string;
+        email: string;
+        telefono: string;
+    };
+    carritoCompra: carritoDeCompra[];
+    idEstado:string;
+    uidUserLogin:string
+
+}
+
 export type Flower = FlowerWithOferta | FlowerWithoutOferta;
 export type CarritoDeCompra = carritoDeCompra;
 export type ProductoExtra = productoExtra;
 export type UserLogin = userLogin;
+
+export type NuevoPedido = Pedido;

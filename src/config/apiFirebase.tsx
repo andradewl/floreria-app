@@ -1,6 +1,6 @@
 import {auth, db} from './firfebase';
-import {collection, getDocs, getDoc, doc,  query, where, setDoc} from 'firebase/firestore';
-import { Flower, ProductoExtra } from '../interfaces/interfaces';
+import {collection, getDocs, getDoc, doc,  query, where, setDoc, addDoc} from 'firebase/firestore';
+import { Flower, ProductoExtra, NuevoPedido } from '../interfaces/interfaces';
 import { createUserWithEmailAndPassword, signInWithEmailAndPassword } from 'firebase/auth';
 
 
@@ -118,4 +118,16 @@ export const getProductsExtraByIds = async (productIds: string[]): Promise<Produ
             return extra;
         });
         return productsExtra;
+};
+
+
+export const addPedido = async (pedidoData:NuevoPedido) => {
+    try {
+        const pedidoRef = await addDoc(collection(db, 'pedidos'), pedidoData);
+        console.log("Pedido añadido con ID: ", pedidoRef.id);
+        return pedidoRef.id; // Devuelve el ID del nuevo pedido
+    } catch (error) {
+        console.error("Error añadiendo pedido: ", error);
+        throw new Error("Error al añadir pedido a Firebase");
+    }
 };
