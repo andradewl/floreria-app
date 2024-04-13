@@ -300,16 +300,16 @@ function ProductId(){
 
     return(
         <>
-            <Grid sx={{ paddingTop:10, paddingLeft:{xs:5, md:8, lg:25}, paddingRight:{xs:5, md:8, lg:25} }}>
+            <Grid sx={{ paddingTop:10, paddingLeft:{xs:5, md:8, lg:15, xl:25}, paddingRight:{xs:5, md:8, lg:15, xl:25}}}>
                 <Grid container>
-                    <Grid item md={5} xs={12} sx={{justifyContent:'center'}}>
+                    <Grid item md={6} xs={12} sx={{justifyContent:'center'}}>
                         {/* <Grid sx={{width:{xs:'270px', md:'350px'}, height:{xs:'390px', md:'450px'}}}> */}
                             <img src={product.imagen} alt="" style={{ width:'100%', height:'auto' }}/>
                         {/* </Grid> */}
                     </Grid>
-                    <Grid item md={7} xs={12} sx={{ paddingLeft:{lg: 5, md:2, xs:0}, paddingRight:{md:5, xs:0} }}>
+                    <Grid item md={6} xs={12} sx={{ paddingLeft:{lg: 5, md:2, xs:0}, paddingRight:{md:5, xs:0} }}>
                         <Grid>
-                            <Typography variant="h4" color="initial" sx={{fontFamily:'Archivo Black, sans-serif', color:'#B42981'}} p={1}>{product.nombre}</Typography>
+                            <Typography variant="h4" color="initial" sx={{ color:'#B42981'}} p={1}>{product.nombre}</Typography>
                         </Grid>
                         {
                             product.descuento ?
@@ -317,8 +317,8 @@ function ProductId(){
                                 <Grid>
                                     <Typography variant="subtitle1" color="initial" p={1}>
                                         <Box display={'flex'}>
-                                            <Typography variant="h6" color="initial" fontFamily={'Archivo Black, sans-serif'} fontSize={16} style={{color:'red', textAlign:'start', width:'50%',  textDecorationLine: 'line-through' }}>${product.precio}</Typography>
-                                            <Typography variant="h6" color="initial" fontFamily={'Archivo Black, sans-serif'} fontSize={16} style={{color:'blue', textAlign:'end', width:'50%' }}>${product.descuento}</Typography>
+                                            <Typography variant="h6" color="initial"  fontSize={16} style={{color:'red', textAlign:'start', width:'50%',  textDecorationLine: 'line-through' }}>${product.precio}</Typography>
+                                            <Typography variant="h6" color="initial"  fontSize={16} style={{color:'blue', textAlign:'end', width:'50%' }}>${product.descuento}</Typography>
                                         </Box>
                                     </Typography>
                                 </Grid>
@@ -328,7 +328,7 @@ function ProductId(){
                                 <Grid>
                                     <Typography variant="subtitle1" color="initial" p={1}>
                                         <Box display={'flex'}>
-                                            <Typography variant="h6" color="initial" fontFamily={'Archivo Black, sans-serif'} fontSize={16} style={{color:'red', textAlign:'start', width:'50%',  textDecorationLine: 'line-through' }}>${product.precio}</Typography>
+                                            <Typography variant="h6" color="initial"  fontSize={16} style={{color:'red', textAlign:'start', width:'50%',  textDecorationLine: 'line-through' }}>${product.precio}</Typography>
                                         </Box>
                                     </Typography>
                                 </Grid>
@@ -411,8 +411,8 @@ function ProductId(){
                                                                         display: 'flex',
                                                                         }}
                                                                     >
-                                                                        <Typography variant="h6" color="initial" fontFamily={'Archivo Black, sans-serif'} fontSize={16} style={{textAlign:'center', width:'50%'}}>{productosExtra[activeStep].nombre}</Typography>
-                                                                        <Typography variant="h6" color="initial" fontFamily={'Archivo Black, sans-serif'} fontSize={16} style={{color:'red', textAlign:'center', width:'50%' }}>${productosExtra[activeStep].precio}</Typography>
+                                                                        <Typography variant="h6" color="initial"  fontSize={16} style={{textAlign:'center', width:'50%'}}>{productosExtra[activeStep].nombre}</Typography>
+                                                                        <Typography variant="h6" color="initial"  fontSize={16} style={{color:'red', textAlign:'center', width:'50%' }}>${productosExtra[activeStep].precio}</Typography>
 
                                                                     </Box>
                                                                     <Box sx={{ height: {md:300, xs:250}, maxWidth: {md:300, xs:250}, width: '100%', pr: 3, pb: 3, m:3 }}>
@@ -527,7 +527,7 @@ function ProductId(){
             </Grid>
             <Grid p={5}>
                 <Grid style={{textAlign:'center', padding:'8px'}} >
-                    <Typography variant="h3" color="initial" fontSize='34px' fontFamily={'Archivo Black, sans-serif'} style={{color:'#B29426'}} >
+                    <Typography variant="h3" color="initial" fontSize='34px'  style={{color:'#B29426'}} >
                         Productos Relacionados
                     </Typography>
                 </Grid>
@@ -543,10 +543,10 @@ function ProductId(){
                             </Box>
                             <Box p={1}>
                                 <Typography variant="h6" color="initial" fontFamily={'Montserrat, sans-serif'} fontSize={16} textAlign={'start'} style={{color:'#404040', textAlign:'center'}} >Arreglo Multicolor</Typography>
-                                <Typography variant="h6" color="initial" fontFamily={'Archivo Black, sans-serif'} fontSize={16} textAlign={'start'} style={{color:'#404040', textAlign:'center' }}>$100.00</Typography>
+                                <Typography variant="h6" color="initial"  fontSize={16} textAlign={'start'} style={{color:'#404040', textAlign:'center' }}>$100.00</Typography>
                             </Box>
                             <Box >
-                                <Button style={{border:'2px solid #b42981', backgroundImage:'linear-gradient(to right, #FF6464 0%, #FF6464  51%, #FF81CE  100%)', textTransform: 'uppercase', transition: '0.5s', color: 'white', borderStyle:'none', borderRadius:'50px', fontFamily:'Archivo Black, sans-serif', padding:'10px', width:'200px' }}>
+                                <Button style={{border:'2px solid #b42981', backgroundImage:'linear-gradient(to right, #FF6464 0%, #FF6464  51%, #FF81CE  100%)', textTransform: 'uppercase', transition: '0.5s', color: 'white', borderStyle:'none', borderRadius:'50px',  padding:'10px', width:'200px' }}>
                                     Ver
                                 </Button>
                             </Box>
@@ -559,10 +559,10 @@ function ProductId(){
                                 </Box>
                                 <Box p={1}>
                                     <Typography variant="h6" color="initial" fontFamily={'Montserrat, sans-serif'} fontSize={16} textAlign={'start'} style={{color:'#404040', textAlign:'center'}}>Arreglo Multicolor</Typography>
-                                    <Typography variant="h6" color="initial" fontFamily={'Archivo Black, sans-serif'} fontSize={16} textAlign={'start'} style={{color:'#404040', textAlign:'center' }}>$100.00</Typography>
+                                    <Typography variant="h6" color="initial"  fontSize={16} textAlign={'start'} style={{color:'#404040', textAlign:'center' }}>$100.00</Typography>
                                 </Box>
                                 <Box >
-                                    <Button style={{border:'2px solid #b42981', backgroundImage:'linear-gradient(to right, #FF6464 0%, #FF6464  51%, #FF81CE  100%)', textTransform: 'uppercase', transition: '0.5s', color: 'white', borderStyle:'none', borderRadius:'50px', fontFamily:'Archivo Black, sans-serif', padding:'10px', width:'200px' }}>
+                                    <Button style={{border:'2px solid #b42981', backgroundImage:'linear-gradient(to right, #FF6464 0%, #FF6464  51%, #FF81CE  100%)', textTransform: 'uppercase', transition: '0.5s', color: 'white', borderStyle:'none', borderRadius:'50px',  padding:'10px', width:'200px' }}>
                                         Ver
                                     </Button>
                             </Box>
@@ -575,10 +575,10 @@ function ProductId(){
                             </Box>
                             <Box p={1}>
                                 <Typography variant="h6" color="initial" fontFamily={'Montserrat, sans-serif'} fontSize={16} textAlign={'start'} style={{color:'#404040', textAlign:'center'}}>Arreglo Multicolor</Typography>
-                                <Typography variant="h6" color="initial" fontFamily={'Archivo Black, sans-serif'} fontSize={16} textAlign={'start'} style={{color:'#404040', textAlign:'center' }}>$100.00</Typography>
+                                <Typography variant="h6" color="initial"  fontSize={16} textAlign={'start'} style={{color:'#404040', textAlign:'center' }}>$100.00</Typography>
                             </Box>
                             <Box >
-                                <Button style={{border:'2px solid #b42981', backgroundImage:'linear-gradient(to right, #FF6464 0%, #FF6464  51%, #FF81CE  100%)', textTransform: 'uppercase', transition: '0.5s', color: 'white', borderStyle:'none', borderRadius:'50px', fontFamily:'Archivo Black, sans-serif', padding:'10px', width:'200px' }}>
+                                <Button style={{border:'2px solid #b42981', backgroundImage:'linear-gradient(to right, #FF6464 0%, #FF6464  51%, #FF81CE  100%)', textTransform: 'uppercase', transition: '0.5s', color: 'white', borderStyle:'none', borderRadius:'50px',  padding:'10px', width:'200px' }}>
                                     Ver
                                 </Button>
                         </Box>
@@ -593,11 +593,11 @@ function ProductId(){
                                 <Typography variant="h6" color="initial" fontFamily={'Montserrat, sans-serif'} fontSize={16} textAlign={'start'} style={{color:'#404040', textAlign:'center'}}>Arreglo Multicolor</Typography>
                             </Box>
                             <Box display={'flex'}>
-                                <Typography variant="h6" color="initial" fontFamily={'Archivo Black, sans-serif'} fontSize={16} textAlign={'start'} style={{color:'red', textAlign:'center', width:'50%',  textDecorationLine: 'line-through' }}>$100.00</Typography>
-                                <Typography variant="h6" color="initial" fontFamily={'Archivo Black, sans-serif'} fontSize={16} textAlign={'start'} style={{color:'blue', textAlign:'center', width:'50%' }}>$83.00</Typography>
+                                <Typography variant="h6" color="initial"  fontSize={16} textAlign={'start'} style={{color:'red', textAlign:'center', width:'50%',  textDecorationLine: 'line-through' }}>$100.00</Typography>
+                                <Typography variant="h6" color="initial"  fontSize={16} textAlign={'start'} style={{color:'blue', textAlign:'center', width:'50%' }}>$83.00</Typography>
                             </Box>
                             <Box >
-                                <Button style={{border:'2px solid #b42981', backgroundImage:'linear-gradient(to right, #FF6464 0%, #FF6464  51%, #FF81CE  100%)', textTransform: 'uppercase', transition: '0.5s', color: 'white', borderStyle:'none', borderRadius:'50px', fontFamily:'Archivo Black, sans-serif', padding:'10px', width:'200px' }}>
+                                <Button style={{border:'2px solid #b42981', backgroundImage:'linear-gradient(to right, #FF6464 0%, #FF6464  51%, #FF81CE  100%)', textTransform: 'uppercase', transition: '0.5s', color: 'white', borderStyle:'none', borderRadius:'50px',  padding:'10px', width:'200px' }}>
                                     Ver
                                 </Button>
                         </Box>

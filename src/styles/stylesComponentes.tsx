@@ -3,14 +3,20 @@ export const stylesComponents = {
 
     //------------------------------Barra de navegacion------------------------------//
     appBar:{
-        backgroundColor: '#ffff',
-        boxShadow:'none',
         position:"sticky",
+        width:'100%',
+        background:"#ffffff00",
         height:'0px'
+    },
+    appBarScrolled:{
+      
+        background:"#ffffff",
+        // height:'0px'
     },
     toolbar:{
         display:'flex',
         justifyContent: 'space-around',
+        // backGroundColor:'white'
     },
 
     boxMenuResponsive:{
@@ -88,14 +94,14 @@ export const stylesComponents = {
     buttonBanners:{
         border:'2px solid #b42981',
         backgroundImage:'linear-gradient(to right, #FF6464 0%, #FF6464  51%, #FF81CE  100%)',
-        margin: '10px',
+        margin: {xm:'2px', md:'10px'},
         textTransform: 'uppercase',
         transition: '0.5s',
         color: 'white',
         borderStyle:'none',
         borderRadius:'50px',
         fontFamily:'Archivo Black, sans-serif',
-        padding:'10px'
+        padding:{xm:'2px', md:'10px'}
     },
     //------------------------------Boton Global------------------------------//
     button:{
@@ -112,22 +118,22 @@ export const stylesComponents = {
     },
     //------------------------------Contenedor ocasiones------------------------------//
 
-    megaContenedorOcasiones:{
-        paddingLeft:{
-            xs:'10px',
-            md:'50px'
-        },
-        paddingRight:{
-            xs:'10px',
-            md:'50px'
+    // megaContenedorOcasiones:{
+    //     paddingLeft:{
+    //         xs:'10px',
+    //         md:'50px'
+    //     },
+    //     paddingRight:{
+    //         xs:'10px',
+    //         md:'50px'
 
-        }
-    },
+    //     }
+    // },
 
     contenedorOcasiones:{
         textAlign:'center',
         justifyContent:'center',
-        alignContent:'center'
+        alignContent:'center',
     },
 
     cajaDatosOcasioners:{
@@ -140,8 +146,11 @@ export const stylesComponents = {
     contenedorImagen:{
         width:'100%',
         height:{
-            xs:'319px'
-        }
+            lg:'300px',
+            md:'200px',
+            xs:'400px'
+        },
+        borderRadius:'100px'
     },
 
     animacionTextoSobreImagenOcasiones:{
@@ -172,48 +181,26 @@ export const stylesComponents = {
         textAlign:'center',
         display:'flex',
         justifyContent:'center',
-        paddingLeft:{
-            xs:0,
-            sm:3,
-            md:10,
-            xl:20
-        },
-        paddingRight:{
-            xs:0,
-            sm:3,
-            md:10,
-            xl:20
-        },
-        paddingBottom:{
-            xs:4,
-            xl:3
-        },
-        paddingTop:{
-            xs:4,
-            xl:3
-        }
     },
 
     contenedorProducto:{
         paddingLeft:1,
         paddingRight:1,
         paddingButtom:5,
-        paddingTop:5
+        paddingTop:5,
+
     },
     contenerdorImagenProducto:{
-        width:{
-            xs:'250px',
-            md:'350px',
-            lg:'210px',
-            xl:'250px'
-
-        },
+        width:'100%',
         height:{
-            xs:'250px',
-            md:'350px',
-            lg:'210px',
-            xl:'250px'
+            xs:'360px',
+            sm:'600px',
+            md:'400px',
+            lg:'250px',
+            xl:'350px'
         },
+        // width:'100px',
+        // height:'100px',
         display:'flex',
         position: 'relative',
     },
@@ -266,6 +253,7 @@ export const stylesComponents = {
             lg:'end',
             sm:'center'
         },
+
 
         fontFamily:'Archivo Black, sans-serif'
 

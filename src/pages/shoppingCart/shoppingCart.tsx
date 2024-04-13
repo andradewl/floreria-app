@@ -85,7 +85,7 @@ function ShoppingCart(){
                     Carrito de compra
                 </Typography>
             </Grid>
-            <Grid container pl={6} pr={6} pt={2} pb={2}>
+            <Grid container paddingLeft={'5%'} paddingRight={'5%'} pt={2} pb={2}>
                 <Grid item md={8} xs={12}  p={1}>
                     <Grid  p={1}>
                         <Grid>

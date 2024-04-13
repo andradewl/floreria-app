@@ -103,7 +103,7 @@ function Banners(){
                                         sx={{
                                         height: {
                                             md:600,
-                                            xs:250
+                                            xs:270
                                         },
                                         display: 'block',
                                         maxWidth: '100%',
@@ -120,7 +120,9 @@ function Banners(){
                                         textAlign: 'center', // Alinea el texto al centro
                                         color: 'black', // Color del texto
                                         padding: '10px', // Espaciado interno del texto (opcional)
-                                        fontSize:'13px',
+                                        fontSize:{
+                                            xs:'10px', md:'18px'
+                                        },
                                         width:'150px',
                                         borderLeft: 4,
                                         borderLeftColor:'#ff26d0'
@@ -130,28 +132,36 @@ function Banners(){
                                         APROVECHA LAS OFERTAS
                                     </Typography>
                                     <Typography variant="h2" sx={{position: 'absolute',
-                                        top: '57%', // Ajusta la posición vertical del texto
+                                        top: {
+                                            xs:'64%', md:'57%'
+                                        }, // Ajusta la posición vertical del texto
                                         left: '15%', // Ajusta la posición horizontal del texto
                                         transform: 'translate(0%, -50%)', // Centra el texto
                                         textAlign: 'center', // Alinea el texto al centro
                                         color: 'black', // Color del texto
                                         padding: '10px', // Espaciado interno del texto (opcional)
                                         borderRadius: '5px',
-                                        fontSize:'50px'
+                                        fontSize:{
+                                            xs:'20px', md:'50px'
+                                        },
                                         }}
                                         fontFamily={'Archivo Black, sans-serif'}
                                         >
                                             Flores
                                     </Typography>
                                     <Typography variant="h2" sx={{position: 'absolute',
-                                        top: '65%', // Ajusta la posición vertical del texto
-                                        left: '15%', // Ajusta la posición horizontal del texto
+                                        top: {
+                                            xs:'74%', md:'65%'
+                                        },
+                                        left: '15%',
                                         transform: 'translate(0%, -50%)', // Centra el texto
                                         textAlign: 'center', // Alinea el texto al centro
                                         color: 'black', // Color del texto
                                         padding: '10px', // Espaciado interno del texto (opcional)
                                         borderRadius: '5px',
-                                        fontSize:'20px'
+                                        fontSize:{
+                                            xs:'15px', md:'20px'
+                                        },
                                         }}
                                         fontFamily={'Archivo Black, sans-serif'}
                                         >

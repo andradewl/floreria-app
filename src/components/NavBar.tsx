@@ -26,7 +26,21 @@ function ResponsiveAppBar() {
   const [anchorElNav, setAnchorElNav] = React.useState<null | HTMLElement>(null);
   const [anchorElUser, setAnchorElUser] = React.useState<null | HTMLElement>(null);
   const [userLogin, setUserLogin] = React.useState<UserLogin>();
+  const [isScrolled, setIsScrolled] = React.useState(false);
 
+  React.useEffect(()=>{
+    const storedUserCredentials = sessionStorage.getItem('credentials');
+    const storedUserName = sessionStorage.getItem('userlogIn');
+
+    if (storedUserCredentials && storedUserName) {
+      // Si se encuentran datos en sessionStorage, parsea el JSON
+      const userCredential = JSON.parse(storedUserCredentials);
+      const userInfo = JSON.parse(storedUserName);
+
+      console.log(userCredential.email, userInfo.email);
+      setUserLogin(userInfo)
+    }
+  },[])
 
 
   const handleOpenNavMenu = (event: React.MouseEvent<HTMLElement>) => {
@@ -42,7 +56,6 @@ function ResponsiveAppBar() {
   };
 
   const handleLogOut = () => {
-  
     sessionStorage.removeItem("userlogIn")
     sessionStorage.removeItem("credentials")
 
@@ -51,27 +64,23 @@ function ResponsiveAppBar() {
 
   };
 
-  
+  const handleScroll = () => {
+    const scrollTop = window.scrollY;
 
-  React.useEffect(()=>{
-    const storedUserCredentials = sessionStorage.getItem('credentials');
-    const storedUserName = sessionStorage.getItem('userlogIn');
-
-    if (storedUserCredentials && storedUserName) {
-      // Si se encuentran datos en sessionStorage, parsea el JSON
-      const userCredential = JSON.parse(storedUserCredentials);
-      const userInfo = JSON.parse(storedUserName);
-
-      console.log(userCredential.email, userInfo.email);
-      setUserLogin(userInfo)
-
+    console.log(scrollTop)
+    if (scrollTop == 0) {
+      setIsScrolled(false);
+    } else {
+      setIsScrolled(true);
     }
-  },[])
+  };
+  window.addEventListener('scroll', handleScroll);
 
   return (
-    <AppBar  sx={stylesComponents.appBar} >
+    <AppBar sx={isScrolled ? stylesComponents.appBarScrolled : stylesComponents.appBar}>
       <Container maxWidth="xl">
-        <Toolbar disableGutters sx={stylesComponents.toolbar}>
+      {/* <Container maxWidth="xl" style={{background:"white"}}> */}
+        <Toolbar disableGutters sx={stylesComponents.toolbar }>
           {/* Logo para escritorio */}
           <Grid
             sx={{

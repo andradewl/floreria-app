@@ -326,7 +326,7 @@ function shopProducts() {
 
                             const datosPedidos = facturacionYEnvioTrue()
                             const newItem: NuevoPedido = datosPedidos
-                            
+
                             addPedido(newItem)
                             .then((pedidoId) => {
                                 console.log("Pedido añadido exitosamente con ID: ", pedidoId);
@@ -335,7 +335,7 @@ function shopProducts() {
                                 console.error("Error al añadir pedido: ", error);
                             });
                             console.log(newItem)
-                
+
                         }else{
                             const datosPedidos = facturacionYEnviofalse()
                             const newItem: NuevoPedido = datosPedidos
@@ -346,7 +346,7 @@ function shopProducts() {
                             .catch((error) => {
                                 console.error("Error al añadir pedido: ", error);
                             });
-                
+
                             console.log(newItem)
                         }
                     }

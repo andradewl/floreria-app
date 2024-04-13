@@ -20,9 +20,9 @@ import { stylesComponents } from "../styles/stylesComponentes"
 import '../styles/fuentes.css'
 import Banners from "../components/Banners";
 
-import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
-// import FavoriteIcon from '@mui/icons-material/Favorite';
-import RemoveRedEyeIcon from '@mui/icons-material/RemoveRedEye';
+// import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
+// // import FavoriteIcon from '@mui/icons-material/Favorite';
+// import RemoveRedEyeIcon from '@mui/icons-material/RemoveRedEye';
 import { getProducts } from "../config/apiFirebase";
 import React from "react";
 
@@ -148,48 +148,28 @@ function Home(){
 
     return(
         <>
-            {/* <Breadcrumbs maxItems={2} aria-label="breadcrumb" style={{paddingLeft:'50px'}}>
-                <Link underline="hover" color="inherit" href="#">
-                    Home
-                </Link>
-                 <Link underline="hover" color="inherit" href="#">
-                    Catalog
-                </Link>
-                <Link underline="hover" color="inherit" href="#">
-                    Accessories
-                </Link>
-                <Link underline="hover" color="inherit" href="#">
-                    New Collection
-                </Link>
-                <Typography color="text.primary">Belts</Typography>
-            </Breadcrumbs> */}
 
-            {/**
-             *
-                Banner de inicio
-             */}
             <Grid>
 
                 <Banners/>
 
             </Grid>
 
-            <Grid sx={{pt:5, pb:5, pl:{xs:5, md:10}, pr:{xs:5, md:10}}}>
+            <Grid  sx={{paddingLeft:{xl:'10%', md:'7%',xs:'5%'}, paddingRight:{xl:'10%',md:'7%', xs:'5%'} }}  >
                 <Grid style={{textAlign:'center', padding:'8px'}} data-aos="fade-right">
-                    <Typography variant="h3" color="initial" fontSize='34px' fontFamily={'Archivo Black, sans-serif'} style={{color:'#B29426'}} p={2}>
+                    <Typography variant="h3" color="initial"  sx={{color:'#B29426',  fontSize:{xs:'24px', md:'34px'}}} p={2}>
                         ¡Pequeños detalles marcando diferencia!
                     </Typography>
-                    <Typography variant="h4" color="initial" fontSize='17px' fontFamily={'Archivo Black, sans-serif'} style={{color:'#000000'}} p={2}>
+                    <Typography variant="h4" color="initial" fontSize='17px'  sx={{color:'#000000',  fontSize:{xs:'14px', md:'17px'}}} p={2}>
                         En Flores Rickys encontrarás lo que necesitas para cada ocasión con ofertas.
-f
                     </Typography>
                 </Grid>
 
-                <Grid sx={stylesComponents.megaContenedorOcasiones}>
+                <Grid >
                     <Grid container display={'flex'}>
 
                         {steps.map((item) => (
-                            <Grid item xs={12} sm={6} lg={4} xl={3} sx={stylesComponents.contenedorOcasiones}>
+                            <Grid item xs={12} md={4} sx={stylesComponents.contenedorOcasiones} p={'5px'}>
                                 <Box sx={stylesComponents.cajaDatosOcasioners}>
                                     <Grid sx={stylesComponents.contenedorImagen}>
                                         <img src={item.imgPath} alt="" width={'100%'} height={'100%'} style={{ objectFit: 'cover'}}/>
@@ -217,9 +197,9 @@ f
 
             </Grid>
 
-            <Grid p={5}>
+            <Grid sx={{paddingLeft:{xl:'10%', md:'7%',xs:'5%'}, paddingRight:{xl:'10%',md:'7%', xs:'5%'} }} >
                 <Grid style={{textAlign:'center', padding:'8px'}} >
-                    <Typography variant="h3" color="initial" fontSize='34px' fontFamily={'Archivo Black, sans-serif'} style={{color:'#B29426'}} >
+                    <Typography variant="h3" color="initial" fontSize='34px'  style={{color:'#B29426'}} >
                         Ofertas
                     </Typography>
                 </Grid>
@@ -227,12 +207,12 @@ f
                 <Grid>
                     <Grid container sx={stylesComponents.ContenedorProductos} >
                         {flores && flores.map((item) => (
-                            <Grid item sm={12} md={6} lg={2.4} sx={stylesComponents.contenedorProducto}>
+                            <Grid item xs={12} md={6} lg={3} sx={stylesComponents.contenedorProducto}>
                                 <Box display={'flex'} style={{justifyContent:'center'}}>
                                     <Grid sx={stylesComponents.contenerdorImagenProducto} onClick={()=>handleRedirectToProductId(item.id)}>
                                         <img src={item.imagen} alt="" width={'100%'} height={'100%'} style={{ objectFit: 'cover', position:'relative'}} />
-                                        <Grid width={'100%'} height={'100%'} sx={{position: 'absolute', textAling:'left', padding:'2px' }}>
-                                            <Box sx={{ backgroundColor:'#ef8f61', width:'50%', color:'white', borderRadius:'5px', fontSize:'20px' }}>
+                                        <Grid width={'100%'} height={'100%'} sx={{position: 'absolute', textAling:'left' }}>
+                                            <Box sx={{ backgroundColor:'#ef8f61', width:'50%', color:'white', borderRadius:'5px', fontSize:'20px', margin:'5px' }}>
                                                 !Oferta¡
                                             </Box>
                                         </Grid>
@@ -244,26 +224,27 @@ f
                                     (
                                         <>
                                             <Grid
-                                            container
-                                            sx={{
-                                                width: '100%',
-                                                justifyContent: 'center',
-                                                textAlign: 'center',
-                                                padding: '2px'
-                                            }}
+                                                container
+                                                sx={{
+                                                    width: '100%',
+                                                }}
                                             >
-                                                <Grid sx={{width:{xs:'300px', md:'400px', lg:'200px'}}}>
+                                                <Grid
+                                                sx={{
+                                                    width: '100%',
+                                                }}
+                                                >
                                                     <Box sx={{ padding: {xs:'10px', lg:'2px'} }}>
-                                                        <Box sx={{justifyContent:'center', textAlign:'center', padding:'2px'}} >
+                                                        {/* <Box sx={{justifyContent:'center', textAlign:'center', padding:'2px'}} >
                                                             <FavoriteBorderIcon sx={{width:'50%', justifyContent:'center', textAlign:'center'}}/>
                                                             <RemoveRedEyeIcon sx={{width:'50%', justifyContent:'center', textAlign:'center'}}/>
+                                                        </Box> */}
+                                                        <Box sx={{padding:'2px'}} onClick={()=>handleRedirectToProductId(item.id)}>
+                                                            <Typography variant="h6" color="initial"  fontSize={16}  style={{color:'#404040'}}>{item.nombre}</Typography>
                                                         </Box>
-                                                        <Box sx={{ justifyContent:'center', textAlign:'center', padding:'2px'}} onClick={()=>handleRedirectToProductId(item.id)}>
-                                                            <Typography variant="h6" color="initial" fontFamily={'Montserrat, sans-serif'} fontSize={16} textAlign={'center'} style={{color:'#404040', textAlign:'center'}}>{item.nombre}</Typography>
-                                                        </Box>
-                                                        <Box sx={{display:'flex',justifyContent:'center', textAlign:'center', padding:'2px'}}>
-                                                            <Typography variant="h6" color="initial" fontFamily={'Archivo Black, sans-serif'} fontSize={16} textAlign={'center'} style={{color:'#404040', textAlign:'center', width:'50%',  textDecorationLine: 'line-through' }}>${item.precio}</Typography>
-                                                            <Typography variant="h6" color="initial" fontFamily={'Archivo Black, sans-serif'} fontSize={16} textAlign={'center'} style={{color:'black', textAlign:'center', width:'50%' }}>${item.descuento}</Typography>
+                                                        <Box sx={{display:'flex',padding:'2px',width: '100%',}}>
+                                                            <Typography variant="h6" color="initial"  fontSize={16}  style={{color:'#404040', width:'50%',  textDecorationLine: 'line-through', fontWeight: 'bold' }}>${item.precio}</Typography>
+                                                            <Typography variant="h6" color="initial"  fontSize={16}  style={{color:'#9c0ba8', width:'50%', fontWeight: 'bold' }}>${item.descuento}</Typography>
                                                         </Box>
                                                     </Box>
                                                 </Grid>
@@ -277,44 +258,37 @@ f
                                             container
                                             sx={{
                                                 width: '100%',
-                                                justifyContent: 'center',
-                                                textAlign: 'center',
-                                                padding: '2px'
+                                                // padding: '2px'
                                             }}
                                         >
                                             <Grid
-                                                sx={{width:{xs:'300px', md:'400px', lg:'200px'}}}
+                                                sx={{
+                                                    width: '100%',
+                                                }}
                                             >
                                                 <Box sx={{ padding: {xs:'10px', lg:'2px'} }}>
-                                                    <Box sx={{ justifyContent: 'center', textAlign: 'center' }}>
+                                                    {/* <Box sx={{ justifyContent: 'center', textAlign: 'center' }}>
                                                         <FavoriteBorderIcon sx={{ width: '50%' }} />
                                                         <RemoveRedEyeIcon sx={{ width: '50%' }} />
-                                                    </Box>
+                                                    </Box> */}
                                                     <Box
-                                                        sx={{
-                                                            justifyContent: 'center',
-                                                            textAlign: 'center',
-                                                        }}
                                                     >
                                                         <Typography
                                                             variant="h6"
                                                             color="initial"
-                                                            fontFamily="Montserrat, sans-serif"
                                                             fontSize={16}
-                                                            textAlign="center"
                                                             style={{ color: '#404040' }}
                                                         >
                                                         {item.nombre}
                                                         </Typography>
                                                     </Box>
-                                                    <Box sx={{ justifyContent: 'center', textAlign: 'center', padding: '2px' }}>
+                                                    <Box sx={{ padding: '2px' }}>
                                                         <Typography
                                                             variant="h6"
                                                             color="initial"
-                                                            fontFamily="Archivo Black, sans-serif"
                                                             fontSize={16}
                                                             textAlign="center"
-                                                            style={{ color: '#404040' }}
+                                                            style={{ color: '#9c0ba8' }}
                                                         >
                                                         ${item.precio}
                                                         </Typography>
@@ -334,7 +308,6 @@ f
                 </Grid>
 
             </Grid>
-
         </>
     )
 }
