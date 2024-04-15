@@ -1,5 +1,3 @@
-// Componente Ubicaciones
-
 import React, { useEffect, useState } from "react";
 import { Button, Divider, Grid, Typography, IconButton } from "@mui/material";
 import { Link, useNavigate } from "react-router-dom";
@@ -9,6 +7,8 @@ import Paper from "@mui/material/Paper";
 import { styled } from "@mui/material/styles";
 import EditIcon from "@mui/icons-material/Edit";
 import DeleteIcon from "@mui/icons-material/Delete";
+import HomeIcon from '@mui/icons-material/Home';
+import WorkIcon from '@mui/icons-material/Work';
 
 export default function Ubicaciones() {
   const navigate = useNavigate();
@@ -16,7 +16,7 @@ export default function Ubicaciones() {
 
   const DemoPaper = styled(Paper)(({ theme }) => ({
     position: "relative",
-    width: "50%",
+    width: "65%", // Ajustar el ancho del DemoPaper según sea necesario
     padding: theme.spacing(2),
     textAlign: "left",
     margin: "auto",
@@ -55,6 +55,11 @@ export default function Ubicaciones() {
               style={{ position: "relative", marginBottom: "1rem" }}
             >
               <div style={{ display: "flex", alignItems: "center" }}>
+                {direccion.tipo === "residencia" ? (
+                  <HomeIcon sx={{ marginRight: '0.5rem' }} />
+                ) : (
+                  <WorkIcon sx={{ marginRight: '0.5rem' }} />
+                )}
                 <Typography
                   variant="body1"
                   sx={{ fontSize: "1.2rem", flex: 1 }}
