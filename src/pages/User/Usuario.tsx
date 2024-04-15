@@ -7,7 +7,7 @@ import DescriptionIcon from '@mui/icons-material/Description';
 import HistPedidos from './HistPedidos';
 import EstatusEnvio from './EstatusEnvio';
 import Ubicaciones from './Ubicaciones';
-import FormDetaFac from './FormDetaFac';
+import DatosFac from './DatosFac';
 
 const Usuario = () => {
   const [tabValue, setTabValue] = useState<number>(0);
@@ -25,7 +25,7 @@ const Usuario = () => {
       case 2:
         return <Ubicaciones />;
       case 3:
-        return <FormDetaFac />;
+        return <DatosFac />;
       default:
         return null;
     }

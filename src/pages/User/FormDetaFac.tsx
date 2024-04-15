@@ -1,36 +1,65 @@
-import {
-  Button,
-  Grid,
-  TextField,
-  Typography,
-} from "@mui/material";
-import MenuItem from "@mui/material/MenuItem";
+import { Button, Grid, TextField, Typography } from "@mui/material";
 
-const currencies = [
-  {
-    value: "Centro",
-    label: "Centro",
-  },
-  {
-    value: "Centro",
-    label: "Centro",
-  },
-  {
-    value: "Centro",
-    label: "Centro",
-  },
-  {
-    value: "Centro",
-    label: "Centro",
-  },
-];
+import { addDirFact } from "../../config/backEndUsuarios/backFacturacion";
+import { useState } from "react";
+import { useNavigate } from "react-router-dom";
+import ArrowBackIcon from "@mui/icons-material/ArrowBack";
+
 
 export default function FormDetaFac() {
+  const navigate = useNavigate();
+  const [nombre, setNombre] = useState<string>("");
+  const [apellido, setApellido] = useState<string>("");
+  const [empresaDirFact, setEmpresaDirFact] = useState<string>("");
+  const [paisDirFact, setPaisDirFact] = useState<string>("");
+  const [codigoPostal, setCodigoPostal] = useState<string>("");
+  const [nEstado, setEstado] = useState<string>("");
+  const [nMunicipio, setMunicipio] = useState<string>("");
+  const [nColonia, setColonia] = useState<string>("");
+  const [nCalle, setCalle] = useState<string>("");
+  const [numExt, setNumExt] = useState<string>("");
+  const [numInt, setNumInt] = useState<string>("");
+  const [calleRef1, setCalleRef1] = useState<string>("");
+  const [calleRef2, setCalleRef2] = useState<string>("");
+  const [telefonoDirFact, setTelefonoDirFact] = useState<string>("");
+  const [emailDirFact, setEmailDirFact] = useState<string>("");
+  const [nIdUserRef, setIdUserRef] = useState<string>(
+    "w2INimKno1fwEXvAJatj3nsWRqJ2"
+  );
+
+  const addNewDireccionFacturacion = () => {
+    addDirFact(
+      nombre,
+      apellido,
+      empresaDirFact,
+      paisDirFact,
+      codigoPostal,
+      nEstado,
+      nMunicipio,
+      nColonia,
+      nCalle,
+      numExt,
+      numInt,
+      calleRef1,
+      calleRef2,
+      telefonoDirFact,
+      emailDirFact,
+      nIdUserRef
+    );
+    alert("Dirección de facturación guardada correctamente");
+    navigate("/Usuario/:id");
+  };
+  const handleRegresar = () => {
+    navigate("/Usuario/:id");
+  };
   return (
-    <Grid container spacing={4} justifyContent="center">
+    <Grid container spacing={4} justifyContent="center" sx={{py:12}}>
       <Grid item container spacing={2} xl={6} lg={6} md={6} sm={12} xs={12}>
         <Grid item xs={12}>
-          <Typography variant="h3">Direccion de Facturación.</Typography>
+        <Button startIcon={<ArrowBackIcon />} onClick={handleRegresar}>
+            Regresar
+          </Button>
+          <Typography variant="h3"sx={{ textAlign: "center" }}>Direccion de Facturación.</Typography>
         </Grid>
         <Grid item xs={12}>
           <Typography variant="h5">Datos Personales.</Typography>
@@ -43,6 +72,8 @@ export default function FormDetaFac() {
             label="Nombre"
             variant="outlined"
             fullWidth
+            value={nombre}
+            onChange={(e)=> setNombre(e.target.value)}
           />
         </Grid>
         <Grid item xs={6}>
@@ -53,6 +84,8 @@ export default function FormDetaFac() {
             label="Apellido"
             variant="outlined"
             fullWidth
+            value={apellido}
+            onChange={(e)=> setApellido(e.target.value)}
           />
         </Grid>
         <Grid item xs={12}>
@@ -61,83 +94,92 @@ export default function FormDetaFac() {
             label="Empresa (Opcional)"
             variant="outlined"
             fullWidth
+            value={empresaDirFact}
+            onChange={(e)=> setEmpresaDirFact(e.target.value)}
           />
         </Grid>
         <Grid item xs={12}>
           <Typography variant="h5">Dirección.</Typography>
         </Grid>
-        <Grid item xs={2}>
+        <Grid item xs={3}>
           <TextField
             id="outlined-basic"
             label="País"
             variant="outlined"
             fullWidth
+            value={paisDirFact}
+            onChange={(e)=> setPaisDirFact(e.target.value)}
           />
         </Grid>
-        <Grid item xs={2}>
+        <Grid item xs={3}>
           <TextField
             id="outlined-basic"
             label="Codigo Postal"
             variant="outlined"
             fullWidth
+            value={codigoPostal}
+            onChange={(e)=> setCodigoPostal(e.target.value)}
           />
         </Grid>
-        <Grid item xs={4}>
+        <Grid item xs={6}>
           <TextField
             id="outlined-disabled"
             label="Estado"
             variant="outlined"
             fullWidth
+            value={nEstado}
+            onChange={(e)=> setEstado(e.target.value)}
           />
         </Grid>
-        <Grid item xs={4}>
+        <Grid item xs={6}>
           <TextField
             id="outlined-basic"
-            disabled
             label="Municipio o Alcaldía"
             variant="outlined"
             fullWidth
+            value={nMunicipio}
+            onChange={(e)=> setMunicipio(e.target.value)}
           />
         </Grid>
-        <Grid item xs={12}>
+        <Grid item xs={6}>
           <TextField
             id="outlined-select-currency"
-            select
             label="Colonia"
             defaultValue="Centro"
-            helperText="Selecciona la colonia, por favor"
             fullWidth
-          >
-            {currencies.map((option) => (
-              <MenuItem key={option.value} value={option.value}>
-                {option.label}
-              </MenuItem>
-            ))}
-          </TextField>
+            value={nColonia}
+            onChange={(e)=> setColonia(e.target.value)}
+          ></TextField>
         </Grid>
-        <Grid item xs={8}>
+        <Grid item xs={6}>
           <TextField
             id="outlined-basic"
             required
             label="Calle"
             variant="outlined"
             fullWidth
+            value={nCalle}
+            onChange={(e)=> setCalle(e.target.value)}
           />
         </Grid>
-        <Grid item xs={2}>
+        <Grid item xs={3}>
           <TextField
             id="outlined-basic"
             label="Número Exterior"
             variant="outlined"
             fullWidth
+            value={numExt}
+            onChange={(e)=> setNumExt(e.target.value)}
           />
         </Grid>
-        <Grid item xs={2}>
+        <Grid item xs={3}>
           <TextField
             id="outlined-basic"
             label="Número Interior"
             variant="outlined"
             fullWidth
+            value={numInt}
+            onChange={(e)=> setNumInt(e.target.value)}
           />
         </Grid>
         <Grid item xs={6}>
@@ -149,6 +191,8 @@ export default function FormDetaFac() {
             label="Calle 1"
             variant="outlined"
             fullWidth
+            value={calleRef1}
+            onChange={(e)=> setCalleRef1(e.target.value)}
           />
         </Grid>
         <Grid item xs={6}>
@@ -160,15 +204,19 @@ export default function FormDetaFac() {
             label="Calle 2"
             variant="outlined"
             fullWidth
+            value={calleRef2}
+            onChange={(e)=> setCalleRef2(e.target.value)}
           />
         </Grid>
         <Grid item xs={4}>
           <TextField
             id="outlined-basic"
-            label="Teléfono de remitente"
+            label="Teléfono"
             variant="outlined"
             required
             fullWidth
+            value={telefonoDirFact}
+            onChange={(e)=> setTelefonoDirFact(e.target.value)}
           />
         </Grid>
         <Grid item xs={8}>
@@ -178,6 +226,8 @@ export default function FormDetaFac() {
             required
             variant="outlined"
             fullWidth
+            value={emailDirFact}
+            onChange={(e)=> setEmailDirFact(e.target.value)}
           />
         </Grid>
 
@@ -185,6 +235,7 @@ export default function FormDetaFac() {
           <Button
             fullWidth
             variant="outlined"
+            onClick={addNewDireccionFacturacion}
             sx={{
               width: "fit-content",
               color: "#B42981",
@@ -199,5 +250,3 @@ export default function FormDetaFac() {
     </Grid>
   );
 }
-
-

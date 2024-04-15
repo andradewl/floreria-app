@@ -11,9 +11,7 @@ import {
 import { useNavigate } from "react-router-dom";
 import { addDireccion } from "../../config/backEndUsuarios/backUbicaciones";
 import { useState } from "react";
-import ArrowBackIcon from '@mui/icons-material/ArrowBack';
-
-
+import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 
 export default function FormUbicaciones() {
   const navigate = useNavigate();
@@ -32,8 +30,10 @@ export default function FormUbicaciones() {
   const [telRemitente, setTelRemitente] = useState<string>("");
   const [telDestinatario, setTelDestinatario] = useState<string>("");
   const [nReferencias, setReferencias] = useState<string>("");
-  const [nIdUserRef, setIdUserRef] = useState<string>("w2INimKno1fwEXvAJatj3nsWRqJ2");
-  
+  const [nIdUserRef, setIdUserRef] = useState<string>(
+    "w2INimKno1fwEXvAJatj3nsWRqJ2"
+  );
+
   const handleRegresar = () => {
     navigate("/Usuario/:id");
   };
@@ -66,16 +66,13 @@ export default function FormUbicaciones() {
   };
 
   return (
-    <Grid container spacing={4} justifyContent="center" sx={{py:12}}>
+    <Grid container spacing={4} justifyContent="center" sx={{ py: 12 }}>
       <Grid item container spacing={2} xl={6} lg={6} md={6} sm={12} xs={12}>
         <Grid item xs={12}>
-        <Button
-          startIcon={<ArrowBackIcon />}
-          onClick={handleRegresar}
-        >
-          Regresar
-        </Button>
-          <Typography variant="h3"sx={{ textAlign: 'center' }}>
+          <Button startIcon={<ArrowBackIcon />} onClick={handleRegresar}>
+            Regresar
+          </Button>
+          <Typography variant="h3" sx={{ textAlign: "center" }}>
             Agregar Nueva Direccion de Entrega.
           </Typography>
         </Grid>
@@ -117,7 +114,6 @@ export default function FormUbicaciones() {
         <Grid item xs={5}>
           <TextField
             id="outlined-disabled"
-            
             label="Estado"
             variant="outlined"
             defaultValue="Nuevo León"
@@ -129,7 +125,6 @@ export default function FormUbicaciones() {
         <Grid item xs={5}>
           <TextField
             id="outlined-basic"
-            
             label="Municipio o Alcaldía"
             variant="outlined"
             defaultValue="Monterrey"
