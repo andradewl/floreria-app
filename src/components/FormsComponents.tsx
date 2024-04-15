@@ -2,7 +2,7 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 
 import React from 'react'
-import {TextField,FormControl,InputLabel, Select,MenuItem,Grid,Typography, Button, FormControlLabel, Checkbox } from '@mui/material'
+import {TextField, Grid,Typography, Button, FormControlLabel, Checkbox } from '@mui/material'
 import { CarritoDeCompra, NuevoPedido } from '../interfaces/interfaces';
 import { PayPalButtons, FUNDING   } from '@paypal/react-paypal-js'
 import { CreateOrderData } from '@paypal/paypal-js';
@@ -12,6 +12,7 @@ import { PaymentMethod } from '@stripe/stripe-js';
 import { WidthFull } from '@mui/icons-material';
 import { addPedido } from '../config/apiFirebase';
 
+
 function shopProducts() {
 
     const servelUrl = "https://serve-paypal.vercel.app";
@@ -19,11 +20,11 @@ function shopProducts() {
     const stripe = useStripe()
 
     const [item, setItems] = React.useState<CarritoDeCompra[]>([]);
-    const [nuevoPedido, setNuevoPedido] = React.useState<NuevoPedido[]>([]);
+    // const [nuevoPedido, setNuevoPedido] = React.useState<NuevoPedido[]>([]);
     const [totalNumerico, setTotalNumerico] = React.useState<number>(0);
 
     const [totalEnvio, settotalEnvio] =  React.useState<number>(0);
-    const [entregaDeFlores, setEntregaDeFlores] = React.useState(true);
+    const [, setEntregaDeFlores] = React.useState(true);
     const [isChecked, setIsChecked] = React.useState(false);
     const [isUidUserLogin, setisUidUserLogin] = React.useState(null);
 
@@ -80,11 +81,9 @@ function shopProducts() {
         const storedUserName = sessionStorage.getItem('credentials');
 
         if(storedUserName){
-            // console.log(storedUserName)
             const userCredential = JSON.parse(storedUserName);
 
             setisUidUserLogin(userCredential.uid)
-            // console.log(userCredential.uid)
         }
 
         const dinero = precioApAGAR()
@@ -104,7 +103,7 @@ function shopProducts() {
         if(!precioPagar){
             return 0
         }
-        return parseFloat(precioPagar)
+        return parseInt(precioPagar)
 
     }
 
@@ -124,19 +123,24 @@ function shopProducts() {
         });
     };
 
-    const handleSubmit = () => {
-        // e.preventDefault();
-    };
+    // const handleSubmit = () => {
+    //     // e.preventDefault();
+    // };
 
     const facturacionYEnvioTrue=()=>{
+        let entrega="";
         let newItem;
+
+        totalEnvio == 0 ? entrega="Recoge en tienda" : entrega="Entregar a cliente";
+
         if(isUidUserLogin != null){
             newItem={
                 facturacion:formDataFacturacion,
                 datosEnvio:formDataEnvio,
                 carritoCompra:item,
                 idEstado:"lihdGU56KMY6sblyD9xb",
-                uidUserLogin:isUidUserLogin
+                uidUserLogin:isUidUserLogin,
+                entrega:entrega
             }
         }else{
             newItem={
@@ -144,7 +148,8 @@ function shopProducts() {
                 datosEnvio:formDataEnvio,
                 carritoCompra:item,
                 idEstado:"lihdGU56KMY6sblyD9xb",
-                uidUserLogin:"no user"
+                uidUserLogin:"no user",
+                entrega:entrega
             }
         }
         return newItem
@@ -152,6 +157,9 @@ function shopProducts() {
 
 
     const facturacionYEnviofalse=()=>{
+        let entrega="";
+        totalEnvio == 0 ? entrega="Recoge en tienda" : entrega="Entregar a cliente";
+
         let newItem;
         if(isUidUserLogin != null){
             newItem={
@@ -159,7 +167,8 @@ function shopProducts() {
                 datosEnvio:formDataFacturacion,
                 carritoCompra:item,
                 idEstado:"lihdGU56KMY6sblyD9xb",
-                uidUserLogin:isUidUserLogin
+                uidUserLogin:isUidUserLogin,
+                entrega:entrega
             }
         }else{
             newItem={
@@ -167,10 +176,19 @@ function shopProducts() {
                 datosEnvio:formDataFacturacion,
                 carritoCompra:item,
                 idEstado:"lihdGU56KMY6sblyD9xb",
-                uidUserLogin:"no user"
+                uidUserLogin:"no user",
+                entrega:entrega
             }
         }
         return newItem
+    }
+
+
+    const deleteCarrito=()=>{
+        localStorage.removeItem('Productos');
+        localStorage.removeItem('PrecioApagar');
+        localStorage.removeItem('envio');
+
     }
 
 
@@ -202,10 +220,11 @@ function shopProducts() {
 
                     addPedido(newItem)
                     .then((pedidoId) => {
-                        console.log("Pedido añadido exitosamente con ID: ", pedidoId);
+                        deleteCarrito()
+                        alert('Pedido añadido exitosamente con id de seguimiento: '+pedidoId)
                     })
-                    .catch((error) => {
-                        console.error("Error al añadir pedido: ", error);
+                    .catch((_error) => {
+                        alert('Error al crear el método de pago intentelo mas tarde')
                     });
                     console.log(newItem)
 
@@ -215,20 +234,24 @@ function shopProducts() {
 
                     addPedido(newItem)
                     .then((pedidoId) => {
-                        console.log("Pedido añadido exitosamente con ID: ", pedidoId);
+                        deleteCarrito()
+                        alert('Pedido añadido exitosamente con id de seguimiento: '+pedidoId)
+                        // sendMessage()
                     })
-                    .catch((error) => {
-                        console.error("Error al añadir pedido: ", error);
+                    .catch((_error) => {
+                        alert('Error al crear el método de pago intentelo mas tarde')
                     });
                     console.log(newItem)
                 }
             }
             // Aquí puedes realizar acciones adicionales después de un pago exitoso
         })
-        .catch((error) => {
-            console.error("Error al capturar el pago:", error.message);
+        .catch((_error) => {
+            alert('Error al crear el método de pago intentelo mas tarde')
         });
     };
+
+
 
 
     const createOrder = async (_data: CreateOrderData) => {
@@ -271,6 +294,7 @@ function shopProducts() {
 
     const handleSubmit2 = async (e: React.FormEvent) => {
         e.preventDefault();
+        const dinero = precioApAGAR();
 
         // console.log(isFormValid, isChecked, isFormValidEnvio)
         if(true== isChecked != isFormValidEnvio == true){
@@ -288,8 +312,7 @@ function shopProducts() {
             console.log(paymentMethod)
 
             if (error) {
-                console.error(error.message);
-                return;
+                return alert(error.message)
             }
 
             if (paymentMethod) {
@@ -302,7 +325,7 @@ function shopProducts() {
                         'Content-Type': 'application/json'
                     },
                     body: JSON.stringify({
-                        amount: 1000, // Monto en centavos (por ejemplo, $10.00)
+                        amount: dinero, // Monto en centavos (por ejemplo, $10.00)
                         id,
                     }),
                 });
@@ -329,10 +352,14 @@ function shopProducts() {
 
                             addPedido(newItem)
                             .then((pedidoId) => {
-                                console.log("Pedido añadido exitosamente con ID: ", pedidoId);
+                                // console.log("Pedido añadido exitosamente con ID: ", pedidoId);
+                                // sendMessage()
+                                deleteCarrito()
+                                alert('Pedido añadido exitosamente con id de seguimiento: '+pedidoId)
                             })
-                            .catch((error) => {
-                                console.error("Error al añadir pedido: ", error);
+                            .catch((_error) => {
+                                // console.error("Error al añadir pedido: ", error);
+                                alert('Error al añadir pedido intentelo mas tarde')
                             });
                             console.log(newItem)
 
@@ -341,29 +368,35 @@ function shopProducts() {
                             const newItem: NuevoPedido = datosPedidos
                             addPedido(newItem)
                             .then((pedidoId) => {
-                                console.log("Pedido añadido exitosamente con ID: ", pedidoId);
+                                // console.log("Pedido añadido exitosamente con ID: ", pedidoId);
+                                // sendMessage()
+                                deleteCarrito()
+                                alert('Pedido añadido exitosamente con id de seguimiento: '+pedidoId)
                             })
-                            .catch((error) => {
-                                console.error("Error al añadir pedido: ", error);
+                            .catch((_error) => {
+                                // console.error("Error al añadir pedido: ", error);
+                                alert('Error al añadir pedido intentelo mas tarde')
                             });
 
                             console.log(newItem)
                         }
                     }
                 }else{
-                    console.log("error xd")
+                    alert('Error al crear el método de pago intentelo mas tarde')
+                    // console.log("error xd")
                 }
 
             }
         } catch (error) {
-            console.error('Error al crear el método de pago:', error);
+            alert('Error al crear el método de pago intentelo mas tarde')
+            // console.error('Error al crear el método de pago:', error);
         }
     };
 
 
-    const datosDeEnvio=(e: { target: { value: boolean | ((prevState: boolean /* eslint-disable @typescript-eslint/no-unused-vars */) => boolean); }; })=>{
-        setEntregaDeFlores(e.target.value)
-    }
+    // const datosDeEnvio=(e: { target: { value: boolean | ((prevState: boolean /* eslint-disable @typescript-eslint/no-unused-vars */) => boolean); }; })=>{
+    //     setEntregaDeFlores(e.target.value)
+    // }
 
     const isChecketEnvios=(e: boolean)=>{
         // setEntregaDeFlores(e.target.value)
@@ -407,7 +440,7 @@ function shopProducts() {
 
     return (
         <>
-            <Grid p={10}>
+            <Grid pt={10} sx={{paddingLeft:{xl:'10%', md:'7%',xs:'5%'}, paddingRight:{xl:'10%',md:'7%', xs:'5%'} }}>
 
                 <Grid  >
                     <Grid container>
@@ -643,11 +676,19 @@ function shopProducts() {
 
                         </Grid>
                         <Grid item xs={12} md={6}  p={4}>
-                            <Grid sx={{backgroundColor:'#eaeaea', borderRadius:'5px'}} p={3}>
-                                <Typography variant="h6" color="initial">Resumen de compra</Typography>
-                                <Typography variant="h6" color="initial">Productos: ${totalNumerico}</Typography>
-                                <Typography variant="h6" color="initial">Envio: ${totalEnvio}</Typography>
-                                <Typography variant="h6" color="initial">Total: ${totalNumerico + totalEnvio}</Typography>
+                            <Grid sx={{ border: '1px solid #afafaf'}} >
+                                <Grid sx={{ borderBottom:'1px solid #afafaf', background:'#ececec' }} p={3}>
+                                    <Typography variant="h6" color="initial">Resumen de compra</Typography>
+                                </Grid>
+                                <Grid m={1} ml={3} mr={3} pb={1} sx={{ borderBottom:'1px solid #afafaf'}}>
+                                    <Typography variant="h6" color="initial">Productos: ${totalNumerico}</Typography>
+                                </Grid>
+                                <Grid m={1} ml={3} mr={3} pb={1} sx={{ borderBottom:'1px solid #afafaf'}}>
+                                    <Typography variant="h6" color="initial">Envio: ${totalEnvio}</Typography>
+                                </Grid>
+                                <Grid m={1} ml={3} mr={3} pb={1} sx={{ borderBottom:'1px solid #afafaf'}}>
+                                    <Typography variant="h6" color="initial">Total: ${totalNumerico + totalEnvio}</Typography>
+                                </Grid>
 
                                 {/* <Button
                                     disabled={!isFormValid}
@@ -656,22 +697,30 @@ function shopProducts() {
                                     Pagar
                                 </Button> */}
 
-                                <Typography variant="h5" color="initial">Pago con tarjeta</Typography>
+                                <Grid m={1} ml={3} mr={3} pb={1} sx={{ borderBottom:'1px solid #afafaf', textAlign:'center' }}>
+
+                                    <Typography variant="h5" color="initial" m={1}>Pago con tarjeta</Typography>
 
 
-                                <CardElement options={cardElementOptions}/>
-                                <Button
-                                    disabled={!isFormValid}
-                                    onClick={handleSubmit2}
-                                >
-                                    Pagar
-                                </Button>
-                                <Typography variant="h5" color="initial">o pago con paypal</Typography>
-                                <PayPalButtons
-                                    createOrder={(data) => createOrder(data)}
-                                    onApprove={(data) => onApprove(data)}
-                                    fundingSource={FUNDING.PAYPAL}
-                                />
+                                    <CardElement options={cardElementOptions}/>
+                                    <Grid m={1}>
+                                        <Button
+                                            disabled={!isFormValid}
+                                            onClick={handleSubmit2}
+                                        >
+                                            Pagar
+                                        </Button>
+                                    </Grid>
+                                </Grid>
+                                <Grid m={1} ml={3} mr={3} pb={1} sx={{ textAlign:'center' }}>
+                                    <Typography variant="h5" color="initial" m={1}>o pago con paypal</Typography>
+                                    <PayPalButtons
+                                        createOrder={(data) => createOrder(data)}
+                                        onApprove={(data) => onApprove(data)}
+                                        fundingSource={FUNDING.PAYPAL}
+                                        disabled={!isFormValid}
+                                    />
+                                </Grid>
 
                             </Grid>
                         </Grid>

@@ -30,7 +30,7 @@ export default function FormUbicaciones() {
   const [telRemitente, setTelRemitente] = useState<string>("");
   const [telDestinatario, setTelDestinatario] = useState<string>("");
   const [nReferencias, setReferencias] = useState<string>("");
-  const [nIdUserRef, setIdUserRef] = useState<string>(
+  const [nIdUserRef] = useState<string>(
     "w2INimKno1fwEXvAJatj3nsWRqJ2"
   );
 

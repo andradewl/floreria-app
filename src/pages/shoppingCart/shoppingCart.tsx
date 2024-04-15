@@ -9,6 +9,7 @@ function ShoppingCart(){
 
 
     const [items, setItems] = React.useState<CarritoDeCompra[]>([]);
+    const [isSetItems, setIsSetItems] = React.useState(false);
     const [totalNumerico, setTotalNumerico] = React.useState<number>(0);
     const [totalEnvio, settotalEnvio] = React.useState<number>(500);
 
@@ -22,6 +23,7 @@ function ShoppingCart(){
             const parsedItems: CarritoDeCompra[] = JSON.parse(storedItems);
             console.log(parsedItems)
             setItems(parsedItems);
+            setIsSetItems(true)
         }else{
             console.log('No hay producto en el carrito');
         }
@@ -37,11 +39,12 @@ function ShoppingCart(){
     }, [items]);
 
 
-    const eliminarItem = (id: string) => {
-        const nuevosItems = items.filter(item => item.id !== id);
-        localStorage.setItem('Productos', JSON.stringify(nuevosItems));
+    const eliminarItem = (index: number) => {
+        // const nuevosItems = items.filter(item => item.id !== id);
+        const updatedItems = [...items.slice(0, index), ...items.slice(index + 1)];
+        localStorage.setItem('Productos', JSON.stringify(updatedItems));
 
-        setItems(nuevosItems);
+        setItems(updatedItems);
     };
 
 
@@ -104,7 +107,7 @@ function ShoppingCart(){
                                                 <Grid>
                                                     <Typography variant="h6" color="initial" fontSize={17}>{item.nombre}</Typography>
                                                     <Typography variant="h6" color="initial" fontSize={17}>Fecha y hora de entrega: {item.fecha}, {item.hora}</Typography>
-                                                    <Button onClick={() => eliminarItem(item.id)}>
+                                                    <Button onClick={() => eliminarItem(index)}>
                                                         Eliminar
                                                     </Button>
                                                 </Grid>
@@ -131,16 +134,26 @@ function ShoppingCart(){
                     </Grid>
                 </Grid>
                 <Grid item md={4} xs={12}  p={1} >
-                    <Grid sx={{backgroundColor:'#eaeaea', borderRadius:'5px'}} p={3}>
-                        <Typography variant="h6" color="initial">Resumen de compra</Typography>
-                        <Typography variant="h6" color="initial">Productos: ${totalNumerico}</Typography>
-                        <Typography variant="h6" color="initial">Envio: ${totalEnvio}</Typography>
-                        <FormControlLabel control={<Checkbox onChange={handleCheckboxChange}/>} label="Recoge en tienda" />
-
-
-                        <Typography variant="h6" color="initial">Total: ${totalNumerico + totalEnvio}</Typography>
-                        <Grid sx={{textAlign:'center'}}>
-                            <Button onClick={()=>handleRedirectToShopingProducts(totalNumerico + totalEnvio)}>
+                    <Grid sx={{ border: '1px solid #afafaf'}} >
+                        <Grid sx={{ borderBottom:'1px solid #afafaf', background:'#ececec' }} p={3}>
+                            <Typography variant="h6" fontSize={'25px'} fontWeight= {'bold'} color="initial">Resumen de compra</Typography>
+                        </Grid>
+                        <Grid m={1} ml={3} mr={3} pb={1} sx={{ borderBottom:'1px solid #afafaf'}}>
+                            <Typography variant="h6" color="initial">Productos: ${totalNumerico}</Typography>
+                        </Grid>
+                        <Grid m={1} ml={3} mr={3} pb={1} sx={{ borderBottom:'1px solid #afafaf'}}>
+                            <Typography variant="h6" color="initial">Envio: ${totalEnvio}</Typography>
+                        </Grid>
+                        <Grid m={1} ml={3} mr={3} pb={1} sx={{ borderBottom:'1px solid #afafaf'}}>
+                            <FormControlLabel control={<Checkbox onChange={handleCheckboxChange}/>} label="Recoge en tienda" />
+                        </Grid>
+                        <Grid m={1} ml={3} mr={3} pb={1} sx={{ borderBottom:'1px solid #afafaf'}}>
+                            <Typography variant="h6" color="initial">Total: ${totalNumerico + totalEnvio}</Typography>
+                        </Grid>
+                        <Grid sx={{textAlign:'center'}} m={1} ml={3} mr={3}>
+                            <Button onClick={()=>handleRedirectToShopingProducts(totalNumerico + totalEnvio)}
+                            disabled={!isSetItems}
+                            >
                                 Completar Compra
                             </Button>
                         </Grid>

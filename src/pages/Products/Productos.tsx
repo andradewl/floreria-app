@@ -48,8 +48,11 @@ function Productos(){
 
     return(
         <>
-        <Grid sx={{width:'100%', height:'560px', backgroundColor:'#fdcfd5'}}>
+        <Grid sx={{width:'100%', height:'560px', backgroundColor:'#fdcfd5', position: 'relative'}}>
             {/* <img src="https://firebasestorage.googleapis.com/v0/b/prowlflores.appspot.com/o/multimedia%2Fimagenes%2FFondos%2Fmariposa-en-flor_3840x2400_xtrafondos.com.jpg?alt=media&token=a7a9c3ef-e968-4ab7-9308-56042bf4dbbf" alt="" width={'100%'} height={'100%'} style={{ objectFit: 'cover', position:'relative'}}/> */}
+            <Grid width={'100%'} height={'100%'} sx={{display: 'flex', justifyContent: 'center', alignItems: 'center'}}>
+                <Typography variant="h2" color="white">Productos</Typography>
+            </Grid>
         </Grid>
             <Grid container sx={{paddingLeft:'5%', paddingRight:'5%'}} >
                 <Grid item xs={12} sx={stylesComponents.positionOfFilter}>

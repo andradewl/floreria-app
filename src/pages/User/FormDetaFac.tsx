@@ -23,7 +23,7 @@ export default function FormDetaFac() {
   const [calleRef2, setCalleRef2] = useState<string>("");
   const [telefonoDirFact, setTelefonoDirFact] = useState<string>("");
   const [emailDirFact, setEmailDirFact] = useState<string>("");
-  const [nIdUserRef, setIdUserRef] = useState<string>(
+  const [nIdUserRef] = useState<string>(
     "w2INimKno1fwEXvAJatj3nsWRqJ2"
   );
 
@@ -230,6 +230,7 @@ export default function FormDetaFac() {
             onChange={(e)=> setEmailDirFact(e.target.value)}
           />
         </Grid>
+
 
         <Grid item xs={12}>
           <Button

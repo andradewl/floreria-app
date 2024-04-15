@@ -88,7 +88,8 @@ interface Pedido {
     };
     carritoCompra: carritoDeCompra[];
     idEstado:string;
-    uidUserLogin:string
+    uidUserLogin:string,
+    entrega:string
 
 }
 

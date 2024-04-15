@@ -19,8 +19,10 @@ import { getProductById, getProductsExtraByIds } from '../../config/apiFirebase'
 import { Flower, CarritoDeCompra, ProductoExtra } from '../../interfaces/interfaces'
 
 import { setLocalStorage, getLocalStorage } from '../../config/LocalStorage'
+import { useNavigate } from 'react-router-dom';
 
 function ProductId(){
+    const navigate = useNavigate()
     const { id } = useParams();
     const theme = useTheme();
 
@@ -118,12 +120,6 @@ function ProductId(){
         setcantidadProducto(newValue);
     }
 
-    // const HandlecantidadProductoExtra = (event: React.ChangeEvent<HTMLInputElement>) => {
-    //     const newValue = parseInt(event.target.value, 10); // Parseamos el valor a un número entero
-    //     console.log("Producto extra", newValue)
-    //     setcantidadProductoExtra(newValue);
-    // }
-
     const handleNext = () => {
         setActiveStep((prevActiveStep) => prevActiveStep + 1);
     };
@@ -215,24 +211,7 @@ function ProductId(){
         const updatedCarritoDeCompra = [...carritoDeCompra, newItem];
         setCarritoDeCompra(updatedCarritoDeCompra);
         setLocalStorage('Productos', updatedCarritoDeCompra);
-
-        // const existingProductIndex = carritoDeCompra.findIndex(item => item.id === newItem.id);
-        // if (existingProductIndex !== -1) {
-        //     console.log('El producto ya está en el carrito.');
-
-        //     // Reemplazar el objeto existente con el nuevo objeto completo
-        //     const updatedCarritoDeCompra = [...carritoDeCompra];
-        //     updatedCarritoDeCompra[existingProductIndex] = newItem;
-
-        //     setCarritoDeCompra(updatedCarritoDeCompra);
-        //     setLocalStorage('Productos', updatedCarritoDeCompra);
-        // } else {
-        //     console.log('Agregando producto al carrito...');
-        //     // Si el producto no está en el carrito, lo agregamos
-        //     const updatedCarritoDeCompra = [...carritoDeCompra, newItem];
-        //     setCarritoDeCompra(updatedCarritoDeCompra);
-        //     setLocalStorage('Productos', updatedCarritoDeCompra);
-        // }
+        navigate('/shoppingCart');
     }
 
     const guardarDatos =(id:string,nombre: string, precio: number, imagen:string)=>{
@@ -260,25 +239,7 @@ function ProductId(){
         const updatedCarritoDeCompra = [...carritoDeCompra, newItem];
         setCarritoDeCompra(updatedCarritoDeCompra);
         setLocalStorage('Productos', updatedCarritoDeCompra);
-
-        // const existingProductIndex = carritoDeCompra.findIndex(item => item.id === newItem.id);
-
-        // if (existingProductIndex !== -1) {
-        //     console.log('El producto ya está en el carrito.');
-
-        //     // Reemplazar el objeto existente con el nuevo objeto completo
-        //     const updatedCarritoDeCompra = [...carritoDeCompra];
-        //     updatedCarritoDeCompra[existingProductIndex] = newItem;
-
-        //     setCarritoDeCompra(updatedCarritoDeCompra);
-        //     setLocalStorage('Productos', updatedCarritoDeCompra);
-        // } else {
-        //     console.log('Agregando producto al carrito...');
-        //     // Si el producto no está en el carrito, lo agregamos
-        //     const updatedCarritoDeCompra = [...carritoDeCompra, newItem];
-        //     setCarritoDeCompra(updatedCarritoDeCompra);
-        //     setLocalStorage('Productos', updatedCarritoDeCompra);
-        // }
+        navigate('/shoppingCart');
     }
 
 

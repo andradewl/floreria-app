@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import { Button, Divider, Grid, Typography, IconButton } from "@mui/material";
 import { Link, useNavigate } from "react-router-dom";
 import { getDirecciones, deleteDireccion } from "../../config/backEndUsuarios/backUbicaciones";
@@ -12,7 +12,7 @@ import WorkIcon from '@mui/icons-material/Work';
 
 export default function Ubicaciones() {
   const navigate = useNavigate();
-  const [direcciones, setDirecciones] = useState<DocumentData[]>([]);
+  const [direcciones, setDirecciones] = React.useState<DocumentData[]>([]);
 
   const DemoPaper = styled(Paper)(({ theme }) => ({
     position: "relative",
@@ -22,7 +22,7 @@ export default function Ubicaciones() {
     margin: "auto",
   }));
 
-  useEffect(() => {
+  React.useEffect(() => {
     getDireccionesData();
   }, []);
 
