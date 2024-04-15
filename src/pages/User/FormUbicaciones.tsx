@@ -61,6 +61,8 @@ export default function FormUbicaciones() {
       nReferencias,
       nIdUserRef
     );
+    alert("Dirección guardada correctamente");
+    navigate("/Usuario/:id");
   };
 
   return (
