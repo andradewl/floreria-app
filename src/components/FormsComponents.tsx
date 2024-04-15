@@ -24,7 +24,7 @@ function shopProducts() {
     const [totalNumerico, setTotalNumerico] = React.useState<number>(0);
 
     const [totalEnvio, settotalEnvio] =  React.useState<number>(0);
-    const [, setEntregaDeFlores] = React.useState(true);
+    // const [, setEntregaDeFlores] = React.useState(true);
     const [isChecked, setIsChecked] = React.useState(false);
     const [isUidUserLogin, setisUidUserLogin] = React.useState(null);
 
