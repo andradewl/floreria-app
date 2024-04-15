@@ -8,33 +8,72 @@ import {
   TextField,
   Typography,
 } from "@mui/material";
-import MenuItem from "@mui/material/MenuItem";
+import { useNavigate } from "react-router-dom";
+import { addDireccion } from "../../config/backEndUsuarios/backUbicaciones";
+import { useState } from "react";
+import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 
-const currencies = [
-  {
-    value: "Centro",
-    label: "Centro",
-  },
-  {
-    value: "Centro",
-    label: "Centro",
-  },
-  {
-    value: "Centro",
-    label: "Centro",
-  },
-  {
-    value: "Centro",
-    label: "Centro",
-  },
-];
+
 
 export default function FormUbicaciones() {
+  const navigate = useNavigate();
+  const [nombreDestino, setNombreDestino] = useState<string>("");
+  const [apellidoDestino, setApellidoDestino] = useState<string>("");
+  const [codigoPostal, setCodigoPostal] = useState<string>("");
+  const [nEstado, setEstado] = useState<string>("");
+  const [nMunicipio, setMunicipio] = useState<string>("");
+  const [nColonia, setColonia] = useState<string>("");
+  const [nCalle, setCalle] = useState<string>("");
+  const [numExt, setNumExt] = useState<string>("");
+  const [numInt, setNumInt] = useState<string>("");
+  const [calleRef1, setCalleRef1] = useState<string>("");
+  const [calleRef2, setCalleRef2] = useState<string>("");
+  const [nTipo, setTipo] = useState<string>("residencia");
+  const [telRemitente, setTelRemitente] = useState<string>("");
+  const [telDestinatario, setTelDestinatario] = useState<string>("");
+  const [nReferencias, setReferencias] = useState<string>("");
+  const [nIdUserRef, setIdUserRef] = useState<string>("w2INimKno1fwEXvAJatj3nsWRqJ2");
+  
+  const handleRegresar = () => {
+    navigate("/Usuario/:id");
+  };
+
+  const handleChangeTipo = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setTipo(event.target.value);
+  };
+
+  const addNewDireccion = () => {
+    addDireccion(
+      nombreDestino,
+      apellidoDestino,
+      codigoPostal,
+      nEstado,
+      nMunicipio,
+      nColonia,
+      nCalle,
+      numExt,
+      numInt,
+      calleRef1,
+      calleRef2,
+      nTipo, // Usamos el estado nTipo para pasar el tipo seleccionado
+      telRemitente,
+      telDestinatario,
+      nReferencias,
+      nIdUserRef
+    );
+  };
+
   return (
-    <Grid container spacing={4} justifyContent="center">
+    <Grid container spacing={4} justifyContent="center" sx={{py:12}}>
       <Grid item container spacing={2} xl={6} lg={6} md={6} sm={12} xs={12}>
         <Grid item xs={12}>
-          <Typography variant="h3">
+        <Button
+          startIcon={<ArrowBackIcon />}
+          onClick={handleRegresar}
+        >
+          Regresar
+        </Button>
+          <Typography variant="h3"sx={{ textAlign: 'center' }}>
             Agregar Nueva Direccion de Entrega.
           </Typography>
         </Grid>
@@ -46,6 +85,8 @@ export default function FormUbicaciones() {
             label="Nombre"
             variant="outlined"
             fullWidth
+            value={nombreDestino}
+            onChange={(e) => setNombreDestino(e.target.value)}
           />
         </Grid>
         <Grid item xs={6}>
@@ -56,53 +97,54 @@ export default function FormUbicaciones() {
             label="Apellido"
             variant="outlined"
             fullWidth
+            value={apellidoDestino}
+            onChange={(e) => setApellidoDestino(e.target.value)}
           />
         </Grid>
         <Grid item xs={2}>
           <TextField
             id="outlined-basic"
-            disabled
             label="Codigo Postal"
             variant="outlined"
             defaultValue="64000"
             fullWidth
+            value={codigoPostal}
+            onChange={(e) => setCodigoPostal(e.target.value)}
           />
         </Grid>
         <Grid item xs={5}>
           <TextField
             id="outlined-disabled"
-            disabled
+            
             label="Estado"
             variant="outlined"
             defaultValue="Nuevo León"
             fullWidth
+            value={nEstado}
+            onChange={(e) => setEstado(e.target.value)}
           />
         </Grid>
         <Grid item xs={5}>
           <TextField
             id="outlined-basic"
-            disabled
+            
             label="Municipio o Alcaldía"
             variant="outlined"
             defaultValue="Monterrey"
             fullWidth
+            value={nMunicipio}
+            onChange={(e) => setMunicipio(e.target.value)}
           />
         </Grid>
         <Grid item xs={12}>
           <TextField
             id="outlined-select-currency"
-            select
             label="Colonia"
             defaultValue="Centro"
-            helperText="Selecciona la colonia, por favor"
             fullWidth
-          >
-            {currencies.map((option) => (
-              <MenuItem key={option.value} value={option.value}>
-                {option.label}
-              </MenuItem>
-            ))}
-          </TextField>
+            value={nColonia}
+            onChange={(e) => setColonia(e.target.value)}
+          ></TextField>
         </Grid>
         <Grid item xs={8}>
           <TextField
@@ -111,6 +153,8 @@ export default function FormUbicaciones() {
             label="Calle"
             variant="outlined"
             fullWidth
+            value={nCalle}
+            onChange={(e) => setCalle(e.target.value)}
           />
         </Grid>
         <Grid item xs={2}>
@@ -119,6 +163,8 @@ export default function FormUbicaciones() {
             label="Número Exterior"
             variant="outlined"
             fullWidth
+            value={numExt}
+            onChange={(e) => setNumExt(e.target.value)}
           />
         </Grid>
         <Grid item xs={2}>
@@ -127,6 +173,8 @@ export default function FormUbicaciones() {
             label="Número Interior"
             variant="outlined"
             fullWidth
+            value={numInt}
+            onChange={(e) => setNumInt(e.target.value)}
           />
         </Grid>
         <Grid item xs={6}>
@@ -138,6 +186,8 @@ export default function FormUbicaciones() {
             label="Calle 1"
             variant="outlined"
             fullWidth
+            value={calleRef1}
+            onChange={(e) => setCalleRef1(e.target.value)}
           />
         </Grid>
         <Grid item xs={6}>
@@ -149,24 +199,31 @@ export default function FormUbicaciones() {
             label="Calle 2"
             variant="outlined"
             fullWidth
+            value={calleRef2}
+            onChange={(e) => setCalleRef2(e.target.value)}
           />
         </Grid>
         <Grid item xs={12}>
           <Typography variant="body2" color="textSecondary" gutterBottom>
             ¿Es trabajo o casa?
           </Typography>
-          <FormControl>
+          <FormControl component="fieldset">
             <RadioGroup
-              aria-labelledby="radio-buttons-group-label"
-              defaultValue="female"
-              name="radio-buttons-group"
+              aria-label="tipo"
+              name="tipo"
+              value={nTipo} // Valor del estado para el tipo seleccionado
+              onChange={handleChangeTipo} // Función para actualizar el estado cuando se seleccione una opción
             >
               <FormControlLabel
-                value="female"
+                value="residencia"
                 control={<Radio />}
-                label="Laboral"
+                label="Residencia"
               />
-              <FormControlLabel value="male" control={<Radio />} label="Casa" />
+              <FormControlLabel
+                value="trabajo"
+                control={<Radio />}
+                label="Trabajo"
+              />
             </RadioGroup>
           </FormControl>
         </Grid>
@@ -177,6 +234,8 @@ export default function FormUbicaciones() {
             variant="outlined"
             required
             fullWidth
+            value={telRemitente}
+            onChange={(e) => setTelRemitente(e.target.value)}
           />
         </Grid>
         <Grid item xs={6}>
@@ -185,6 +244,8 @@ export default function FormUbicaciones() {
             label="Teléfono de destinatario"
             variant="outlined"
             fullWidth
+            value={telDestinatario}
+            onChange={(e) => setTelDestinatario(e.target.value)}
           />
         </Grid>
         <Grid item xs={12}>
@@ -195,6 +256,8 @@ export default function FormUbicaciones() {
             required
             rows={4}
             fullWidth
+            value={nReferencias}
+            onChange={(e) => setReferencias(e.target.value)}
           />
         </Grid>
 
@@ -202,6 +265,7 @@ export default function FormUbicaciones() {
           <Button
             fullWidth
             variant="outlined"
+            onClick={addNewDireccion} // Llama a la función para agregar dirección al hacer clic en el botón
             sx={{
               width: "fit-content",
               color: "#B42981",

@@ -25,41 +25,45 @@ const Usuario = () => {
       case 2:
         return <Ubicaciones />;
       case 3:
-        return <FormDetaFac/>;
+        return <FormDetaFac />;
       default:
         return null;
     }
   };
 
   return (
-    <Grid container spacing={6} justifyContent="center">
-      <Grid item xs={2}>
+    <Grid container spacing={4} justifyContent="center" sx={{ py: 12 }}>
+      <Grid item xs={12} sm={12} md={12} lg={3} xl={2}>
         <Typography variant="h5" sx={{ fontWeight: 'bold', color: '#B95389' }}>Opciones</Typography>
         <Tabs value={tabValue} onChange={handleChange} orientation="vertical">
           <Tab
             icon={<LocalFloristIcon fontSize="medium" sx={{ color: '#C81987' }} />}
             iconPosition="start"
-            label="Historial de pedidos"sx={{alignSelf:'start'}}
+            label="Historial de pedidos"
+            sx={{ alignSelf: 'start' }}
           />
           <Tab
             icon={<LoyaltyIcon fontSize="medium" sx={{ color: '#C81987' }} />}
             iconPosition="start"
-            label="Estatus de envío"sx={{alignSelf:'start'}}
+            label="Estatus de envío"
+            sx={{ alignSelf: 'start' }}
           />
           <Tab
             icon={<MapsHomeWorkIcon fontSize="medium" sx={{ color: '#C81987' }} />}
             iconPosition="start"
-            label="Ubicaciones de entrega"sx={{alignSelf:'start'}}
+            label="Ubicaciones de entrega"
+            sx={{ alignSelf: 'start' }}
           />
           <Tab
             icon={<DescriptionIcon fontSize="medium" sx={{ color: '#C81987' }} />}
             iconPosition="start"
-            label="Datos de facturación" sx={{alignSelf:'start'}}
+            label="Datos de facturación"
+            sx={{ alignSelf: 'start' }}
           />
         </Tabs>
       </Grid>
-      <Grid item xs={9} justifyContent="center">
-          {renderContent()}
+      <Grid item xs={12} sm={12} md={12} lg={9} xl={10}>
+        {renderContent()}
       </Grid>
     </Grid>
   );
