@@ -3,24 +3,24 @@ import CheckIcon from '@mui/icons-material/Check';
 
 function Nosotros() {
   return (
-    <Container sx={{ backgroundColor: "#f8f9fa", py: 8, marginTop: '64px' }}>
+    <Container sx={{ backgroundColor: "#f8f9fa", py: 10 }}>
       <Grid container spacing={4} justifyContent="center">
         <Grid item xs={12}>
           <Stack spacing={3} alignItems="center">
             <Typography variant="h3" textAlign="center" sx={{ fontStyle: 'italic' }}>
-              Conócenos
+              Conócenos.
             </Typography>
             <Typography variant="body1" textAlign="center" sx={{ maxWidth: 800 }}>
               En Daisy's Garden, pensamos en todo para convertir cualquier momento en algo mágico. Te ayudamos a expresar emociones y sentimientos a través de una gran variedad de hermosos arreglos florales, arreglos frutales y más obsequios de excelente calidad para toda ocasión a un precio justo. Queremos que nuestras flores te ayuden a crear más y mejores experiencias memorables a lo largo de tu vida, así como estar para ti en esos momentos difíciles de despedir a un ser amado y honrarlo adecuadamente.
             </Typography>
             <Typography variant="h4" textAlign="center">
-              Misión
+              Misión.
             </Typography>
             <Typography variant="body1" textAlign="center">
               Brindar las mejores flores y 100% frescas para que tu arreglo luzca en perfectas condiciones de acuerdo a la ocasión.
             </Typography>
             <Typography variant="h4" textAlign="center">
-              Valores
+              Valores.
             </Typography>
           </Stack>
         </Grid>
