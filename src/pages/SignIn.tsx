@@ -13,18 +13,15 @@ import {
 
 import { Visibility, VisibilityOff } from "@mui/icons-material";
 import { addUser } from "../config/apiFirebase";
-
-import { useNavigate } from 'react-router-dom';
-
+import { useNavigate } from "react-router-dom";
+import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 
 function SignIn() {
-
-  const navigate = useNavigate()
+  const navigate = useNavigate();
   const [nombreUser, setNombreUser] = useState<string>("");
   const [apellidoUser, setApellidoUser] = useState<string>("");
   const [emailUser, setEmailUser] = useState<string>("");
   const [passwordUser, setPasswordUser] = useState<string>("");
-
   const [showPassword, setShowPassword] = useState(false);
 
   const newUserName = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -53,21 +50,28 @@ function SignIn() {
 
   const addNewUser = () => {
     addUser(nombreUser, apellidoUser, emailUser, passwordUser)
-    .then((result) => {
+      .then((result) => {
         alert("Usuario Registrado con éxito, ya puede iniciar sesión");
         console.log(result);
-        navigate('/Login'); // Assuming navigate is defined and used for routing
-    })
-    .catch((error) => {
+        navigate("/Login"); // Assuming navigate is defined and used for routing
+      })
+      .catch((error) => {
         console.error("Failed to add user:", error);
         alert("Ha ocurrido un error, intente de nuevo");
-    });
-};
-
-
+      });
+  };
+  const handleRegresar = () => {
+    navigate("/login");
+  };
   return (
-    <Container maxWidth="sm">
-      <Grid container spacing={2} pt={15} pb={7}>
+    <Container
+      maxWidth="sm"
+      sx={{ backgroundColor: "#f8f9fa", py: 3, marginTop: "4%" }}
+    >
+      <Grid container spacing={2} pt={4} pb={5}>
+      <Button startIcon={<ArrowBackIcon />} onClick={handleRegresar}>
+            Iniciar Sesión.
+          </Button>
         <Grid item xs={12}>
           <Typography
             variant="h4"
@@ -76,7 +80,7 @@ function SignIn() {
             sx={{ fontFamily: "Times New Roman", mb: 3 }}
             gutterBottom
           >
-            Crear Cuenta
+            Crear Cuenta.
           </Typography>
         </Grid>
         <Grid item xs={12}>
@@ -158,17 +162,13 @@ function SignIn() {
           />
         </Grid>
         <Grid item xs={12}>
-          <Stack
-            direction="column"
-            spacing={2}
-            alignItems="center"
-            width="100%"
-          >
-            <Box>
+          <Stack direction="column" spacing={2} alignItems="center">
+            <Box sx={{ width: "100%" }}>
               <Button
                 variant="contained"
                 color="primary"
                 onClick={addNewUser}
+                fullWidth
               >
                 Crear Cuenta
               </Button>
@@ -180,4 +180,4 @@ function SignIn() {
   );
 }
 
-export default SignIn
+export default SignIn;
