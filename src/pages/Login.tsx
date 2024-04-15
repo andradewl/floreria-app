@@ -51,7 +51,7 @@ export default function Login() {
       .then((result) => {
         alert("Inicio de sesión exitoso");
         console.log(result);
-        window.location.reload();
+        window.location.href = '/';
       })
       .catch((error) => {
         console.error("Failed to LOGIN user:", error);
