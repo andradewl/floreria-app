@@ -94,7 +94,7 @@ export default function Ubicaciones() {
             </div>
           ))}
           <Button variant="text" onClick={handleNuevoClick} fullWidth>
-            Agregar nueva dirección.
+            Agregar nueva dirección de facturación.
           </Button>
         </DemoPaper>
       </Grid>
