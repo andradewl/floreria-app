@@ -11,20 +11,20 @@ import { CardElement, useElements, useStripe } from "@stripe/react-stripe-js"
 import { PaymentMethod } from '@stripe/stripe-js';
 import { WidthFull } from '@mui/icons-material';
 import { addPedido } from '../config/apiFirebase';
+import { useNavigate } from "react-router-dom";
 
 
 function shopProducts() {
+    const navigate = useNavigate();
 
     const servelUrl = "https://serve-paypal.vercel.app";
     const elements = useElements()
     const stripe = useStripe()
 
     const [item, setItems] = React.useState<CarritoDeCompra[]>([]);
-    // const [nuevoPedido, setNuevoPedido] = React.useState<NuevoPedido[]>([]);
     const [totalNumerico, setTotalNumerico] = React.useState<number>(0);
 
     const [totalEnvio, settotalEnvio] =  React.useState<number>(0);
-    // const [, setEntregaDeFlores] = React.useState(true);
     const [isChecked, setIsChecked] = React.useState(false);
     const [isUidUserLogin, setisUidUserLogin] = React.useState(null);
 
@@ -80,9 +80,13 @@ function shopProducts() {
         const storedItemsEnvio = localStorage.getItem('envio');
         const storedUserName = sessionStorage.getItem('credentials');
 
+        if(!storedItems){
+
+            return navigate("/");
+        }
+
         if(storedUserName){
             const userCredential = JSON.parse(storedUserName);
-
             setisUidUserLogin(userCredential.uid)
         }
 
@@ -96,6 +100,8 @@ function shopProducts() {
             setItems(parsedItems)
             settotalEnvio(ItemsEnvio)
         }
+
+
     }, [])
 
     const precioApAGAR = () =>{
@@ -121,11 +127,21 @@ function shopProducts() {
             ...formDataEnvio,
             [name]: value
         });
-    };
+    }
 
-    // const handleSubmit = () => {
-    //     // e.preventDefault();
-    // };
+
+    const handleRedirect = () =>{
+
+        const storedUserName = sessionStorage.getItem("credentials");
+        if (storedUserName) {
+            const userInfo = JSON.parse(storedUserName);
+            navigate("/Usuario/"+userInfo.uid);
+        }else{
+            navigate("/");
+
+        }
+    }
+
 
     const facturacionYEnvioTrue=()=>{
         let entrega="";
@@ -188,7 +204,6 @@ function shopProducts() {
         localStorage.removeItem('Productos');
         localStorage.removeItem('PrecioApagar');
         localStorage.removeItem('envio');
-
     }
 
 
@@ -222,6 +237,7 @@ function shopProducts() {
                     .then((pedidoId) => {
                         deleteCarrito()
                         alert('Pedido añadido exitosamente con id de seguimiento: '+pedidoId)
+                        handleRedirect()
                     })
                     .catch((_error) => {
                         alert('Error al crear el método de pago intentelo mas tarde')
@@ -236,6 +252,8 @@ function shopProducts() {
                     .then((pedidoId) => {
                         deleteCarrito()
                         alert('Pedido añadido exitosamente con id de seguimiento: '+pedidoId)
+                        handleRedirect()
+
                         // sendMessage()
                     })
                     .catch((_error) => {
@@ -356,6 +374,8 @@ function shopProducts() {
                                 // sendMessage()
                                 deleteCarrito()
                                 alert('Pedido añadido exitosamente con id de seguimiento: '+pedidoId)
+                                handleRedirect()
+
                             })
                             .catch((_error) => {
                                 // console.error("Error al añadir pedido: ", error);
@@ -372,6 +392,8 @@ function shopProducts() {
                                 // sendMessage()
                                 deleteCarrito()
                                 alert('Pedido añadido exitosamente con id de seguimiento: '+pedidoId)
+                                handleRedirect()
+
                             })
                             .catch((_error) => {
                                 // console.error("Error al añadir pedido: ", error);

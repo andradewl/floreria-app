@@ -22,7 +22,8 @@ export const addUser = async (nombre: string, apellido: string, email: string, p
             await setDoc(ref, {
                 nombre: nombre,
                 apellido: apellido,
-                email: email
+                email: email,
+                tipoUsuario: 'comprador'
             });
             resolve(true); // User creation successful
         })
@@ -46,7 +47,8 @@ export const login = async (email: string, password: string) => {
                     sessionStorage.setItem("userlogIn", JSON.stringify({
                         id:credential.user.uid,
                         name: docSnap.data().nombre,
-                        email:docSnap.data().email
+                        email:docSnap.data().email,
+                        tipoUsuario: docSnap.data().tipoUsuario
                     }) )
                     sessionStorage.setItem("credentials", JSON.stringify(credential.user))
             }

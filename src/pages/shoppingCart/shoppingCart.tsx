@@ -41,10 +41,25 @@ function ShoppingCart(){
 
     const eliminarItem = (index: number) => {
         // const nuevosItems = items.filter(item => item.id !== id);
-        const updatedItems = [...items.slice(0, index), ...items.slice(index + 1)];
-        localStorage.setItem('Productos', JSON.stringify(updatedItems));
+        // const updatedItems = [...items.slice(0, index), ...items.slice(index + 1)];
+        // localStorage.setItem('Productos', JSON.stringify(updatedItems));
 
-        setItems(updatedItems);
+        // setItems(updatedItems);
+
+        const updatedItems = [...items.slice(0, index), ...items.slice(index + 1)];
+        // Verificar si updatedItems está vacío
+        if (updatedItems.length === 0) {
+            localStorage.removeItem('Productos'); // Eliminar del localStorage si está vacío
+            localStorage.removeItem('envio');
+            localStorage.removeItem('PrecioApagar');
+            setItems([]);
+            setIsSetItems(false)
+        } else {
+            localStorage.setItem('Productos', JSON.stringify(updatedItems)); // Actualizar en localStorage
+            setItems(updatedItems);
+        }
+
+
     };
 
 

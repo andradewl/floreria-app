@@ -28,6 +28,7 @@ function ResponsiveAppBar() {
   const [userLogin, setUserLogin] = React.useState<UserLogin>();
   const [isScrolled, setIsScrolled] = React.useState(false);
 
+
   React.useEffect(()=>{
     const storedUserCredentials = sessionStorage.getItem('credentials');
     const storedUserName = sessionStorage.getItem('userlogIn');
@@ -58,9 +59,7 @@ function ResponsiveAppBar() {
   const handleLogOut = () => {
     sessionStorage.removeItem("userlogIn")
     sessionStorage.removeItem("credentials")
-
-    window.location.reload();
-
+    window.location.href = '/';
 
   };
 

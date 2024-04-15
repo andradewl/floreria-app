@@ -17,6 +17,9 @@ import { login } from "../config/apiFirebase";
 import { useNavigate } from "react-router-dom";
 import GoogleIcon from "../assets/icon/iconGoogleV2.svg";
 import logoFR from "../assets/logo.png"
+
+
+
 export default function Login() {
   const navigate = useNavigate();
   const [showPassword, setShowPassword] = useState(false);
@@ -24,7 +27,7 @@ export default function Login() {
   const [passwordUser, setPasswordUser] = useState<string>("");
 
   React.useEffect(() => {
-    const storedUserName = sessionStorage.getItem("credentials");
+    const storedUserName = sessionStorage.getItem("userlogIn");
     if (storedUserName) {
       navigate("/");
     }
