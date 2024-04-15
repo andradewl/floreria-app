@@ -16,7 +16,7 @@ import { Link } from "react-router-dom";
 import { login } from "../config/apiFirebase";
 import { useNavigate } from "react-router-dom";
 import GoogleIcon from "../assets/icon/iconGoogleV2.svg";
-
+import logoFR from "../assets/logo.png"
 export default function Login() {
   const navigate = useNavigate();
   const [showPassword, setShowPassword] = useState(false);
@@ -64,7 +64,10 @@ export default function Login() {
       maxWidth="sm"
       sx={{ backgroundColor: "#f8f9fa", py: 3, marginTop: "4%" }}
     >
-      <Grid container spacing={2} pt={10} pb={10}>
+      <Grid container spacing={2} pt={2} pb={8}>
+      <Grid item xs={12} sx={{ textAlign: "center" }}>
+          <img src={logoFR} alt="Logo" height="100" />
+        </Grid>
         <Grid item xs={12}>
           <Typography
             variant="h4"
