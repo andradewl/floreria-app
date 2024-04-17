@@ -66,7 +66,7 @@ export default function DatosFac() {
                 >
                   {direccion.apellido}, {direccion.nombre} - {direccion.empresa}
                 </Typography>
-                <Link to={`/vwUpdateDireccion/${direccion.id}`}>
+                <Link to={`/editDireccionFact/${direccion.id}`}>
                   <IconButton>
                     <EditIcon />
                   </IconButton>
