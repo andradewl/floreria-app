@@ -30,6 +30,7 @@ export default function FormUbicaciones() {
   const [telRemitente, setTelRemitente] = useState<string>("");
   const [telDestinatario, setTelDestinatario] = useState<string>("");
   const [nReferencias, setReferencias] = useState<string>("");
+
   const userId = JSON.parse(sessionStorage.getItem("userlogIn") || "{}").id;
 
   const handleRegresar = () => {

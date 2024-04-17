@@ -1,37 +1,74 @@
 import React, { useEffect, useState } from "react";
-import { Grid, TextField, Typography } from "@mui/material";
-import { getDireccionById } from "../../config/backEndUsuarios/backUbicaciones";
+import {
+  Button,
+  FormControl,
+  FormControlLabel,
+  Grid,
+  Radio,
+  RadioGroup,
+  TextField,
+  Typography,
+} from "@mui/material";
+import { getDireccionById, updateDireccion } from "../../config/backEndUsuarios/backUbicaciones";
 import { useParams } from "react-router-dom";
+import ArrowBackIcon from "@mui/icons-material/ArrowBack";
+import { useNavigate } from "react-router-dom";
 
 export default function editDirecciones() {
-// Obtener la ID de la dirección de los parámetros de la URL
-const { id } = useParams<{ id: string }>();
+  const navigate = useNavigate();
+  const { id } = useParams<{ id: string }>();
+  const [direccion, setDireccion] = useState<any>(null);
+  const [nTipo, setTipo] = useState<string>("residencia");
 
-// Estado para almacenar los datos de la dirección
-const [direccion, setDireccion] = useState<any>(null);
-
-useEffect(() => {
-  const fetchDireccion = async () => {
-    try {
-      if (id) { // Verificar si id tiene un valor asignado
-        const direccionData = await getDireccionById(id); // Obtener datos reales de la dirección
-        setDireccion(direccionData);
-      } else {
-        console.error("La ID de la dirección es indefinida.");
-      }
-    } catch (error) {
-      console.error("Error al obtener dirección:", error);
-    }
+  const handleRegresar = () => {
+    navigate(`/Usuario/${id}`);
   };
 
-  fetchDireccion();
-}, [id]); // Asegúrate de incluir id en la lista de dependencias del efecto
+  useEffect(() => {
+    const fetchDireccion = async () => {
+      try {
+        if (id) {
+          const direccionData = await getDireccionById(id);
+          setDireccion(direccionData);
+        } else {
+          console.error("La ID de la dirección es indefinida.");
+        }
+      } catch (error) {
+        console.error("Error al obtener dirección:", error);
+      }
+    };
+
+    fetchDireccion();
+  }, [id]);
+
+  const handleChangeTipo = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setTipo(event.target.value);
+  };
+
+  const handleUpdateDireccion = async () => {
+    try {
+      if (direccion) {
+        await updateDireccion(direccion.id, direccion.nombre, direccion.apellido, direccion.zip, direccion.estado, direccion.municipio, direccion.colonia, direccion.calle, direccion.NumE, direccion.NumI, direccion.refCalle1, direccion.refCalle2, nTipo, direccion.telRemitente, direccion.telDestinatario, direccion.referencias, direccion.relUsuario);
+        console.log("Dirección actualizada exitosamente.");
+        alert("Dirección actualizada correctamente");
+        navigate("/Usuario/:id");
+        
+      } else {
+        console.error("No se ha cargado ninguna dirección.");
+      }
+    } catch (error) {
+      console.error("Error al actualizar dirección:", error);
+    }
+  };
 
   return (
     <Grid container spacing={4} justifyContent="center" sx={{ py: 12 }}>
       <Grid item container spacing={2} xl={6} lg={6} md={6} sm={12} xs={12}>
         <Grid item xs={12}>
-          <Typography variant="h3">
+          <Button startIcon={<ArrowBackIcon />} onClick={handleRegresar}>
+            Regresar
+          </Button>
+          <Typography variant="h3" sx={{ textAlign: "center" }}>
             Editar dirección de entrega.
           </Typography>
         </Grid>
@@ -44,7 +81,7 @@ useEffect(() => {
             variant="outlined"
             fullWidth
             value={direccion?.nombre || ""}
-            disabled
+            onChange={(event) => setDireccion({ ...direccion, nombre: event.target.value })}
           />
         </Grid>
         <Grid item xs={6}>
@@ -56,10 +93,10 @@ useEffect(() => {
             variant="outlined"
             fullWidth
             value={direccion?.apellido || ""}
-            disabled
+            onChange={(event) => setDireccion({ ...direccion, apellido: event.target.value })}
           />
         </Grid>
-        <Grid item xs={6}>
+        <Grid item xs={4}>
           <TextField
             id="codigoPostal"
             margin="dense"
@@ -68,10 +105,10 @@ useEffect(() => {
             variant="outlined"
             fullWidth
             value={direccion?.zip || ""}
-            disabled
+            onChange={(event) => setDireccion({ ...direccion, zip: event.target.value })}
           />
         </Grid>
-        <Grid item xs={6}>
+        <Grid item xs={4}>
           <TextField
             id="estado"
             margin="dense"
@@ -80,10 +117,10 @@ useEffect(() => {
             variant="outlined"
             fullWidth
             value={direccion?.estado || ""}
-            disabled
+            onChange={(event) => setDireccion({ ...direccion, estado: event.target.value })}
           />
         </Grid>
-        <Grid item xs={6}>
+        <Grid item xs={4}>
           <TextField
             id="municipio"
             margin="dense"
@@ -92,10 +129,10 @@ useEffect(() => {
             variant="outlined"
             fullWidth
             value={direccion?.municipio || ""}
-            disabled
+            onChange={(event) => setDireccion({ ...direccion, municipio: event.target.value })}
           />
         </Grid>
-        <Grid item xs={6}>
+        <Grid item xs={12}>
           <TextField
             id="colonia"
             margin="dense"
@@ -104,10 +141,10 @@ useEffect(() => {
             variant="outlined"
             fullWidth
             value={direccion?.colonia || ""}
-            disabled
+            onChange={(event) => setDireccion({ ...direccion, colonia: event.target.value })}
           />
         </Grid>
-        <Grid item xs={6}>
+        <Grid item xs={8}>
           <TextField
             id="calle"
             margin="dense"
@@ -116,10 +153,10 @@ useEffect(() => {
             variant="outlined"
             fullWidth
             value={direccion?.calle || ""}
-            disabled
+            onChange={(event) => setDireccion({ ...direccion, calle: event.target.value })}
           />
         </Grid>
-        <Grid item xs={6}>
+        <Grid item xs={2}>
           <TextField
             id="numExt"
             margin="dense"
@@ -128,10 +165,10 @@ useEffect(() => {
             variant="outlined"
             fullWidth
             value={direccion?.NumE || ""}
-            disabled
+            onChange={(event) => setDireccion({ ...direccion, NumE: event.target.value })}
           />
         </Grid>
-        <Grid item xs={6}>
+        <Grid item xs={2}>
           <TextField
             id="numInt"
             margin="dense"
@@ -139,7 +176,7 @@ useEffect(() => {
             variant="outlined"
             fullWidth
             value={direccion?.NumI || ""}
-            disabled
+            onChange={(event) => setDireccion({ ...direccion, NumI: event.target.value })}
           />
         </Grid>
         <Grid item xs={6}>
@@ -150,7 +187,7 @@ useEffect(() => {
             variant="outlined"
             fullWidth
             value={direccion?.refCalle1 || ""}
-            disabled
+            onChange={(event) => setDireccion({ ...direccion, refCalle1: event.target.value })}
           />
         </Grid>
         <Grid item xs={6}>
@@ -161,20 +198,32 @@ useEffect(() => {
             variant="outlined"
             fullWidth
             value={direccion?.refCalle2 || ""}
-            disabled
+            onChange={(event) => setDireccion({ ...direccion, refCalle2: event.target.value })}
           />
         </Grid>
-        <Grid item xs={6}>
-          <TextField
-            id="tipo"
-            margin="dense"
-            required
-            label="Tipo (Residencia o Trabajo)"
-            variant="outlined"
-            fullWidth
-            value={direccion?.tipo || ""}
-            disabled
-          />
+        <Grid item xs={12}>
+          <Typography variant="body2" color="textSecondary" gutterBottom>
+            ¿Es trabajo o casa?
+          </Typography>
+          <FormControl component="fieldset">
+            <RadioGroup
+              aria-label="tipo"
+              name="tipo"
+              value={nTipo}
+              onChange={handleChangeTipo}
+            >
+              <FormControlLabel
+                value="residencia"
+                control={<Radio />}
+                label="Residencia"
+              />
+              <FormControlLabel
+                value="trabajo"
+                control={<Radio />}
+                label="Trabajo"
+              />
+            </RadioGroup>
+          </FormControl>
         </Grid>
         <Grid item xs={6}>
           <TextField
@@ -185,32 +234,37 @@ useEffect(() => {
             variant="outlined"
             fullWidth
             value={direccion?.telRemitente || ""}
-            disabled
+            onChange={(event) => setDireccion({ ...direccion, telRemitente: event.target.value })}
           />
         </Grid>
         <Grid item xs={6}>
           <TextField
             id="telDestinatario"
             margin="dense"
+            required
             label="Teléfono de Destinatario"
             variant="outlined"
             fullWidth
             value={direccion?.telDestinatario || ""}
-            disabled
+            onChange={(event) => setDireccion({ ...direccion, telDestinatario: event.target.value })}
           />
         </Grid>
         <Grid item xs={12}>
           <TextField
             id="referencias"
             margin="dense"
-            label="Referencias Adicionales"
+            label="Referencias"
             variant="outlined"
             fullWidth
             multiline
             rows={4}
             value={direccion?.referencias || ""}
-            disabled
+            onChange={(event) => setDireccion({ ...direccion, referencias: event.target.value })}
           />
+        </Grid>
+        
+        <Grid item xs={12}>
+          <Button onClick={handleUpdateDireccion}>Guardar cambios</Button>
         </Grid>
       </Grid>
     </Grid>
