@@ -1,37 +1,38 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Button, Divider, Grid, Typography, IconButton } from "@mui/material";
 import { Link, useNavigate } from "react-router-dom";
-import {
-  getDireccionesUsuario,
-  deleteDirFact,
-} from "../../config/backEndUsuarios/backFacturacion";
+import { getDireccionesUsuario, deleteDirFact } from "../../config/backEndUsuarios/backFacturacion";
 import { DocumentData } from "@firebase/firestore-types";
 import Paper from "@mui/material/Paper";
 import { styled } from "@mui/material/styles";
 import EditIcon from "@mui/icons-material/Edit";
 import DeleteIcon from "@mui/icons-material/Delete";
 import BusinessIcon from "@mui/icons-material/Business";
-export default function Ubicaciones() {
+
+export default function DatosFac() {
   const navigate = useNavigate();
-  const [direcciones, setDirecciones] = React.useState<DocumentData[]>([]);
+  const [direcciones, setDirecciones] = useState<DocumentData[]>([]);
+  const userId = JSON.parse(sessionStorage.getItem("userlogIn") || "{}").id;
 
   const DemoPaper = styled(Paper)(({ theme }) => ({
     position: "relative",
-    width: "65%", // Ajustar el ancho del DemoPaper según sea necesario
+    width: "65%",
     padding: theme.spacing(2),
     textAlign: "left",
     margin: "auto",
   }));
 
-  React.useEffect(() => {
-    getDireccionesData();
-  }, []);
+  useEffect(() => {
+    if (userId) {
+      getDireccionesData();
+    } else {
+      console.error("ID de usuario no definido.");
+    }
+  }, [userId]);
 
   const getDireccionesData = async () => {
     try {
-      const direccionesData = await getDireccionesUsuario(
-        "w2INimKno1fwEXvAJatj3nsWRqJ2"
-      );
+      const direccionesData = await getDireccionesUsuario(userId);
       setDirecciones(direccionesData);
     } catch (error) {
       console.error("Error al obtener direcciones:", error);
