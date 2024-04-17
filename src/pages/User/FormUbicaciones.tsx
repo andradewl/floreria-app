@@ -30,9 +30,7 @@ export default function FormUbicaciones() {
   const [telRemitente, setTelRemitente] = useState<string>("");
   const [telDestinatario, setTelDestinatario] = useState<string>("");
   const [nReferencias, setReferencias] = useState<string>("");
-  const [nIdUserRef] = useState<string>(
-    "w2INimKno1fwEXvAJatj3nsWRqJ2"
-  );
+  const userId = JSON.parse(sessionStorage.getItem("userlogIn") || "{}").id;
 
   const handleRegresar = () => {
     navigate("/Usuario/:id");
@@ -55,11 +53,11 @@ export default function FormUbicaciones() {
       numInt,
       calleRef1,
       calleRef2,
-      nTipo, // Usamos el estado nTipo para pasar el tipo seleccionado
+      nTipo,
       telRemitente,
       telDestinatario,
       nReferencias,
-      nIdUserRef
+      userId
     );
     alert("Dirección guardada correctamente");
     navigate("/Usuario/:id");
@@ -208,8 +206,8 @@ export default function FormUbicaciones() {
             <RadioGroup
               aria-label="tipo"
               name="tipo"
-              value={nTipo} // Valor del estado para el tipo seleccionado
-              onChange={handleChangeTipo} // Función para actualizar el estado cuando se seleccione una opción
+              value={nTipo}
+              onChange={handleChangeTipo}
             >
               <FormControlLabel
                 value="residencia"
@@ -262,7 +260,7 @@ export default function FormUbicaciones() {
           <Button
             fullWidth
             variant="outlined"
-            onClick={addNewDireccion} // Llama a la función para agregar dirección al hacer clic en el botón
+            onClick={addNewDireccion}
             sx={{
               width: "fit-content",
               color: "#B42981",

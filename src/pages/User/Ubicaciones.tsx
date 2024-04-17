@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Button, Divider, Grid, Typography, IconButton } from "@mui/material";
 import { Link, useNavigate } from "react-router-dom";
 import { getDirecciones, deleteDireccion } from "../../config/backEndUsuarios/backUbicaciones";
@@ -12,23 +12,28 @@ import WorkIcon from '@mui/icons-material/Work';
 
 export default function Ubicaciones() {
   const navigate = useNavigate();
-  const [direcciones, setDirecciones] = React.useState<DocumentData[]>([]);
+  const [direcciones, setDirecciones] = useState<DocumentData[]>([]);
+  const userId = sessionStorage.getItem("userlogIn") ? JSON.parse(sessionStorage.getItem("userlogIn")!).id : null;
 
   const DemoPaper = styled(Paper)(({ theme }) => ({
     position: "relative",
-    width: "65%", // Ajustar el ancho del DemoPaper según sea necesario
+    width: "65%", 
     padding: theme.spacing(2),
     textAlign: "left",
     margin: "auto",
   }));
 
-  React.useEffect(() => {
-    getDireccionesData();
-  }, []);
+  useEffect(() => {
+    if (userId) {
+      getDireccionesData(userId); 
+    } else {
+      console.error("ID de usuario no definido.");
+    }
+  }, [userId]);
 
-  const getDireccionesData = async () => {
+  const getDireccionesData = async (userId: string) => { 
     try {
-      const direccionesData = await getDirecciones("w2INimKno1fwEXvAJatj3nsWRqJ2");
+      const direccionesData = await getDirecciones(userId);
       setDirecciones(direccionesData);
     } catch (error) {
       console.error("Error al obtener direcciones:", error);
@@ -42,7 +47,12 @@ export default function Ubicaciones() {
   const borrarDireccion = async (id: string) => {
     await deleteDireccion(id);
     console.log("Dirección eliminada con éxito:", id);
-    getDireccionesData();
+    if (userId) {
+      getDireccionesData(userId); 
+    } else {
+      console.error("ID de usuario no definido.");
+     
+    }
   };
 
   return (
