@@ -50,8 +50,7 @@ export default function Ubicaciones() {
     if (userId) {
       getDireccionesData(userId); 
     } else {
-      console.error("ID de usuario no definido.");
-     
+      console.error("ID de usuario no definido.");   
     }
   };
 
@@ -76,7 +75,7 @@ export default function Ubicaciones() {
                 >
                   {direccion.calle}, {direccion.NumE} - {direccion.NumI}
                 </Typography>
-                <Link to={`/vwUpdateDireccion/${direccion.id}`}>
+                <Link to={`/editDirecciones/${direccion.id}`}>
                     <IconButton><EditIcon/></IconButton>
                 </Link>
                 <IconButton
