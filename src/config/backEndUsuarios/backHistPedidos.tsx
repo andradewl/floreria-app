@@ -1,14 +1,9 @@
 import { db } from "../firfebase";
 import {
   collection,
-  addDoc,
   getDocs,
   query,
-  deleteDoc,
-  doc,
   where,
-  updateDoc,
-  getDoc,
 } from "firebase/firestore";
 
 export const getPedidosUsuario = async (uidUser: string) => {
@@ -26,7 +21,8 @@ export const getPedidosUsuario = async (uidUser: string) => {
         const carritoData = carritoCompra.map((item: any) => ({
           nombre: item.nombre,
           cantidad: item.cantidad,
-          precio: item.precio
+          precio: item.precio,
+          fecha: item.fecha // Incluir la fecha si está presente en el objeto carritoCompra
         }));
         return carritoData;
       } else {

@@ -16,34 +16,30 @@ interface Pedido {
   nombre: string;
   cantidad: number;
   precio: number;
+  fecha: string; // Agrega la propiedad fecha a la interfaz Pedido
 }
 
 export default function HistPedidos() {
-  const [pedidos, setPedidos] = useState<Pedido[][]>([]); // Modifica el estado inicial para que sea un array de arrays de Pedido
+  const [pedidos, setPedidos] = useState<Pedido[][]>([]);
 
   useEffect(() => {
-    // Obtenemos el ID del usuario del sessionStorage al montar el componente
     const userId = JSON.parse(sessionStorage.getItem("userlogIn") || "{}").id;
-  
-    // Verificamos si hay un ID de usuario válido
+
     if (userId) {
-      // Obtenemos los pedidos del usuario actual
       async function fetchPedidos() {
         try {
           const pedidosData = await getPedidosUsuario(userId);
-          console.log("Datos de pedidos obtenidos:", pedidosData);
           setPedidos(pedidosData);
         } catch (error) {
           console.error("Error al obtener los pedidos:", error);
         }
       }
-  
+
       fetchPedidos();
     } else {
       console.error("ID de usuario no encontrado en sessionStorage.");
     }
   }, []);
-  
 
   return (
     <Grid container justifyContent="center">
@@ -58,6 +54,7 @@ export default function HistPedidos() {
                 <TableCell>Nombre</TableCell>
                 <TableCell align="right">Cantidad</TableCell>
                 <TableCell align="right">Precio</TableCell>
+                <TableCell align="right">Fecha</TableCell> {/* Agrega la celda para la fecha */}
               </TableRow>
             </TableHead>
             <TableBody>
@@ -67,6 +64,7 @@ export default function HistPedidos() {
                     <TableCell>{pedido.nombre}</TableCell>
                     <TableCell align="right">{pedido.cantidad}</TableCell>
                     <TableCell align="right">{pedido.precio}</TableCell>
+                    <TableCell align="right">{pedido.fecha}</TableCell> {/* Muestra la fecha */}
                   </TableRow>
                 ))
               ))}
