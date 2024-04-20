@@ -143,7 +143,7 @@ function shopProducts() {
     }
 
 
-    const facturacionYEnvioTrue=()=>{
+    const facturacionYEnvioTrue=(total:number)=>{
         let entrega="";
         let newItem;
 
@@ -156,7 +156,8 @@ function shopProducts() {
                 carritoCompra:item,
                 idEstado:"lihdGU56KMY6sblyD9xb",
                 uidUserLogin:isUidUserLogin,
-                entrega:entrega
+                entrega:entrega,
+                total:total
             }
         }else{
             newItem={
@@ -165,14 +166,15 @@ function shopProducts() {
                 carritoCompra:item,
                 idEstado:"lihdGU56KMY6sblyD9xb",
                 uidUserLogin:"no user",
-                entrega:entrega
+                entrega:entrega,
+                total:total
             }
         }
         return newItem
     }
 
 
-    const facturacionYEnviofalse=()=>{
+    const facturacionYEnviofalse=(total:number)=>{
         let entrega="";
         totalEnvio == 0 ? entrega="Recoge en tienda" : entrega="Entregar a cliente";
 
@@ -184,7 +186,8 @@ function shopProducts() {
                 carritoCompra:item,
                 idEstado:"lihdGU56KMY6sblyD9xb",
                 uidUserLogin:isUidUserLogin,
-                entrega:entrega
+                entrega:entrega,
+                total:total
             }
         }else{
             newItem={
@@ -193,7 +196,8 @@ function shopProducts() {
                 carritoCompra:item,
                 idEstado:"lihdGU56KMY6sblyD9xb",
                 uidUserLogin:"no user",
-                entrega:entrega
+                entrega:entrega,
+                total:total
             }
         }
         return newItem
@@ -209,6 +213,7 @@ function shopProducts() {
 
     const onApprove = async (data: { orderID: string }) => {
 
+        const dinero = precioApAGAR();
         return fetch(`${servelUrl}/api/orders/${data.orderID}/capture`, {
             method: "POST",
             headers: {
@@ -230,7 +235,7 @@ function shopProducts() {
 
                 if( true== isFormValid && isFormValidEnvio == true){
 
-                    const datosPedidos = facturacionYEnvioTrue()
+                    const datosPedidos = facturacionYEnvioTrue(dinero)
                     const newItem: NuevoPedido = datosPedidos
 
                     addPedido(newItem)
@@ -245,7 +250,7 @@ function shopProducts() {
                     console.log(newItem)
 
                 }else{
-                    const datosPedidos = facturacionYEnviofalse()
+                    const datosPedidos = facturacionYEnviofalse(dinero)
                     const newItem: NuevoPedido = datosPedidos
 
                     addPedido(newItem)
@@ -365,7 +370,7 @@ function shopProducts() {
                         console.log("resuñtado pago",result.paymentIntent);
                         if( true== isFormValid && isFormValidEnvio == true){
 
-                            const datosPedidos = facturacionYEnvioTrue()
+                            const datosPedidos = facturacionYEnvioTrue(dinero)
                             const newItem: NuevoPedido = datosPedidos
 
                             addPedido(newItem)
@@ -384,7 +389,7 @@ function shopProducts() {
                             console.log(newItem)
 
                         }else{
-                            const datosPedidos = facturacionYEnviofalse()
+                            const datosPedidos = facturacionYEnviofalse(dinero)
                             const newItem: NuevoPedido = datosPedidos
                             addPedido(newItem)
                             .then((pedidoId) => {

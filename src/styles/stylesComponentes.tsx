@@ -221,6 +221,8 @@ export const stylesComponents = {
             xs:'5px',
             md:'10px'
         },
+        paddingTop:{xs:'20px'},
+
         color:'#fffff',
     },
 

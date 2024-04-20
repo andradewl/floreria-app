@@ -1,6 +1,6 @@
-import {auth, db} from './firfebase';
-import {collection, getDocs, getDoc, doc,  query, where, setDoc, addDoc} from 'firebase/firestore';
-import { Flower, ProductoExtra, NuevoPedido } from '../interfaces/interfaces';
+import { auth, db} from './firfebase';
+import {collection, getDocs, getDoc, doc,  query, where, setDoc, addDoc  } from 'firebase/firestore';
+import { Flower, ProductoExtra, NuevoPedido, Tipoflores, Ocasionest } from '../interfaces/interfaces';
 import { createUserWithEmailAndPassword, signInWithEmailAndPassword } from 'firebase/auth';
 
 
@@ -73,6 +73,9 @@ export const getProducts = async (): Promise<Flower[]> => {
             imagen: data.imagen,
             precio: data.precio,
             oferta: data.oferta,
+            existencias:data.existencias,
+            tipoflor:data.tipoflor,
+            ocasion:data.ocasion,
             descuento: data.descuento !== undefined ? data.descuento : undefined,
             productosExtra: data.productosExtra !== undefined ? data.productosExtra : []
         };
@@ -80,6 +83,36 @@ export const getProducts = async (): Promise<Flower[]> => {
     });
     return products;
 };
+
+export const getTipoFlores = async (): Promise<Tipoflores[]> => {
+    const result = await getDocs(query(collection(db,'TipoFlores')));
+    const products: Tipoflores[] = result.docs.map(doc => {
+        const data = doc.data();
+        const tipoflores: Tipoflores = {
+            id: doc.id,
+            nombre: data.nombre
+        };
+        return tipoflores;
+    });
+    return products;
+};
+
+
+export const getOcasiones = async (): Promise<Ocasionest[]> => {
+    const result = await getDocs(query(collection(db,'ocasiones')));
+    const products: Ocasionest[] = result.docs.map(doc => {
+        const data = doc.data();
+        const tipoOcasiones: Ocasionest = {
+            id: doc.id,
+            descripcion: data.descripcion,
+            imagen: data.imagen,
+            nombre: data.nombre
+        };
+        return tipoOcasiones;
+    });
+    return products;
+};
+
 
 export const getProductById = async (productId: string): Promise<Flower | null> => {
     const productDocRef = doc(db, 'Flores', productId);

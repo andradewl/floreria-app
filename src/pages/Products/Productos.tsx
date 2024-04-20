@@ -1,49 +1,97 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 
 import React from 'react'
-import { Box, Grid, Typography, MenuItem } from '@mui/material'
+import { Box, Grid, Typography, MenuItem, List, ListItem, ListItemButton, ListItemText } from '@mui/material'
 import { stylesComponents } from '../../styles/stylesComponentes'
 import Select, { SelectChangeEvent } from '@mui/material/Select';
 import { useNavigate } from 'react-router-dom';
-import { Flower } from '../../interfaces/interfaces'
-import { getProducts } from '../../config/apiFirebase'
+import { Flower, Ocasionest, Tipoflores } from '../../interfaces/interfaces'
+import { getOcasiones, getProducts, getTipoFlores } from '../../config/apiFirebase'
+// import { onValue } from 'firebase/database';
 
 function Productos(){
 
     const navigate = useNavigate()
 
 
-    const [precio, setPrecio] = React.useState('')
-    const [ocasion, setOcasion] = React.useState('')
-    const [calificacion, setCalificacion] = React.useState('')
+    // const [precio, setPrecio] = React.useState('')
+    // const [ocasion, setOcasion] = React.useState('')
+    // const [calificacion, setCalificacion] = React.useState('')
     const [flores, setFlores] = React.useState<Flower[]>([]);
+    const [floresFiltro, setFloresFiltro] = React.useState<Flower[]>([]);
+    // const [filtroTipoFlor, setFiltroTipoFlor] = React.useState<string | null>(null);
 
-    React.useEffect(()=>{
-        fetchFlores()
-    },[])
+    const [ocasiones, setOcasiones] = React.useState<Ocasionest[]>([]);
+    const [tipoFlores, setTipoFlores] = React.useState<Tipoflores[]>([]);
 
-    const fetchFlores = async () => {
+    React.useEffect(() => {
+        const fetchData = async () => {
+            try {
+                const flowersData = await getProducts();
+                setFloresFiltro(flowersData); // Update state with fetched data
+                setFlores(flowersData);
+                fetchTipoFlores();
+                fetchOcasiones();
+            } catch (error) {
+                console.error('Error fetching flowers:', error);
+            }
+        };
+        fetchData(); // Call the async function directly
+    }, []);
+
+    const fetchTipoFlores = async () => {
         try {
-            const flowersData = await getProducts();
-            console.log(flowersData)
-            setFlores(flowersData);
+            const typeFlowersData = await getTipoFlores();
+            console.log(typeFlowersData)
+            setTipoFlores(typeFlowersData);
         } catch (error) {
-            console.error('Error fetching flowers:', error);
+            console.error('Error fetching typeFlower:', error);
+        }
+    };
+
+    const fetchOcasiones = async () => {
+        try {
+            const OcasionesData = await getOcasiones();
+            console.log(OcasionesData)
+            setOcasiones(OcasionesData);
+        } catch (error) {
+            console.error('Error fetching ocasiones:', error);
         }
     };
 
     const handleChangePrecio = (event: SelectChangeEvent) => {
-        setPrecio(event.target.value);
-    };
-    const handleChangeOcasion = (event: SelectChangeEvent) => {
-        setOcasion(event.target.value);
-    }
-    const handleChangeCalificacion = (event: SelectChangeEvent) => {
-        setCalificacion(event.target.value);
+        // setPrecio(event.target.value);
+        if (event.target.value == "mayor"){
+            const filtroFlores = floresFiltro.slice().sort((a, b) => b.precio - a.precio)
+            setFloresFiltro(filtroFlores)
+        }else if(event.target.value == "menor"){
+            const filtroFlores = floresFiltro.slice().sort((a, b) => a.precio - b.precio)
+            setFloresFiltro(filtroFlores)
+        }else{
+            const filtroFlores = flores
+            setFloresFiltro(filtroFlores)
+        }
+        console.log(event.target.value)
     };
 
     const handleRedirectToProductId = (id:string) => {
         navigate('/Producto/'+id);
     };
+
+    const filtroPorTipoDeFlores = (id:string)=>{
+        const filtroFlores = flores.filter((product) => product.tipoflor === id)
+        setFloresFiltro(filtroFlores)
+    }
+
+    const filtroPorOcasiones = (id:string)=>{
+        const filtroFlores = flores.filter((product) => product.ocasion === id)
+        setFloresFiltro(filtroFlores)
+    }
+
+    // const mayorAMenor = ()=>{
+    //     const filtroFlores = floresFiltro.slice().sort((a, b) => b.precio - a.precio)
+    //     setFloresFiltro(filtroFlores)
+    // }
 
 
     return(
@@ -58,92 +106,78 @@ function Productos(){
                 <Grid item xs={12} sx={stylesComponents.positionOfFilter}>
                     <Box sx={stylesComponents.espaciadoOrdenFiltro}>
                         <Select
-                            value={precio}
-                            onChange={handleChangePrecio}
-                            displayEmpty
-                            inputProps={{ 'aria-label': 'Without label' }}
+                                value=''
+                                onChange={handleChangePrecio}
+                                displayEmpty
+                                inputProps={{ 'aria-label': 'Without label' }}
+                                // onChangeCapture={()=>console.log(onValue)}
                             >
-                                <MenuItem value="">
-                                    <em>Ordenar por Precio</em>
-                                </MenuItem>
-                                <MenuItem value={'mayor'} sx={{ fontize:'20px'}}>Mayor</MenuItem>
-                                <MenuItem value={'menor'}>Menor</MenuItem>
-                            </Select>
+                            <MenuItem value="">
+                                <em>Ver todo</em>
+                            </MenuItem>
+                            <MenuItem value={'mayor'} sx={{ fontize:'20px'}}>Mayor precio</MenuItem>
+                            <MenuItem value={'menor'}>Menor precio</MenuItem>
+                        </Select>
+                    </Box>
+                    {/* { filtroTipoFlor &&
+                        <Box sx={stylesComponents.espaciadoOrdenFiltro}>
+                            <Button variant="text">
+                                Quitar filtro
+                            </Button>
 
-                    </Box>
-                    <Box sx={stylesComponents.espaciadoOrdenFiltro}>
-                    <Select
-                            value={calificacion}
-                            onChange={handleChangeCalificacion}
-                            displayEmpty
-                            inputProps={{ 'aria-label': 'Without label' }}
-                            >
-                                <MenuItem value="">
-                                    <em>Ordenar por calificacion</em>
-                                </MenuItem>
-                                <MenuItem value={5}>5 estrellas</MenuItem>
-                                <MenuItem value={4}>4 estrellas</MenuItem>
-                                <MenuItem value={3}>3 estrellas</MenuItem>
-                                <MenuItem value={2}>2 estrellas</MenuItem>
-                                <MenuItem value={1}>1 estrellas</MenuItem>
-                            </Select>
-                    </Box>
+                        </Box>
+                    } */}
                 </Grid>
                 <Grid item xs={12} paddingTop={'30px'} >
                     <Grid container>
+
                         <Grid item md={2} sx={{display:{ xs:'none', md:'block'}}}>
                             <Grid >
-                                <Typography variant="h1" color="initial" sx={{fontSize:'30px', fontFamily:'Archivo Black, sans-serif', color:'#B42981'}}>Filtros</Typography>
-                                <Grid >
+                                <Typography variant="h1" color="initial" sx={{fontSize:'30px', fontFamily:'Archivo Black, sans-serif', color:'#B42981'}}>Ocasiones</Typography>
+                                <Grid>
 
-                                    <Grid>
-                                        <Select
-                                            value={ocasion}
-                                            onChange={handleChangeOcasion}
-                                            displayEmpty
-                                            inputProps={{ 'aria-label': 'Without label' }}
+                                    <List
+                                        sx={{ width: '100%', maxWidth: 360, bgcolor: 'background.paper' }}
+                                        aria-label="contacts"
                                         >
-                                            <MenuItem value="">
-                                                <em>Por Ocasion</em>
-                                            </MenuItem>
-                                            <MenuItem value={'mayor'} sx={{ fontize:'20px'}}>boda</MenuItem>
-                                            <MenuItem value={'menor'}>Para ella</MenuItem>
-                                            <MenuItem value={'menor'}>Para el</MenuItem>
-                                            <MenuItem value={'menor'}>Bautisos</MenuItem>
-                                            <MenuItem value={'menor'}>Velorios</MenuItem>
-                                            <MenuItem value={'menor'}>XV Años</MenuItem>
-                                        </Select>
-                                    </Grid>
+                                            {ocasiones && ocasiones.map((item) => (
+                                                <ListItem disablePadding>
+                                                    <ListItemButton onClick={() => filtroPorOcasiones(item.id)}>
+                                                    <ListItemText primary={item.nombre} />
+                                                    </ListItemButton>
+                                                </ListItem>
+                                            ))}
+                                    </List>
+                                </Grid>
+                            </Grid>
 
-                                    <Grid>
-                                        <Grid>
-                                            <Select
-                                                value={ocasion}
-                                                onChange={handleChangeOcasion}
-                                                displayEmpty
-                                                inputProps={{ 'aria-label': 'Without label' }}
-                                            >
-                                                <MenuItem value="">
-                                                    <em>Tipo de flor</em>
-                                                </MenuItem>
-                                                <MenuItem value={'mayor'} sx={{ fontize:'20px'}}>Rosas</MenuItem>
-                                                <MenuItem value={'menor'}>Claveles</MenuItem>
-                                                <MenuItem value={'menor'}>Girasoles</MenuItem>
-                                                <MenuItem value={'menor'}>Bautisos</MenuItem>
-                                                <MenuItem value={'menor'}>Velorios</MenuItem>
-                                                <MenuItem value={'menor'}>XV Años</MenuItem>
-                                            </Select>
-                                        </Grid>
-                                    </Grid>
+                            <Grid >
+                                <Typography variant="h1" color="initial" sx={{fontSize:'30px', fontFamily:'Archivo Black, sans-serif', color:'#B42981'}}>Flores</Typography>
+                                <Grid>
+
+                                    <List
+                                        sx={{ width: '100%', maxWidth: 360, bgcolor: 'background.paper' }}
+                                        aria-label="contacts"
+                                        >
+
+                                            {tipoFlores && tipoFlores.map((item) => (
+                                                <ListItem disablePadding>
+                                                    {/* <ListItemButton> */}
+                                                    <ListItemButton onClick={() => filtroPorTipoDeFlores(item.id)}>
+                                                        <ListItemText primary={item.nombre} />
+                                                    </ListItemButton>
+                                                </ListItem>
+                                            ))}
+                                    </List>
 
                                 </Grid>
                             </Grid>
-                            <Grid>
-                            </Grid>
+
                         </Grid>
+
                         <Grid item md={10} xs={12}>
                             <Grid container sx={stylesComponents.ContenedorProductos}>
-                            {flores && flores.map((item) => (
+                            {floresFiltro && floresFiltro.map((item) => (
                                 <Grid item xs={12} md={6} lg={3} sx={stylesComponents.contenedorProducto}>
                                     <Box display={'flex'} style={{justifyContent:'center'}}>
                                         <Grid sx={stylesComponents.contenerdorImagenProducto} onClick={()=>handleRedirectToProductId(item.id)}>

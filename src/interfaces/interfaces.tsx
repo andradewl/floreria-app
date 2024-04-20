@@ -8,8 +8,12 @@ interface FlowerWithOferta {
     imagen: string;
     precio: number;
     oferta: number;
+    existencias:number;
     descuento: number;
+    tipoflor:string;
+    ocasion:string;
     productosExtra:[]; // Aquí puedes definir un tipo específico para los productos extra si es necesario
+
 }
 
 interface FlowerWithoutOferta {
@@ -20,8 +24,11 @@ interface FlowerWithoutOferta {
     imagen: string;
     precio: number;
     oferta: number;
+    existencias:number;
     descuento?: undefined;
     productosExtra?: undefined;
+    tipoflor:string;
+    ocasion:string;
 }
 
 
@@ -89,13 +96,33 @@ interface Pedido {
     carritoCompra: carritoDeCompra[];
     idEstado:string;
     uidUserLogin:string,
-    entrega:string
+    entrega:string,
+    total:number,
 
+}
+
+
+
+
+interface TipoFlores {
+    id: string;
+    nombre: string;
+}
+
+interface Ocasiones {
+    id: string;
+    descripcion: string;
+    imagen: string;
+    nombre: string;
 }
 
 export type Flower = FlowerWithOferta | FlowerWithoutOferta;
 export type CarritoDeCompra = carritoDeCompra;
 export type ProductoExtra = productoExtra;
 export type UserLogin = userLogin;
+export type Tipoflores = TipoFlores;
+export type Ocasionest = Ocasiones;
+
+
 
 export type NuevoPedido = Pedido;

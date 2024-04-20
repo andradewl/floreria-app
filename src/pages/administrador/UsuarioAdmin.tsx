@@ -2,7 +2,6 @@ import { Grid, Typography } from '@mui/material';
 
 
 const UsuarioAdmin = () => {
-    
 
     return (
         <Grid>

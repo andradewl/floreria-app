@@ -1,4 +1,4 @@
-import {  Box, Grid, Paper, Typography } from "@mui/material";
+import {  Box, Grid, Pagination, PaginationItem, Paper, Typography } from "@mui/material";
 
 import one from'../assets/secciones/1.jpg'
 import two from'../assets/secciones/2.jpg'
@@ -14,6 +14,9 @@ import nuevos from'../assets/secciones/11.jpg'
 import kits from'../assets/secciones/12.jpg'
 import regalos from'../assets/secciones/12.jpg'
 
+import ArrowBackIcon from '@mui/icons-material/ArrowBack';
+import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
+
 
 import { stylesComponents } from "../styles/stylesComponentes"
 
@@ -28,7 +31,7 @@ import React from "react";
 
 import { Flower } from "../interfaces/interfaces"
 import { useNavigate } from 'react-router-dom';
-
+import BarraDeBusqueda from "../components/BarraDeBusqueda";
 
 const steps = [
     {
@@ -154,6 +157,11 @@ function Home(){
                 <Banners/>
 
             </Grid>
+            <Grid>
+
+                <BarraDeBusqueda/>
+
+            </Grid>
 
             <Grid  sx={{paddingLeft:{xl:'10%', md:'7%',xs:'5%'}, paddingRight:{xl:'10%',md:'7%', xs:'5%'} }}  >
                 <Grid style={{textAlign:'center', padding:'8px'}} data-aos="fade-right">
@@ -239,13 +247,14 @@ function Home(){
                                                             <FavoriteBorderIcon sx={{width:'50%', justifyContent:'center', textAlign:'center'}}/>
                                                             <RemoveRedEyeIcon sx={{width:'50%', justifyContent:'center', textAlign:'center'}}/>
                                                         </Box> */}
-                                                        <Box sx={{padding:'2px'}} onClick={()=>handleRedirectToProductId(item.id)}>
-                                                            <Typography variant="h6" color="initial"  fontSize={16}  style={{color:'#404040'}}>{item.nombre}</Typography>
-                                                        </Box>
                                                         <Box sx={{display:'flex',padding:'2px',width: '100%',}}>
                                                             <Typography variant="h6" color="initial"  fontSize={16}  style={{color:'#404040', width:'50%',  textDecorationLine: 'line-through', fontWeight: 'bold' }}>${item.precio}</Typography>
                                                             <Typography variant="h6" color="initial"  fontSize={16}  style={{color:'#9c0ba8', width:'50%', fontWeight: 'bold' }}>${item.descuento}</Typography>
                                                         </Box>
+                                                        <Box sx={{padding:'2px'}} onClick={()=>handleRedirectToProductId(item.id)}>
+                                                            <Typography variant="h6" color="initial"  fontSize={16}  style={{color:'#404040'}}>{item.nombre}</Typography>
+                                                        </Box>
+                                                        
                                                     </Box>
                                                 </Grid>
 
@@ -271,17 +280,6 @@ function Home(){
                                                         <FavoriteBorderIcon sx={{ width: '50%' }} />
                                                         <RemoveRedEyeIcon sx={{ width: '50%' }} />
                                                     </Box> */}
-                                                    <Box
-                                                    >
-                                                        <Typography
-                                                            variant="h6"
-                                                            color="initial"
-                                                            fontSize={16}
-                                                            style={{ color: '#404040' }}
-                                                        >
-                                                        {item.nombre}
-                                                        </Typography>
-                                                    </Box>
                                                     <Box sx={{ padding: '2px' }}>
                                                         <Typography
                                                             variant="h6"
@@ -291,6 +289,17 @@ function Home(){
                                                             style={{ color: '#9c0ba8' }}
                                                         >
                                                         ${item.precio}
+                                                        </Typography>
+                                                    </Box>
+                                                    <Box
+                                                    >
+                                                        <Typography
+                                                            variant="h6"
+                                                            color="initial"
+                                                            fontSize={16}
+                                                            style={{ color: '#404040' }}
+                                                        >
+                                                        {item.nombre}
                                                         </Typography>
                                                     </Box>
                                                 </Box>
@@ -303,6 +312,18 @@ function Home(){
 
                             </Grid>
                         ))}
+
+                        <Pagination
+                            count={10}
+                            renderItem={(flores) => (
+                                <PaginationItem
+                                slots={{ previous: ArrowBackIcon, next: ArrowForwardIcon }}
+                                {...flores}
+                                />
+                            )}
+                        />
+
+
 
                     </Grid>
                 </Grid>

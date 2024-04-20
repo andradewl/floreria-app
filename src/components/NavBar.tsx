@@ -10,14 +10,15 @@ import Container from '@mui/material/Container';
 import Button from '@mui/material/Button';
 import MenuItem from '@mui/material/MenuItem';
 import Logo from '../assets/logo.png'
-import SearchIcon from '@mui/icons-material/Search';
-import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
+// import SearchIcon from '@mui/icons-material/Search';
+// import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
 import Person2Icon from '@mui/icons-material/Person2';
 import '../styles/estilosCss.css'
 import { Link  } from 'react-router-dom';
 import { Grid } from '@mui/material';
 import { stylesComponents } from '../styles/stylesComponentes';
 import { UserLogin } from '../interfaces/interfaces';
+import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
 
 const settings = ['Profile', 'Account', 'Dashboard', 'Logout'];
 
@@ -60,7 +61,6 @@ function ResponsiveAppBar() {
     sessionStorage.removeItem("userlogIn")
     sessionStorage.removeItem("credentials")
     window.location.href = '/';
-
   };
 
   const handleScroll = () => {
@@ -184,7 +184,7 @@ function ResponsiveAppBar() {
               >
                 Contacto
             </Button>
-            <Button
+            {/* <Button
                 component={Link}
                 to="/shoppingCart"
                 variant="text"
@@ -192,7 +192,7 @@ function ResponsiveAppBar() {
                 sx={stylesComponents.navigationButton}
               >
                 Carrito
-            </Button>
+            </Button> */}
           </Box>
 
           {/* Logo para movil */}
@@ -210,7 +210,6 @@ function ResponsiveAppBar() {
             {
               userLogin ? (
                 <Button
-                  
                   variant="text"
                   onClick={handleLogOut}
                   sx={stylesComponents.navigationButton}
@@ -229,11 +228,13 @@ function ResponsiveAppBar() {
                 </Button>
               )
             }
-            <SearchIcon color="disabled" sx={stylesComponents.iconsMovile}/>
+            <Link to ="shoppingCart">
+              <ShoppingCartIcon  color="disabled" sx={stylesComponents.iconsMovile}/>
+            </Link>
           </Grid>
 
           <Grid sx={{ flexGrow: 0,display:{md:'none', xs:'flex'} }}>
-                <SearchIcon color="disabled" sx={stylesComponents.iconsMovile}/>
+                {/* <SearchIcon color="disabled" sx={stylesComponents.iconsMovile}/> */}
                 <Link to="/shoppingCart">
                   <ShoppingCartIcon sx={stylesComponents.iconsMovile} />
                 </Link>
