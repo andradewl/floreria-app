@@ -8,6 +8,7 @@ import {
   doc,
   where,
   updateDoc,
+  getDoc,
 } from "firebase/firestore";
 
 export const addDireccion = (
@@ -109,3 +110,15 @@ export const getDirecciones = async (idUser: string) => {
   const result = await getDocs(query(collection(db, 'direcciones'), where('relUsuario', '==', idUser)));
   return result.docs.map(doc => ({ id: doc.id, ...doc.data() }));
 };
+
+
+export const getDireccionById = async (direccionId: string) => {
+  const direccionDocRef = doc(db, 'direcciones', direccionId);
+  const direccionDocSnapshot = await getDoc(direccionDocRef);
+  if (direccionDocSnapshot.exists()) {
+    return { id: direccionDocSnapshot.id, ...direccionDocSnapshot.data() };
+  } else {
+    throw new Error(`No se encontró ninguna dirección con el ID ${direccionId}`);
+  }
+};
+
