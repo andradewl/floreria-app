@@ -15,8 +15,8 @@ import { getPedidosUsuario } from "../../config/backEndUsuarios/backHistPedidos"
 interface Pedido {
   nombre: string;
   cantidad: number;
-  precio: number;
-  fecha: string; // Agrega la propiedad fecha a la interfaz Pedido
+  total: number; // Reemplaza precio por total
+  fecha: string;
 }
 
 export default function HistPedidos() {
@@ -53,8 +53,8 @@ export default function HistPedidos() {
               <TableRow>
                 <TableCell>Nombre</TableCell>
                 <TableCell align="right">Cantidad</TableCell>
-                <TableCell align="right">Precio</TableCell>
-                <TableCell align="right">Fecha</TableCell> {/* Agrega la celda para la fecha */}
+                <TableCell align="right">Total</TableCell> {/* Cambia el encabezado de la columna */}
+                <TableCell align="right">Fecha</TableCell>
               </TableRow>
             </TableHead>
             <TableBody>
@@ -63,8 +63,8 @@ export default function HistPedidos() {
                   <TableRow key={index * 1000 + innerIndex}>
                     <TableCell>{pedido.nombre}</TableCell>
                     <TableCell align="right">{pedido.cantidad}</TableCell>
-                    <TableCell align="right">{pedido.precio}</TableCell>
-                    <TableCell align="right">{pedido.fecha}</TableCell> {/* Muestra la fecha */}
+                    <TableCell align="right">{pedido.total}</TableCell> {/* Muestra el total */}
+                    <TableCell align="right">{pedido.fecha}</TableCell>
                   </TableRow>
                 ))
               ))}
