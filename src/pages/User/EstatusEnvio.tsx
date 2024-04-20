@@ -1,75 +1,94 @@
-import Table from '@mui/material/Table';
-import TableBody from '@mui/material/TableBody';
-import TableCell from '@mui/material/TableCell';
-import TableContainer from '@mui/material/TableContainer';
-import TableHead from '@mui/material/TableHead';
-import TableRow from '@mui/material/TableRow';
-import Paper from '@mui/material/Paper';
-import { Grid, Typography } from '@mui/material';
+import { useEffect, useState } from "react";
+import {
+  Grid,
+  Typography,
+  Table,
+  TableBody,
+  TableCell,
+  TableContainer,
+  TableHead,
+  TableRow,
+  Paper,
+} from "@mui/material";
+import { getPedidosUsuario } from "../../config/backEndUsuarios/backEstatus";
 
-function createData(
-  sku: string,
-  name: string,
-  Tpag: number,
-  FPed: string,
-  Estatus: string,
-) {
-  return { sku, name, Tpag, FPed, Estatus };
+interface Pedido {
+  nombre: string;
+  cantidad: number;
+  total: number;
+  fecha: string;
+  estatusEnv: string;
 }
 
-const rows = [
-  createData('FD034', 'Arreglo Rosas', 360, '15/01/2024', 'Preparando'),
-  createData('FD035', 'Arreglo Rosas', 360, '15/01/2024', 'Enviado'),
-  createData('FD036', 'Arreglo Rosas', 360, '15/01/2024', 'En camino'),
-  createData('FD036', 'Arreglo Rosas', 360, '15/01/2024', 'Entregado'),
-];
-
 export default function EstatusEnvio() {
+  const [pedidos, setPedidos] = useState<Pedido[] | null>(null);
+
+  useEffect(() => {
+    const userId = JSON.parse(sessionStorage.getItem("userlogIn") || "{}").id;
+
+    if (userId) {
+      async function fetchPedidos() {
+        try {
+          const pedidosData = await getPedidosUsuario(userId);
+          setPedidos(pedidosData);
+        } catch (error) {
+          console.error("Error al obtener los pedidos:", error);
+        }
+      }
+
+      fetchPedidos();
+    } else {
+      console.error("ID de usuario no encontrado en sessionStorage.");
+    }
+  }, []);
+
   return (
     <Grid container justifyContent="center">
       <Grid item xs={12} md={10} lg={8}>
         <Typography variant="h5" align="center" gutterBottom>
-          Estatus de Envíos
+          Historial de Estatus de Envío
         </Typography>
         <TableContainer component={Paper}>
           <Table aria-label="simple table">
             <TableHead>
               <TableRow>
-                <TableCell>SKU</TableCell>
-                <TableCell align="right">Nombre</TableCell>
-                <TableCell align="right">Total Pagado</TableCell>
-                <TableCell align="right">Fecha Pedido</TableCell>
-                <TableCell align="right">Estatus</TableCell>
+                <TableCell>Nombre</TableCell>
+                <TableCell align="right">Cantidad</TableCell>
+                <TableCell align="right">Total</TableCell>
+                <TableCell align="right">Estatus de Envío</TableCell>
               </TableRow>
             </TableHead>
             <TableBody>
-              {rows.map((row) => (
-                <TableRow key={row.sku}>
-                  <TableCell component="th" scope="row">
-                    {row.sku}
-                  </TableCell>
-                  <TableCell align="right">{row.name}</TableCell>
-                  <TableCell align="right">{row.Tpag}</TableCell>
-                  <TableCell align="right">{row.FPed}</TableCell>
-                  <TableCell align="right">
-                    <Typography
-                      variant="body1"
+              {pedidos &&
+                pedidos.map((pedido: Pedido, index: number) => (
+                  <TableRow key={index}>
+                    <TableCell>{pedido.nombre}</TableCell>
+                    <TableCell align="right">{pedido.cantidad}</TableCell>
+                    <TableCell align="right">{pedido.total}</TableCell>
+                    <TableCell
+                      align="right"
                       sx={{
-                        color:
-                          row.Estatus === 'Enviado'
-                            ? '#4caf50'
-                            : row.Estatus === 'En camino'
-                            ? '#2196f3'
-                            : row.Estatus === 'Entregado'
-                            ? '#fbc02d'
-                            : '#ff5722',
+                        color: (() => {
+                          switch (pedido.estatusEnv) {
+                            case "Preparando":
+                              return "#FFA500"; // Naranja
+                            case "En camino":
+                              return "#0000FF"; // Azul
+                            case "Enviado":
+                              return "#FFD700"; // Amarillo
+                            case "Entregado":
+                              return "#008000"; // Verde
+                            default:
+                              return "inherit";
+                          }
+                        })(),
+                        fontWeight: "bold",
                       }}
                     >
-                      {row.Estatus}
-                    </Typography>
-                  </TableCell>
-                </TableRow>
-              ))}
+                      {pedido.estatusEnv}
+                    </TableCell>
+                  </TableRow>
+                ))}
             </TableBody>
           </Table>
         </TableContainer>
