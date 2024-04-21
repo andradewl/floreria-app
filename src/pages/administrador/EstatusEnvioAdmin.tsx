@@ -10,7 +10,7 @@ import {
   TableRow,
   Paper,
 } from "@mui/material";
-import { getPedidosUsuario } from "../../config/backEndUsuarios/backEstatus";
+import { getPedidosUsuario } from "../../config/backEndAdmin/backEstatusAdmin";
 
 interface Pedido {
   nombre: string;
@@ -20,26 +20,20 @@ interface Pedido {
   estatusEnv: string;
 }
 
-export default function EstatusEnvio() {
+export default function EstatusEnvioAdministrador() {
   const [pedidos, setPedidos] = useState<Pedido[] | null>(null);
 
   useEffect(() => {
-    const userId = JSON.parse(sessionStorage.getItem("userlogIn") || "{}").id;
-
-    if (userId) {
-      async function fetchPedidos() {
-        try {
-          const pedidosData = await getPedidosUsuario(userId);
-          setPedidos(pedidosData);
-        } catch (error) {
-          console.error("Error al obtener los pedidos:", error);
-        }
+    async function fetchPedidos() {
+      try {
+        const pedidosData = await getPedidosUsuario();
+        setPedidos(pedidosData);
+      } catch (error) {
+        console.error("Error al obtener los pedidos:", error);
       }
-
-      fetchPedidos();
-    } else {
-      console.error("ID de usuario no encontrado en sessionStorage.");
     }
+
+    fetchPedidos();
   }, []);
 
   return (

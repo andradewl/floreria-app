@@ -18,6 +18,9 @@ import Login from "./pages/Login";
 import SignIn from "./pages/SignIn";
 import editDirecciones from "./pages/User/editDirecciones";
 import editDireccionFact from "./pages/User/editDireccionFact";
+import EstatusEnvioAdministrador from "./pages/administrador/EstatusEnvioAdmin";
+import HistPedidosAdmin from "./pages/administrador/HistPedidosAdmin";
+
 
 import shopProducts from "./pages/ShopProduct/shopProducts";
 import { PayPalScriptProvider } from "@paypal/react-paypal-js";
@@ -59,7 +62,8 @@ function App() {
           <Route path="/Completeion" Component={ Completeion }/>
           <Route path="/editDirecciones/:id" Component={editDirecciones} />
           <Route path="/editDireccionFact/:id" Component={editDireccionFact} />
-
+          <Route path="/HistPedidosAdmin" Component={HistPedidosAdmin} />
+          <Route path="/EstatusEnvioAdministrador" Component={EstatusEnvioAdministrador} />
         </Routes>
 
         <Footer/>
