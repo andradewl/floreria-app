@@ -1,4 +1,6 @@
-import React from "react";
+/* eslint-disable @typescript-eslint/no-explicit-any */
+/* eslint-disable react-hooks/rules-of-hooks */
+import React, { useEffect, useState } from "react";
 import { Button, Grid, TextField, Typography } from "@mui/material";
 import {
   getDireccionFacturacionById,
@@ -11,13 +13,13 @@ import { useNavigate } from "react-router-dom";
 export default function editDireccionFact() {
   const navigate = useNavigate();
   const { id } = useParams<{ id: string }>();
-  const [direccion, setDireccion] = React.useState<any>(null);
+  const [direccion, setDireccion] = useState<any>(null);
 
   const handleRegresar = () => {
     navigate(`/Usuario/${id}`);
   };
 
-  useEffect.useEffect(() => {
+  useEffect(() => {
     const fetchDireccion = async () => {
       try {
         if (id) {
