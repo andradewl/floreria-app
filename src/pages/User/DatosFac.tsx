@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import { Button, Divider, Grid, Typography, IconButton } from "@mui/material";
 import { Link, useNavigate } from "react-router-dom";
 import { getDireccionesUsuario, deleteDirFact } from "../../config/backEndUsuarios/backFacturacion";
@@ -11,7 +11,7 @@ import BusinessIcon from "@mui/icons-material/Business";
 
 export default function DatosFac() {
   const navigate = useNavigate();
-  const [direcciones, setDirecciones] = useState<DocumentData[]>([]);
+  const [direcciones, setDirecciones] = React.useState<DocumentData[]>([]);
   const userId = JSON.parse(sessionStorage.getItem("userlogIn") || "{}").id;
 
   const DemoPaper = styled(Paper)(({ theme }) => ({
@@ -22,7 +22,7 @@ export default function DatosFac() {
     margin: "auto",
   }));
 
-  useEffect(() => {
+  React.useEffect(() => {
     if (userId) {
       getDireccionesData();
     } else {

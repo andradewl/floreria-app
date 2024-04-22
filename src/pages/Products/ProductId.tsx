@@ -44,6 +44,8 @@ function ProductId(){
     const [habilitarDesabilitarBottonCompra, setHabilitarDesabilitarBottonCompra] = React.useState(false)
     const [productosExtra, setProductosExtras] = React.useState<ProductoExtra[]>([]);
     const [cantidadProducto, setcantidadProducto] = React.useState(0);
+    // const [numberValue, setNumberValue] = React.useState('');
+
     // const [cantidadProductoExtra, setcantidadProductoExtra] = React.useState(0);
 
 
@@ -114,8 +116,22 @@ function ProductId(){
         sethora(event.target.value);
     };
 
-    const HandlecantidadProducto = (event: React.ChangeEvent<HTMLInputElement>) => {
-        const newValue = parseInt(event.target.value, 10); // Parseamos el valor a un número entero
+    const HandlecantidadProducto = (existencias:number) => {
+        let newValue = existencias;
+
+
+
+        if (newValue < 0) {
+            newValue = 0;
+        }
+
+
+        if (newValue > existencias) {
+            newValue = existencias
+        }
+
+
+        // const newValue = parseInt(event.target.value, 10);
         console.log("FLOR",newValue)
         setcantidadProducto(newValue);
     }
@@ -303,186 +319,197 @@ function ProductId(){
                             <Typography variant="subtitle1" color="initial" p={1}>{product.descripcion}</Typography>
                         </Grid>
 
-                        <Grid sx={{paddingTop:{  md:2, xs:1}}}>
-                            <Grid m={2}>
-                                <Typography variant="h6" color="#B42981" fontSize={'16px'}>Cantidad</Typography>
-                                <TextField
-                                    label="Cantidad"
-                                    type="number"
-                                    fullWidth
-                                    onChange={HandlecantidadProducto}
+                        {product.existencias == 0 ?
+                            (
+                                <Grid m={2}>
+                                    <Typography variant="h1" color="initial">Sin Existencias</Typography>
+                                </Grid>
+                            ):(
+                                <Grid sx={{paddingTop:{  md:2, xs:1}}}>
+                                    <Grid m={2}>
+                                        <Typography variant="h6" color="#B42981" fontSize={'16px'}>Cantidad</Typography>
+                                        <TextField
+                                            label="Cantidad"
+                                            type="number"
+                                            fullWidth
+                                            InputProps={{
+                                                inputProps: {
+                                                    min: 0,
+                                                    max: product.existencias,
+                                                    step: 1,
+                                                },
+                                            }}
+                                            onChange={()=>HandlecantidadProducto(product.existencias)}
 
-                                />
-                            </Grid>
-
-                            <Grid m={2}>
-                                <Typography variant="h6" color="#B42981" fontSize={'16px'}>Elije una Fecha y hora de entrega</Typography>
-                                <LocalizationProvider dateAdapter={AdapterDayjs}>
-                                    <DemoContainer components={['DatePicker']} sx={{justifyContent:'center', width:'100%'}}>
-                                        <DatePicker sx={{justifyContent:'center', width:'100%'}}
-                                            value={date}
-                                            onChange={(newDate)=>handleDateValidation(newDate)}
-                                            disablePast
                                         />
-                                    </DemoContainer >
-                                </LocalizationProvider>
-                            </Grid>
-                            <Grid  m={2}>
-                                {visibleHorarios &&
-                                    <FormControl sx={{width:'100%', textalign:'center'}} >
-                                        <InputLabel id="demo-simple-select-label">Hora de entrega</InputLabel>
-                                        <Select
-                                            required
-                                            labelId="demo-simple-select-label"
-                                            id="demo-simple-select"
-                                            label="Age"
-                                            onChange={handleChangehour}
+                                    </Grid>
+                                    <Grid m={2}>
+                                        <Typography variant="h6" color="#B42981" fontSize={'16px'}>Elije una Fecha y hora de entrega</Typography>
+                                        <LocalizationProvider dateAdapter={AdapterDayjs}>
+                                            <DemoContainer components={['DatePicker']} sx={{justifyContent:'center', width:'100%'}}>
+                                                <DatePicker sx={{justifyContent:'center', width:'100%'}}
+                                                    value={date}
+                                                    onChange={(newDate)=>handleDateValidation(newDate)}
+                                                    disablePast
+                                                />
+                                            </DemoContainer >
+                                        </LocalizationProvider>
+                                    </Grid>
+                                    <Grid  m={2}>
+                                        {visibleHorarios &&
+                                            <FormControl sx={{width:'100%', textalign:'center'}} >
+                                                <InputLabel id="demo-simple-select-label">Hora de entrega</InputLabel>
+                                                <Select
+                                                    required
+                                                    labelId="demo-simple-select-label"
+                                                    id="demo-simple-select"
+                                                    label="Age"
+                                                    onChange={handleChangehour}
 
-                                        >
-                                            {visibleHora1 && <MenuItem value={'8:00 AM - 12:00 PM'}>8:00 AM - 12:00 PM</MenuItem>}
-                                            {visibleHora2 && <MenuItem value={'12:00 PM - 4:00 PM'}>12:00 PM - 4:00 PM</MenuItem>}
-                                            {visibleHora3 && <MenuItem value={'4:00 PM - 8:00 PM'}>4:00 PM - 8:00 PM</MenuItem>}
-                                        </Select>
-                                    </FormControl>
-                                }
-                            </Grid>
+                                                >
+                                                    {visibleHora1 && <MenuItem value={'8:00 AM - 12:00 PM'}>8:00 AM - 12:00 PM</MenuItem>}
+                                                    {visibleHora2 && <MenuItem value={'12:00 PM - 4:00 PM'}>12:00 PM - 4:00 PM</MenuItem>}
+                                                    {visibleHora3 && <MenuItem value={'4:00 PM - 8:00 PM'}>4:00 PM - 8:00 PM</MenuItem>}
+                                                </Select>
+                                            </FormControl>
+                                        }
+                                    </Grid>
 
-                            {
-                                productosExtra.length > 0 &&
-                                <>
-                                    {changeProductExtra ?
-                                        (
-                                            <>
-                                                <Grid  m={2}>
-                                                    { visibleProductoExtra ?
-                                                        (
-                                                            <Typography component={Button} variant="h6" color="#B42981" fontSize={'16px'} onClick={handleVisibleProductoExtra2}>Cancelar</Typography>
-                                                        ):(
-                                                            <Typography component={Button} variant="h6" color="#B42981" fontSize={'16px'} onClick={handleVisibleProductoExtra}>Añadir Producto Extra</Typography>
-                                                        )
-                                                    }
-                                                </Grid>
-                                                {visibleProductoExtra &&
-                                                    <Grid m={2} sx={{textAlign:'-webkit-center'}}>
-                                                        <Grid sx={{ Width: '100%', flexGrow: 1 }}>
-                                                            <Grid  xs={12}>
-                                                                <Box sx={{ maxWidth: 390, flexGrow: 1 }}>
-                                                                    <Box
-                                                                        sx={{
-                                                                        display: 'flex',
-                                                                        }}
-                                                                    >
-                                                                        <Typography variant="h6" color="initial"  fontSize={16} style={{textAlign:'center', width:'50%'}}>{productosExtra[activeStep].nombre}</Typography>
-                                                                        <Typography variant="h6" color="initial"  fontSize={16} style={{color:'red', textAlign:'center', width:'50%' }}>${productosExtra[activeStep].precio}</Typography>
-
-                                                                    </Box>
-                                                                    <Box sx={{ height: {md:300, xs:250}, maxWidth: {md:300, xs:250}, width: '100%', pr: 3, pb: 3, m:3 }}>
-                                                                        <img src={`${productosExtra[activeStep].imagen}`} alt=""  width={'100%'} height={'100%'} style={{ objectFit: 'cover'}}/>
-                                                                        <Button sx={stylesComponents.button} onClick={() =>  guardarProductoExtra(productosExtra[activeStep].nombre, productosExtra[activeStep].precio ) }>
-                                                                            Añadir
-                                                                        </Button>
-
-                                                                    </Box>
-                                                                    <MobileStepper
-                                                                        variant="text"
-                                                                        steps={maxSteps}
-                                                                        position="static"
-                                                                        activeStep={activeStep}
-                                                                        nextButton={
-                                                                        <Button
-                                                                            size="small"
-                                                                            onClick={handleNext}
-                                                                            disabled={activeStep == maxSteps - 1}
-                                                                        >
-                                                                            Next
-                                                                            {theme.direction === 'rtl' ? (
-                                                                            <KeyboardArrowLeft />
-                                                                            ) : (
-                                                                            <KeyboardArrowRight />
-                                                                            )}
-                                                                        </Button>
-                                                                        }
-                                                                        backButton={
-                                                                        <Button size="small" onClick={handleBack} disabled={activeStep == 0}>
-                                                                            {theme.direction === 'rtl' ? (
-                                                                            <KeyboardArrowRight />
-                                                                            ) : (
-                                                                            <KeyboardArrowLeft />
-                                                                            )}
-                                                                            Back
-                                                                        </Button>
-                                                                        }
-                                                                    />
-                                                                </Box>
-
-
-                                                            </Grid>
-
+                                    {
+                                        productosExtra.length > 0 &&
+                                        <>
+                                            {changeProductExtra ?
+                                                (
+                                                    <>
+                                                        <Grid  m={2}>
+                                                            { visibleProductoExtra ?
+                                                                (
+                                                                    <Typography component={Button} variant="h6" color="#B42981" fontSize={'16px'} onClick={handleVisibleProductoExtra2}>Cancelar</Typography>
+                                                                ):(
+                                                                    <Typography component={Button} variant="h6" color="#B42981" fontSize={'16px'} onClick={handleVisibleProductoExtra}>Añadir Producto Extra</Typography>
+                                                                )
+                                                            }
                                                         </Grid>
-                                                    </Grid>
-                                                }
-                                            </>
-                                        ):(
-                                            <>
-                                                <Grid  m={2}>
-                                                    <Typography variant="h6" component={Button} color="#B42981" fontSize={'16px'} onClick={canbiarProductoExtra}>Cambiar producto extra</Typography>
-                                                    <Typography variant="h6" component={Button} color="#B42981" fontSize={'16px'} onClick={eliminarProducto}>Eliminar producto extra</Typography>
+                                                        {visibleProductoExtra &&
+                                                            <Grid m={2} sx={{textAlign:'-webkit-center'}}>
+                                                                <Grid sx={{ Width: '100%', flexGrow: 1 }}>
+                                                                    <Grid  xs={12}>
+                                                                        <Box sx={{ maxWidth: 390, flexGrow: 1 }}>
+                                                                            <Box
+                                                                                sx={{
+                                                                                display: 'flex',
+                                                                                }}
+                                                                            >
+                                                                                <Typography variant="h6" color="initial"  fontSize={16} style={{textAlign:'center', width:'50%'}}>{productosExtra[activeStep].nombre}</Typography>
+                                                                                <Typography variant="h6" color="initial"  fontSize={16} style={{color:'red', textAlign:'center', width:'50%' }}>${productosExtra[activeStep].precio}</Typography>
 
-                                                    <Typography variant="h6" color="initial">
-                                                        {productoExtra.nombreProductoExtra}
-                                                    </Typography>
+                                                                            </Box>
+                                                                            <Box sx={{ height: {md:300, xs:250}, maxWidth: {md:300, xs:250}, width: '100%', pr: 3, pb: 3, m:3 }}>
+                                                                                <img src={`${productosExtra[activeStep].imagen}`} alt=""  width={'100%'} height={'100%'} style={{ objectFit: 'cover'}}/>
+                                                                                <Button sx={stylesComponents.button} onClick={() =>  guardarProductoExtra(productosExtra[activeStep].nombre, productosExtra[activeStep].precio ) }>
+                                                                                    Añadir
+                                                                                </Button>
 
-                                                    <Typography variant="h6" color="initial">
-                                                        {productoExtra.precioProductoExtra}
-                                                    </Typography>
-                                                </Grid>
-                                            </>
-                                        )
+                                                                            </Box>
+                                                                            <MobileStepper
+                                                                                variant="text"
+                                                                                steps={maxSteps}
+                                                                                position="static"
+                                                                                activeStep={activeStep}
+                                                                                nextButton={
+                                                                                <Button
+                                                                                    size="small"
+                                                                                    onClick={handleNext}
+                                                                                    disabled={activeStep == maxSteps - 1}
+                                                                                >
+                                                                                    Next
+                                                                                    {theme.direction === 'rtl' ? (
+                                                                                    <KeyboardArrowLeft />
+                                                                                    ) : (
+                                                                                    <KeyboardArrowRight />
+                                                                                    )}
+                                                                                </Button>
+                                                                                }
+                                                                                backButton={
+                                                                                <Button size="small" onClick={handleBack} disabled={activeStep == 0}>
+                                                                                    {theme.direction === 'rtl' ? (
+                                                                                    <KeyboardArrowRight />
+                                                                                    ) : (
+                                                                                    <KeyboardArrowLeft />
+                                                                                    )}
+                                                                                    Back
+                                                                                </Button>
+                                                                                }
+                                                                            />
+                                                                        </Box>
+
+
+                                                                    </Grid>
+
+                                                                </Grid>
+                                                            </Grid>
+                                                        }
+                                                    </>
+                                                ):(
+                                                    <>
+                                                        <Grid  m={2}>
+                                                            <Typography variant="h6" component={Button} color="#B42981" fontSize={'16px'} onClick={canbiarProductoExtra}>Cambiar producto extra</Typography>
+                                                            <Typography variant="h6" component={Button} color="#B42981" fontSize={'16px'} onClick={eliminarProducto}>Eliminar producto extra</Typography>
+
+                                                            <Typography variant="h6" color="initial">
+                                                                {productoExtra.nombreProductoExtra}
+                                                            </Typography>
+
+                                                            <Typography variant="h6" color="initial">
+                                                                {productoExtra.precioProductoExtra}
+                                                            </Typography>
+                                                        </Grid>
+                                                    </>
+                                                )
+                                            }
+                                        </>
                                     }
-                                </>
-                            }
+                                    <Grid m={2}>
+                                        <Typography variant="h6" color="#B42981" fontSize={'16px'}>Dedicatoria</Typography>
+                                        <TextField
+                                            id="outlined-basic"
+                                            label="Mensaje"
+                                            variant="outlined"
+                                            rows={4}
+                                            multiline
+                                            fullWidth
+                                            value={dedicatoria} // Muestra el valor actual de dedicatoria en el TextField
+                                            onChange={handleChangeDedicatoria} //
+                                        />
+                                    </Grid>
+                                    <Grid>
+                                
+
+                                    {habilitarDesabilitarBottonCompra ? (
+                                            product.descuento ? (
+                                                <Button sx={stylesComponents.button} onClick={()=>guardarDatosConDescuento(product.id,product.nombre, product.precio, product.descuento, product.imagen)} >
+                                                    Añadir al carrito
+                                                </Button>
+                                            )
+                                            :
+                                            (
+                                                <Button sx={stylesComponents.button} onClick={()=>guardarDatos(product.id,product.nombre, product.precio, product.imagen)} >
+                                                    Añadir al carrito
+                                                </Button>
+                                            )
 
 
+                                    ):(
+                                        <Button sx={stylesComponents.button} disabled >
+                                            Añadir al carrito
+                                        </Button>
+                                    )
 
-                            <Grid m={2}>
-                                <Typography variant="h6" color="#B42981" fontSize={'16px'}>Dedicatoria</Typography>
-                                <TextField
-                                    id="outlined-basic"
-                                    label="Mensaje"
-                                    variant="outlined"
-                                    rows={4}
-                                    multiline
-                                    fullWidth
-                                    value={dedicatoria} // Muestra el valor actual de dedicatoria en el TextField
-                                    onChange={handleChangeDedicatoria} //
-                                />
+
+                                    }
+                                </Grid>
                             </Grid>
-                            <Grid>
-
-                                {habilitarDesabilitarBottonCompra ? (
-                                        product.descuento ? (
-                                            <Button sx={stylesComponents.button} onClick={()=>guardarDatosConDescuento(product.id,product.nombre, product.precio, product.descuento, product.imagen)} >
-                                                Añadir al carrito
-                                            </Button>
-                                        )
-                                        :
-                                        (
-                                            <Button sx={stylesComponents.button} onClick={()=>guardarDatos(product.id,product.nombre, product.precio, product.imagen)} >
-                                                Añadir al carrito
-                                            </Button>
-                                        )
-
-
-                                ):(
-                                    <Button sx={stylesComponents.button} disabled >
-                                        Añadir al carrito
-                                    </Button>
-                                )
-
-
-                                }
-                            </Grid>
-                        </Grid>
+                        )}
                     </Grid>
                 </Grid>
             </Grid>

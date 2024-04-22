@@ -12,7 +12,7 @@ import WorkIcon from '@mui/icons-material/Work';
 
 export default function Ubicaciones() {
   const navigate = useNavigate();
-  const [direcciones, setDirecciones] = useState<DocumentData[]>([]);
+  const [direcciones, setDirecciones] = React.useState<DocumentData[]>([]);
   const userId = sessionStorage.getItem("userlogIn") ? JSON.parse(sessionStorage.getItem("userlogIn")!).id : null;
 
   const DemoPaper = styled(Paper)(({ theme }) => ({
@@ -23,7 +23,7 @@ export default function Ubicaciones() {
     margin: "auto",
   }));
 
-  useEffect(() => {
+  React.useEffect(() => {
     if (userId) {
       getDireccionesData(userId); 
     } else {

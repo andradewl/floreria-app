@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import {
   Grid,
   Typography,
@@ -32,10 +32,10 @@ interface Pedido {
 }
 
 export default function EstatusEnvioAdministrador() {
-const [pedidos, setPedidos] = useState<Pedido[] | null>(null);
-  const [botonDeshabilitado, setBotonDeshabilitado] = useState(false);
+const [pedidos, setPedidos] = React.useState<Pedido[] | null>(null);
+  const [botonDeshabilitado, setBotonDeshabilitado] = React.useState(false);
 
-  useEffect(() => {
+  React.useEffect(() => {
     async function fetchPedidos() {
       try {
         const pedidosData = await getPedidosUsuario();
