@@ -23,7 +23,8 @@ export const getPedidosUsuario = async (uidUser: string) => {
         cantidad: item.cantidad,
         total: total,
         fecha: item.fecha,
-        estatusEnv: datosEnvio?.estatusEnv
+        estatusEnv: datosEnvio?.estatusEnv,
+        imagen: item.imagen, // Agregar el campo imagen
       }));
 
       return carritoData;
