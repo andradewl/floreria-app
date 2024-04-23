@@ -1,6 +1,5 @@
 import { db } from "../firfebase";
 import { collection, doc, getDocs, updateDoc } from "firebase/firestore";
-
 export const getPedidosUsuario = async () => {
   const result = await getDocs(collection(db, "pedidos"));
 
@@ -11,13 +10,13 @@ export const getPedidosUsuario = async () => {
     const total = data.total;
 
     if (carritoCompra && carritoCompra.length > 0) {
-      const carritoData = carritoCompra.map((item: any) => ({
+      return carritoCompra.map((item: any) => ({
+        id: doc.id, // Añadir el ID del pedido
         nombre: item.nombre,
         cantidad: item.cantidad,
         total: total,
         fecha: item.fecha,
         estatusEnv: datosEnvio?.estatusEnv,
-        // Agregar datos de la dirección
         direccion: datosEnvio?.direccion || "",
         colonia: datosEnvio?.colonia || "",
         ciudad: datosEnvio?.ciudad || "",
@@ -25,23 +24,17 @@ export const getPedidosUsuario = async () => {
         estado: datosEnvio?.estado || "",
         telefono: datosEnvio?.telefono || "",
         nombreEnvio: datosEnvio?.nombre || "",
-        // Incluir imagen
-        imagen: item.imagen || "", // Suponiendo que "imagen" está en cada objeto de "carritoCompra"
+        imagen: item.imagen || "",
       }));
-
-      return carritoData;
     } else {
       console.error("No se encontraron pedidos.");
       return [];
     }
   });
 
-  // Almacenar los ID de los pedidos para uso posterior
-  const pedidosIds = result.docs.map(doc => doc.id);
-  console.log("IDs de los pedidos:", pedidosIds);
-
-  console.log("Pedidos obtenidos:", pedidos);
-  return pedidos.flat();
+  const pedidosFlat = pedidos.flat(); // Aplanar el array de pedidos
+  console.log("Pedidos obtenidos:", pedidosFlat);
+  return pedidosFlat;
 };
 
 
@@ -58,7 +51,7 @@ export const actualizarEstatusPedido = async (pedidoId: string, nuevoEstatus: st
     // Actualizar el campo estatusEnv dentro del campo datosEnv del documento
     await updateDoc(pedidoRef, {
       // Usamos la notación de puntos para acceder a campos anidados
-      "datosEnv.estatusEnv": nuevoEstatus,
+      "datosEnvio.estatusEnv": nuevoEstatus,
     });
     console.log("Estatus del pedido actualizado correctamente.");
   } catch (error) {
