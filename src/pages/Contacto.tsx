@@ -4,13 +4,46 @@ import MailOutlineIcon from "@mui/icons-material/MailOutline";
 import LocationOnIcon from "@mui/icons-material/LocationOn";
 import AccessTimeIcon from "@mui/icons-material/AccessTime";
 import { Icon } from "@mui/material";
+import { useState } from "react";
+import { agregarRegistroContacto } from "../config/backEndUsuarios/backContacto";
 
 // Definir un tipo para el icono
 type IconType = React.ReactElement<typeof Icon>;
 
 function Contacto() {
+  const [formData, setFormData] = useState({
+    nombre: "",
+    apellido: "",
+    correoElectronico: "",
+    telefono: "",
+    asunto: "",
+    mensaje: "",
+  });
+
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+    setFormData({ ...formData, [e.target.id]: e.target.value });
+  };
+
+  const handleSubmit = async () => {
+    try {
+      await agregarRegistroContacto(formData);
+      alert("Mensaje enviado correctamente");
+      setFormData({
+        nombre: "",
+        apellido: "",
+        correoElectronico: "",
+        telefono: "",
+        asunto: "",
+        mensaje: "",
+      });
+    } catch (error) {
+      console.error("Error al enviar el mensaje:", error);
+      alert("Ocurrió un error al enviar el mensaje. Por favor, inténtalo de nuevo más tarde.");
+    }
+  };
+
   return (
-    <Container sx={{ backgroundColor: "#f8f9fa", py: 10}}>
+    <Container sx={{ backgroundColor: "#f8f9fa", py: 10 }}>
       <Grid container spacing={5}>
         <Grid item xs={12}>
           <Stack spacing={3} alignItems="center">
@@ -39,25 +72,25 @@ function Contacto() {
 
         <Grid item container spacing={1} xl={6} lg={6} md={6} sm={12} xs={12}>
           <Grid item xs={6}>
-            <TextField id="outlined-basic" label="Nombre" variant="outlined" fullWidth />
+            <TextField id="nombre" label="Nombre" variant="outlined" fullWidth value={formData.nombre} onChange={handleChange} />
           </Grid>
           <Grid item xs={6}>
-            <TextField id="outlined-basic" label="Apellido" variant="outlined" fullWidth />
+            <TextField id="apellido" label="Apellido" variant="outlined" fullWidth value={formData.apellido} onChange={handleChange} />
           </Grid>
           <Grid item xs={6}>
-            <TextField id="outlined-basic" label="Correo Electrónico" variant="outlined" fullWidth />
+            <TextField id="correoElectronico" label="Correo Electrónico" variant="outlined" fullWidth value={formData.correoElectronico} onChange={handleChange} />
           </Grid>
           <Grid item xs={6}>
-            <TextField id="outlined-basic" label="Teléfono" variant="outlined" fullWidth />
+            <TextField id="telefono" label="Teléfono" variant="outlined" fullWidth value={formData.telefono} onChange={handleChange} />
           </Grid>
           <Grid item xs={12}>
-            <TextField id="outlined-basic" label="Asunto" variant="outlined" fullWidth />
+            <TextField id="asunto" label="Asunto" variant="outlined" fullWidth value={formData.asunto} onChange={handleChange} />
           </Grid>
           <Grid item xs={12}>
-            <TextField id="outlined-basic" label="Mensaje" variant="outlined" rows={4} multiline fullWidth />
+            <TextField id="mensaje" label="Mensaje" variant="outlined" rows={4} multiline fullWidth value={formData.mensaje} onChange={handleChange} />
           </Grid>
           <Grid item xs={12}>
-            <Button fullWidth variant="outlined" sx={{ color: "#B42981", borderColor: "#B42981", borderWidth: "3px" }}>
+            <Button fullWidth variant="outlined" sx={{ color: "#B42981", borderColor: "#B42981", borderWidth: "3px" }} onClick={handleSubmit}>
               Enviar
             </Button>
           </Grid>
@@ -67,7 +100,6 @@ function Contacto() {
   );
 }
 
-// Componente para mostrar la información de contacto con icono
 const ContactInfo = ({ icon, text }: { icon: IconType, text: string }) => (
   <Stack direction="row" spacing={1} alignItems="center">
     {icon}
