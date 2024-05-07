@@ -5,21 +5,21 @@ export const stylesComponents = {
     appBar:{
         position:"sticky",
         width:'100%',
-        background:"#ffffff00",
+        background:"#none",
         height:'0px'
     },
     appBarScrolled:{
-        
         color:'black',
-        
         background:'white'
-
-        // height:'0px'
     },
+    appSubBar:{
+        position:"sticky",
+        display:'flex', padding:'5px', paddingLeft:'5%', paddingRight:'5%', backgroundImage:'linear-gradient(to right, #ff646426 0%, #ff50501f 51%, #963a711c 100%)'
+    },
+    
     toolbar:{
         display:'flex',
         justifyContent: 'space-around',
-        // backGroundColor:'white'
     },
 
     boxMenuResponsive:{
@@ -163,7 +163,7 @@ export const stylesComponents = {
     contenedorOcasiones:{
         textAlign:'center',
         justifyContent:'center',
-        alignContent:'center',
+        alignContent:'center'
     },
 
     cajaDatosOcasioners:{

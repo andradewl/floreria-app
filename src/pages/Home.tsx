@@ -163,8 +163,8 @@ function Home(){
 
             </Grid>
 
-            <Grid  sx={{paddingLeft:{xl:'10%', md:'7%',xs:'5%'}, paddingRight:{xl:'10%',md:'7%', xs:'5%'}}}  >
-                <Grid style={{textAlign:'start', padding:'8px' }} data-aos="fade-right" pt={8} pb={8}>
+            <Grid  sx={{paddingLeft:{xl:'10%', md:'3%',xs:'5%'}, paddingRight:{xl:'10%',md:'3%', xs:'5%', backgroundColor:'#fbf8f4' }}} >
+                <Grid style={{textAlign:'start', padding:'8px', paddingTop:'80px', paddingBottom:'80px' }} data-aos="fade-right">
                     <Typography variant="h1" color="initial"
                         sx={{
                             color:'#fb7185',
@@ -172,7 +172,7 @@ function Home(){
                             fontOpticalSizing: "auto",
                             fontWeight: "<weight>",
                             fontStyle: "normal",
-                            fontSize:{md:'35px', xs:'25px'}
+                            fontSize:{md:'45px', xs:'25px'}
                             }}>
                         ¡Pequeños detalles marcando diferencia!
                     </Typography>
@@ -182,7 +182,7 @@ function Home(){
                             fontOpticalSizing: "auto",
                             fontWeight: "<weight>",
                             fontStyle: "normal",
-                            fontSize:{md:'15px'}}} >
+                            fontSize:{md:'25px'}}} >
                         En Flores El Gato encontrarás lo que necesitas para cada ocasión.
                     </Typography>
                 </Grid>
@@ -191,7 +191,7 @@ function Home(){
                     <Grid container display={'flex'}>
 
                         {steps.map((item) => (
-                            <Grid item xs={12} md={4} sx={stylesComponents.contenedorOcasiones} p={'5px'}>
+                            <Grid item xs={12} md={4} sx={stylesComponents.contenedorOcasiones} p={'10px'}>
                                 <Box sx={stylesComponents.cajaDatosOcasioners}>
                                     <Grid sx={stylesComponents.contenedorImagen}>
                                         <img src={item.imgPath} alt="" width={'100%'} height={'100%'} style={{ objectFit: 'cover'}}/>
@@ -202,6 +202,17 @@ function Home(){
                                 </Box>
                             </Grid>
                         ))}
+
+
+                        {/* <Grid item xs={12} sm={6} lg={4} xl={3} sx={stylesComponents.contenedorOcasiones}>
+                            <Box sx={stylesComponents.cajaDatosOcasioners}>
+                                <Grid sx={stylesComponents.contenedorImagen}>
+                                    <img src={one} alt="" width={'100%'} height={'100%'} style={{ objectFit: 'cover'}}/>
+                                </Grid>
+                            </Box>
+                        </Grid> */}
+
+
 
                     </Grid>
                 </Grid>

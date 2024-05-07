@@ -78,17 +78,26 @@ function ResponsiveAppBar() {
 
   return (
     <>
-    
-      <Grid sx={{display:'flex', padding:'5px', paddingLeft:'5%', paddingRight:'5%', backgroundImage:'linear-gradient(to right, #ff646426 0%, #ff50501f 51%, #963a711c 100%)', position:"sticky"}}>
-            <Grid sx={{width:'50%', alignSelf:'center', display:'flex'}}>
-              <Typography variant="body2" color="initial" sx={{fontSize:'13px'}}>Flores Rickys Envíos a Monterrey y área metropolitana</Typography>
-            </Grid>
-            <Grid sx={{width:'50%', textAlign:'end' }}>
-              <Button sx={{borderRadius:'30px', backgroundColor:'black', color:'white', paddingLeft:'20px', paddingRight:'20px', fontSize:'10px'}}>WhatsApp →</Button>
-            </Grid>
+
+
+      <Grid sx={isScrolled ? {display:'none'} : stylesComponents.appSubBar} >
+        <Grid sx={{width:'50%', alignSelf:'center', display:'flex'}}>
+          <Typography variant="body2" color="initial" sx={{fontSize:'13px'}}>Flores Rickys Envíos a Monterrey y área metropolitana</Typography>
         </Grid>
+        <Grid sx={{width:'50%', textAlign:'end' }}>
+          <Button sx={{borderRadius:'30px', backgroundColor:'black', color:'white', paddingLeft:'20px', paddingRight:'20px', fontSize:'10px'}}>WhatsApp →</Button>
+        </Grid>
+      </Grid>
 
       <AppBar sx={isScrolled ? stylesComponents.appBarScrolled : stylesComponents.appBar}>
+        <Grid sx={isScrolled ? stylesComponents.appSubBar : {display:'none'}}>
+          <Grid sx={{width:'50%', alignSelf:'center', display:'flex'}}>
+            <Typography variant="body2" color="initial" sx={{fontSize:'13px'}}>Flores Rickys Envíos a Monterrey y área metropolitana</Typography>
+          </Grid>
+          <Grid sx={{width:'50%', textAlign:'end' }}>
+            <Button sx={{borderRadius:'30px', backgroundColor:'black', color:'white', paddingLeft:'20px', paddingRight:'20px', fontSize:'10px'}}>WhatsApp →</Button>
+          </Grid>
+        </Grid>
         <Container maxWidth="xl" >
           <Grid sx={{display:'flex', marginTop:'10px', paddingLeft:'5%', paddingRight:'5%', borderBottomStyle: 'solid', borderBottomColor:'white'}}  >
             <Grid

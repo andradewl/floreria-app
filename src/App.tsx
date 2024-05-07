@@ -29,6 +29,7 @@ import PerfilUsuario from "./pages/PerfilUsuario";
 
 
 
+
 function App() {
 
   const initialOptions = {
@@ -40,7 +41,9 @@ function App() {
   return (
     <PayPalScriptProvider options={initialOptions}>
       <BrowserRouter>
+        
         <NavBar/>
+        
         <Routes>
           <Route path="/" Component={Home} />
           <Route path="/Productos" Component={Productos}/>
