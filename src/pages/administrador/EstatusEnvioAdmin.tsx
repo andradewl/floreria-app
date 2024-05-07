@@ -32,14 +32,21 @@ interface Pedido {
 }
 
 export default function EstatusEnvioAdministrador() {
-const [pedidos, setPedidos] = React.useState<Pedido[] | null>(null);
-  const [botonDeshabilitado, setBotonDeshabilitado] = React.useState(false);
+  const [pedidos, setPedidos] = React.useState<Pedido[] | null>(null);
+  const [botonesDeshabilitados, setBotonesDeshabilitados] = React.useState<Record<string, boolean>>({});
 
   React.useEffect(() => {
     async function fetchPedidos() {
       try {
         const pedidosData = await getPedidosUsuario();
         setPedidos(pedidosData);
+        
+        // Crear un objeto con el estado de los botones deshabilitados
+        const botonesDeshabilitadosInicial = pedidosData.reduce((acc, pedido) => {
+          acc[pedido.id] = pedido.estatusEnv === "Entregado";
+          return acc;
+        }, {});
+        setBotonesDeshabilitados(botonesDeshabilitadosInicial);
       } catch (error) {
         console.error("Error al obtener los pedidos:", error);
       }
@@ -50,14 +57,14 @@ const [pedidos, setPedidos] = React.useState<Pedido[] | null>(null);
 
   const handleActualizarEstatus = async (id: string) => {
     try {
-      if (!pedidos) return; // Verificar si pedidos existe antes de continuar
-  
+      if (!pedidos) return;
+
       const pedidoToUpdate = pedidos.find((pedido) => pedido.id === id);
       if (!pedidoToUpdate) {
         console.error("Pedido no encontrado.");
         return;
       }
-  
+
       let nuevoEstatus: string;
       switch (pedidoToUpdate.estatusEnv) {
         case "Preparando":
@@ -72,7 +79,7 @@ const [pedidos, setPedidos] = React.useState<Pedido[] | null>(null);
         default:
           nuevoEstatus = "Preparando";
       }
-      
+
       await actualizarEstatusPedido(id, nuevoEstatus);
       const pedidosActualizados = pedidos.map((pedido) => {
         if (pedido.id === id) {
@@ -81,15 +88,13 @@ const [pedidos, setPedidos] = React.useState<Pedido[] | null>(null);
         return pedido;
       });
       setPedidos(pedidosActualizados);
-      if (nuevoEstatus === "Entregado") {
-        setBotonDeshabilitado(true);
-      }
+      
+      // Actualizar el estado del botón deshabilitado para este pedido
+      setBotonesDeshabilitados({ ...botonesDeshabilitados, [id]: nuevoEstatus === "Entregado" });
     } catch (error) {
       console.error("Error al actualizar el estatus del pedido:", error);
     }
   };
-  
-  
 
   return (
     <Grid container justifyContent="center">
@@ -139,7 +144,7 @@ const [pedidos, setPedidos] = React.useState<Pedido[] | null>(null);
               </TableRow>
             </TableHead>
             <TableBody>
-              {pedidos &&
+              {pedidos ? (
                 pedidos.map((pedido: Pedido) => (
                   <TableRow key={pedido.id}>
                     <TableCell>{pedido.nombre}</TableCell>
@@ -186,13 +191,22 @@ const [pedidos, setPedidos] = React.useState<Pedido[] | null>(null);
                       <Button
                         variant="contained"
                         onClick={() => handleActualizarEstatus(pedido.id)}
-                        disabled={botonDeshabilitado}
+                        disabled={botonesDeshabilitados[pedido.id]}
                       >
                         Actualizar Estatus
                       </Button>
                     </TableCell>
                   </TableRow>
-                ))}
+                ))
+              ) : (
+                <TableRow>
+                  <TableCell colSpan={7}>
+                    <Typography variant="body1" color="error">
+                      No se encontraron pedidos.
+                    </Typography>
+                  </TableCell>
+                </TableRow>
+              )}
             </TableBody>
           </Table>
         </TableContainer>

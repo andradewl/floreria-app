@@ -18,6 +18,7 @@ interface Pedido {
   total: number;
   fecha: string;
   estatusEnv: string;
+  imagen: string; // Agregamos el campo imagen al tipo Pedido
 }
 
 export default function EstatusEnvio() {
@@ -53,6 +54,7 @@ export default function EstatusEnvio() {
             <TableHead>
               <TableRow>
                 <TableCell>Nombre</TableCell>
+                <TableCell>Imagen</TableCell> {/* Agregamos la columna para la imagen */}
                 <TableCell align="right">Cantidad</TableCell>
                 <TableCell align="right">Total</TableCell>
                 <TableCell align="right">Estatus de Envío</TableCell>
@@ -63,6 +65,9 @@ export default function EstatusEnvio() {
                 pedidos.map((pedido: Pedido, index: number) => (
                   <TableRow key={index}>
                     <TableCell>{pedido.nombre}</TableCell>
+                    <TableCell>
+                      <img src={pedido.imagen} alt="Imagen del producto" style={{ width: 50, height: 50 }} />
+                    </TableCell> {/* Mostramos la imagen */}
                     <TableCell align="right">{pedido.cantidad}</TableCell>
                     <TableCell align="right">{pedido.total}</TableCell>
                     <TableCell
