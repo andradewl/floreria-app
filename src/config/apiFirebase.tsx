@@ -10,7 +10,6 @@ export const addUser = async (nombre: string, apellido: string, email: string, p
     const userSnapshot = await getDocs(userQuery);
 
     if (!userSnapshot.empty) {
-        // Ya hay un usuario con este correo electrónico
         throw new Error('¡Este correo electrónico ya está registrado!');
     }
 
@@ -96,7 +95,6 @@ export const getTipoFlores = async (): Promise<Tipoflores[]> => {
     });
     return products;
 };
-
 
 export const getOcasiones = async (): Promise<Ocasionest[]> => {
     const result = await getDocs(query(collection(db,'ocasiones')));

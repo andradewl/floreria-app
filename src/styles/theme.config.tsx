@@ -9,7 +9,7 @@ type ThemeProp = {
 export enum themePalette{
     BG = "#ffff",
     VIOLLETE = 'rgb(151, 15, 103)',
-    FONT_GLOBAL = 'Shippori Mincho',
+    // FONT_GLOBAL = 'Shippori Mincho',
 }
 
 
@@ -23,9 +23,9 @@ const theme = createTheme({
             main: themePalette.VIOLLETE
         }
     },
-    typography:{
-        fontFamily:themePalette.FONT_GLOBAL
-    }
+    // typography:{
+    //     fontFamily:themePalette.FONT_GLOBAL
+    // }
 })
 
 export const ThemeConfig: React.FC<ThemeProp> =({children})=>{

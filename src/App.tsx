@@ -37,13 +37,10 @@ function App() {
     "intent":"capture"
   }
 
- 
   return (
     <PayPalScriptProvider options={initialOptions}>
       <BrowserRouter>
-
         <NavBar/>
-
         <Routes>
           <Route path="/" Component={Home} />
           <Route path="/Productos" Component={Productos}/>

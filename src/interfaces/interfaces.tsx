@@ -12,8 +12,7 @@ interface FlowerWithOferta {
     descuento: number;
     tipoflor:string;
     ocasion:string;
-    productosExtra:[]; // Aquí puedes definir un tipo específico para los productos extra si es necesario
-
+    productosExtra:[];
 }
 
 interface FlowerWithoutOferta {

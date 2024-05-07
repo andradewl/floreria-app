@@ -21,7 +21,7 @@ import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
 import { stylesComponents } from "../styles/stylesComponentes"
 
 import '../styles/fuentes.css'
-import Banners from "../components/Banners";
+// import Banners from "../components/Banners";
 
 // import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
 // // import FavoriteIcon from '@mui/icons-material/Favorite';
@@ -32,6 +32,7 @@ import React from "react";
 import { Flower } from "../interfaces/interfaces"
 import { useNavigate } from 'react-router-dom';
 import BarraDeBusqueda from "../components/BarraDeBusqueda";
+
 
 const steps = [
     {
@@ -124,15 +125,9 @@ function Home(){
     const navigate = useNavigate()
     const [flores, setFlores] = React.useState<Flower[]>([]);
 
-
     React.useEffect(()=>{
-
         fetchFlores()
     },[])
-
-    React.useEffect(()=>{
-        console.log('floresxd', flores)
-    },[flores])
 
 
     const fetchFlores = async () => {
@@ -151,25 +146,44 @@ function Home(){
 
     return(
         <>
-
-            <Grid>
-
-                <Banners/>
-
+            <Grid sx={{width:'100%', position: 'relative'}}>
+                <Grid style={{width:'100%', height: 'auto', position:'relative', zIndex:1}}>
+                    <video src="https://admin.floreselgato.com/wp-content/uploads/2024/04/portada-FG.com-2.mp4" style={{width:'100%'}}></video>
+                </Grid>
+                <Grid sx={{position: 'absolute',top: 0, left: 0, width: '100%', height: '100%', backgroundColor: '#0000004d', zIndex: 2}}></Grid>
             </Grid>
+
+            {/* <Grid>
+                <Banners/>
+            </Grid> */}
+
             <Grid>
 
                 <BarraDeBusqueda/>
 
             </Grid>
 
-            <Grid  sx={{paddingLeft:{xl:'10%', md:'7%',xs:'5%'}, paddingRight:{xl:'10%',md:'7%', xs:'5%'} }}  >
-                <Grid style={{textAlign:'center', padding:'8px'}} data-aos="fade-right">
-                    <Typography variant="h3" color="initial"  sx={{color:'#B29426',  fontSize:{xs:'24px', md:'34px'}}} p={2}>
+            <Grid  sx={{paddingLeft:{xl:'10%', md:'7%',xs:'5%'}, paddingRight:{xl:'10%',md:'7%', xs:'5%'}}}  >
+                <Grid style={{textAlign:'start', padding:'8px' }} data-aos="fade-right" pt={8} pb={8}>
+                    <Typography variant="h1" color="initial"
+                        sx={{
+                            color:'#fb7185',
+                            fontFamily: "Cormorant",
+                            fontOpticalSizing: "auto",
+                            fontWeight: "<weight>",
+                            fontStyle: "normal",
+                            fontSize:{md:'35px', xs:'25px'}
+                            }}>
                         ¡Pequeños detalles marcando diferencia!
                     </Typography>
-                    <Typography variant="h4" color="initial" fontSize='17px'  sx={{color:'#000000',  fontSize:{xs:'14px', md:'17px'}}} p={2}>
-                        En Flores Rickys encontrarás lo que necesitas para cada ocasión con ofertas.
+                    <Typography variant="subtitle1" color="initial" fontSize='17px'
+                        sx={{color:'black',
+                            fontFamily: "Cormorant",
+                            fontOpticalSizing: "auto",
+                            fontWeight: "<weight>",
+                            fontStyle: "normal",
+                            fontSize:{md:'15px'}}} >
+                        En Flores El Gato encontrarás lo que necesitas para cada ocasión.
                     </Typography>
                 </Grid>
 
@@ -188,17 +202,6 @@ function Home(){
                                 </Box>
                             </Grid>
                         ))}
-
-
-                        {/* <Grid item xs={12} sm={6} lg={4} xl={3} sx={stylesComponents.contenedorOcasiones}>
-                            <Box sx={stylesComponents.cajaDatosOcasioners}>
-                                <Grid sx={stylesComponents.contenedorImagen}>
-                                    <img src={one} alt="" width={'100%'} height={'100%'} style={{ objectFit: 'cover'}}/>
-                                </Grid>
-                            </Box>
-                        </Grid> */}
-
-
 
                     </Grid>
                 </Grid>
@@ -243,10 +246,6 @@ function Home(){
                                                 }}
                                                 >
                                                     <Box sx={{ padding: {xs:'10px', lg:'2px'} }}>
-                                                        {/* <Box sx={{justifyContent:'center', textAlign:'center', padding:'2px'}} >
-                                                            <FavoriteBorderIcon sx={{width:'50%', justifyContent:'center', textAlign:'center'}}/>
-                                                            <RemoveRedEyeIcon sx={{width:'50%', justifyContent:'center', textAlign:'center'}}/>
-                                                        </Box> */}
                                                         <Box sx={{display:'flex',padding:'2px',width: '100%',}}>
                                                             <Typography variant="h6" color="initial"  fontSize={16}  style={{color:'#404040', width:'50%',  textDecorationLine: 'line-through', fontWeight: 'bold' }}>${item.precio}</Typography>
                                                             <Typography variant="h6" color="initial"  fontSize={16}  style={{color:'#9c0ba8', width:'50%', fontWeight: 'bold' }}>${item.descuento}</Typography>
@@ -254,7 +253,6 @@ function Home(){
                                                         <Box sx={{padding:'2px'}} onClick={()=>handleRedirectToProductId(item.id)}>
                                                             <Typography variant="h6" color="initial"  fontSize={16}  style={{color:'#404040'}}>{item.nombre}</Typography>
                                                         </Box>
-                                                        
                                                     </Box>
                                                 </Grid>
 

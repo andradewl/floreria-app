@@ -117,18 +117,18 @@ function ProductId(){
     };
 
     const HandlecantidadProducto = (existencias:number) => {
-        let newValue = existencias;
+        const newValue = existencias;
 
 
 
-        if (newValue < 0) {
-            newValue = 0;
-        }
+        // if (newValue < 0) {
+        //     newValue = 0;
+        // }
 
 
-        if (newValue > existencias) {
-            newValue = existencias
-        }
+        // if (newValue > existencias) {
+        //     newValue = existencias
+        // }
 
 
         // const newValue = parseInt(event.target.value, 10);
@@ -223,7 +223,6 @@ function ProductId(){
         };
 
         console.log('Agregando producto al carrito...');
-        // Si el producto no está en el carrito, lo agregamos
         const updatedCarritoDeCompra = [...carritoDeCompra, newItem];
         setCarritoDeCompra(updatedCarritoDeCompra);
         setLocalStorage('Productos', updatedCarritoDeCompra);
@@ -340,7 +339,6 @@ function ProductId(){
                                                 },
                                             }}
                                             onChange={()=>HandlecantidadProducto(product.existencias)}
-
                                         />
                                     </Grid>
                                     <Grid m={2}>
@@ -483,8 +481,6 @@ function ProductId(){
                                         />
                                     </Grid>
                                     <Grid>
-                                
-
                                     {habilitarDesabilitarBottonCompra ? (
                                             product.descuento ? (
                                                 <Button sx={stylesComponents.button} onClick={()=>guardarDatosConDescuento(product.id,product.nombre, product.precio, product.descuento, product.imagen)} >

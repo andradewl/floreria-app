@@ -8,6 +8,7 @@ import { useNavigate } from 'react-router-dom';
 
 
 
+
 function BarraDeBusqueda(){
     const navigate = useNavigate()
 
@@ -58,6 +59,7 @@ function BarraDeBusqueda(){
             setIsSearch(false)
         }
     };
+
     const handleRedirectToProductId = (id:string) => {
         navigate('/Producto/'+id);
     };
@@ -66,11 +68,17 @@ function BarraDeBusqueda(){
         <>
 
             <Grid sx={{ background:'#ffb3e2b3', padding:'30px' }}>
-                <Grid container sx={{paddingLeft:{xl:'10%', md:'7%',xs:'5%'}, paddingRight:{xl:'10%',md:'7%', xs:'5%'} }}>
+                <Grid container sx={{paddingLeft:{xl:'10%', md:'2%',xs:'2%'}, paddingRight:{xl:'10%',md:'7%', xs:'5%'} }}>
                     <Grid item md={6} xs={12} sx={{color:'white'}}>
-                        <Typography variant="h1" sx={{fontSize:{md:'30px', xs:'25px'}}} >Encuentra las flores de la mejor calidad que estabas buscando</Typography>
+                        <Typography variant="h1" sx={{
+                            color:'black',
+                            fontFamily: "Cormorant",
+                            fontOpticalSizing: "auto",
+                            fontWeight: "<weight>",
+                            fontStyle: "normal",
+                            fontSize:{md:'30px', xs:'25px'}}} >Encuentra las flores de la mejor calidad que estabas buscando</Typography>
                     </Grid>
-                    <Grid item md={6}  xs={12} sx={{textAlign:'center', paddingTop:'30px'}}>
+                    <Grid item md={6}  xs={12} sx={{textAlign:'center'}}>
                         <TextField
                             label="buscar"
                             variant="outlined"
@@ -78,9 +86,10 @@ function BarraDeBusqueda(){
                             value={searchTerm}
                             onChange={handleSearch}
                             placeholder="Buscar productos..."
-                            sx={{color:'grey', width:{md:'90%',xs:'100%'}}}
+                            sx={{color:'grey', width:{md:'90%',xs:'100%', borderRadius:'20px'}}}
                         />
 
+                        
                     </Grid>
                 </Grid>
             </Grid>

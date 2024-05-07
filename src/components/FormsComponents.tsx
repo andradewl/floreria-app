@@ -81,7 +81,6 @@ function shopProducts() {
         const storedUserName = sessionStorage.getItem('credentials');
 
         if(!storedItems){
-
             return navigate("/");
         }
 
@@ -94,13 +93,12 @@ function shopProducts() {
 
         if (storedItems && dinero && storedItemsEnvio) {
             const parsedItems: CarritoDeCompra[] = JSON.parse(storedItems);
-            console.log(parsedItems)
+            // console.log(parsedItems)
             const ItemsEnvio = parseFloat(storedItemsEnvio);
             setTotalNumerico(dinero+ItemsEnvio)
             setItems(parsedItems)
             settotalEnvio(ItemsEnvio)
         }
-
 
     }, [])
 
@@ -212,7 +210,6 @@ function shopProducts() {
 
 
     const onApprove = async (data: { orderID: string }) => {
-
         const dinero = precioApAGAR();
         return fetch(`${servelUrl}/api/orders/${data.orderID}/capture`, {
             method: "POST",
@@ -258,8 +255,6 @@ function shopProducts() {
                         deleteCarrito()
                         alert('Pedido añadido exitosamente con id de seguimiento: '+pedidoId)
                         handleRedirect()
-
-                        // sendMessage()
                     })
                     .catch((_error) => {
                         alert('Error al crear el método de pago intentelo mas tarde')
@@ -267,7 +262,6 @@ function shopProducts() {
                     console.log(newItem)
                 }
             }
-            // Aquí puedes realizar acciones adicionales después de un pago exitoso
         })
         .catch((_error) => {
             alert('Error al crear el método de pago intentelo mas tarde')
@@ -292,7 +286,6 @@ function shopProducts() {
                         value: dinero,
                         currency_code: 'MXN'
                     },
-
                 }
             ],
             cart: {
@@ -301,7 +294,6 @@ function shopProducts() {
                 quantity: dinero
             },
             })
-
         }).then((response) => {
             if (!response.ok) {
             throw new Error("Error al crear la orden.");
@@ -327,6 +319,7 @@ function shopProducts() {
         if (!stripe || !elements) {
             return;
         }
+
         try {
             const { error, paymentMethod } = await stripe.createPaymentMethod({
                 type: 'card',
@@ -375,15 +368,12 @@ function shopProducts() {
 
                             addPedido(newItem)
                             .then((pedidoId) => {
-                                // console.log("Pedido añadido exitosamente con ID: ", pedidoId);
-                                // sendMessage()
                                 deleteCarrito()
                                 alert('Pedido añadido exitosamente con id de seguimiento: '+pedidoId)
                                 handleRedirect()
 
                             })
                             .catch((_error) => {
-                                // console.error("Error al añadir pedido: ", error);
                                 alert('Error al añadir pedido intentelo mas tarde')
                             });
                             console.log(newItem)
@@ -393,15 +383,12 @@ function shopProducts() {
                             const newItem: NuevoPedido = datosPedidos
                             addPedido(newItem)
                             .then((pedidoId) => {
-                                // console.log("Pedido añadido exitosamente con ID: ", pedidoId);
-                                // sendMessage()
                                 deleteCarrito()
                                 alert('Pedido añadido exitosamente con id de seguimiento: '+pedidoId)
                                 handleRedirect()
 
                             })
                             .catch((_error) => {
-                                // console.error("Error al añadir pedido: ", error);
                                 alert('Error al añadir pedido intentelo mas tarde')
                             });
 
@@ -410,13 +397,10 @@ function shopProducts() {
                     }
                 }else{
                     alert('Error al crear el método de pago intentelo mas tarde')
-                    // console.log("error xd")
                 }
-
             }
         } catch (error) {
             alert('Error al crear el método de pago intentelo mas tarde')
-            // console.error('Error al crear el método de pago:', error);
         }
     };
 
@@ -716,13 +700,6 @@ function shopProducts() {
                                 <Grid m={1} ml={3} mr={3} pb={1} sx={{ borderBottom:'1px solid #afafaf'}}>
                                     <Typography variant="h6" color="initial">Total: ${totalNumerico + totalEnvio}</Typography>
                                 </Grid>
-
-                                {/* <Button
-                                    disabled={!isFormValid}
-                                    onClick={handleSubmit}
-                                >
-                                    Pagar
-                                </Button> */}
 
                                 <Grid m={1} ml={3} mr={3} pb={1} sx={{ borderBottom:'1px solid #afafaf', textAlign:'center' }}>
 

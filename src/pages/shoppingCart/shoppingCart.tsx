@@ -40,26 +40,17 @@ function ShoppingCart(){
 
 
     const eliminarItem = (index: number) => {
-        // const nuevosItems = items.filter(item => item.id !== id);
-        // const updatedItems = [...items.slice(0, index), ...items.slice(index + 1)];
-        // localStorage.setItem('Productos', JSON.stringify(updatedItems));
-
-        // setItems(updatedItems);
-
         const updatedItems = [...items.slice(0, index), ...items.slice(index + 1)];
-        // Verificar si updatedItems está vacío
         if (updatedItems.length === 0) {
-            localStorage.removeItem('Productos'); // Eliminar del localStorage si está vacío
+            localStorage.removeItem('Productos');
             localStorage.removeItem('envio');
             localStorage.removeItem('PrecioApagar');
             setItems([]);
             setIsSetItems(false)
         } else {
-            localStorage.setItem('Productos', JSON.stringify(updatedItems)); // Actualizar en localStorage
+            localStorage.setItem('Productos', JSON.stringify(updatedItems));
             setItems(updatedItems);
         }
-
-
     };
 
 
@@ -71,14 +62,10 @@ function ShoppingCart(){
             localStorage.setItem('envio',JSON.stringify(500));
             settotalEnvio(500)
         }
-        // setChecked(event.target.checked);
     };
 
     const handleRedirectToShopingProducts = (total:number) => {
-
-        // console.log(total)
         localStorage.setItem('PrecioApagar', JSON.stringify(total));
-
         navigate('/shopProducts');
     };
 

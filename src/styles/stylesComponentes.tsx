@@ -9,8 +9,11 @@ export const stylesComponents = {
         height:'0px'
     },
     appBarScrolled:{
-      
-        background:"#ffffff",
+        
+        color:'black',
+        
+        background:'white'
+
         // height:'0px'
     },
     toolbar:{
@@ -58,6 +61,33 @@ export const stylesComponents = {
         padding:'3px',
         fontSize: 30,
         color:'purple'
+    },
+    butonMenu:{
+        fontSize:'11px',
+        borderRadius:'30px',
+        margin:'10px',
+        color:'white'
+    },
+    butonMenuScroll:{
+        fontSize:'11px',
+        borderRadius:'30px',
+        margin:'10px',
+        color:'black'
+    },
+
+    butonMenuCarrito:{
+        fontSize:'11px',
+        borderRadius:'30px',
+        margin:'10px',
+        color:'white',
+        width:'100px'
+    },
+    butonMenuCarritoScroll:{
+        fontSize:'11px',
+        borderRadius:'30px',
+        margin:'10px',
+        color:'black',
+        width:'100px'
     },
 
     //------------------------------Footer------------------------------//

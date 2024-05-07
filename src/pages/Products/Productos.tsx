@@ -12,15 +12,8 @@ import { getOcasiones, getProducts, getTipoFlores } from '../../config/apiFireba
 function Productos(){
 
     const navigate = useNavigate()
-
-
-    // const [precio, setPrecio] = React.useState('')
-    // const [ocasion, setOcasion] = React.useState('')
-    // const [calificacion, setCalificacion] = React.useState('')
     const [flores, setFlores] = React.useState<Flower[]>([]);
     const [floresFiltro, setFloresFiltro] = React.useState<Flower[]>([]);
-    // const [filtroTipoFlor, setFiltroTipoFlor] = React.useState<string | null>(null);
-
     const [ocasiones, setOcasiones] = React.useState<Ocasionest[]>([]);
     const [tipoFlores, setTipoFlores] = React.useState<Tipoflores[]>([]);
 
@@ -28,7 +21,7 @@ function Productos(){
         const fetchData = async () => {
             try {
                 const flowersData = await getProducts();
-                setFloresFiltro(flowersData); // Update state with fetched data
+                setFloresFiltro(flowersData);
                 setFlores(flowersData);
                 fetchTipoFlores();
                 fetchOcasiones();
@@ -36,7 +29,7 @@ function Productos(){
                 console.error('Error fetching flowers:', error);
             }
         };
-        fetchData(); // Call the async function directly
+        fetchData();
     }, []);
 
     const fetchTipoFlores = async () => {
@@ -60,7 +53,6 @@ function Productos(){
     };
 
     const handleChangePrecio = (event: SelectChangeEvent) => {
-        // setPrecio(event.target.value);
         if (event.target.value == "mayor"){
             const filtroFlores = floresFiltro.slice().sort((a, b) => b.precio - a.precio)
             setFloresFiltro(filtroFlores)
@@ -88,16 +80,10 @@ function Productos(){
         setFloresFiltro(filtroFlores)
     }
 
-    // const mayorAMenor = ()=>{
-    //     const filtroFlores = floresFiltro.slice().sort((a, b) => b.precio - a.precio)
-    //     setFloresFiltro(filtroFlores)
-    // }
-
 
     return(
         <>
         <Grid sx={{width:'100%', height:'560px', backgroundColor:'#fdcfd5', position: 'relative'}}>
-            {/* <img src="https://firebasestorage.googleapis.com/v0/b/prowlflores.appspot.com/o/multimedia%2Fimagenes%2FFondos%2Fmariposa-en-flor_3840x2400_xtrafondos.com.jpg?alt=media&token=a7a9c3ef-e968-4ab7-9308-56042bf4dbbf" alt="" width={'100%'} height={'100%'} style={{ objectFit: 'cover', position:'relative'}}/> */}
             <Grid width={'100%'} height={'100%'} sx={{display: 'flex', justifyContent: 'center', alignItems: 'center'}}>
                 <Typography variant="h2" color="white">Productos</Typography>
             </Grid>
