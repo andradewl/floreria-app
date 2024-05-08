@@ -89,20 +89,20 @@ function BarraDeBusqueda(){
                             sx={{color:'grey', width:{md:'90%',xs:'100%', borderRadius:'20px'}}}
                         />
 
-                        
+
                     </Grid>
                 </Grid>
             </Grid>
             <Grid sx={{paddingLeft:{xl:'10%', md:'7%',xs:'5%'}, paddingRight:{xl:'10%',md:'7%', xs:'5%'} }}>
                 {
                     isSearch &&
-                    <Grid>
-                        <Grid container sx={stylesComponents.ContenedorProductos} >
-                            {searchResults.map(product => (
-                                <Grid item xs={12} md={6} lg={3} sx={stylesComponents.contenedorProducto}>
+                        <Grid>
+                            <Grid container sx={stylesComponents.ContenedorProductos} >
+                            {searchResults.map((item) => (
+                                <Grid item xs={6} md={3}  sx={stylesComponents.contenedorProducto}>
                                     <Box display={'flex'} style={{justifyContent:'center'}}>
-                                        <Grid sx={stylesComponents.contenerdorImagenProducto} onClick={()=>handleRedirectToProductId(product.id)}>
-                                            <img src={product.imagen} alt="" width={'100%'} height={'100%'} style={{ objectFit: 'cover', position:'relative'}} />
+                                        <Grid sx={stylesComponents.contenerdorImagenProducto} onClick={()=>handleRedirectToProductId(item.id)}>
+                                            <img src={item.imagen} alt="" width={'100%'} height={'100%'} style={{ objectFit: 'cover', position:'relative', borderRadius:'7px'}} />
                                             <Grid width={'100%'} height={'100%'} sx={{position: 'absolute', textAling:'left' }}>
                                                 <Box sx={{ backgroundColor:'#ef8f61', width:'50%', color:'white', borderRadius:'5px', fontSize:'20px', margin:'5px' }}>
                                                     !Oferta¡
@@ -112,7 +112,7 @@ function BarraDeBusqueda(){
                                     </Box>
 
                                     {
-                                        product.descuento ?
+                                        item.descuento ?
                                         (
                                             <>
                                                 <Grid
@@ -126,18 +126,31 @@ function BarraDeBusqueda(){
                                                         width: '100%',
                                                     }}
                                                     >
-                                                        <Box sx={{ padding: {xs:'10px', lg:'2px'} }}>
-                                                            {/* <Box sx={{justifyContent:'center', textAlign:'center', padding:'2px'}} >
-                                                                <FavoriteBorderIcon sx={{width:'50%', justifyContent:'center', textAlign:'center'}}/>
-                                                                <RemoveRedEyeIcon sx={{width:'50%', justifyContent:'center', textAlign:'center'}}/>
-                                                            </Box> */}
-                                                            <Box sx={{padding:'2px'}} onClick={()=>handleRedirectToProductId(product.id)}>
-                                                                <Typography variant="h6" color="initial"  fontSize={16}  style={{color:'#404040'}}>{product.nombre}</Typography>
+                                                        <Box sx={{ paddingTop:'2px' }}>
+                                                            <Box sx={{padding:'2px'}} onClick={()=>handleRedirectToProductId(item.id)}>
+                                                                <Typography variant="body1" color="initial" style={{color:'#404040',
+                                                                    fontFamily: "Cormorant",
+                                                                    fontOpticalSizing: "auto",
+                                                                    fontWeight: "<weight>",
+                                                                    fontStyle: "normal",
+                                                                    textAlign:'left',
+                                                                    fontSize:'17px',
+                                                                    whiteSpace:'nowrap', overflow:'hidden'
+                                                                }}>{item.nombre}</Typography>
+                                                                <Typography variant="body1" color="initial"  style={{color:'#404040',
+                                                                    fontFamily: "Cormorant",
+                                                                    fontOpticalSizing: "auto",
+                                                                    fontWeight: "<weight>",
+                                                                    fontStyle: "normal",
+                                                                    textAlign:'left',
+                                                                    fontSize:'12px'
+                                                                }}>{item.ocasion}</Typography>
                                                             </Box>
                                                             <Box sx={{display:'flex',padding:'2px',width: '100%',}}>
-                                                                <Typography variant="h6" color="initial"  fontSize={16}  style={{color:'#404040', width:'50%',  textDecorationLine: 'line-through', fontWeight: 'bold' }}>${product.precio}</Typography>
-                                                                <Typography variant="h6" color="initial"  fontSize={16}  style={{color:'#9c0ba8', width:'50%', fontWeight: 'bold' }}>${product.descuento}</Typography>
+                                                                <Typography variant="body2" color="initial"  style={{color:'#404040',textAlign:'left', width:'50%',  textDecorationLine: 'line-through', fontWeight: 'bold', fontSize:'12px' }}>${item.precio}</Typography>
+                                                                <Typography variant="body2" color="initial"  style={{color:'#9c0ba8', textAlign:'right',width:'50%', fontWeight: 'bold',fontSize:'12px' }}>${item.descuento}</Typography>
                                                             </Box>
+                                                            
                                                         </Box>
                                                     </Grid>
 
@@ -163,17 +176,6 @@ function BarraDeBusqueda(){
                                                             <FavoriteBorderIcon sx={{ width: '50%' }} />
                                                             <RemoveRedEyeIcon sx={{ width: '50%' }} />
                                                         </Box> */}
-                                                        <Box
-                                                        >
-                                                            <Typography
-                                                                variant="h6"
-                                                                color="initial"
-                                                                fontSize={16}
-                                                                style={{ color: '#404040' }}
-                                                            >
-                                                            {product.nombre}
-                                                            </Typography>
-                                                        </Box>
                                                         <Box sx={{ padding: '2px' }}>
                                                             <Typography
                                                                 variant="h6"
@@ -182,7 +184,18 @@ function BarraDeBusqueda(){
                                                                 textAlign="center"
                                                                 style={{ color: '#9c0ba8' }}
                                                             >
-                                                            ${product.precio}
+                                                            ${item.precio}
+                                                            </Typography>
+                                                        </Box>
+                                                        <Box
+                                                        >
+                                                            <Typography
+                                                                variant="h6"
+                                                                color="initial"
+                                                                fontSize={16}
+                                                                style={{ color: '#404040' }}
+                                                            >
+                                                            {item.nombre}
                                                             </Typography>
                                                         </Box>
                                                     </Box>

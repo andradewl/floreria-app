@@ -80,7 +80,8 @@ export const stylesComponents = {
         borderRadius:'30px',
         margin:'10px',
         color:'white',
-        width:'100px'
+        width:'100px',
+        
     },
     butonMenuCarritoScroll:{
         fontSize:'11px',
@@ -223,11 +224,11 @@ export const stylesComponents = {
     contenerdorImagenProducto:{
         width:'100%',
         height:{
-            xs:'360px',
-            sm:'600px',
-            md:'400px',
-            lg:'250px',
-            xl:'350px'
+            xs:'180px',
+            sm:'340px',
+            md:'260px',
+            lg:'300px',
+            xl:'323px'
         },
         // width:'100px',
         // height:'100px',

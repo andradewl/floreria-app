@@ -163,7 +163,7 @@ function Home(){
 
             </Grid>
 
-            <Grid  sx={{paddingLeft:{xl:'10%', md:'3%',xs:'5%'}, paddingRight:{xl:'10%',md:'3%', xs:'5%', backgroundColor:'#fbf8f4' }}} >
+            <Grid  sx={{paddingLeft:{xl:'10%', md:'3%',xs:'5%'}, paddingRight:{xl:'10%',md:'3%', xs:'5%', backgroundColor:'#fbf8f4'}}} pb={8}>
                 <Grid style={{textAlign:'start', padding:'8px', paddingTop:'80px', paddingBottom:'80px' }} data-aos="fade-right">
                     <Typography variant="h1" color="initial"
                         sx={{
@@ -202,37 +202,41 @@ function Home(){
                                 </Box>
                             </Grid>
                         ))}
-
-
-                        {/* <Grid item xs={12} sm={6} lg={4} xl={3} sx={stylesComponents.contenedorOcasiones}>
-                            <Box sx={stylesComponents.cajaDatosOcasioners}>
-                                <Grid sx={stylesComponents.contenedorImagen}>
-                                    <img src={one} alt="" width={'100%'} height={'100%'} style={{ objectFit: 'cover'}}/>
-                                </Grid>
-                            </Box>
-                        </Grid> */}
-
-
-
                     </Grid>
                 </Grid>
 
             </Grid>
 
-            <Grid sx={{paddingLeft:{xl:'10%', md:'7%',xs:'5%'}, paddingRight:{xl:'10%',md:'7%', xs:'5%'} }} >
+            <Grid sx={{paddingLeft:{xl:'15%', md:'1%',xs:'5%'}, paddingRight:{xl:'15%',md:'1%', xs:'5%'}, paddingTop:'80px', paddingBottom:'80px' }} >
                 <Grid style={{textAlign:'center', padding:'8px'}} >
-                    <Typography variant="h3" color="initial" fontSize='34px'  style={{color:'#B29426'}} >
-                        Ofertas
+                    <Typography variant="h1" color="initial" fontSize='34px'  sx={{
+                            color:'#fb7185',
+                            fontFamily: "Cormorant",
+                            fontOpticalSizing: "auto",
+                            fontWeight: "<weight>",
+                            fontStyle: "normal",
+                            fontSize:{md:'45px', xs:'25px'}
+                            }} pb={4}>
+                        Mas Vendidos
+                    </Typography>
+                    <Typography variant="subtitle1" color="initial" fontSize='17px'
+                        sx={{color:'black',
+                            fontFamily: "Cormorant",
+                            fontOpticalSizing: "auto",
+                            fontWeight: "<weight>",
+                            fontStyle: "normal",
+                            fontSize:{md:'20px'}}} pb={8}>
+                        Ver Todo →
                     </Typography>
                 </Grid>
 
                 <Grid>
                     <Grid container sx={stylesComponents.ContenedorProductos} >
                         {flores && flores.map((item) => (
-                            <Grid item xs={12} md={6} lg={3} sx={stylesComponents.contenedorProducto}>
+                            <Grid item xs={6} md={3}  sx={stylesComponents.contenedorProducto}>
                                 <Box display={'flex'} style={{justifyContent:'center'}}>
                                     <Grid sx={stylesComponents.contenerdorImagenProducto} onClick={()=>handleRedirectToProductId(item.id)}>
-                                        <img src={item.imagen} alt="" width={'100%'} height={'100%'} style={{ objectFit: 'cover', position:'relative'}} />
+                                        <img src={item.imagen} alt="" width={'100%'} height={'100%'} style={{ objectFit: 'cover', position:'relative', borderRadius:'7px'}} />
                                         <Grid width={'100%'} height={'100%'} sx={{position: 'absolute', textAling:'left' }}>
                                             <Box sx={{ backgroundColor:'#ef8f61', width:'50%', color:'white', borderRadius:'5px', fontSize:'20px', margin:'5px' }}>
                                                 !Oferta¡
@@ -256,14 +260,31 @@ function Home(){
                                                     width: '100%',
                                                 }}
                                                 >
-                                                    <Box sx={{ padding: {xs:'10px', lg:'2px'} }}>
-                                                        <Box sx={{display:'flex',padding:'2px',width: '100%',}}>
-                                                            <Typography variant="h6" color="initial"  fontSize={16}  style={{color:'#404040', width:'50%',  textDecorationLine: 'line-through', fontWeight: 'bold' }}>${item.precio}</Typography>
-                                                            <Typography variant="h6" color="initial"  fontSize={16}  style={{color:'#9c0ba8', width:'50%', fontWeight: 'bold' }}>${item.descuento}</Typography>
-                                                        </Box>
+                                                    <Box sx={{ paddingTop:'2px' }}>
                                                         <Box sx={{padding:'2px'}} onClick={()=>handleRedirectToProductId(item.id)}>
-                                                            <Typography variant="h6" color="initial"  fontSize={16}  style={{color:'#404040'}}>{item.nombre}</Typography>
+                                                            <Typography variant="body1" color="initial" style={{color:'#404040',
+                                                                fontFamily: "Cormorant",
+                                                                fontOpticalSizing: "auto",
+                                                                fontWeight: "<weight>",
+                                                                fontStyle: "normal",
+                                                                textAlign:'left',
+                                                                fontSize:'17px',
+                                                                whiteSpace:'nowrap', overflow:'hidden'
+                                                            }}>{item.nombre}</Typography>
+                                                            <Typography variant="body1" color="initial"  style={{color:'#404040',
+                                                                fontFamily: "Cormorant",
+                                                                fontOpticalSizing: "auto",
+                                                                fontWeight: "<weight>",
+                                                                fontStyle: "normal",
+                                                                textAlign:'left',
+                                                                fontSize:'12px'
+                                                            }}>{item.ocasion}</Typography>
                                                         </Box>
+                                                        <Box sx={{display:'flex',padding:'2px',width: '100%',}}>
+                                                            <Typography variant="body2" color="initial"  style={{color:'#404040',textAlign:'left', width:'50%',  textDecorationLine: 'line-through', fontWeight: 'bold', fontSize:'12px' }}>${item.precio}</Typography>
+                                                            <Typography variant="body2" color="initial"  style={{color:'#9c0ba8', textAlign:'right',width:'50%', fontWeight: 'bold',fontSize:'12px' }}>${item.descuento}</Typography>
+                                                        </Box>
+                                                        
                                                     </Box>
                                                 </Grid>
 

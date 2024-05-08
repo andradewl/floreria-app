@@ -15,21 +15,84 @@ import Logo from '../assets/logo.png'
 // import Person2Icon from '@mui/icons-material/Person2';
 import '../styles/estilosCss.css'
 // import { Link  } from 'react-router-dom';
-import { Grid } from '@mui/material';
+import { Box, Divider, Drawer, Grid, List, ListItem, ListItemButton, ListItemIcon, ListItemText, Menu, MenuItem } from '@mui/material';
 import { stylesComponents } from '../styles/stylesComponentes';
 import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
+import { useNavigate } from 'react-router-dom';
+
 // import { UserLogin } from '../interfaces/interfaces';
 // import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
 
 // const settings = ['Profile', 'Account', 'Dashboard', 'Logout'];
+import MenuIcon from '@mui/icons-material/Menu';
+import InboxIcon from '@mui/icons-material/Inbox';
+import MailIcon from '@mui/icons-material/Mail';
+
+type Anchor = 'top' | 'left' | 'bottom' | 'right';
 
 
 function ResponsiveAppBar() {
-  // const [anchorElNav, setAnchorElNav] = React.useState<null | HTMLElement>(null);
-  // const [anchorElUser, setAnchorElUser] = React.useState<null | HTMLElement>(null);
-  // const [userLogin, setUserLogin] = React.useState<UserLogin>();
+  const navigate = useNavigate()
   const [isScrolled, setIsScrolled] = React.useState(false);
 
+
+  const [state, setState] = React.useState({
+    top: false,
+    left: false,
+    bottom: false,
+    right: false,
+  });
+
+
+  const toggleDrawer =
+    (anchor: Anchor, open: boolean) =>
+    (event: React.KeyboardEvent | React.MouseEvent) => {
+      if (
+        event.type === 'keydown' &&
+        ((event as React.KeyboardEvent).key === 'Tab' ||
+          (event as React.KeyboardEvent).key === 'Shift')
+      ) {
+        return;
+      }
+
+      setState({ ...state, [anchor]: open });
+    };
+
+
+    const list = (anchor: Anchor) => (
+      <Box
+        sx={{ width: anchor === 'top' || anchor === 'bottom' ? 'auto' : 350 }}
+        role="presentation"
+        onClick={toggleDrawer(anchor, false)}
+        onKeyDown={toggleDrawer(anchor, false)}
+      >
+        <List>
+          {['Inbox', 'Starred', 'Send email', 'Drafts'].map((text, index) => (
+            <ListItem key={text} disablePadding>
+              <ListItemButton>
+                <ListItemIcon>
+                  {index % 2 === 0 ? <InboxIcon /> : <MailIcon />}
+                </ListItemIcon>
+                <ListItemText primary={text} />
+              </ListItemButton>
+            </ListItem>
+          ))}
+        </List>
+        <Divider />
+        <List>
+          {['All mail', 'Trash', 'Spam'].map((text, index) => (
+            <ListItem key={text} disablePadding>
+              <ListItemButton>
+                <ListItemIcon>
+                  {index % 2 === 0 ? <InboxIcon /> : <MailIcon />}
+                </ListItemIcon>
+                <ListItemText primary={text} />
+              </ListItemButton>
+            </ListItem>
+          ))}
+        </List>
+      </Box>
+    );
 
   React.useEffect(()=>{
     const storedUserCredentials = sessionStorage.getItem('credentials');
@@ -46,23 +109,15 @@ function ResponsiveAppBar() {
   },[])
 
 
-  // const handleOpenNavMenu = (event: React.MouseEvent<HTMLElement>) => {
-  //   setAnchorElNav(event.currentTarget);
-  // };
+  const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
+  const open = Boolean(anchorEl);
+  const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
+    setAnchorEl(event.currentTarget);
+  };
+  const handleClose = () => {
+    setAnchorEl(null);
+  };
 
-  // const handleCloseNavMenu = () => {
-  //   setAnchorElNav(null);
-  // };
-
-  // const handleCloseUserMenu = () => {
-  //   setAnchorElUser(null);
-  // };
-
-  // const handleLogOut = () => {
-  //   sessionStorage.removeItem("userlogIn")
-  //   sessionStorage.removeItem("credentials")
-  //   window.location.href = '/';
-  // };
 
   const handleScroll = () => {
     const scrollTop = window.scrollY;
@@ -98,8 +153,10 @@ function ResponsiveAppBar() {
             <Button sx={{borderRadius:'30px', backgroundColor:'black', color:'white', paddingLeft:'20px', paddingRight:'20px', fontSize:'10px'}}>WhatsApp →</Button>
           </Grid>
         </Grid>
+
         <Container maxWidth="xl" >
           <Grid sx={{display:'flex', marginTop:'10px', paddingLeft:'5%', paddingRight:'5%', borderBottomStyle: 'solid', borderBottomColor:'white'}}  >
+
             <Grid
               sx={{
                 width:'30%',
@@ -112,208 +169,86 @@ function ResponsiveAppBar() {
               style={{ width: '90px' }}
             />
             </Grid>
+
             <Grid
-              sx={{width:'70%', display:'flex', justifyContent:'end' }}
+              sx={{width:'70%', display:{xs:'none', md:'flex'}, justifyContent:'end'}}
             >
               <Button
                 sx={isScrolled ? stylesComponents.butonMenuScroll : stylesComponents.butonMenu}
+                onClick={()=>navigate('/')}
               >Inicio</Button>
               <Button
                 sx={isScrolled ? stylesComponents.butonMenuScroll : stylesComponents.butonMenu}
-              >Ocasiones</Button>
+                id="basic-button"
+                aria-controls={open ? 'basic-menu' : undefined}
+                aria-haspopup="true"
+                aria-expanded={open ? 'true' : undefined}
+                onClick={handleClick}
+              >
+                Ocasiones
+              </Button>
+              <Menu
+                id="basic-menu"
+                anchorEl={anchorEl}
+                open={open}
+                onClose={handleClose}
+                MenuListProps={{
+                  'aria-labelledby': 'basic-button',
+                }}
+              >
+                <MenuItem onClick={handleClose}>Cumpleaños</MenuItem>
+                <MenuItem onClick={handleClose}>Combos</MenuItem>
+                <MenuItem onClick={handleClose}>Para mama</MenuItem>
+              </Menu>
+              {/* <Button
+                sx={isScrolled ? stylesComponents.butonMenuScroll : stylesComponents.butonMenu}
+              >Ocasiones</Button> */}
               <Button
                 sx={isScrolled ? stylesComponents.butonMenuScroll : stylesComponents.butonMenu}
+                onClick={()=>navigate('/FormDetaFac')}
               >Contacto</Button>
               <Button
                 sx={isScrolled ? stylesComponents.butonMenuScroll : stylesComponents.butonMenu}
+                onClick={()=>navigate('/Login')}
               >Login</Button>
             </Grid>
-            <Grid >
+
+            
+            <Grid sx={{
+              width:{
+                md:'auto',
+                xs:'70%'
+              },
+              textAlign:'end'
+            }}>
               <Button
                 sx={isScrolled ? stylesComponents.butonMenuCarritoScroll : stylesComponents.butonMenuCarrito}
+                onClick={toggleDrawer("right", true)}
               ><ShoppingCartIcon sx={{fontSize:'15px'}}/> Total ($0)</Button>
             </Grid>
+            
+            <Grid sx={{display:{xs:'flex', md:'none'}, justifyContent:'end', alignItems:'center'}} onClick={toggleDrawer("left", true)}>
+              <MenuIcon/>
+            </Grid>
+
           </Grid>
         </Container>
-        {/* <Container maxWidth="xl">
-          <Toolbar disableGutters sx={stylesComponents.toolbar }>
-            <Grid
-              sx={{
-                width: '90px',
-                display: { xs: 'none', md: 'flex' },
-              }}
-            >
-              <img
-              src={Logo}
-              alt="Logo"
-              style={{ width: '100%' }}
-            />
-            </Grid>
-            
-            <Box  sx={stylesComponents.boxMenuResponsive}>
-              <IconButton
-                size="large"
-                aria-label="account of current user"
-                aria-controls="menu-appbar"
-                aria-haspopup="true"
-                onClick={handleOpenNavMenu}
-                color="inherit"
-              >
-                <MenuIcon color="disabled" style={{ fontSize: 30}}/>
-              </IconButton>
-              <Menu
-                id="menu-appbar"
-                anchorEl={anchorElNav}
-                anchorOrigin={{
-                  vertical: 'bottom',
-                  horizontal: 'left',
-                }}
-                keepMounted
-                transformOrigin={{
-                  vertical: 'top',
-                  horizontal: 'left',
-                }}
-                open={Boolean(anchorElNav)}
-                onClose={handleCloseNavMenu}
-                sx={stylesComponents.MenuResponsive}
-              >
-                <MenuItem
-                  component={Link}
-                  to="/"
-                  key="/" onClick={handleCloseNavMenu}>
-                    <Typography textAlign="center">Inicio</Typography>
-                </MenuItem>
-                <MenuItem
-                  component={Link}
-                  to="/Productos"
-                  key="/Productos" onClick={handleCloseNavMenu}>
-                    <Typography textAlign="center">Productos</Typography>
-                </MenuItem>
-                <MenuItem
-                  component={Link}
-                  to="/Nosotros"
-                  key="/Nosotros" onClick={handleCloseNavMenu}>
-                    <Typography textAlign="center">Nosotros</Typography>
-                </MenuItem>
-                <MenuItem
-                  component={Link}
-                  to="/Contacto"
-                  key="/Contacto" onClick={handleCloseNavMenu}>
-                    <Typography textAlign="center">Contacto</Typography>
-                </MenuItem>
-              </Menu>
-            </Box>
-            <Box sx={stylesComponents.boxMenuDesk}>
-              <Button
-                  component={Link}
-                  to="/"
-                  variant="text"
-                  onClick={handleCloseNavMenu}
-                  sx={stylesComponents.navigationButton}
-                >
-                  Inicio
-              </Button>
-              <Button
-                  component={Link}
-                  to="/Productos"
-                  variant="text"
-                  onClick={handleCloseNavMenu}
-                  sx={stylesComponents.navigationButton}
-                >
-                  Productos
-              </Button>
-              <Button
-                  component={Link}
-                  to="/Nosotros"
-                  variant="text"
-                  onClick={handleCloseNavMenu}
-                  sx={stylesComponents.navigationButton}
-                >
-                  Nosotros
-              </Button>
-              <Button
-                  component={Link}
-                  to="/Contacto"
-                  variant="text"
-                  onClick={handleCloseNavMenu}
-                  sx={stylesComponents.navigationButton}
-                >
-                  Contacto
-              </Button>
-            </Box>
-
-            
-            <Grid sx={stylesComponents.logoResponsive} >
-              <img
-                src={Logo}
-                alt="Logo"
-                style={{ width: '100%' }}
-              />
-            </Grid>
-
-
-            <Grid sx={{ flexGrow: 0,display:{md:'flex', xs:'none'}, alignItems :'center' }}>
-
-              {
-                userLogin ? (
-                  <Button
-                    variant="text"
-                    onClick={handleLogOut}
-                    sx={stylesComponents.navigationButton}
-                  >
-                    {userLogin.name}
-                  </Button>
-                ):(
-                  <Button
-                    component={Link}
-                    to="/Login"
-                    variant="text"
-                    onClick={handleCloseNavMenu}
-                    sx={stylesComponents.navigationButton}
-                  >
-                    LogIn
-                  </Button>
-                )
-              }
-              <Link to ="shoppingCart">
-                <ShoppingCartIcon  color="disabled" sx={stylesComponents.iconsMovile}/>
-              </Link>
-            </Grid>
-
-            <Grid sx={{ flexGrow: 0,display:{md:'none', xs:'flex'} }}>
-                  
-                  <Link to="/shoppingCart">
-                    <ShoppingCartIcon sx={stylesComponents.iconsMovile} />
-                  </Link>
-                  <Link to="/Usuario" style={{ textDecoration: 'none', color: 'inherit' }}>
-                      <Person2Icon color="disabled" sx={stylesComponents.iconsMovile}/>
-                  </Link>
-              <Menu
-                sx={{ mt: '45px'}}
-                id="menu-appbar"
-                anchorEl={anchorElUser}
-                anchorOrigin={{
-                  vertical: 'top',
-                  horizontal: 'right',
-                }}
-                keepMounted
-                transformOrigin={{
-                  vertical: 'top',
-                  horizontal: 'right',
-                }}
-                open={Boolean(anchorElUser)}
-                onClose={handleCloseUserMenu}
-              >
-                {settings.map((setting) => (
-                  <MenuItem key={setting} onClick={handleCloseUserMenu}>
-                    <Typography textAlign="center">{setting}</Typography>
-                  </MenuItem>
-                ))}
-              </Menu>
-            </Grid>
-          </Toolbar>
-        </Container> */}
+        
       </AppBar>
+      <Drawer
+        anchor={"left"}
+        open={state["left"]}
+        onClose={toggleDrawer("left", false)}
+      >
+        {list("left")}
+      </Drawer>
+      <Drawer
+        anchor={"right"}
+        open={state["right"]}
+        onClose={toggleDrawer("right", false)}
+      >
+        {list("right")}
+      </Drawer>
     </>
   );
 }
