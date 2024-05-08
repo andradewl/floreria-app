@@ -26,6 +26,7 @@ import shopProducts from "./pages/ShopProduct/shopProducts";
 import { PayPalScriptProvider } from "@paypal/react-paypal-js";
 import Completeion from "./pages/ShopProduct/Completeion";
 import PerfilUsuario from "./pages/PerfilUsuario";
+import ocasionesProductos from "./pages/Products/ocasionesProductos";
 
 
 
@@ -41,9 +42,7 @@ function App() {
   return (
     <PayPalScriptProvider options={initialOptions}>
       <BrowserRouter>
-        
         <NavBar/>
-        
         <Routes>
           <Route path="/" Component={Home} />
           <Route path="/Productos" Component={Productos}/>
@@ -64,6 +63,7 @@ function App() {
           <Route path="/editDireccionFact/:id" Component={editDireccionFact} />
           <Route path="/HistPedidosAdmin" Component={HistPedidosAdmin} />
           <Route path="/EstatusEnvioAdministrador" Component={EstatusEnvioAdministrador} />
+          <Route path="/ocasion/:nombreOcasion/:id" Component={ocasionesProductos} />
         </Routes>
 
         <Footer/>

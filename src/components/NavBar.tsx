@@ -1,41 +1,48 @@
 import * as React from 'react';
 import AppBar from '@mui/material/AppBar';
-// import Box from '@mui/material/Box';
-// import Toolbar from '@mui/material/Toolbar';
-// import IconButton from '@mui/material/IconButton';
 import Typography from '@mui/material/Typography';
-// import Menu from '@mui/material/Menu';
-// import MenuIcon from '@mui/icons-material/Menu';
 import Container from '@mui/material/Container';
 import Button from '@mui/material/Button';
-// import MenuItem from '@mui/material/MenuItem';
 import Logo from '../assets/logo.png'
-// import SearchIcon from '@mui/icons-material/Search';
-// import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
-// import Person2Icon from '@mui/icons-material/Person2';
 import '../styles/estilosCss.css'
-// import { Link  } from 'react-router-dom';
 import { Box, Divider, Drawer, Grid, List, ListItem, ListItemButton, ListItemIcon, ListItemText, Menu, MenuItem } from '@mui/material';
 import { stylesComponents } from '../styles/stylesComponentes';
 import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
 import { useNavigate } from 'react-router-dom';
-
-// import { UserLogin } from '../interfaces/interfaces';
-// import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
-
-// const settings = ['Profile', 'Account', 'Dashboard', 'Logout'];
 import MenuIcon from '@mui/icons-material/Menu';
 import InboxIcon from '@mui/icons-material/Inbox';
 import MailIcon from '@mui/icons-material/Mail';
+import { Ocasionest } from '../interfaces/interfaces';
+import { getOcasiones } from '../config/apiFirebase';
 
 type Anchor = 'top' | 'left' | 'bottom' | 'right';
-
 
 function ResponsiveAppBar() {
   const navigate = useNavigate()
   const [isScrolled, setIsScrolled] = React.useState(false);
+  const [ocasiones, setOcasiones] = React.useState<Ocasionest[]>([]);
 
 
+  React.useEffect(() => {
+    const fetchData = async () => {
+        try {
+            fetchOcasiones();
+        } catch (error) {
+            console.error('Error fetching flowers:', error);
+        }
+    };
+    fetchData();
+  }, []);
+
+  const fetchOcasiones = async () => {
+    try {
+        const OcasionesData = await getOcasiones();
+        console.log(OcasionesData)
+        setOcasiones(OcasionesData);
+    } catch (error) {
+        console.error('Error fetching ocasiones:', error);
+    }
+};
   const [state, setState] = React.useState({
     top: false,
     left: false,
@@ -99,18 +106,16 @@ function ResponsiveAppBar() {
     const storedUserName = sessionStorage.getItem('userlogIn');
 
     if (storedUserCredentials && storedUserName) {
-      // Si se encuentran datos en sessionStorage, parsea el JSON
       const userCredential = JSON.parse(storedUserCredentials);
       const userInfo = JSON.parse(storedUserName);
-
       console.log(userCredential.email, userInfo.email);
-      // setUserLogin(userInfo)
     }
   },[])
 
 
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
   const open = Boolean(anchorEl);
+
   const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
     setAnchorEl(event.currentTarget);
   };
@@ -196,9 +201,9 @@ function ResponsiveAppBar() {
                   'aria-labelledby': 'basic-button',
                 }}
               >
-                <MenuItem onClick={handleClose}>Cumpleaños</MenuItem>
-                <MenuItem onClick={handleClose}>Combos</MenuItem>
-                <MenuItem onClick={handleClose}>Para mama</MenuItem>
+                {ocasiones && ocasiones.map((item) => (
+                    <MenuItem onClick={()=>navigate("ocasion/"+item.nombre+"/"+item.id)}>{item.nombre}</MenuItem>
+                  ))}
               </Menu>
               {/* <Button
                 sx={isScrolled ? stylesComponents.butonMenuScroll : stylesComponents.butonMenu}
