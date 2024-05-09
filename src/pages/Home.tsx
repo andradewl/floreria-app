@@ -1,13 +1,8 @@
 import {  Box, Button, Grid, Pagination, PaginationItem, Paper, Typography } from "@mui/material";
 
-import one from'../assets/secciones/1.jpg'
-import two from'../assets/secciones/2.jpg'
-import three from '../assets/secciones/3.jpg'
-import condolencias from '../assets/secciones/4.png'
-import imageArregloMesa from'../assets/secciones/5.jpg'
+
 import imageBoda from'../assets/secciones/6.png'
 import imageParaElla from'../assets/secciones/7.jpg'
-import descuento1 from'../assets/secciones/7.jpg'
 import descuento2 from'../assets/secciones/9.jpg'
 import descuento3 from'../assets/secciones/10.jpg'
 import nuevos from'../assets/secciones/11.jpg'
@@ -38,39 +33,39 @@ const steps = [
     {
         id:1,
         label: 'Titulo',
-        imgPath: descuento1,
+        imgPath: "https://www.floreselgato.com/_next/image?url=https%3A%2F%2Fadmin.floreselgato.com%2Fwp-content%2Fuploads%2F2022%2F04%2Fcelebra-tu-aniversario.jpg&w=2048&q=75",
         url: 130.10
     },
     {
         id:1,
         label: 'Titulo',
-        imgPath: one,
-        url: 130.10
-
-    },
-    {
-        id:1,
-        label: 'Titulo',
-        imgPath: two,
-        url: 130.10
-    },
-    {
-        id:1,
-        label: 'Titulo',
-        imgPath: condolencias,
-        url: 130.10
-    },
-    {
-        id:1,
-        label: 'Titulo',
-        imgPath: three,
+        imgPath: "https://www.floreselgato.com/_next/image?url=https%3A%2F%2Fadmin.floreselgato.com%2Fwp-content%2Fuploads%2F2022%2F04%2Fcumpleanos.jpg&w=1920&q=75",
         url: 130.10
 
     },
     {
         id:1,
         label: 'Titulo',
-        imgPath: imageArregloMesa,
+        imgPath: "https://www.floreselgato.com/_next/image?url=https%3A%2F%2Fadmin.floreselgato.com%2Fwp-content%2Fuploads%2F2022%2F04%2FLo-mejor-en-Canastas.jpg&w=2048&q=75",
+        url: 130.10
+    },
+    {
+        id:1,
+        label: 'Titulo',
+        imgPath: "https://www.floreselgato.com/_next/image?url=https%3A%2F%2Fadmin.floreselgato.com%2Fwp-content%2Fuploads%2F2022%2F04%2FPara-felicitar-a-esa-persona-especial.jpg&w=2048&q=75",
+        url: 130.10
+    },
+    {
+        id:1,
+        label: 'Titulo',
+        imgPath: "https://www.floreselgato.com/_next/image?url=https%3A%2F%2Fadmin.floreselgato.com%2Fwp-content%2Fuploads%2F2022%2F04%2FPresenta-tus-Condolencias.jpg&w=2048&q=75",
+        url: 130.10
+
+    },
+    {
+        id:1,
+        label: 'Titulo',
+        imgPath: "https://www.floreselgato.com/_next/image?url=https%3A%2F%2Fadmin.floreselgato.com%2Fwp-content%2Fuploads%2F2022%2F04%2Fcentros-de-mesa.jpg&w=2048&q=75",
         url: 130.10
     },
     {
@@ -190,9 +185,7 @@ function Home(){
             </Grid> */}
 
             <Grid>
-
                 <BarraDeBusqueda/>
-
             </Grid>
 
             <Grid  sx={{paddingLeft:{xl:'10%', md:'3%',xs:'5%'}, paddingRight:{xl:'10%',md:'3%', xs:'5%', backgroundColor:'#fbf8f4'}}} pb={8}>
@@ -223,7 +216,7 @@ function Home(){
                     <Grid container display={'flex'}>
 
                         {steps.map((item) => (
-                            <Grid item xs={12} md={4} sx={stylesComponents.contenedorOcasiones} p={'10px'}>
+                            <Grid item xs={6} md={4} sx={stylesComponents.contenedorOcasiones} p={'8px'}>
                                 <Box sx={stylesComponents.cajaDatosOcasioners}>
                                     <Grid sx={stylesComponents.contenedorImagen}>
                                         <img src={item.imgPath} alt="" width={'100%'} height={'100%'} style={{ objectFit: 'cover'}}/>

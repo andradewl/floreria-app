@@ -206,7 +206,8 @@ export const stylesComponents = {
         height:{
             lg:'300px',
             md:'200px',
-            xs:'400px'
+            sm:'300px',
+            xs:'170px'
         },
         borderRadius:'100px'
     },
