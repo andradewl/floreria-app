@@ -67,8 +67,8 @@ function BarraDeBusqueda(){
     return(
         <>
 
-            <Grid sx={{ background:'#ffb3e2b3', padding:'30px' }}>
-                <Grid container sx={{paddingLeft:{xl:'10%', md:'2%',xs:'2%'}, paddingRight:{xl:'10%',md:'7%', xs:'5%'} }}>
+            <Grid sx={{ background:'#ffb3e2b3', paddingLeft:{xs:'1%', md:'5%'}, paddingRight:{xs:'1%', md:'5%'}, paddingTop:'30px', paddingBottom:'30px'  }}>
+                <Grid container sx={{paddingLeft:{xl:'10%', md:'2%',xs:'2%'}, paddingRight:{xl:'10%',md:'2%', xs:'2%'}}}>
                     <Grid item md={6} xs={12} sx={{color:'white'}}>
                         <Typography variant="h1" sx={{
                             color:'black',
@@ -76,9 +76,9 @@ function BarraDeBusqueda(){
                             fontOpticalSizing: "auto",
                             fontWeight: "<weight>",
                             fontStyle: "normal",
-                            fontSize:{md:'30px', xs:'25px'}}} >Encuentra las flores de la mejor calidad que estabas buscando</Typography>
+                            fontSize:{md:'35px', xs:'25px'}}} >Encuentra las flores de la mejor calidad que estabas buscando</Typography>
                     </Grid>
-                    <Grid item md={6}  xs={12} sx={{textAlign:'center'}}>
+                    <Grid item md={6}  xs={12} sx={{textAlign:'center', marginTop:{xs:'40px', md:'0px'}}}>
                         <TextField
                             label="buscar"
                             variant="outlined"

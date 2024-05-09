@@ -10,18 +10,20 @@ export const stylesComponents = {
     },
     appBarScrolled:{
         color:'black',
-        background:'white'
+        background: "rgba(255, 255, 255, 0.95)",
+        boxShadow: "0 4px 30px rgba(0, 0, 0, 0.1)",
+        backdropFilter: "blur(11.7px)",
+        webkitBackdropFilter: "blur(11.7px)",
+        
     },
     appSubBar:{
         position:"sticky",
-        display:'flex', padding:'5px', paddingLeft:'5%', paddingRight:'5%', backgroundImage:'linear-gradient(to right, #ff646426 0%, #ff50501f 51%, #963a711c 100%)'
+        display:'flex', padding:'5px', paddingLeft:'5%', paddingRight:'5%', backgroundImage:'linear-gradient(to right, #ff646461 0%, #bb6e6e52 51%, #d62d9263 100%)'
     },
-    
     toolbar:{
         display:'flex',
         justifyContent: 'space-around',
     },
-
     boxMenuResponsive:{
         display: {
             xs: 'flex',
@@ -68,6 +70,12 @@ export const stylesComponents = {
         margin:'10px',
         color:'white'
     },
+    butonMenu2:{
+        fontSize:'11px',
+        borderRadius:'30px',
+        margin:'10px',
+        color:'black'
+    },
     butonMenuScroll:{
         fontSize:'11px',
         borderRadius:'30px',
@@ -81,7 +89,14 @@ export const stylesComponents = {
         margin:'10px',
         color:'white',
         width:'100px',
-        
+    },
+
+    butonMenuCarrito2:{
+        fontSize:'11px',
+        borderRadius:'30px',
+        margin:'10px',
+        color:'black',
+        width:'100px',
     },
     butonMenuCarritoScroll:{
         fontSize:'11px',
@@ -89,6 +104,18 @@ export const stylesComponents = {
         margin:'10px',
         color:'black',
         width:'100px'
+    },
+    menuResponsivo:{
+        display:{xs:'flex', md:'none'},
+        justifyContent:'end',
+        alignItems:'center',
+        color:"white"
+    },
+    menuResponsivo2:{
+        display:{xs:'flex', md:'none'},
+        justifyContent:'end',
+        alignItems:'center',
+        color:"black"
     },
 
     //------------------------------Footer------------------------------//

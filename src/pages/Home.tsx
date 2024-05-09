@@ -1,4 +1,4 @@
-import {  Box, Grid, Pagination, PaginationItem, Paper, Typography } from "@mui/material";
+import {  Box, Button, Grid, Pagination, PaginationItem, Paper, Typography } from "@mui/material";
 
 import one from'../assets/secciones/1.jpg'
 import two from'../assets/secciones/2.jpg'
@@ -147,10 +147,42 @@ function Home(){
     return(
         <>
             <Grid sx={{width:'100%', position: 'relative'}}>
-                <Grid style={{width:'100%', height: 'auto', position:'relative', zIndex:1}}>
-                    <video src="https://admin.floreselgato.com/wp-content/uploads/2024/04/portada-FG.com-2.mp4" style={{width:'100%'}}></video>
+                <Grid sx={{width:'100%', height: {xs:'300px', md:'auto'}, position:'relative', zIndex:1}}>
+                    <img src="https://firebasestorage.googleapis.com/v0/b/prowlflores.appspot.com/o/multimedia%2Fimagenes%2FFondos%2FCaptura%20de%20pantalla%202024-05-09%20121118.png?alt=media&token=5b4c51d7-b60f-4f9a-9504-31cb33650362" style={{width:'100%', height:'100%', objectFit:'cover', objectPosition:'left'}} alt="" />
                 </Grid>
-                <Grid sx={{position: 'absolute',top: 0, left: 0, width: '100%', height: '100%', backgroundColor: '#0000004d', zIndex: 2}}></Grid>
+                <Grid sx={{position: 'absolute',top: 0, left: 0, width: '100%', height: '100%', backgroundColor: '#0000004d', zIndex: 2}}>
+                    <Grid sx={{ paddingLeft:"2%", paddingTop:{xs: "20%", sm:"12%",md:"13%"} }}>
+                        <Typography variant="h1" color="initial" sx={{
+                            color:'white',
+                            fontFamily: "Cormorant",
+                            fontOpticalSizing: "auto",
+                            fontWeight: "<weight>",
+                            fontStyle: "normal",
+                            fontSize:{xs: "40px",md:"60px"}
+                        }}>Sorprende a mamá</Typography>
+                        <Typography variant="body1" color="initial" sx={{
+                            color:'white',
+                            fontFamily: "Cormorant",
+                            fontOpticalSizing: "auto",
+                            fontWeight: "<weight>",
+                            fontStyle: "normal",
+                            fontSize:{xs: "15px",md:'20px'}
+                        }}>Porque mama tambien merece ser consentida</Typography>
+                        <Button
+                        sx={{
+                            background:'white',
+                            color:'black',
+                            fontSize:{xs: '12px',md:'17px'},
+                            padding:'17px',
+                            paddingLeft:'40px',
+                            paddingRight:'40px',
+                            marginTop:{xs:'50px',sm:'30px',md:'60px',lg:'100px'}
+                        }}
+                        >
+                            Productos Disponibles para mama
+                        </Button>
+                    </Grid>
+                </Grid>
             </Grid>
 
             {/* <Grid>
