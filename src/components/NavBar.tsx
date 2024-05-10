@@ -129,7 +129,7 @@ function ResponsiveAppBar() {
           </ListItemButton>
         </ListItem> */}
 
-        <ListItem key={"Contacto"} disablePadding onClick={()=>{changeView("contacto"), navigate('/FormDetaFac')}}>
+        <ListItem key={"Contacto"} disablePadding onClick={()=>{changeView("contacto"), navigate('/Contacto')}}>
           <ListItemButton>
             <ListItemIcon>
               <MailIcon />
@@ -338,7 +338,7 @@ function ResponsiveAppBar() {
               >Ocasiones</Button> */}
               <Button
                 sx={isScrolled ? stylesComponents.butonMenuScroll : currentView=="inicio"?stylesComponents.butonMenu:stylesComponents.butonMenu2}
-                onClick={()=>{changeView("contacto"), navigate('/FormDetaFac')}}
+                onClick={()=>{changeView("contacto"), navigate('/Contacto')}}
               >Contacto</Button>
               <Button
                 sx={isScrolled ? stylesComponents.butonMenuScroll : currentView=="inicio"?stylesComponents.butonMenu:stylesComponents.butonMenu2}

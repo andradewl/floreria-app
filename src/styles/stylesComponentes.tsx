@@ -121,9 +121,9 @@ export const stylesComponents = {
     //------------------------------Footer------------------------------//
 
     BoxFooter:{
-        backgroundColor: '#dbb2da',
-        padding:'20px',
-        marginTop:'5px'
+        backgroundColor: '#f5f1ec',
+        
+        paddingTop:'35px'
     },
 
     //------------------------------titulos banner------------------------------//

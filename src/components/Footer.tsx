@@ -2,7 +2,7 @@ import Container from "@mui/material/Container";
 import Typography from "@mui/material/Typography";
 import Link from "@mui/material/Link";
 import Grid from "@mui/material/Grid";
-import { Facebook, Instagram, Twitter } from "@mui/icons-material";
+import { Facebook, Instagram } from "@mui/icons-material";
 import { Box } from "@mui/material";
 import Logo from '../assets/logo.png'
 import { stylesComponents } from "../styles/stylesComponentes";
@@ -10,65 +10,159 @@ import { stylesComponents } from "../styles/stylesComponentes";
 
 function Footer(){
     return(
-        <Box
-        component="footer" sx={stylesComponents.BoxFooter }>
-            <Container maxWidth="lg">
-            <Grid container spacing={5}>
-                <Grid item xs={12} sm={4}>
-                    <img
-                        src={Logo}
-                        alt="Logo"
-                        style={{width:'100px', margin:'15px'}}
-                    />
-                    <Typography variant="body2" color="text.secondary">
-                    En Daisys Garden encuentra una gran variedad de diseños florales para eventos y toda ocasión.
-                    </Typography>
+        <Grid sx={stylesComponents.BoxFooter }>
+            <Container >
+                <Grid container sx={{
+                    borderBottomStyle:'solid',
+                    borderBottomWidth: '1px',
+                    borderColor: '#cecccc',
+                    paddingTop:'100px',
+                    paddingBottom:'100px',
+                }}>
+                    <Grid item xs={12} md={3} p={1}>
+                        <img
+                            src={Logo}
+                            alt="Logo"
+                            style={{width:'100px'}}
+                        />
+                        <Typography variant="body2" color="text.secondary" sx={{
+                            fontSize:'15px',
+                            fontFamily: "Cormorant",
+                            fontOpticalSizing: "auto",
+                            fontWeight: "<weight>",
+                            fontStyle: "normal",
+                        }}>
+                            Nuestro horario de atención es de 8:00 am a 8:00 pm
+                        </Typography>
+                    </Grid>
+                    <Grid item xs={12} md={3} style={{justifyContent:'center'}} p={1}>
+                        <Typography variant="h5" color="text.primary" gutterBottom sx={{
+                            fontFamily: "Cormorant",
+                            fontOpticalSizing: "auto",
+                            fontWeight: "<weight>",
+                            fontStyle: "normal",
+                        }}>
+                            Flores El Gato
+                        </Typography>
+                        <Typography variant="body2" color="text.secondary" sx={{
+                            fontSize:'15px',
+                            fontFamily: "Cormorant",
+                            fontOpticalSizing: "auto",
+                            fontWeight: "<weight>",
+                            fontStyle: "normal",
+                        }}>
+                            En Flores el Gato encuentra una gran variedad de diseños florales para eventos y toda ocasión.
+                        </Typography>
+                        <Link href="https://www.facebook.com/" color="inherit">
+                            <Facebook />
+                        </Link>
+                        <Link
+                            href="https://www.instagram.com/"
+                            color="inherit"
+                            sx={{ pl: 1, pr: 1 }}
+                        >
+                            <Instagram />
+                        </Link>
+                        {/* <Typography variant="body2" color="text.secondary">
+                            Email: info@example.com
+                        </Typography>
+                        <Typography variant="body2" color="text.secondary">
+                            Phone: +963 937 715 637
+                        </Typography> */}
+                    </Grid>
+                    <Grid item xs={12} md={3} p={1}>
+                        <Typography variant="h5" color="text.primary" gutterBottom sx={{
+                            fontFamily: "Cormorant",
+                            fontOpticalSizing: "auto",
+                            fontWeight: "<weight>",
+                            fontStyle: "normal",
+                        }}>
+                            Contacto
+                        </Typography>
+                        <Typography variant="body2" color="text.secondary" sx={{
+                            fontSize:'15px',
+                            fontFamily: "Cormorant",
+                            fontOpticalSizing: "auto",
+                            fontWeight: "<weight>",
+                            fontStyle: "normal",
+                        }}>
+                            Av. Venustiano Carranza No.502
+                            Col. María Luisa – CP 64000
+                            Monterrey, N.L.
+                        </Typography>
+                        <Typography variant="body2" color="text.secondary" sx={{
+                            fontSize:'15px',
+                            fontFamily: "Cormorant",
+                            fontOpticalSizing: "auto",
+                            fontWeight: "<weight>",
+                            fontStyle: "normal",
+                        }}>
+                            Tel. 81 8342 3548
+                        </Typography>
+                        {/* <Link href="https://www.facebook.com/" color="inherit">
+                            <Facebook />
+                        </Link>
+                        <Link
+                            href="https://www.instagram.com/"
+                            color="inherit"
+                            sx={{ pl: 1, pr: 1 }}
+                        >
+                            <Instagram />
+                        </Link>
+                        <Link href="https://www.twitter.com/" color="inherit">
+                            <Twitter />
+                        </Link> */}
+                    </Grid>
+                    <Grid item xs={12} md={3} p={1}>
+                        <Typography variant="h5" color="text.primary" gutterBottom sx={{
+                            fontFamily: "Cormorant",
+                            fontOpticalSizing: "auto",
+                            fontWeight: "<weight>",
+                            fontStyle: "normal",
+                        }}>
+                            Avisos
+                        </Typography>
+                        <Typography variant="body2" color="text.secondary" sx={{
+                            fontSize:'15px',
+                            fontFamily: "Cormorant",
+                            fontOpticalSizing: "auto",
+                            fontWeight: "<weight>",
+                            fontStyle: "normal",
+                        }}>
+                            Términos y Condiciones
+                        </Typography>
+                        <Typography variant="body2" color="text.secondary" sx={{
+                            fontSize:'15px',
+                            fontFamily: "Cormorant",
+                            fontOpticalSizing: "auto",
+                            fontWeight: "<weight>",
+                            fontStyle: "normal",
+                        }}>
+                            Aviso de Privacidad
+                        </Typography>
+                        <Typography variant="body2" color="text.secondary" sx={{
+                            fontSize:'15px',
+                            fontFamily: "Cormorant",
+                            fontOpticalSizing: "auto",
+                            fontWeight: "<weight>",
+                            fontStyle: "normal",
+                        }}>
+                            ¿Cómo comprar?
+                        </Typography>
+                    </Grid>
                 </Grid>
-                <Grid item xs={12} sm={4} style={{justifyContent:'center'}}>
-                    <Typography variant="h6" color="text.primary" gutterBottom>
-                        Contactanos
+                <Box pt={1} pb={10}>
+                    <Typography variant="body2" color="text.secondary" align="center">
+                    {" 2023 Copyright © "}
+                    <Link color="inherit" href="https://your-website.com/">
+                        | FLORES EL GATO | DESIGN BY PIXELERO. TODOS LOS DERECHOS RESERVADOS.
+
+
+                    </Link>{" "}
                     </Typography>
-                    <Typography variant="body2" color="text.secondary">
-                        Mitras Centro
-                    </Typography>
-                    <Typography variant="body2" color="text.secondary">
-                        Email: info@example.com
-                    </Typography>
-                    <Typography variant="body2" color="text.secondary">
-                        Phone: +963 937 715 637
-                    </Typography>
-                </Grid>
-                <Grid item xs={12} sm={4}>
-                <Typography variant="h6" color="text.primary" gutterBottom>
-                    Siguenos
-                </Typography>
-                <Link href="https://www.facebook.com/" color="inherit">
-                    <Facebook />
-                </Link>
-                <Link
-                    href="https://www.instagram.com/"
-                    color="inherit"
-                    sx={{ pl: 1, pr: 1 }}
-                >
-                    <Instagram />
-                </Link>
-                <Link href="https://www.twitter.com/" color="inherit">
-                    <Twitter />
-                </Link>
-                </Grid>
-            </Grid>
-            <Box mt={5}>
-                <Typography variant="body2" color="text.secondary" align="center">
-                {"Copyright © "}
-                <Link color="inherit" href="https://your-website.com/">
-                    FloreriaDaysis.com
-                </Link>{" "}
-                {new Date().getFullYear()}
-                {"."}
-                </Typography>
-            </Box>
+                </Box>
             </Container>
-        </Box>
+        </Grid>
     )
 }
 
