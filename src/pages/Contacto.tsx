@@ -43,20 +43,18 @@ function Contacto() {
   };
 
   return (
-    <Container sx={{ backgroundColor: "#f8f9fa", py: 10 }}>
+    <Container sx={{ 
+      background: 'linear-gradient(to bottom, #FCE4E5 50%, #FBF8F4 50%)', 
+      py: 10,
+      display: 'flex',
+      justifyContent: 'center',
+      alignItems: 'center'
+    }}>
       <Grid container spacing={5}>
         <Grid item xs={12}>
-          <Stack spacing={3} alignItems="center">
-            <Typography variant="h3" textAlign="center" sx={{ fontStyle: "italic" }}>
+        <Typography textAlign="center" sx={{ fontFamily: "Times New Roman" }}>
               Contacto.
             </Typography>
-            <Typography variant="body1">
-              En Florería Ricky nos complace tener una comunicación abierta con nuestros clientes. Si deseas hacernos alguna pregunta o sugerirnos alguna idea hazlo a través de nuestro formulario de contacto, y nos pondremos en contacto contigo.
-            </Typography>
-            <Typography variant="h4" textAlign="center" sx={{ fontVariantCaps: "normal" }}>
-              Florería Ricky.
-            </Typography>
-          </Stack>
         </Grid>
         <Grid item container xl={6} lg={6} md={6} sm={12} xs={12}>
           <Stack direction="column" spacing={3}>

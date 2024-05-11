@@ -338,7 +338,7 @@ function ResponsiveAppBar() {
               >Ocasiones</Button> */}
               <Button
                 sx={isScrolled ? stylesComponents.butonMenuScroll : currentView=="inicio"?stylesComponents.butonMenu:stylesComponents.butonMenu2}
-                onClick={()=>{changeView("contacto"), navigate('/Contacto')}}
+                onClick={()=>{changeView("contacto"), navigate('/newContacto')}}
               >Contacto</Button>
               <Button
                 sx={isScrolled ? stylesComponents.butonMenuScroll : currentView=="inicio"?stylesComponents.butonMenu:stylesComponents.butonMenu2}
