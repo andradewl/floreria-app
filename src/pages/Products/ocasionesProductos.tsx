@@ -33,10 +33,9 @@ function ocasionesProductos(){
         try {
             const flowersData = await getProducts();
             const filtroFlores = flowersData.filter((product) => product.ocasion === id)
-            const flowercount = filtradoForesOcasion.length
+            const flowercount = filtroFlores.length
 
             setCountflores(flowercount)
-            // console.log(flowersData.)
             setfiltradoForesOcasion(filtroFlores)
             setFlores(flowersData);
         } catch (error) {
@@ -46,6 +45,19 @@ function ocasionesProductos(){
 
     const handleChange = (event: SelectChangeEvent) => {
         setAge(event.target.value as string);
+        if (event.target.value == "mayor"){
+            const filtroFlores = filtradoForesOcasion.slice().sort((a, b) => b.precio - a.precio)
+            setfiltradoForesOcasion(filtroFlores)
+        }
+        if(event.target.value == "menor"){
+            const filtroFlores = filtradoForesOcasion.slice().sort((a, b) => a.precio - b.precio)
+            setfiltradoForesOcasion(filtroFlores)
+        }
+        // else{
+        //     const filtroFlores = flores
+        //     setfiltradoForesOcasion(filtroFlores)
+        // }
+        console.log(event.target.value)
     };
 
     const handleRedirectToProductId = (id:string) => {
@@ -89,9 +101,11 @@ function ocasionesProductos(){
                         label="Age"
                         onChange={handleChange}
                     >
-                        <MenuItem value="valor">Ordenar de:</MenuItem>
-                        <MenuItem value={10}>Precio Mayor</MenuItem>
-                        <MenuItem value={20}>Precio Menor</MenuItem>
+                        <MenuItem value="">
+                            <em>Ver todo</em>
+                        </MenuItem>
+                        <MenuItem value={'mayor'}>Precio Mayor</MenuItem>
+                        <MenuItem value={'menor'}>Precio Menor</MenuItem>
                     </Select>
                 </Grid>
             </Grid>

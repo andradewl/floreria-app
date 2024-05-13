@@ -1,26 +1,16 @@
 import {  Box, Button, Grid, Pagination, PaginationItem, Paper, Typography } from "@mui/material";
-
-
-import imageBoda from'../assets/secciones/6.png'
-import imageParaElla from'../assets/secciones/7.jpg'
-import descuento2 from'../assets/secciones/9.jpg'
-import descuento3 from'../assets/secciones/10.jpg'
-import nuevos from'../assets/secciones/11.jpg'
-import kits from'../assets/secciones/12.jpg'
-import regalos from'../assets/secciones/12.jpg'
-
+// import imageBoda from'../assets/secciones/6.png'
+// import imageParaElla from'../assets/secciones/7.jpg'
+// import descuento2 from'../assets/secciones/9.jpg'
+// import descuento3 from'../assets/secciones/10.jpg'
+// import nuevos from'../assets/secciones/11.jpg'
+// import kits from'../assets/secciones/12.jpg'
+// import regalos from'../assets/secciones/12.jpg'
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
-
-
 import { stylesComponents } from "../styles/stylesComponentes"
-
 import '../styles/fuentes.css'
-// import Banners from "../components/Banners";
 
-// import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
-// // import FavoriteIcon from '@mui/icons-material/Favorite';
-// import RemoveRedEyeIcon from '@mui/icons-material/RemoveRedEye';
 import { getOcasiones, getProducts } from "../config/apiFirebase";
 import React from "react";
 
@@ -29,90 +19,90 @@ import { useNavigate } from 'react-router-dom';
 import BarraDeBusqueda from "../components/BarraDeBusqueda";
 
 
-const steps = [
-    {
-        id:1,
-        label: 'Titulo',
-        imgPath: "https://www.floreselgato.com/_next/image?url=https%3A%2F%2Fadmin.floreselgato.com%2Fwp-content%2Fuploads%2F2022%2F04%2Fcelebra-tu-aniversario.jpg&w=2048&q=75",
-        url: 130.10
-    },
-    {
-        id:1,
-        label: 'Titulo',
-        imgPath: "https://www.floreselgato.com/_next/image?url=https%3A%2F%2Fadmin.floreselgato.com%2Fwp-content%2Fuploads%2F2022%2F04%2Fcumpleanos.jpg&w=1920&q=75",
-        url: 130.10
+// const steps = [
+//     {
+//         id:1,
+//         label: 'Titulo',
+//         imgPath: "https://www.floreselgato.com/_next/image?url=https%3A%2F%2Fadmin.floreselgato.com%2Fwp-content%2Fuploads%2F2022%2F04%2Fcelebra-tu-aniversario.jpg&w=2048&q=75",
+//         url: 130.10
+//     },
+//     {
+//         id:1,
+//         label: 'Titulo',
+//         imgPath: "https://www.floreselgato.com/_next/image?url=https%3A%2F%2Fadmin.floreselgato.com%2Fwp-content%2Fuploads%2F2022%2F04%2Fcumpleanos.jpg&w=1920&q=75",
+//         url: 130.10
 
-    },
-    {
-        id:1,
-        label: 'Titulo',
-        imgPath: "https://www.floreselgato.com/_next/image?url=https%3A%2F%2Fadmin.floreselgato.com%2Fwp-content%2Fuploads%2F2022%2F04%2FLo-mejor-en-Canastas.jpg&w=2048&q=75",
-        url: 130.10
-    },
-    {
-        id:1,
-        label: 'Titulo',
-        imgPath: "https://www.floreselgato.com/_next/image?url=https%3A%2F%2Fadmin.floreselgato.com%2Fwp-content%2Fuploads%2F2022%2F04%2FPara-felicitar-a-esa-persona-especial.jpg&w=2048&q=75",
-        url: 130.10
-    },
-    {
-        id:1,
-        label: 'Titulo',
-        imgPath: "https://www.floreselgato.com/_next/image?url=https%3A%2F%2Fadmin.floreselgato.com%2Fwp-content%2Fuploads%2F2022%2F04%2FPresenta-tus-Condolencias.jpg&w=2048&q=75",
-        url: 130.10
+//     },
+//     {
+//         id:1,
+//         label: 'Titulo',
+//         imgPath: "https://www.floreselgato.com/_next/image?url=https%3A%2F%2Fadmin.floreselgato.com%2Fwp-content%2Fuploads%2F2022%2F04%2FLo-mejor-en-Canastas.jpg&w=2048&q=75",
+//         url: 130.10
+//     },
+//     {
+//         id:1,
+//         label: 'Titulo',
+//         imgPath: "https://www.floreselgato.com/_next/image?url=https%3A%2F%2Fadmin.floreselgato.com%2Fwp-content%2Fuploads%2F2022%2F04%2FPara-felicitar-a-esa-persona-especial.jpg&w=2048&q=75",
+//         url: 130.10
+//     },
+//     {
+//         id:1,
+//         label: 'Titulo',
+//         imgPath: "https://www.floreselgato.com/_next/image?url=https%3A%2F%2Fadmin.floreselgato.com%2Fwp-content%2Fuploads%2F2022%2F04%2FPresenta-tus-Condolencias.jpg&w=2048&q=75",
+//         url: 130.10
 
-    },
-    {
-        id:1,
-        label: 'Titulo',
-        imgPath: "https://www.floreselgato.com/_next/image?url=https%3A%2F%2Fadmin.floreselgato.com%2Fwp-content%2Fuploads%2F2022%2F04%2Fcentros-de-mesa.jpg&w=2048&q=75",
-        url: 130.10
-    },
-    {
-        id:1,
-        label: 'Titulo',
-        imgPath: imageBoda,
-        url: 130.10
-    },
-    {
-        id:1,
-        label: 'Titulo',
-        imgPath: descuento2,
-        url: 130.10
+//     },
+//     {
+//         id:1,
+//         label: 'Titulo',
+//         imgPath: "https://www.floreselgato.com/_next/image?url=https%3A%2F%2Fadmin.floreselgato.com%2Fwp-content%2Fuploads%2F2022%2F04%2Fcentros-de-mesa.jpg&w=2048&q=75",
+//         url: 130.10
+//     },
+//     {
+//         id:1,
+//         label: 'Titulo',
+//         imgPath: imageBoda,
+//         url: 130.10
+//     },
+//     {
+//         id:1,
+//         label: 'Titulo',
+//         imgPath: descuento2,
+//         url: 130.10
 
-    },
-    {
-        id:1,
-        label: 'Titulo',
-        imgPath: descuento3,
-        url: 130.10
-    },
-    {
-        id:1,
-        label: 'Titulo',
-        imgPath: imageParaElla,
-        url: 130.10
-    },
-    {
-        id:1,
-        label: 'Titulo',
-        imgPath: nuevos,
-        url: 130.10
+//     },
+//     {
+//         id:1,
+//         label: 'Titulo',
+//         imgPath: descuento3,
+//         url: 130.10
+//     },
+//     {
+//         id:1,
+//         label: 'Titulo',
+//         imgPath: imageParaElla,
+//         url: 130.10
+//     },
+//     {
+//         id:1,
+//         label: 'Titulo',
+//         imgPath: nuevos,
+//         url: 130.10
 
-    },
-    {
-        id:1,
-        label: 'Titulo',
-        imgPath: kits,
-        url: 130.10
-    },
-    {
-        id:1,
-        label: 'Titulo',
-        imgPath: regalos,
-        url: 130.10
-    },
-];
+//     },
+//     {
+//         id:1,
+//         label: 'Titulo',
+//         imgPath: kits,
+//         url: 130.10
+//     },
+//     {
+//         id:1,
+//         label: 'Titulo',
+//         imgPath: regalos,
+//         url: 130.10
+//     },
+// ];
 
 
 function Home(){
@@ -217,14 +207,14 @@ function Home(){
                 <Grid >
                     <Grid container display={'flex'}>
 
-                        {steps.map((item) => (
+                        {ocasinesDataId && ocasinesDataId.map((item) => (
                             <Grid item xs={6} md={4} sx={stylesComponents.contenedorOcasiones} p={'8px'}>
                                 <Box sx={stylesComponents.cajaDatosOcasioners}>
                                     <Grid sx={stylesComponents.contenedorImagen}>
-                                        <img src={item.imgPath} alt="" width={'100%'} height={'100%'} style={{ objectFit: 'cover'}}/>
+                                        <img src={item.imagen} alt="" width={'100%'} height={'100%'} style={{ objectFit: 'cover'}}/>
                                     </Grid>
-                                    <Paper sx={stylesComponents.animacionTextoSobreImagenOcasiones}>
-                                        <Typography variant="h4" color="initial" sx={stylesComponents.letraSobreImagen}>{item.label}</Typography>
+                                    <Paper sx={stylesComponents.animacionTextoSobreImagenOcasiones} onClick={()=>navigate("ocasion/"+item.nombre+"/"+item.id)}>
+                                        <Typography variant="h4" color="initial" sx={stylesComponents.letraSobreImagen}>{item.nombre}</Typography>
                                     </Paper>
                                 </Box>
                             </Grid>

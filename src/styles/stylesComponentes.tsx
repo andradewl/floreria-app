@@ -230,7 +230,11 @@ export const stylesComponents = {
 
     letraSobreImagen:{
         color:'white',
-        fontFamily:'Archivo Black, sans-serif'
+        fontFamily:'Archivo Black, sans-serif',
+        fontSize:{
+            md:'40px',
+            xs:'20px'
+        }
     },
 
 

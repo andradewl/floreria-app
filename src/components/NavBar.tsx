@@ -5,7 +5,7 @@ import Container from '@mui/material/Container';
 import Button from '@mui/material/Button';
 import Logo from '../assets/logo.png'
 import '../styles/estilosCss.css'
-import { Box, Collapse, Drawer, Grid, Link, List, ListItem, ListItemButton, ListItemIcon, ListItemText, Menu, MenuItem } from '@mui/material';
+import { Box, Collapse, Drawer, Grid, List, ListItem, ListItemButton, ListItemIcon, ListItemText, Menu, MenuItem, Toolbar } from '@mui/material';
 import { stylesComponents } from '../styles/stylesComponentes';
 import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
 import { useNavigate } from 'react-router-dom';
@@ -13,11 +13,12 @@ import MenuIcon from '@mui/icons-material/Menu';
 import { Ocasionest } from '../interfaces/interfaces';
 import { getOcasiones } from '../config/apiFirebase';
 import HomeIcon from '@mui/icons-material/Home';
-import CardGiftcardIcon from '@mui/icons-material/CardGiftcard';
+// import CardGiftcardIcon from '@mui/icons-material/CardGiftcard';
 import MailIcon from '@mui/icons-material/Mail';
 import LoginIcon from '@mui/icons-material/Login';
 import { ExpandLess, ExpandMore } from '@mui/icons-material';
 import LocalFloristIcon from '@mui/icons-material/LocalFlorist';
+
 
 type Anchor = 'top' | 'left' | 'bottom' | 'right';
 
@@ -80,7 +81,7 @@ function ResponsiveAppBar() {
     <Box
       sx={{ width: anchor === 'top' || anchor === 'bottom' ? 'auto' : 250 }}
       role="presentation"
-      onClick={toggleDrawer(anchor, false)}
+      // onClick={toggleDrawer(anchor, false)}
       onKeyDown={toggleDrawer(anchor, false)}
     >
       <List>
@@ -103,14 +104,7 @@ function ResponsiveAppBar() {
         </ListItem>
         <Collapse in={openOcasiones} timeout="auto" unmountOnExit>
           <List component="div" disablePadding>
-            {/* <ListItemButton sx={{ pl: 4 }}>
-              <ListItemIcon>
-              </ListItemIcon>
-              <ListItemText primary="Starred" />
-            </ListItemButton> */}
             {ocasiones && ocasiones.map((item) => (
-              // <MenuItem onClick={()=>navigate("ocasion/"+item.nombre+"/"+item.id)}>{item.nombre}</MenuItem>
-
               <ListItemButton sx={{ pl: 4 }} onClick={()=>{changeView("ocasion"), navigate("ocasion/"+item.nombre+"/"+item.id)}}>
                 <ListItemIcon>
                 </ListItemIcon>
@@ -119,16 +113,6 @@ function ResponsiveAppBar() {
             ))}
           </List>
         </Collapse>
-
-        {/* <ListItem key={"Ocasiones"} disablePadding >
-          <ListItemButton component={Link}>
-            <ListItemIcon>
-              <CardGiftcardIcon />
-            </ListItemIcon>
-            <ListItemText primary={"Ocasiones"} />
-          </ListItemButton>
-        </ListItem> */}
-
         <ListItem key={"Contacto"} disablePadding onClick={()=>{changeView("contacto"), navigate('/Contacto')}}>
           <ListItemButton>
             <ListItemIcon>
@@ -166,64 +150,636 @@ function ResponsiveAppBar() {
 
 
   const shopCar = (anchor: Anchor) => (
-    <Box
+    <Grid
       sx={{ width: anchor === 'top' || anchor === 'bottom' ? 'auto' : {xs:350, md:450} }}
       role="presentation"
-      onClick={toggleDrawer(anchor, false)}
+      // onClick={toggleDrawer(anchor, false)}
       onKeyDown={toggleDrawer(anchor, false)}
     >
-      <List>
-        <ListItem key={"Inicio"}  onClick={()=>navigate('/')} disablePadding>
-          <ListItemButton>
-            <ListItemIcon>
-              <HomeIcon />
-            </ListItemIcon>
-            <ListItemText primary={"Inicio"} />
-          </ListItemButton>
-        </ListItem>
+      <Grid sx={{width:'100%', minHeight:'100vh', position: 'relative' }}>
+        <Grid sx={{width:'100%'}}>
+          <Typography variant="h1" color="initial"
+          sx={{
+            fontFamily: "Cormorant",
+            fontOpticalSizing: "auto",
+            fontWeight: "<weight>",
+            fontStyle: "normal",
+            fontSize:'30px'
+          }} pl={'5%'} pt={'2%'} pb={'2%'}
+          >Carrito</Typography>
 
-        <ListItem key={"Ocasiones"} disablePadding >
-          <ListItemButton component={Link}>
-            <ListItemIcon>
-              <CardGiftcardIcon />
-            </ListItemIcon>
-            <ListItemText primary={"Ocasiones"} />
-          </ListItemButton>
-        </ListItem>
+          <Toolbar sx={{display:'block'}}>
+            <Grid container pt={1}>
+              <Grid item xs={3} >
+                <img src="https://firebasestorage.googleapis.com/v0/b/prowlflores.appspot.com/o/multimedia%2Fimagenes%2Fproductos%2FC038-JARRON-DE-ROSAS-300x300.jpg?alt=media&token=c7e74236-7662-44fa-a5e2-c0b4ae5bfb12" alt="" style={{width:'100%', borderRadius:'10px'}}/>
+              </Grid>
+              <Grid item xs={9} p={1}>
+                <Grid container >
+                  <Grid item xs={8}>
+                    <Typography variant="body1" color="initial"
+                    sx={{
+                      fontFamily: "Cormorant",
+                      fontOpticalSizing: "auto",
+                      fontWeight: "<weight>",
+                      fontStyle: "normal",
+                      fontSize:'15px'
+                    }}
+                    >Nombre producto</Typography>
+                  </Grid>
+                  <Grid item xs={4}>
+                    <Typography variant="body2" color="initial"
+                    sx={{
+                      fontFamily: "Cormorant",
+                      fontOpticalSizing: "auto",
+                      fontWeight: "<weight>",
+                      fontStyle: "normal",
+                      fontSize:'15px',
+                      textAlign:'end'
+                    }}
+                    >$346.10</Typography>
+                  </Grid>
+                </Grid>
+                <Grid container>
+                  <Grid item xs={4}>
+                    <Typography variant="body1" color="initial"
+                    sx={{
+                      fontFamily: "Cormorant",
+                      fontOpticalSizing: "auto",
+                      fontWeight: "bold",
+                      fontStyle: "normal",
+                      fontSize:'15px'
+                    }}
+                    >Entrega</Typography>
+                  </Grid>
+                  <Grid item xs={8}>
+                  <Typography variant="body2" color="initial"
+                  sx={{
+                    fontFamily: "Cormorant",
+                    fontOpticalSizing: "auto",
+                    fontWeight: "<weight>",
+                    fontStyle: "normal",
+                    fontSize:'15px',
+                    textAlign:'end'
+                  }}
+                  >En tienda</Typography>
+                  </Grid>
+                </Grid>
+                <Grid container>
+                  <Grid item xs={4}>
+                    <Typography variant="body1" color="initial"
+                    sx={{
+                      fontFamily: "Cormorant",
+                      fontOpticalSizing: "auto",
+                      fontWeight: "bold",
+                      fontStyle: "normal",
+                      fontSize:'15px'
+                    }}
+                    >Fecha</Typography>
+                  </Grid>
+                  <Grid item xs={8}>
+                  <Typography variant="body2" color="initial"
+                  sx={{
+                    fontFamily: "Cormorant",
+                    fontOpticalSizing: "auto",
+                    fontWeight: "<weight>",
+                    fontStyle: "normal",
+                    fontSize:'15px',
+                    textAlign:'end'
+                  }}
+                  >
+                    15/06/2024 12:00 - 16:00 pm
+                  </Typography>
+                  </Grid>
+                </Grid>
+                <Grid container>
+                  <Grid item xs={4}>
+                    <Typography variant="body1" color="initial"
+                    sx={{
+                      fontFamily: "Cormorant",
+                      fontOpticalSizing: "auto",
+                      fontWeight: "bold",
+                      fontStyle: "normal",
+                      fontSize:'15px'
+                    }}
+                    >Dedicatoria</Typography>
+                  </Grid>
+                  <Grid item xs={8}>
+                  <Typography variant="body2" color="initial"
+                  sx={{
+                    fontFamily: "Cormorant",
+                    fontOpticalSizing: "auto",
+                    fontWeight: "<weight>",
+                    fontStyle: "normal",
+                    fontSize:'15px',
+                    textAlign:'end'
+                  }}
+                  >
+                    Lorem, ipsum dolor sit amet consectetur adipisicing elit.
+                  </Typography>
+                  </Grid>
+                </Grid>
 
-        <ListItem key={"Contacto"} disablePadding onClick={()=>navigate('/FormDetaFac')}>
-          <ListItemButton>
-            <ListItemIcon>
-              <MailIcon />
-            </ListItemIcon>
-            <ListItemText primary={"Contacto"} />
-          </ListItemButton>
-        </ListItem>
+              </Grid>
 
-        <ListItem key={"Login"} disablePadding onClick={()=>navigate('/Login')}>
-          <ListItemButton>
-            <ListItemIcon>
-              <LoginIcon />
-            </ListItemIcon>
-            <ListItemText primary={"Login"} />
-          </ListItemButton>
-        </ListItem>
-      </List>
+              <Grid item xs={12} sx={{
+                    borderBlockWidth: '1px',
+                    borderBottomColor: '#dadada',
+                    borderBottomStyle: 'double'
+              }}>
+                <Grid container>
+                  <Grid item xs={6} >
+                    <Grid sx={{display:'flex'}}>
+                      <Button>
+                        +
+                      </Button>
+                      <Typography variant="subtitle1" color="initial">2</Typography>
+                      <Button>
+                        -
+                      </Button>
 
-      {/* <Divider />
-      <List>
-        {['All mail', 'Trash', 'Spam'].map((text, index) => (
-          <ListItem key={text} disablePadding>
-            <ListItemButton>
-              <ListItemIcon>
-                {index % 2 === 0 ? <InboxIcon /> : <MailIcon />}
-              </ListItemIcon>
-              <ListItemText primary={text} />
-            </ListItemButton>
-          </ListItem>
-        ))}
-      </List> */}
-    </Box>
+                    </Grid>
+                    {/* <TextField
+                      id="outlined-number"
+                      type="number"
+                      variant="standard"
+                      InputLabelProps={{
+                        shrink: true,
+                      }}
+                    /> */}
+                    
+                  </Grid>
+                  <Grid item xs={6} sx={{textAlign:'end'}}>
+                    <Button variant="text">
+                      Eliminar
+                    </Button>
+                  </Grid>
+                </Grid>
+              </Grid>
+            </Grid>
+            <Grid container pt={1}>
+              <Grid item xs={3}>
+                <img src="https://firebasestorage.googleapis.com/v0/b/prowlflores.appspot.com/o/multimedia%2Fimagenes%2Fproductos%2FC038-JARRON-DE-ROSAS-300x300.jpg?alt=media&token=c7e74236-7662-44fa-a5e2-c0b4ae5bfb12" alt="" style={{width:'100%', borderRadius:'10px'}}/>
+              </Grid>
+              <Grid item xs={9} p={1}>
+                <Grid container >
+                  <Grid item xs={8}>
+                    <Typography variant="body1" color="initial"
+                    sx={{
+                      fontFamily: "Cormorant",
+                      fontOpticalSizing: "auto",
+                      fontWeight: "<weight>",
+                      fontStyle: "normal",
+                      fontSize:'15px'
+                    }}
+                    >Nombre producto</Typography>
+                  </Grid>
+                  <Grid item xs={4}>
+                    <Typography variant="body2" color="initial"
+                    sx={{
+                      fontFamily: "Cormorant",
+                      fontOpticalSizing: "auto",
+                      fontWeight: "<weight>",
+                      fontStyle: "normal",
+                      fontSize:'15px',
+                      textAlign:'end'
+                    }}
+                    >$346.10</Typography>
+                  </Grid>
+                </Grid>
+                <Grid container>
+                  <Grid item xs={4}>
+                    <Typography variant="body1" color="initial"
+                    sx={{
+                      fontFamily: "Cormorant",
+                      fontOpticalSizing: "auto",
+                      fontWeight: "<weight>",
+                      fontStyle: "normal",
+                      fontSize:'15px'
+                    }}
+                    >Entrega</Typography>
+                  </Grid>
+                  <Grid item xs={8}>
+                  <Typography variant="body2" color="initial"
+                  sx={{
+                    fontFamily: "Cormorant",
+                    fontOpticalSizing: "auto",
+                    fontWeight: "<weight>",
+                    fontStyle: "normal",
+                    fontSize:'15px',
+                    textAlign:'end'
+                  }}
+                  >En tienda</Typography>
+                  </Grid>
+                </Grid>
+                <Grid container>
+                  <Grid item xs={4}>
+                    <Typography variant="body1" color="initial"
+                    sx={{
+                      fontFamily: "Cormorant",
+                      fontOpticalSizing: "auto",
+                      fontWeight: "<weight>",
+                      fontStyle: "normal",
+                      fontSize:'15px'
+                    }}
+                    >Fecha</Typography>
+                  </Grid>
+                  <Grid item xs={8}>
+                  <Typography variant="body2" color="initial"
+                  sx={{
+                    fontFamily: "Cormorant",
+                    fontOpticalSizing: "auto",
+                    fontWeight: "<weight>",
+                    fontStyle: "normal",
+                    fontSize:'15px',
+                    textAlign:'end'
+                  }}
+                  >
+                    15/06/2024 12:00 - 16:00 pm
+                  </Typography>
+                  </Grid>
+                </Grid>
+                <Grid container>
+                  <Grid item xs={4}>
+                    <Typography variant="body1" color="initial"
+                    sx={{
+                      fontFamily: "Cormorant",
+                      fontOpticalSizing: "auto",
+                      fontWeight: "<weight>",
+                      fontStyle: "normal",
+                      fontSize:'15px'
+                    }}
+                    >Dedicatoria</Typography>
+                  </Grid>
+                  <Grid item xs={8}>
+                  <Typography variant="body2" color="initial"
+                  sx={{
+                    fontFamily: "Cormorant",
+                    fontOpticalSizing: "auto",
+                    fontWeight: "<weight>",
+                    fontStyle: "normal",
+                    fontSize:'15px',
+                    textAlign:'end'
+                  }}
+                  >
+                    Lorem, ipsum dolor sit amet consectetur adipisicing elit.
+                  </Typography>
+                  </Grid>
+                </Grid>
+
+              </Grid>
+
+              <Grid item xs={12} sx={{
+                    borderBlockWidth: '1px',
+                    borderBottomColor: '#dadada',
+                    borderBottomStyle: 'double'
+              }}>
+                <Grid container>
+                  <Grid item xs={6} >
+                    <Grid sx={{display:'flex'}}>
+                      <Button>
+                        +
+                      </Button>
+                      <Typography variant="subtitle1" color="initial">2</Typography>
+                      <Button>
+                        -
+                      </Button>
+
+                    </Grid>
+                    {/* <TextField
+                      id="outlined-number"
+                      type="number"
+                      variant="standard"
+                      InputLabelProps={{
+                        shrink: true,
+                      }}
+                    /> */}
+                    
+                  </Grid>
+                  <Grid item xs={6} sx={{textAlign:'end'}}>
+                    <Button variant="text">
+                      Eliminar
+                    </Button>
+                  </Grid>
+                </Grid>
+              </Grid>
+            </Grid>
+            <Grid container pt={1}>
+              <Grid item xs={3}>
+                <img src="https://firebasestorage.googleapis.com/v0/b/prowlflores.appspot.com/o/multimedia%2Fimagenes%2Fproductos%2FC038-JARRON-DE-ROSAS-300x300.jpg?alt=media&token=c7e74236-7662-44fa-a5e2-c0b4ae5bfb12" alt="" style={{width:'100%', borderRadius:'10px'}}/>
+              </Grid>
+              <Grid item xs={9} p={1}>
+                <Grid container >
+                  <Grid item xs={8}>
+                    <Typography variant="body1" color="initial"
+                    sx={{
+                      fontFamily: "Cormorant",
+                      fontOpticalSizing: "auto",
+                      fontWeight: "<weight>",
+                      fontStyle: "normal",
+                      fontSize:'15px'
+                    }}
+                    >Nombre producto</Typography>
+                  </Grid>
+                  <Grid item xs={4}>
+                    <Typography variant="body2" color="initial"
+                    sx={{
+                      fontFamily: "Cormorant",
+                      fontOpticalSizing: "auto",
+                      fontWeight: "<weight>",
+                      fontStyle: "normal",
+                      fontSize:'15px',
+                      textAlign:'end'
+                    }}
+                    >$346.10</Typography>
+                  </Grid>
+                </Grid>
+                <Grid container>
+                  <Grid item xs={4}>
+                    <Typography variant="body1" color="initial"
+                    sx={{
+                      fontFamily: "Cormorant",
+                      fontOpticalSizing: "auto",
+                      fontWeight: "<weight>",
+                      fontStyle: "normal",
+                      fontSize:'15px'
+                    }}
+                    >Entrega</Typography>
+                  </Grid>
+                  <Grid item xs={8}>
+                  <Typography variant="body2" color="initial"
+                  sx={{
+                    fontFamily: "Cormorant",
+                    fontOpticalSizing: "auto",
+                    fontWeight: "<weight>",
+                    fontStyle: "normal",
+                    fontSize:'15px',
+                    textAlign:'end'
+                  }}
+                  >En tienda</Typography>
+                  </Grid>
+                </Grid>
+                <Grid container>
+                  <Grid item xs={4}>
+                    <Typography variant="body1" color="initial"
+                    sx={{
+                      fontFamily: "Cormorant",
+                      fontOpticalSizing: "auto",
+                      fontWeight: "<weight>",
+                      fontStyle: "normal",
+                      fontSize:'15px'
+                    }}
+                    >Fecha</Typography>
+                  </Grid>
+                  <Grid item xs={8}>
+                  <Typography variant="body2" color="initial"
+                  sx={{
+                    fontFamily: "Cormorant",
+                    fontOpticalSizing: "auto",
+                    fontWeight: "<weight>",
+                    fontStyle: "normal",
+                    fontSize:'15px',
+                    textAlign:'end'
+                  }}
+                  >
+                    15/06/2024 12:00 - 16:00 pm
+                  </Typography>
+                  </Grid>
+                </Grid>
+                <Grid container>
+                  <Grid item xs={4}>
+                    <Typography variant="body1" color="initial"
+                    sx={{
+                      fontFamily: "Cormorant",
+                      fontOpticalSizing: "auto",
+                      fontWeight: "<weight>",
+                      fontStyle: "normal",
+                      fontSize:'15px'
+                    }}
+                    >Dedicatoria</Typography>
+                  </Grid>
+                  <Grid item xs={8}>
+                  <Typography variant="body2" color="initial"
+                  sx={{
+                    fontFamily: "Cormorant",
+                    fontOpticalSizing: "auto",
+                    fontWeight: "<weight>",
+                    fontStyle: "normal",
+                    fontSize:'15px',
+                    textAlign:'end'
+                  }}
+                  >
+                    Lorem, ipsum dolor sit amet consectetur adipisicing elit.
+                  </Typography>
+                  </Grid>
+                </Grid>
+
+              </Grid>
+
+              <Grid item xs={12} sx={{
+                    borderBlockWidth: '1px',
+                    borderBottomColor: '#dadada',
+                    borderBottomStyle: 'double'
+              }}>
+                <Grid container>
+                  <Grid item xs={6} >
+                    <Grid sx={{display:'flex'}}>
+                      <Button>
+                        +
+                      </Button>
+                      <Typography variant="subtitle1" color="initial">2</Typography>
+                      <Button>
+                        -
+                      </Button>
+
+                    </Grid>
+                    {/* <TextField
+                      id="outlined-number"
+                      type="number"
+                      variant="standard"
+                      InputLabelProps={{
+                        shrink: true,
+                      }}
+                    /> */}
+                    
+                  </Grid>
+                  <Grid item xs={6} sx={{textAlign:'end'}}>
+                    <Button variant="text">
+                      Eliminar
+                    </Button>
+                  </Grid>
+                </Grid>
+              </Grid>
+            </Grid>
+            <Grid container pt={1}>
+              <Grid item xs={3}>
+                <img src="https://firebasestorage.googleapis.com/v0/b/prowlflores.appspot.com/o/multimedia%2Fimagenes%2Fproductos%2FC038-JARRON-DE-ROSAS-300x300.jpg?alt=media&token=c7e74236-7662-44fa-a5e2-c0b4ae5bfb12" alt="" style={{width:'100%', borderRadius:'10px'}}/>
+              </Grid>
+              <Grid item xs={9} p={1}>
+                <Grid container >
+                  <Grid item xs={8}>
+                    <Typography variant="body1" color="initial"
+                    sx={{
+                      fontFamily: "Cormorant",
+                      fontOpticalSizing: "auto",
+                      fontWeight: "<weight>",
+                      fontStyle: "normal",
+                      fontSize:'15px'
+                    }}
+                    >Nombre producto</Typography>
+                  </Grid>
+                  <Grid item xs={4}>
+                    <Typography variant="body2" color="initial"
+                    sx={{
+                      fontFamily: "Cormorant",
+                      fontOpticalSizing: "auto",
+                      fontWeight: "<weight>",
+                      fontStyle: "normal",
+                      fontSize:'15px',
+                      textAlign:'end'
+                    }}
+                    >$346.10</Typography>
+                  </Grid>
+                </Grid>
+                <Grid container>
+                  <Grid item xs={4}>
+                    <Typography variant="body1" color="initial"
+                    sx={{
+                      fontFamily: "Cormorant",
+                      fontOpticalSizing: "auto",
+                      fontWeight: "<weight>",
+                      fontStyle: "normal",
+                      fontSize:'15px'
+                    }}
+                    >Entrega</Typography>
+                  </Grid>
+                  <Grid item xs={8}>
+                  <Typography variant="body2" color="initial"
+                  sx={{
+                    fontFamily: "Cormorant",
+                    fontOpticalSizing: "auto",
+                    fontWeight: "<weight>",
+                    fontStyle: "normal",
+                    fontSize:'15px',
+                    textAlign:'end'
+                  }}
+                  >En tienda</Typography>
+                  </Grid>
+                </Grid>
+                <Grid container>
+                  <Grid item xs={4}>
+                    <Typography variant="body1" color="initial"
+                    sx={{
+                      fontFamily: "Cormorant",
+                      fontOpticalSizing: "auto",
+                      fontWeight: "<weight>",
+                      fontStyle: "normal",
+                      fontSize:'15px'
+                    }}
+                    >Fecha</Typography>
+                  </Grid>
+                  <Grid item xs={8}>
+                  <Typography variant="body2" color="initial"
+                  sx={{
+                    fontFamily: "Cormorant",
+                    fontOpticalSizing: "auto",
+                    fontWeight: "<weight>",
+                    fontStyle: "normal",
+                    fontSize:'15px',
+                    textAlign:'end'
+                  }}
+                  >
+                    15/06/2024 12:00 - 16:00 pm
+                  </Typography>
+                  </Grid>
+                </Grid>
+                <Grid container>
+                  <Grid item xs={4}>
+                    <Typography variant="body1" color="initial"
+                    sx={{
+                      fontFamily: "Cormorant",
+                      fontOpticalSizing: "auto",
+                      fontWeight: "<weight>",
+                      fontStyle: "normal",
+                      fontSize:'15px'
+                    }}
+                    >Dedicatoria</Typography>
+                  </Grid>
+                  <Grid item xs={8}>
+                  <Typography variant="body2" color="initial"
+                  sx={{
+                    fontFamily: "Cormorant",
+                    fontOpticalSizing: "auto",
+                    fontWeight: "<weight>",
+                    fontStyle: "normal",
+                    fontSize:'15px',
+                    textAlign:'end'
+                  }}
+                  >
+                    Lorem, ipsum dolor sit amet consectetur adipisicing elit.
+                  </Typography>
+                  </Grid>
+                </Grid>
+
+              </Grid>
+
+              <Grid item xs={12} sx={{
+                    borderBlockWidth: '1px',
+                    borderBottomColor: '#dadada',
+                    borderBottomStyle: 'double'
+              }}>
+                <Grid container>
+                  <Grid item xs={6} >
+                    <Grid sx={{display:'flex'}}>
+                      <Button>
+                        +
+                      </Button>
+                      <Typography variant="subtitle1" color="initial">2</Typography>
+                      <Button>
+                        -
+                      </Button>
+
+                    </Grid>
+                    {/* <TextField
+                      id="outlined-number"
+                      type="number"
+                      variant="standard"
+                      InputLabelProps={{
+                        shrink: true,
+                      }}
+                    /> */}
+                    
+                  </Grid>
+                  <Grid item xs={6} sx={{textAlign:'end'}}>
+                    <Button variant="text">
+                      Eliminar
+                    </Button>
+                  </Grid>
+                </Grid>
+              </Grid>
+            </Grid>
+          </Toolbar>
+        </Grid>
+        <Grid sx={{width:'100%', backgroundColor:'#fee7ea', alignContent:'center', padding:'2%', position: 'sticky', bottom: '0'}} >
+          {/* <Typography variant="h1" color="initial">adios</Typography> */}
+            <Grid container mt={3} mb={3}>
+              <Grid item xs={8}>
+                <Typography variant="body1" color="initial" sx={{fontWeight: "bold",}}>Subtotal</Typography>
+                <Typography variant="body2" color="initial">Precios sujetos a cambios sin previo aviso.</Typography>
+              </Grid>
+              <Grid item xs={4}>
+                <Typography variant="body1" color="initial"  sx={{textAlign:'end'}}>
+                  $5900
+                </Typography>
+              </Grid>
+            </Grid>
+            <Button sx={{ width:"100%", backgroundColor:'black', color:'white'}} >
+              Completar pedido
+            </Button>
+          
+        </Grid>
+      </Grid>
+
+    </Grid>
   );
 
   React.useEffect(()=>{
