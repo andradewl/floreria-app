@@ -3,7 +3,7 @@ import { BrowserRouter, Route, Routes } from "react-router-dom";
 
 
 import Home from "./pages/Home";
-import Contacto from "./pages/Contacto";
+import newContacto from "./pages/newContacto";
 import Nosotros from "./pages/Nosotros";
 import Productos from "./pages/Products/Productos";
 import Footer from "./components/Footer";
@@ -48,7 +48,7 @@ function App() {
           <Route path="/Productos" Component={Productos}/>
           <Route path="/Producto/:id" Component={ProductId}/>
           <Route path="/Nosotros" Component={Nosotros}/>
-          <Route path="/Contacto" Component={Contacto}/>
+          <Route path="/newContacto" Component={newContacto}/>
           <Route path="/Usuario/:id" Component={PerfilUsuario}/>
           <Route path="/EstatusEnvio" Component={EstatusEnvio}/>
           <Route path="/Ubicaciones" Component={Ubicaciones}/>
