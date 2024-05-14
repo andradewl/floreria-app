@@ -1,109 +1,13 @@
 import {  Box, Button, Grid, Pagination, PaginationItem, Paper, Typography } from "@mui/material";
-// import imageBoda from'../assets/secciones/6.png'
-// import imageParaElla from'../assets/secciones/7.jpg'
-// import descuento2 from'../assets/secciones/9.jpg'
-// import descuento3 from'../assets/secciones/10.jpg'
-// import nuevos from'../assets/secciones/11.jpg'
-// import kits from'../assets/secciones/12.jpg'
-// import regalos from'../assets/secciones/12.jpg'
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
 import { stylesComponents } from "../styles/stylesComponentes"
 import '../styles/fuentes.css'
-
 import { getOcasiones, getProducts } from "../config/apiFirebase";
 import React from "react";
-
 import { Flower, Ocasionest } from "../interfaces/interfaces"
 import { useNavigate } from 'react-router-dom';
 import BarraDeBusqueda from "../components/BarraDeBusqueda";
-
-
-// const steps = [
-//     {
-//         id:1,
-//         label: 'Titulo',
-//         imgPath: "https://www.floreselgato.com/_next/image?url=https%3A%2F%2Fadmin.floreselgato.com%2Fwp-content%2Fuploads%2F2022%2F04%2Fcelebra-tu-aniversario.jpg&w=2048&q=75",
-//         url: 130.10
-//     },
-//     {
-//         id:1,
-//         label: 'Titulo',
-//         imgPath: "https://www.floreselgato.com/_next/image?url=https%3A%2F%2Fadmin.floreselgato.com%2Fwp-content%2Fuploads%2F2022%2F04%2Fcumpleanos.jpg&w=1920&q=75",
-//         url: 130.10
-
-//     },
-//     {
-//         id:1,
-//         label: 'Titulo',
-//         imgPath: "https://www.floreselgato.com/_next/image?url=https%3A%2F%2Fadmin.floreselgato.com%2Fwp-content%2Fuploads%2F2022%2F04%2FLo-mejor-en-Canastas.jpg&w=2048&q=75",
-//         url: 130.10
-//     },
-//     {
-//         id:1,
-//         label: 'Titulo',
-//         imgPath: "https://www.floreselgato.com/_next/image?url=https%3A%2F%2Fadmin.floreselgato.com%2Fwp-content%2Fuploads%2F2022%2F04%2FPara-felicitar-a-esa-persona-especial.jpg&w=2048&q=75",
-//         url: 130.10
-//     },
-//     {
-//         id:1,
-//         label: 'Titulo',
-//         imgPath: "https://www.floreselgato.com/_next/image?url=https%3A%2F%2Fadmin.floreselgato.com%2Fwp-content%2Fuploads%2F2022%2F04%2FPresenta-tus-Condolencias.jpg&w=2048&q=75",
-//         url: 130.10
-
-//     },
-//     {
-//         id:1,
-//         label: 'Titulo',
-//         imgPath: "https://www.floreselgato.com/_next/image?url=https%3A%2F%2Fadmin.floreselgato.com%2Fwp-content%2Fuploads%2F2022%2F04%2Fcentros-de-mesa.jpg&w=2048&q=75",
-//         url: 130.10
-//     },
-//     {
-//         id:1,
-//         label: 'Titulo',
-//         imgPath: imageBoda,
-//         url: 130.10
-//     },
-//     {
-//         id:1,
-//         label: 'Titulo',
-//         imgPath: descuento2,
-//         url: 130.10
-
-//     },
-//     {
-//         id:1,
-//         label: 'Titulo',
-//         imgPath: descuento3,
-//         url: 130.10
-//     },
-//     {
-//         id:1,
-//         label: 'Titulo',
-//         imgPath: imageParaElla,
-//         url: 130.10
-//     },
-//     {
-//         id:1,
-//         label: 'Titulo',
-//         imgPath: nuevos,
-//         url: 130.10
-
-//     },
-//     {
-//         id:1,
-//         label: 'Titulo',
-//         imgPath: kits,
-//         url: 130.10
-//     },
-//     {
-//         id:1,
-//         label: 'Titulo',
-//         imgPath: regalos,
-//         url: 130.10
-//     },
-// ];
-
 
 function Home(){
 

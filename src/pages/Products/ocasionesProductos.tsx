@@ -4,9 +4,9 @@ import { Box, Grid, MenuItem, Select, SelectChangeEvent } from "@mui/material"
 import Typography from '@mui/material/Typography'
 import React from "react";
 import { stylesComponents } from "../../styles/stylesComponentes";
-import { getProducts } from "../../config/apiFirebase";
+import { getOcasiones, getProducts } from "../../config/apiFirebase";
 import { useNavigate, useParams } from "react-router-dom";
-import { Flower } from "../../interfaces/interfaces";
+import { Flower, Ocasionest } from "../../interfaces/interfaces";
 
 function ocasionesProductos(){
     const { nombreOcasion, id} = useParams();
@@ -16,16 +16,15 @@ function ocasionesProductos(){
     const [, setFlores] = React.useState<Flower[]>([]);
     const [filtradoForesOcasion, setfiltradoForesOcasion] = React.useState<Flower[]>([]);
     const [countflores, setCountflores] = React.useState(0);
+    const [changevalueCombo, setChangevalueCombo] = React.useState("1");
+    const [ocasinesDataId, setOcasinesDataId] = React.useState<Ocasionest[]>([]);
 
     React.useEffect(()=>{
         fetchFlores()
-        // console.log(nombreOcasion, id)
     },[])
 
     React.useEffect(()=>{
         fetchFlores()
-        
-        // console.log(nombreOcasion, id)
     },[nombreOcasion, id])
 
 
@@ -34,7 +33,9 @@ function ocasionesProductos(){
             const flowersData = await getProducts();
             const filtroFlores = flowersData.filter((product) => product.ocasion === id)
             const flowercount = filtroFlores.length
+            const ocasionesDataid = await getOcasiones()
 
+            setOcasinesDataId(ocasionesDataid)
             setCountflores(flowercount)
             setfiltradoForesOcasion(filtroFlores)
             setFlores(flowersData);
@@ -47,16 +48,14 @@ function ocasionesProductos(){
         setAge(event.target.value as string);
         if (event.target.value == "mayor"){
             const filtroFlores = filtradoForesOcasion.slice().sort((a, b) => b.precio - a.precio)
+            setChangevalueCombo("mayor")
             setfiltradoForesOcasion(filtroFlores)
         }
         if(event.target.value == "menor"){
+            setChangevalueCombo("menor")
             const filtroFlores = filtradoForesOcasion.slice().sort((a, b) => a.precio - b.precio)
             setfiltradoForesOcasion(filtroFlores)
         }
-        // else{
-        //     const filtroFlores = flores
-        //     setfiltradoForesOcasion(filtroFlores)
-        // }
         console.log(event.target.value)
     };
 
@@ -97,12 +96,12 @@ function ocasionesProductos(){
                     <Select
                         labelId="demo-simple-select-label"
                         id="demo-simple-select"
-                        value="valor"
+                        value={changevalueCombo}
                         label="Age"
                         onChange={handleChange}
                     >
-                        <MenuItem value="">
-                            <em>Ver todo</em>
+                        <MenuItem value="1">
+                            <em>Ordenar de</em>
                         </MenuItem>
                         <MenuItem value={'mayor'}>Precio Mayor</MenuItem>
                         <MenuItem value={'menor'}>Precio Menor</MenuItem>
@@ -161,7 +160,9 @@ function ocasionesProductos(){
                                                                 fontStyle: "normal",
                                                                 textAlign:'left',
                                                                 fontSize:'12px'
-                                                            }}>{item.ocasion}</Typography>
+                                                            }}>{ocasinesDataId && ocasinesDataId.map((item2) => (
+                                                                item2.id === item.ocasion ? item2.nombre : null
+                                                            ))}</Typography>
                                                         </Box>
                                                         <Box sx={{display:'flex',padding:'2px',width: '100%',}}>
                                                             <Typography variant="body2" color="initial"  style={{color:'#404040',textAlign:'left', width:'50%',  textDecorationLine: 'line-through', fontWeight: 'bold', fontSize:'12px' }}>${item.precio}</Typography>
@@ -180,7 +181,6 @@ function ocasionesProductos(){
                                             container
                                             sx={{
                                                 width: '100%',
-                                                // padding: '2px'
                                             }}
                                         >
                                             <Grid
@@ -189,12 +189,29 @@ function ocasionesProductos(){
                                                 }}
                                             >
                                                 <Box sx={{ padding: {xs:'10px', lg:'2px'} }}>
-                                                    {/* <Box sx={{ justifyContent: 'center', textAlign: 'center' }}>
-                                                        <FavoriteBorderIcon sx={{ width: '50%' }} />
-                                                        <RemoveRedEyeIcon sx={{ width: '50%' }} />
-                                                    </Box> */}
                                                     <Box sx={{ padding: '2px' }}>
-                                                        <Typography
+                                                        <Typography variant="body1" color="initial" style={{color:'#404040',
+                                                            fontFamily: "Cormorant",
+                                                            fontOpticalSizing: "auto",
+                                                            fontWeight: "<weight>",
+                                                            fontStyle: "normal",
+                                                            textAlign:'left',
+                                                            fontSize:'17px',
+                                                            whiteSpace:'nowrap', overflow:'hidden'
+                                                        }}>{item.nombre}</Typography>
+                                                        <Typography variant="body1" color="initial"  style={{color:'#404040',
+                                                            fontFamily: "Cormorant",
+                                                            fontOpticalSizing: "auto",
+                                                            fontWeight: "<weight>",
+                                                            fontStyle: "normal",
+                                                            textAlign:'left',
+                                                            fontSize:'12px'
+                                                        }}>
+                                                            {ocasinesDataId && ocasinesDataId.map((item2) => (
+                                                                item2.id === item.ocasion ? item2.nombre : null
+                                                            ))}
+                                                        </Typography>
+                                                        {/* <Typography
                                                             variant="h6"
                                                             color="initial"
                                                             fontSize={16}
@@ -202,18 +219,19 @@ function ocasionesProductos(){
                                                             style={{ color: '#9c0ba8' }}
                                                         >
                                                         ${item.precio}
-                                                        </Typography>
+                                                        </Typography> */}
                                                     </Box>
                                                     <Box
                                                     >
-                                                        <Typography
+                                                        {/* <Typography
                                                             variant="h6"
                                                             color="initial"
                                                             fontSize={16}
                                                             style={{ color: '#404040' }}
                                                         >
-                                                        {item.nombre}
-                                                        </Typography>
+                                                        {item.nombre} */}
+                                                        {/* </Typography> */}
+                                                        <Typography variant="body2" color="initial"  style={{color:'#9c0ba8', textAlign:'left', fontWeight: 'bold',fontSize:'12px' }}>${item.precio }</Typography>
                                                     </Box>
                                                 </Box>
                                             </Grid>

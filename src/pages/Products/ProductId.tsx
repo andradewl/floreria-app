@@ -2,7 +2,7 @@
 
 import * as React from 'react';
 
-import { Box, Grid, Rating, Typography, Button, TextField, FormControl, InputLabel, Select, MenuItem } from '@mui/material';
+import { Box, Grid, Typography, Button, TextField, FormControl, InputLabel, Select, MenuItem } from '@mui/material';
 import { useParams } from 'react-router-dom';
 import { stylesComponents } from '../../styles/stylesComponentes';
 import { DemoContainer } from '@mui/x-date-pickers/internals/demo';
@@ -276,25 +276,81 @@ function ProductId(){
 
     return(
         <>
-            <Grid sx={{ paddingTop:10, paddingLeft:{xs:5, md:8, lg:15, xl:25}, paddingRight:{xs:5, md:8, lg:15, xl:25}}}>
+            <Grid sx={{ paddingTop:10, paddingLeft:{xs:5, md:8, lg:10, xl:25}, paddingRight:{xs:5, md:8, lg:10, xl:25}}}>
                 <Grid container>
-                    <Grid item md={6} xs={12} sx={{justifyContent:'center'}}>
+                    <Grid item md={7} xs={12} sx={{justifyContent:'center'}}>
+                        <Grid container>
+                            <Grid item xs={3} sx={{textAlign:'center'}}>
+                                <img src={product.imagen} alt="" style={{ width:'70%', height:'auto', borderRadius:'8px' }}/>
+                                <img src={product.imagen} alt="" style={{ width:'70%', height:'auto', borderRadius:'8px' }}/>
+                                <img src={product.imagen} alt="" style={{ width:'70%', height:'auto', borderRadius:'8px' }}/>
+                            </Grid>
+                            <Grid item xs={9}>
+                                <img src={product.imagen} alt="" style={{ width:'100%', height:'auto', borderRadius:'8px' }}/>
+                            </Grid>
+                            
+
+                        </Grid>
                         {/* <Grid sx={{width:{xs:'270px', md:'350px'}, height:{xs:'390px', md:'450px'}}}> */}
-                            <img src={product.imagen} alt="" style={{ width:'100%', height:'auto' }}/>
+                            
                         {/* </Grid> */}
                     </Grid>
-                    <Grid item md={6} xs={12} sx={{ paddingLeft:{lg: 5, md:2, xs:0}, paddingRight:{md:5, xs:0} }}>
+                    <Grid item md={5} xs={12} sx={{ paddingLeft:{lg: 5, md:2, xs:0}, paddingRight:{md:5, xs:0} }}>
                         <Grid>
-                            <Typography variant="h4" color="initial" sx={{ color:'#B42981'}} p={1}>{product.nombre}</Typography>
+                            <Typography variant="h1" color="initial" sx={{ color:'#B42981',
+                            fontFamily: "Cormorant",
+                            fontOpticalSizing: "auto",
+                            fontWeight: "<weight>",
+                            fontStyle: "normal",
+                            fontSize:'30px'
+                            }} p={1}>{product.nombre}</Typography>
                         </Grid>
+                        <Grid>
+                            <Typography variant="body1" color="initial" sx={{ color:'#525252',
+                            fontFamily: "Cormorant",
+                            fontOpticalSizing: "auto",
+                            fontWeight: "bold",
+                            fontStyle: "normal",
+                            fontSize:'15px'
+                            }}
+                            p={1}
+                            >
+                                SKU: {product.sku}
+                            </Typography>
+                            
+                        </Grid>
+                        
+
+                        {/* <Grid>
+                            <Rating name="read-only" value={4} readOnly />
+                        </Grid> */}
+                        <Grid>
+                            <Typography variant="subtitle1" color="initial" p={1}
+                            sx={{
+                                fontFamily: "Cormorant",
+                                fontOpticalSizing: "auto",
+                                fontWeight: "<weight>",
+                                fontStyle: "normal",
+                                fontSize:'17px'
+                            }
+                            }
+                            >{product.descripcion}</Typography>
+                        </Grid>
+
                         {
                             product.descuento ?
                             (
                                 <Grid>
                                     <Typography variant="subtitle1" color="initial" p={1}>
                                         <Box display={'flex'}>
-                                            <Typography variant="h6" color="initial"  fontSize={16} style={{color:'red', textAlign:'start', width:'50%',  textDecorationLine: 'line-through' }}>${product.precio}</Typography>
-                                            <Typography variant="h6" color="initial"  fontSize={16} style={{color:'blue', textAlign:'end', width:'50%' }}>${product.descuento}</Typography>
+                                            <Typography variant="h2" color="initial"  fontSize={20} style={{color:'red', textAlign:'start', width:'50%',  textDecorationLine: 'line-through',
+                                                fontWeight: "bold",
+                                                fontStyle: "normal"
+                                            }}>${product.precio}</Typography>
+                                            <Typography variant="h2" color="initial"  fontSize={20} style={{color:'#b42981', textAlign:'end', width:'50%',
+                                                fontWeight: "bold",
+                                                fontStyle: "normal",
+                                            }}>${product.descuento}</Typography>
                                         </Box>
                                     </Typography>
                                 </Grid>
@@ -304,19 +360,13 @@ function ProductId(){
                                 <Grid>
                                     <Typography variant="subtitle1" color="initial" p={1}>
                                         <Box display={'flex'}>
-                                            <Typography variant="h6" color="initial"  fontSize={16} style={{color:'red', textAlign:'start', width:'50%',  textDecorationLine: 'line-through' }}>${product.precio}</Typography>
+                                            <Typography variant="h2" color="initial"  fontSize={20} style={{color:'#b42981', textAlign:'start', width:'50%',fontStyle: "normal"
+                                            }}>${product.precio}</Typography>
                                         </Box>
                                     </Typography>
                                 </Grid>
                             )
                         }
-
-                        <Grid>
-                            <Rating name="read-only" value={4} readOnly />
-                        </Grid>
-                        <Grid>
-                            <Typography variant="subtitle1" color="initial" p={1}>{product.descripcion}</Typography>
-                        </Grid>
 
                         {product.existencias == 0 ?
                             (
@@ -325,10 +375,10 @@ function ProductId(){
                                 </Grid>
                             ):(
                                 <Grid sx={{paddingTop:{  md:2, xs:1}}}>
+                                    {/* Cantidad a elejir */}
                                     <Grid m={2}>
                                         <Typography variant="h6" color="#B42981" fontSize={'16px'}>Cantidad</Typography>
                                         <TextField
-                                            label="Cantidad"
                                             type="number"
                                             fullWidth
                                             InputProps={{
@@ -341,6 +391,7 @@ function ProductId(){
                                             onChange={()=>HandlecantidadProducto(product.existencias)}
                                         />
                                     </Grid>
+                                    {/* Fecha y hora de entrega */}
                                     <Grid m={2}>
                                         <Typography variant="h6" color="#B42981" fontSize={'16px'}>Elije una Fecha y hora de entrega</Typography>
                                         <LocalizationProvider dateAdapter={AdapterDayjs}>
@@ -353,6 +404,7 @@ function ProductId(){
                                             </DemoContainer >
                                         </LocalizationProvider>
                                     </Grid>
+                                    {/* Hora de entrega */}
                                     <Grid  m={2}>
                                         {visibleHorarios &&
                                             <FormControl sx={{width:'100%', textalign:'center'}} >
@@ -372,7 +424,7 @@ function ProductId(){
                                             </FormControl>
                                         }
                                     </Grid>
-
+                                    {/* Producto Extra */}
                                     {
                                         productosExtra.length > 0 &&
                                         <>
@@ -467,11 +519,11 @@ function ProductId(){
                                             }
                                         </>
                                     }
+                                    {/* Dedicatoria */}
                                     <Grid m={2}>
                                         <Typography variant="h6" color="#B42981" fontSize={'16px'}>Dedicatoria</Typography>
                                         <TextField
                                             id="outlined-basic"
-                                            label="Mensaje"
                                             variant="outlined"
                                             rows={4}
                                             multiline

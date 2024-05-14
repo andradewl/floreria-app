@@ -43,8 +43,8 @@ function Contacto() {
   };
 
   return (
-    <Container sx={{ 
-      background: 'linear-gradient(to bottom, #FCE4E5 50%, #FBF8F4 50%)', 
+    <Container sx={{
+      background: 'linear-gradient(to bottom, #FCE4E5 50%, #FBF8F4 50%)',
       py: 10,
       display: 'flex',
       justifyContent: 'center',

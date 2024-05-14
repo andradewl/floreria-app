@@ -256,10 +256,10 @@ export const stylesComponents = {
     contenerdorImagenProducto:{
         width:'100%',
         height:{
-            xs:'180px',
-            sm:'340px',
+            xs:'200px',
+            sm:'380px',
             md:'260px',
-            lg:'300px',
+            lg:'350px',
             xl:'323px'
         },
         // width:'100px',
