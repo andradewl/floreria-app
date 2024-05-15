@@ -47,7 +47,7 @@ function Home(){
                             color:'white',
                             fontFamily: "Cormorant",
                             fontOpticalSizing: "auto",
-                            fontWeight: "<weight>",
+                            fontWeight: "bold",
                             fontStyle: "normal",
                             fontSize:{xs: "40px",md:"60px"}
                         }}>Sorprende a mamá</Typography>
@@ -91,7 +91,7 @@ function Home(){
                             color:'#fb7185',
                             fontFamily: "Cormorant",
                             fontOpticalSizing: "auto",
-                            fontWeight: "<weight>",
+                            fontWeight: "bold",
                             fontStyle: "normal",
                             fontSize:{md:'45px', xs:'25px'}
                             }}>
@@ -134,7 +134,7 @@ function Home(){
                             color:'#fb7185',
                             fontFamily: "Cormorant",
                             fontOpticalSizing: "auto",
-                            fontWeight: "<weight>",
+                            fontWeight: "bold",
                             fontStyle: "normal",
                             fontSize:{md:'45px', xs:'25px'}
                             }} pb={4}>
@@ -187,7 +187,7 @@ function Home(){
                                                             <Typography variant="body1" color="initial" style={{color:'#404040',
                                                                 fontFamily: "Cormorant",
                                                                 fontOpticalSizing: "auto",
-                                                                fontWeight: "<weight>",
+                                                                fontWeight: "bold",
                                                                 fontStyle: "normal",
                                                                 textAlign:'left',
                                                                 fontSize:'17px',
@@ -196,7 +196,7 @@ function Home(){
                                                             <Typography variant="body1" color="initial"  style={{color:'#404040',
                                                                 fontFamily: "Cormorant",
                                                                 fontOpticalSizing: "auto",
-                                                                fontWeight: "<weight>",
+                                                                fontWeight: "bold",
                                                                 fontStyle: "normal",
                                                                 textAlign:'left',
                                                                 fontSize:'12px'
@@ -234,7 +234,7 @@ function Home(){
                                                         <Typography variant="body1" color="initial" style={{color:'#404040',
                                                             fontFamily: "Cormorant",
                                                             fontOpticalSizing: "auto",
-                                                            fontWeight: "<weight>",
+                                                            fontWeight: "bold",
                                                             fontStyle: "normal",
                                                             textAlign:'left',
                                                             fontSize:'17px',
@@ -243,7 +243,7 @@ function Home(){
                                                         <Typography variant="body1" color="initial"  style={{color:'#404040',
                                                             fontFamily: "Cormorant",
                                                             fontOpticalSizing: "auto",
-                                                            fontWeight: "<weight>",
+                                                            fontWeight: "bold",
                                                             fontStyle: "normal",
                                                             textAlign:'left',
                                                             fontSize:'12px'

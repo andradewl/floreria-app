@@ -4,7 +4,7 @@ import { Box, Grid, MenuItem, Select, SelectChangeEvent } from "@mui/material"
 import Typography from '@mui/material/Typography'
 import React from "react";
 import { stylesComponents } from "../../styles/stylesComponentes";
-import { getOcasiones, getProducts } from "../../config/apiFirebase";
+import { getOcasiones, productoOcasionId } from "../../config/apiFirebase";
 import { useNavigate, useParams } from "react-router-dom";
 import { Flower, Ocasionest } from "../../interfaces/interfaces";
 
@@ -13,11 +13,12 @@ function ocasionesProductos(){
 
     const [, setAge] = React.useState('')
     const navigate = useNavigate()
-    const [, setFlores] = React.useState<Flower[]>([]);
+    // const [, setFlores] = React.useState<Flower[]>([]);
     const [filtradoForesOcasion, setfiltradoForesOcasion] = React.useState<Flower[]>([]);
     const [countflores, setCountflores] = React.useState(0);
     const [changevalueCombo, setChangevalueCombo] = React.useState("1");
     const [ocasinesDataId, setOcasinesDataId] = React.useState<Ocasionest[]>([]);
+    const [OcasionDataFlor, setOcasionDataFlor ] = React.useState<Flower[]>([]);
 
     React.useEffect(()=>{
         fetchFlores()
@@ -30,15 +31,28 @@ function ocasionesProductos(){
 
     const fetchFlores = async () => {
         try {
-            const flowersData = await getProducts();
-            const filtroFlores = flowersData.filter((product) => product.ocasion === id)
-            const flowercount = filtroFlores.length
+            // const flowersData = await getProducts();
+            // const filtroFlores = flowersData.filter((product) => product.ocasion === id)
+            // const flowercount = filtroFlores.length
             const ocasionesDataid = await getOcasiones()
 
+            // let idocasionDataFlores
+            // const flowercount
+
+            if(id){
+                const idocasionDataFlores = await productoOcasionId(id.toString())
+                const flowercount = idocasionDataFlores.length
+
+                setOcasionDataFlor(idocasionDataFlores)
+                
+                setCountflores(flowercount)
+            }
             setOcasinesDataId(ocasionesDataid)
-            setCountflores(flowercount)
-            setfiltradoForesOcasion(filtroFlores)
-            setFlores(flowersData);
+            
+
+            
+            // setfiltradoForesOcasion(filtroFlores)
+            // setFlores(flowersData);
         } catch (error) {
             console.error('Error fetching flowers:', error);
         }
@@ -114,7 +128,7 @@ function ocasionesProductos(){
             <Grid sx={{paddingLeft:{xl:'15%', md:'1%',xs:'5%'}, paddingRight:{xl:'15%',md:'1%', xs:'5%'}, paddingTop:'20px', paddingBottom:'80px' }} >
                 <Grid>
                     <Grid container sx={stylesComponents.ContenedorProductos} >
-                        {filtradoForesOcasion && filtradoForesOcasion.map((item) => (
+                        {OcasionDataFlor && OcasionDataFlor.map((item) => (
                             <Grid item xs={6} md={3}  sx={stylesComponents.contenedorProducto}>
                                 <Box display={'flex'} style={{justifyContent:'center'}}>
                                     <Grid sx={stylesComponents.contenerdorImagenProducto} onClick={()=>handleRedirectToProductId(item.id)}>
@@ -147,7 +161,7 @@ function ocasionesProductos(){
                                                             <Typography variant="body1" color="initial" style={{color:'#404040',
                                                                 fontFamily: "Cormorant",
                                                                 fontOpticalSizing: "auto",
-                                                                fontWeight: "<weight>",
+                                                                fontWeight: "bold",
                                                                 fontStyle: "normal",
                                                                 textAlign:'left',
                                                                 fontSize:'17px',
@@ -156,7 +170,7 @@ function ocasionesProductos(){
                                                             <Typography variant="body1" color="initial"  style={{color:'#404040',
                                                                 fontFamily: "Cormorant",
                                                                 fontOpticalSizing: "auto",
-                                                                fontWeight: "<weight>",
+                                                                fontWeight: "blod",
                                                                 fontStyle: "normal",
                                                                 textAlign:'left',
                                                                 fontSize:'12px'
@@ -193,7 +207,7 @@ function ocasionesProductos(){
                                                         <Typography variant="body1" color="initial" style={{color:'#404040',
                                                             fontFamily: "Cormorant",
                                                             fontOpticalSizing: "auto",
-                                                            fontWeight: "<weight>",
+                                                            fontWeight: "bold",
                                                             fontStyle: "normal",
                                                             textAlign:'left',
                                                             fontSize:'17px',
@@ -202,7 +216,7 @@ function ocasionesProductos(){
                                                         <Typography variant="body1" color="initial"  style={{color:'#404040',
                                                             fontFamily: "Cormorant",
                                                             fontOpticalSizing: "auto",
-                                                            fontWeight: "<weight>",
+                                                            fontWeight: "bold",
                                                             fontStyle: "normal",
                                                             textAlign:'left',
                                                             fontSize:'12px'

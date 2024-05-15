@@ -20,6 +20,7 @@ import { Flower, CarritoDeCompra, ProductoExtra } from '../../interfaces/interfa
 
 import { setLocalStorage, getLocalStorage } from '../../config/LocalStorage'
 import { useNavigate } from 'react-router-dom';
+import CheckCircleIcon from '@mui/icons-material/CheckCircle';
 
 function ProductId(){
     const navigate = useNavigate()
@@ -276,31 +277,36 @@ function ProductId(){
 
     return(
         <>
-            <Grid sx={{ paddingTop:10, paddingLeft:{xs:5, md:8, lg:10, xl:25}, paddingRight:{xs:5, md:8, lg:10, xl:25}}}>
+            <Grid sx={{ paddingTop:10, paddingLeft:{xs:5, md:8, lg:10, xl:25}, paddingRight:{xs:5, md:8, lg:10, xl:25}, backgroundColor:'#f5f1ec'}}>
                 <Grid container>
                     <Grid item md={7} xs={12} sx={{justifyContent:'center'}}>
                         <Grid container>
-                            <Grid item xs={3} sx={{textAlign:'center'}}>
+                            <Grid item xs={3} sx={{textAlign:'center', display:{xs:'none', md:'block'}}}>
+                                <img src={product.imagen} alt="" style={{ width:'70%', height:'auto', borderRadius:'8px' }}/>
                                 <img src={product.imagen} alt="" style={{ width:'70%', height:'auto', borderRadius:'8px' }}/>
                                 <img src={product.imagen} alt="" style={{ width:'70%', height:'auto', borderRadius:'8px' }}/>
                                 <img src={product.imagen} alt="" style={{ width:'70%', height:'auto', borderRadius:'8px' }}/>
                             </Grid>
-                            <Grid item xs={9}>
+                            <Grid item xs={12} md={9}>
                                 <img src={product.imagen} alt="" style={{ width:'100%', height:'auto', borderRadius:'8px' }}/>
                             </Grid>
-                            
+                            <Grid item xs={12} sx={{textAlign:'center', display:{xs:'flex', md:'none'}}}>
+                                <img src={product.imagen} alt="" style={{ width:'60px', height:'60px', borderRadius:'8px', margin:'4px' }}/>
+                                <img src={product.imagen} alt="" style={{ width:'60px', height:'60px', borderRadius:'8px', margin:'4px' }}/>
+                                <img src={product.imagen} alt="" style={{ width:'60px', height:'60px', borderRadius:'8px', margin:'4px' }}/>
+                                <img src={product.imagen} alt="" style={{ width:'60px', height:'60px', borderRadius:'8px', margin:'4px' }}/>
+                            </Grid>
 
                         </Grid>
                         {/* <Grid sx={{width:{xs:'270px', md:'350px'}, height:{xs:'390px', md:'450px'}}}> */}
-                            
                         {/* </Grid> */}
                     </Grid>
                     <Grid item md={5} xs={12} sx={{ paddingLeft:{lg: 5, md:2, xs:0}, paddingRight:{md:5, xs:0} }}>
                         <Grid>
-                            <Typography variant="h1" color="initial" sx={{ color:'#B42981',
+                            <Typography variant="h1" color="initial" sx={{
                             fontFamily: "Cormorant",
                             fontOpticalSizing: "auto",
-                            fontWeight: "<weight>",
+                            fontWeight: "bold",
                             fontStyle: "normal",
                             fontSize:'30px'
                             }} p={1}>{product.nombre}</Typography>
@@ -317,9 +323,7 @@ function ProductId(){
                             >
                                 SKU: {product.sku}
                             </Typography>
-                            
                         </Grid>
-                        
 
                         {/* <Grid>
                             <Rating name="read-only" value={4} readOnly />
@@ -327,9 +331,6 @@ function ProductId(){
                         <Grid>
                             <Typography variant="subtitle1" color="initial" p={1}
                             sx={{
-                                fontFamily: "Cormorant",
-                                fontOpticalSizing: "auto",
-                                fontWeight: "<weight>",
                                 fontStyle: "normal",
                                 fontSize:'17px'
                             }
@@ -347,8 +348,7 @@ function ProductId(){
                                                 fontWeight: "bold",
                                                 fontStyle: "normal"
                                             }}>${product.precio}</Typography>
-                                            <Typography variant="h2" color="initial"  fontSize={20} style={{color:'#b42981', textAlign:'end', width:'50%',
-                                                fontWeight: "bold",
+                                            <Typography variant="h2" color="initial"  fontSize={20} style={{color:'#fb7185', textAlign:'end', width:'50%',
                                                 fontStyle: "normal",
                                             }}>${product.descuento}</Typography>
                                         </Box>
@@ -360,24 +360,41 @@ function ProductId(){
                                 <Grid>
                                     <Typography variant="subtitle1" color="initial" p={1}>
                                         <Box display={'flex'}>
-                                            <Typography variant="h2" color="initial"  fontSize={20} style={{color:'#b42981', textAlign:'start', width:'50%',fontStyle: "normal"
+                                            <Typography variant="h2" color="initial"  fontSize={20} style={{color:'#fb7185', textAlign:'start', width:'50%',fontStyle: "normal"
                                             }}>${product.precio}</Typography>
                                         </Box>
                                     </Typography>
                                 </Grid>
                             )
                         }
-
-                        {product.existencias == 0 ?
-                            (
-                                <Grid m={2}>
-                                    <Typography variant="h1" color="initial">Sin Existencias</Typography>
-                                </Grid>
-                            ):(
                                 <Grid sx={{paddingTop:{  md:2, xs:1}}}>
                                     {/* Cantidad a elejir */}
                                     <Grid m={2}>
-                                        <Typography variant="h6" color="#B42981" fontSize={'16px'}>Cantidad</Typography>
+                                        <Grid sx={{display:'flex', color:'#fb7185'}}>
+                                            <CheckCircleIcon sx={{width:'20px', height:'auto'}}/>
+                                            <Typography variant="h6" color="#fb7185" fontSize={'16px'}>¿Para enviar o recoger?</Typography>
+                                        </Grid>
+                                        <Grid container>
+                                            <Grid item xs={12} sx={{margin:'5px'}}>
+                                                <Button key="one" sx={{display:'block',width:'100%', backgroundColor:'#fb7185', paddingTop:'15px', paddingBottom:'15px', borderRadius:'13px' }} >
+                                                    <Typography variant="h1" color="initial" fontSize={12} sx={{color:'white', fontWeight:'bold' }}>Recoger en tienda</Typography>
+                                                    <Typography variant="body1" color="initial" fontSize={12} sx={{color:'white'}}>Sin costo adicional</Typography>
+                                                </Button>
+                                            </Grid>
+                                            <Grid item xs={12} sx={{margin:'5px'}}>
+                                                <Button key="two" sx={{display:'block', width:'100%' , backgroundColor:'white', paddingTop:'15px', paddingBottom:'15px', borderRadius:'13px'}}>
+                                                    <Typography variant="h1" color="initial" fontSize={12}>Enviar a domicilio</Typography>
+                                                    <Typography variant="body1" color="initial" fontSize={12} sx={{color:'#737373'}}>Con costo adicional</Typography>
+                                                </Button>
+                                            </Grid>
+                                        </Grid>
+                                    </Grid>
+                                    {/* Cantidad a elejir */}
+                                    <Grid m={2}>
+                                        <Grid sx={{display:'flex', color:'#fb7185'}}>
+                                            <CheckCircleIcon sx={{width:'20px', height:'auto'}}/>
+                                            <Typography variant="h6" color="#fb7185" fontSize={'16px'}> Cantidad</Typography>
+                                        </Grid>
                                         <TextField
                                             type="number"
                                             fullWidth
@@ -393,7 +410,10 @@ function ProductId(){
                                     </Grid>
                                     {/* Fecha y hora de entrega */}
                                     <Grid m={2}>
-                                        <Typography variant="h6" color="#B42981" fontSize={'16px'}>Elije una Fecha y hora de entrega</Typography>
+                                        <Grid sx={{display:'flex', color:'#fb7185'}}>
+                                            <CheckCircleIcon sx={{width:'20px', height:'auto'}}/>
+                                            <Typography variant="h6" color="#fb7185" fontSize={'16px'}> Elije una Fecha y hora de entrega</Typography>
+                                        </Grid>
                                         <LocalizationProvider dateAdapter={AdapterDayjs}>
                                             <DemoContainer components={['DatePicker']} sx={{justifyContent:'center', width:'100%'}}>
                                                 <DatePicker sx={{justifyContent:'center', width:'100%'}}
@@ -432,16 +452,20 @@ function ProductId(){
                                                 (
                                                     <>
                                                         <Grid  m={2}>
+                                                                <Grid sx={{display:'flex', color:'#fb7185'}}>
+                                                                    <CheckCircleIcon sx={{width:'20px', height:'auto'}}/>
+                                                                    <Typography variant="h6" color="#fb7185" fontSize={'16px'}> Producto Extra</Typography>
+                                                                </Grid>
                                                             { visibleProductoExtra ?
                                                                 (
-                                                                    <Typography component={Button} variant="h6" color="#B42981" fontSize={'16px'} onClick={handleVisibleProductoExtra2}>Cancelar</Typography>
+                                                                    <Typography component={Button} variant="h6" color="#fb7185" fontSize={'16px'} onClick={handleVisibleProductoExtra2}>Cancelar</Typography>
                                                                 ):(
-                                                                    <Typography component={Button} variant="h6" color="#B42981" fontSize={'16px'} onClick={handleVisibleProductoExtra}>Añadir Producto Extra</Typography>
+                                                                    <Typography component={Button} variant="h6" color="#fb7185" fontSize={'16px'} onClick={handleVisibleProductoExtra}>Añadir Producto Extra</Typography>
                                                                 )
                                                             }
                                                         </Grid>
                                                         {visibleProductoExtra &&
-                                                            <Grid m={2} sx={{textAlign:'-webkit-center'}}>
+                                                            <Grid m={2} sx={{textAlign:'center'}}>
                                                                 <Grid sx={{ Width: '100%', flexGrow: 1 }}>
                                                                     <Grid  xs={12}>
                                                                         <Box sx={{ maxWidth: 390, flexGrow: 1 }}>
@@ -521,7 +545,10 @@ function ProductId(){
                                     }
                                     {/* Dedicatoria */}
                                     <Grid m={2}>
-                                        <Typography variant="h6" color="#B42981" fontSize={'16px'}>Dedicatoria</Typography>
+                                        <Grid sx={{display:'flex', color:'#fb7185'}}>
+                                        <CheckCircleIcon sx={{width:'20px', height:'auto'}}/>
+                                            <Typography variant="h6" color="#fb7185" fontSize={'16px'}> Dedicatoria</Typography>
+                                        </Grid>
                                         <TextField
                                             id="outlined-basic"
                                             variant="outlined"
@@ -529,11 +556,11 @@ function ProductId(){
                                             multiline
                                             fullWidth
                                             value={dedicatoria} // Muestra el valor actual de dedicatoria en el TextField
-                                            onChange={handleChangeDedicatoria} //
+                                            onChange={handleChangeDedicatoria}
                                         />
                                     </Grid>
                                     <Grid>
-                                    {habilitarDesabilitarBottonCompra ? (
+                                        {habilitarDesabilitarBottonCompra ? (
                                             product.descuento ? (
                                                 <Button sx={stylesComponents.button} onClick={()=>guardarDatosConDescuento(product.id,product.nombre, product.precio, product.descuento, product.imagen)} >
                                                     Añadir al carrito
@@ -547,17 +574,14 @@ function ProductId(){
                                             )
 
 
-                                    ):(
-                                        <Button sx={stylesComponents.button} disabled >
-                                            Añadir al carrito
-                                        </Button>
-                                    )
-
-
-                                    }
+                                        ):(
+                                            
+                                            <Button sx={stylesComponents.button} disabled={product.existencias != 0}>
+                                                Añadir al carrito
+                                            </Button>
+                                        )}
                                 </Grid>
                             </Grid>
-                        )}
                     </Grid>
                 </Grid>
             </Grid>

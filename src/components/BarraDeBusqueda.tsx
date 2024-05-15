@@ -74,9 +74,9 @@ function BarraDeBusqueda(){
                             color:'black',
                             fontFamily: "Cormorant",
                             fontOpticalSizing: "auto",
-                            fontWeight: "<weight>",
+                            fontWeight: "bold",
                             fontStyle: "normal",
-                            fontSize:{md:'35px', xs:'25px'}}} >Encuentra las flores de la mejor calidad que estabas buscando</Typography>
+                            fontSize:{md:'30px', xs:'23px'}}} >Encuentra las flores de la mejor calidad que estabas buscando</Typography>
                     </Grid>
                     <Grid item md={6}  xs={12} sx={{textAlign:'center', marginTop:{xs:'40px', md:'0px'}}}>
                         <TextField

@@ -5,7 +5,6 @@ import { createUserWithEmailAndPassword, signInWithEmailAndPassword } from 'fire
 
 
 export const addUser = async (nombre: string, apellido: string, email: string, password: string) => {
-
     const userQuery = query(collection(db, 'usuarios'), where('email', '==', email));
     const userSnapshot = await getDocs(userQuery);
 
@@ -31,6 +30,37 @@ export const addUser = async (nombre: string, apellido: string, email: string, p
         });
     });
 };
+
+export const productoOcasionId = async(idOcasion:string): Promise<Flower[]>=>{
+    // const userQuery = query(collection(db, 'Flores'), where('ocasion', '==', "0yVDjdZV0mHgHr3yEAYL"));
+    // const userSnapshot = await getDocs(userQuery);
+    // console.log(userSnapshot.docs.map(doc => {doc.id }))
+
+    const userQuery = query(collection(db, 'Flores'), where('ocasion', '==', idOcasion));
+    const userSnapshot = await getDocs(userQuery);
+
+    const products: Flower[] = userSnapshot.docs.map(doc => {
+        const data = doc.data();
+        const flower: Flower = {
+            id: doc.id,
+            sku: data.sku,
+            nombre: data.nombre,
+            descripcion: data.descripcion,
+            imagen: data.imagen,
+            precio: data.precio,
+            oferta: data.oferta,
+            existencias:data.existencias,
+            tipoflor:data.tipoflor,
+            ocasion:data.ocasion,
+            descuento: data.descuento !== undefined ? data.descuento : undefined,
+            productosExtra: data.productosExtra !== undefined ? data.productosExtra : []
+        };
+        return flower;
+    });
+    return products;
+    // console.log( userSnapshot.docs.map(doc => ({ ...doc.data(), id: doc.id, collection: 'Flores' })));
+
+}
 
 export const login = async (email: string, password: string) => {
 
