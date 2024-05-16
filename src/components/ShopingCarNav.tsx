@@ -94,13 +94,13 @@ function ShopingCarNav() {
     return(
         <Grid
             // sx={{ width: anchor == 'top' || anchor == 'bottom' ? 'auto' : {xs:350, md:450} }}
-            sx={{ width: {xs:350, md:450}, height:'100vh' }}
+            sx={{ width: {xs:'350px', md:'450px'}, height:'100vh' }}
             role="presentation"
             // onClick={toggleDrawer(anchor, false)}
             onKeyDown={toggleDrawer(anchor, false)}
         >
-            <Grid sx={{width:'100%', height:'100%', position:'relative'}}>
-                <Grid sx={{width:'100%', height:'100%'}} >
+            <Grid sx={{width:'100%', height:'100%'}}>
+                <Grid sx={{width:'100%',  paddingBottom:'200px'}} >
                     <Typography variant="h1" color="initial"
                     sx={{
                         fontFamily: "Cormorant",
@@ -262,9 +262,9 @@ function ShopingCarNav() {
 
                     </Toolbar>
                 </Grid>
-                <Grid sx={{minWidth:'100%', backgroundColor:'#fee7ea', alignContent:'center', padding:'2%', position: 'sticky', bottom: '0px'}} >
+                <Grid sx={{width:{xs:'350px', md:'450px'}, backgroundColor:'#fee7ea', alignContent:'center', padding:'2%', position: 'fixed', bottom: '0px'}} >
                 {/* <Typography variant="h1" color="initial">adios</Typography> */}
-                    <Grid container mt={3} mb={3}>
+                    <Grid container mt={3} mb={3} sx={{maxWidth:'100%'}}>
                         <Grid item xs={8}>
                             <Typography variant="body1" color="initial" sx={{fontWeight: "bold",}}>Subtotal</Typography>
                             <Typography variant="body2" color="initial">Precios sujetos a cambios sin previo aviso.</Typography>
@@ -275,14 +275,13 @@ function ShopingCarNav() {
                             </Typography>
                         </Grid>
                     </Grid>
-                    <Button sx={{ width:"100%", backgroundColor:'black', color:'white'}} onClick={()=>handleRedirectToShopingProducts(totalNumerico)}
-                            disabled={!isSetItems}>
-                    Completar pedido
+                    <Button sx={{ width:"100%", backgroundColor:'black', color:'white'}} onClick={()=>handleRedirectToShopingProducts(totalNumerico)} disabled={!isSetItems}>
+                        Completar pedido
                     </Button>
                 </Grid>
             </Grid>
         </Grid>
     )
-}
+} 
 
 export default ShopingCarNav

@@ -492,7 +492,7 @@ function shopProducts() {
                                                 required
                                                 />
                                             </Grid>
-                                            <Grid item xs={12}>
+                                            <Grid item xs={6}>
                                                 <TextField
                                                 fullWidth
                                                 label="Colonia"
@@ -502,7 +502,7 @@ function shopProducts() {
                                                 required
                                                 />
                                             </Grid>
-                                            <Grid item xs={12}>
+                                            <Grid item xs={6}>
                                                 <TextField
                                                 fullWidth
                                                 label="Cuidad"
@@ -512,7 +512,7 @@ function shopProducts() {
                                                 required
                                                 />
                                             </Grid>
-                                            <Grid item xs={12}>
+                                            <Grid item xs={6}>
                                                 <TextField
                                                 fullWidth
                                                 label="Estado"
@@ -522,7 +522,7 @@ function shopProducts() {
                                                 required
                                                 />
                                             </Grid>
-                                            <Grid item xs={12}>
+                                            <Grid item xs={6}>
                                                 <TextField
                                                 fullWidth
                                                 label="Codigo Postal"
@@ -532,7 +532,7 @@ function shopProducts() {
                                                 required
                                                 />
                                             </Grid>
-                                            <Grid item xs={12}>
+                                            <Grid item xs={6}>
                                                 <TextField
                                                 fullWidth
                                                 type="email"
@@ -543,7 +543,7 @@ function shopProducts() {
                                                 required
                                                 />
                                             </Grid>
-                                            <Grid item xs={12}>
+                                            <Grid item xs={6}>
                                                 <TextField
                                                 fullWidth
                                                 type="tel"
@@ -617,7 +617,7 @@ function shopProducts() {
                                                     required
                                                     />
                                                 </Grid>
-                                                <Grid item xs={12}>
+                                                <Grid item xs={6}>
                                                     <TextField
                                                     fullWidth
                                                     label="Colonia"
@@ -627,7 +627,7 @@ function shopProducts() {
                                                     required
                                                     />
                                                 </Grid>
-                                                <Grid item xs={12}>
+                                                <Grid item xs={6}>
                                                     <TextField
                                                     fullWidth
                                                     label="Cuidad"
@@ -637,7 +637,7 @@ function shopProducts() {
                                                     required
                                                     />
                                                 </Grid>
-                                                <Grid item xs={12}>
+                                                <Grid item xs={6}>
                                                     <TextField
                                                     fullWidth
                                                     label="Estado"
@@ -647,7 +647,7 @@ function shopProducts() {
                                                     required
                                                     />
                                                 </Grid>
-                                                <Grid item xs={12}>
+                                                <Grid item xs={6}>
                                                     <TextField
                                                     fullWidth
                                                     label="Codigo Postal"
@@ -657,7 +657,7 @@ function shopProducts() {
                                                     required
                                                     />
                                                 </Grid>
-                                                <Grid item xs={12}>
+                                                <Grid item xs={6}>
                                                     <TextField
                                                     fullWidth
                                                     type="email"
@@ -668,7 +668,7 @@ function shopProducts() {
                                                     required
                                                     />
                                                 </Grid>
-                                                <Grid item xs={12}>
+                                                <Grid item xs={6}>
                                                     <TextField
                                                     fullWidth
                                                     type="phone"
@@ -684,10 +684,209 @@ function shopProducts() {
                                 }
                             </Grid>
 
+                            <Grid>
+                                <Grid m={1} ml={3} mr={3} pb={1} sx={{ borderBottom:'1px solid #afafaf', textAlign:'center' }}>
+
+                                <Typography variant="h5" color="initial" m={1}>Pago con tarjeta</Typography>
+
+
+                                <CardElement options={cardElementOptions}/>
+                                <Grid m={1}>
+                                    <Button
+                                        disabled={!isFormValid}
+                                        onClick={handleSubmit2}
+                                    >
+                                        Pagar
+                                    </Button>
+                                </Grid>
+                                </Grid>
+                                <Grid m={1} ml={3} mr={3} pb={1} sx={{ textAlign:'center' }}>
+                                <Typography variant="h5" color="initial" m={1}>o pago con paypal</Typography>
+                                <PayPalButtons
+                                    createOrder={(data) => createOrder(data)}
+                                    onApprove={(data) => onApprove(data)}
+                                    fundingSource={FUNDING.PAYPAL}
+                                    disabled={!isFormValid}
+                                />
+                                </Grid>
+                            </Grid>
 
                         </Grid>
-                        <Grid item xs={12} md={6}  p={4}>
-                            <Grid sx={{ border: '1px solid #afafaf'}} >
+                        <Grid item xs={12} md={6}  p={10}>
+                            <Grid>
+                                {item && item.map((item) => (
+                                    <Grid container pt={1}>
+                                        <Grid item xs={3} >
+                                            <img src={item.imagen} alt="" style={{width:'70%', borderRadius:'10px'}}/>
+                                        </Grid>
+                                        <Grid item xs={9} p={1}>
+                                            <Grid container >
+                                                <Grid item xs={8}>
+                                                    <Typography variant="body1" color="initial"
+                                                    sx={{
+                                                    fontFamily: "Cormorant",
+                                                    fontOpticalSizing: "auto",
+                                                    fontWeight: "<weight>",
+                                                    fontStyle: "normal",
+                                                    fontSize:'15px'
+                                                    }}
+                                                    >{item.nombre }</Typography>
+                                                </Grid>
+                                                <Grid item xs={4}>
+                                                    <Typography variant="body2" color="initial"
+                                                    sx={{
+                                                        fontSize:'15px',
+                                                        textAlign:'end'
+                                                    }}
+                                                    >x{item.cantidad } {item.precio}</Typography>
+                                                </Grid>
+                                            </Grid>
+                                            <Grid container>
+                                                <Grid item xs={4}>
+                                                    <Typography variant="body1" color="initial"
+                                                    sx={{
+                                                    fontFamily: "Cormorant",
+                                                    fontOpticalSizing: "auto",
+                                                    fontWeight: "bold",
+                                                    fontStyle: "normal",
+                                                    fontSize:'15px'
+                                                    }}
+                                                    >Entrega</Typography>
+                                                </Grid>
+                                                <Grid item xs={8}>
+                                                    <Typography variant="body2" color="initial"
+                                                    sx={{
+                                                        fontFamily: "Cormorant",
+                                                        fontOpticalSizing: "auto",
+                                                        fontWeight: "<weight>",
+                                                        fontStyle: "normal",
+                                                        fontSize:'15px',
+                                                        textAlign:'end'
+                                                    }}
+                                                    >En tienda</Typography>
+                                                </Grid>
+                                            </Grid>
+                                            <Grid container>
+                                                <Grid item xs={4}>
+                                                    <Typography variant="body1" color="initial"
+                                                    sx={{
+                                                    fontFamily: "Cormorant",
+                                                    fontOpticalSizing: "auto",
+                                                    fontWeight: "bold",
+                                                    fontStyle: "normal",
+                                                    fontSize:'15px'
+                                                    }}
+                                                    >Fecha</Typography>
+                                                </Grid>
+                                                <Grid item xs={8}>
+                                                <Typography variant="body2" color="initial"
+                                                sx={{
+                                                    fontFamily: "Cormorant",
+                                                    fontOpticalSizing: "auto",
+                                                    fontWeight: "<weight>",
+                                                    fontStyle: "normal",
+                                                    fontSize:'15px',
+                                                    textAlign:'end'
+                                                }}
+                                                >
+                                                    {item.fecha } - {item.hora }
+                                                </Typography>
+                                                </Grid>
+                                            </Grid>
+                                            <Grid container>
+                                                <Grid item xs={4}>
+                                                    <Typography variant="body1" color="initial"
+                                                    sx={{
+                                                    fontFamily: "Cormorant",
+                                                    fontOpticalSizing: "auto",
+                                                    fontWeight: "bold",
+                                                    fontStyle: "normal",
+                                                    fontSize:'15px'
+                                                    }}
+                                                    >Dedicatoria</Typography>
+                                                </Grid>
+                                                <Grid item xs={8}>
+                                                <Typography variant="body2" color="initial"
+                                                sx={{
+                                                    fontFamily: "Cormorant",
+                                                    fontOpticalSizing: "auto",
+                                                    fontWeight: "<weight>",
+                                                    fontStyle: "normal",
+                                                    fontSize:'15px',
+                                                    textAlign:'end'
+                                                }}
+                                                >
+                                                    {item.dedicatoria }
+                                                </Typography>
+                                                </Grid>
+                                            </Grid>
+
+                                        </Grid>
+
+                                        {/* <Grid item xs={12} sx={{
+                                                borderBlockWidth: '1px',
+                                                borderBottomColor: '#dadada',
+                                                borderBottomStyle: 'double'
+                                        }}>
+                                            <Grid container>
+                                                <Grid item xs={6} >
+                                                    <Grid sx={{display:'flex'}}>
+                                                    <Button>
+                                                        +
+                                                    </Button>
+                                                        <Typography variant="subtitle1" color="initial">{item.cantidad }</Typography>
+                                                    <Button>
+                                                        -
+                                                    </Button>
+
+                                                    </Grid>
+                                                </Grid>
+                                                <Grid item xs={6} sx={{textAlign:'end'}}>
+                                                    <Button variant="text" onClick={() => eliminarItem(index)}>
+                                                        Eliminar
+                                                    </Button>
+                                                </Grid>
+                                            </Grid>
+                                        </Grid> */}
+                                    </Grid>
+
+                                ))}
+                            </Grid>
+                            <Grid>
+                                <Grid container>
+                                    <Grid item xs={6}>
+                                        <Typography variant="body1" color="initial">Subtotal</Typography>
+                                    </Grid>
+                                    <Grid item xs={6}>
+                                        <Typography variant="body1" color="initial">${totalNumerico}</Typography>
+                                    </Grid>
+                                </Grid>
+                                <Grid container>
+                                    <Grid item xs={6}>
+                                        <Typography variant="body1" color="initial">Envio</Typography>
+                                    </Grid>
+                                    <Grid item xs={6}>
+                                        <Typography variant="body1" color="initial">${totalEnvio}</Typography>
+                                    </Grid>
+                                </Grid>
+                                <Grid container>
+                                    <Grid item xs={6}>
+                                        <Typography variant="body1" color="initial">Descuento</Typography>
+                                    </Grid>
+                                    <Grid item xs={6}>
+                                        <Typography variant="body1" color="initial">$0</Typography>
+                                    </Grid>
+                                </Grid>
+                                <Grid container>
+                                    <Grid item xs={6}>
+                                        <Typography variant="body1" color="initial">Total</Typography>
+                                    </Grid>
+                                    <Grid item xs={6}>
+                                        <Typography variant="body1" color="initial">${totalNumerico + totalEnvio}</Typography>
+                                    </Grid>
+                                </Grid>
+                            </Grid>
+                            {/* <Grid sx={{ border: '1px solid #afafaf'}} >
                                 <Grid sx={{ borderBottom:'1px solid #afafaf', background:'#ececec' }} p={3}>
                                     <Typography variant="h6" color="initial">Resumen de compra</Typography>
                                 </Grid>
@@ -726,7 +925,7 @@ function shopProducts() {
                                     />
                                 </Grid>
 
-                            </Grid>
+                            </Grid> */}
                         </Grid>
                     </Grid>
 

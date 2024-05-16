@@ -2,7 +2,7 @@
 
 import * as React from 'react';
 
-import { Box, Grid, Typography, Button, TextField, FormControl, InputLabel, Select, MenuItem } from '@mui/material';
+import { Box, Grid, Typography, Button, TextField, FormControl, InputLabel, Select, MenuItem, Drawer } from '@mui/material';
 import { useParams } from 'react-router-dom';
 import { stylesComponents } from '../../styles/stylesComponentes';
 import { DemoContainer } from '@mui/x-date-pickers/internals/demo';
@@ -19,18 +19,21 @@ import { getProductById, getProductsExtraByIds } from '../../config/apiFirebase'
 import { Flower, CarritoDeCompra, ProductoExtra } from '../../interfaces/interfaces'
 
 import { setLocalStorage, getLocalStorage } from '../../config/LocalStorage'
-import { useNavigate } from 'react-router-dom';
+// import { useNavigate } from 'react-router-dom';
 import CheckCircleIcon from '@mui/icons-material/CheckCircle';
+import ShopingCarNav from '../../components/ShopingCarNav';
+
+
+type Anchor = 'top' | 'left' | 'bottom' | 'right';
 
 function ProductId(){
-    const navigate = useNavigate()
+    // const navigate = useNavigate()
     const { id } = useParams();
     const theme = useTheme();
 
     const [product, setProduct] = React.useState<Flower | null>(null);
     const [activeStep, setActiveStep] = React.useState(0);
     const [carritoDeCompra, setCarritoDeCompra] = React.useState<CarritoDeCompra[]>([]);
-
     const [visibleHora1, setVisibleHora1] = React.useState(true)
     const [visibleHora2, setVisibleHora2] = React.useState(true)
     const [visibleHora3, setVisibleHora3] = React.useState(true)
@@ -45,10 +48,11 @@ function ProductId(){
     const [habilitarDesabilitarBottonCompra, setHabilitarDesabilitarBottonCompra] = React.useState(false)
     const [productosExtra, setProductosExtras] = React.useState<ProductoExtra[]>([]);
     const [cantidadProducto, setcantidadProducto] = React.useState(0);
-    // const [numberValue, setNumberValue] = React.useState('');
-
-    // const [cantidadProductoExtra, setcantidadProductoExtra] = React.useState(0);
-
+    const [dataInfoAddShoppingCard1,setdataInfoAddShoppingCard1] = React.useState(true)
+    const [dataInfoAddShoppingCard2,setdataInfoAddShoppingCard2] = React.useState(false)
+    const [dataInfoAddShoppingCard3,setdataInfoAddShoppingCard3] = React.useState(false)
+    const [dataInfoAddShoppingCard4,setdataInfoAddShoppingCard4] = React.useState(false)
+    const [dataInfoAddShoppingCard5,setdataInfoAddShoppingCard5] = React.useState(false)
 
     let maxSteps = productosExtra.length
 
@@ -56,7 +60,6 @@ function ProductId(){
         getDataCarShopping()
         fetchProduct()
     }, []);
-
 
     React.useEffect(() => {
         maxSteps = productosExtra.length;
@@ -78,6 +81,63 @@ function ProductId(){
         setDedicatoria(dedicatoria)
         console.log(dedicatoria)
     }, [dedicatoria]);
+
+    const [state, setState] = React.useState({
+        top: false,
+        left: false,
+        bottom: false,
+        right: false,
+    });
+
+    const toggleDrawer = (anchor: Anchor, open: boolean) =>(event: React.KeyboardEvent | React.MouseEvent) => {
+        if (
+            event.type === 'keydown' &&
+            ((event as React.KeyboardEvent).key === 'Tab' ||
+            (event as React.KeyboardEvent).key === 'Shift')
+        ) {
+            return;
+        }
+        setState({ ...state, [anchor]: open });
+    };
+
+    const changeDataAddShoppingCard = (data:number) => {
+
+        if(data ==1 ){
+            setdataInfoAddShoppingCard1(true)
+            setdataInfoAddShoppingCard2(false)
+            setdataInfoAddShoppingCard3(false)
+            setdataInfoAddShoppingCard4(false)
+            setdataInfoAddShoppingCard5(false)
+        }
+        if(data ==2 ){
+            setdataInfoAddShoppingCard1(false)
+            setdataInfoAddShoppingCard2(true)
+            setdataInfoAddShoppingCard3(false)
+            setdataInfoAddShoppingCard4(false)
+            setdataInfoAddShoppingCard5(false)
+        }
+        if(data ==3 ){
+            setdataInfoAddShoppingCard1(false)
+            setdataInfoAddShoppingCard2(false)
+            setdataInfoAddShoppingCard3(true)
+            setdataInfoAddShoppingCard4(false)
+            setdataInfoAddShoppingCard5(false)
+        }
+        if(data ==4 ){
+            setdataInfoAddShoppingCard1(false)
+            setdataInfoAddShoppingCard2(false)
+            setdataInfoAddShoppingCard3(false)
+            setdataInfoAddShoppingCard4(true)
+            setdataInfoAddShoppingCard5(false)
+        }
+        if(data ==5 ){
+            setdataInfoAddShoppingCard1(false)
+            setdataInfoAddShoppingCard2(false)
+            setdataInfoAddShoppingCard3(false)
+            setdataInfoAddShoppingCard4(false)
+            setdataInfoAddShoppingCard5(true)
+        }
+    };
 
     const fetchProducExtra = async (dataProductsExtra:[]) =>{
         const data= await getProductsExtraByIds(dataProductsExtra)
@@ -191,7 +251,6 @@ function ProductId(){
 
 
     const guardarProductoExtra = (nombre: string, precio: number)=>{
-
         setproductoExtra({
             nombreProductoExtra: nombre,
             precioProductoExtra: precio,
@@ -215,7 +274,6 @@ function ProductId(){
             productoExtra: productoExtra ? {
                 nombreProductoExtra: productoExtra.nombreProductoExtra,
                 precioProductoExtra: productoExtra.precioProductoExtra,
-
             } : {
                 nombreProductoExtra: 'Sin producto Extra',
                 precioProductoExtra: 0,
@@ -227,7 +285,8 @@ function ProductId(){
         const updatedCarritoDeCompra = [...carritoDeCompra, newItem];
         setCarritoDeCompra(updatedCarritoDeCompra);
         setLocalStorage('Productos', updatedCarritoDeCompra);
-        navigate('/shoppingCart');
+        // navigate('/shoppingCart');
+        toggleDrawer("right", true)
     }
 
     const guardarDatos =(id:string,nombre: string, precio: number, imagen:string)=>{
@@ -255,7 +314,8 @@ function ProductId(){
         const updatedCarritoDeCompra = [...carritoDeCompra, newItem];
         setCarritoDeCompra(updatedCarritoDeCompra);
         setLocalStorage('Productos', updatedCarritoDeCompra);
-        navigate('/shoppingCart');
+        // navigate('/shoppingCart');
+        toggleDrawer("right", true)
     }
 
 
@@ -368,65 +428,71 @@ function ProductId(){
                             )
                         }
                                 <Grid sx={{paddingTop:{  md:2, xs:1}}}>
-                                    {/* Cantidad a elejir */}
+                                    {/* Donde revcoger */}
                                     <Grid m={2}>
-                                        <Grid sx={{display:'flex', color:'#fb7185'}}>
+                                        <Grid sx={{display:'flex', color:'#fb7185'}} onClick={()=>changeDataAddShoppingCard(1)}>
                                             <CheckCircleIcon sx={{width:'20px', height:'auto'}}/>
                                             <Typography variant="h6" color="#fb7185" fontSize={'16px'}>¿Para enviar o recoger?</Typography>
                                         </Grid>
-                                        <Grid container>
-                                            <Grid item xs={12} sx={{margin:'5px'}}>
-                                                <Button key="one" sx={{display:'block',width:'100%', backgroundColor:'#fb7185', paddingTop:'15px', paddingBottom:'15px', borderRadius:'13px' }} >
-                                                    <Typography variant="h1" color="initial" fontSize={12} sx={{color:'white', fontWeight:'bold' }}>Recoger en tienda</Typography>
-                                                    <Typography variant="body1" color="initial" fontSize={12} sx={{color:'white'}}>Sin costo adicional</Typography>
-                                                </Button>
+                                        {dataInfoAddShoppingCard1 &&
+                                            <Grid container>
+                                                <Grid item xs={12} sx={{margin:'5px'}}>
+                                                    <Button key="one" sx={{display:'block',width:'100%', backgroundColor:'#fb7185', paddingTop:'15px', paddingBottom:'15px', borderRadius:'13px' }} >
+                                                        <Typography variant="h1" color="initial" fontSize={12} sx={{color:'white', fontWeight:'bold' }}>Recoger en tienda</Typography>
+                                                        <Typography variant="body1" color="initial" fontSize={12} sx={{color:'white'}}>Sin costo adicional</Typography>
+                                                    </Button>
+                                                </Grid>
+                                                <Grid item xs={12} sx={{margin:'5px'}}>
+                                                    <Button key="two" sx={{display:'block', width:'100%' , backgroundColor:'white', paddingTop:'15px', paddingBottom:'15px', borderRadius:'13px'}}>
+                                                        <Typography variant="h1" color="initial" fontSize={12}>Enviar a domicilio</Typography>
+                                                        <Typography variant="body1" color="initial" fontSize={12} sx={{color:'#737373'}}>Con costo adicional</Typography>
+                                                    </Button>
+                                                </Grid>
                                             </Grid>
-                                            <Grid item xs={12} sx={{margin:'5px'}}>
-                                                <Button key="two" sx={{display:'block', width:'100%' , backgroundColor:'white', paddingTop:'15px', paddingBottom:'15px', borderRadius:'13px'}}>
-                                                    <Typography variant="h1" color="initial" fontSize={12}>Enviar a domicilio</Typography>
-                                                    <Typography variant="body1" color="initial" fontSize={12} sx={{color:'#737373'}}>Con costo adicional</Typography>
-                                                </Button>
-                                            </Grid>
-                                        </Grid>
+                                        }
                                     </Grid>
                                     {/* Cantidad a elejir */}
                                     <Grid m={2}>
-                                        <Grid sx={{display:'flex', color:'#fb7185'}}>
+                                        <Grid sx={{display:'flex', color:'#fb7185'}} onClick={()=>changeDataAddShoppingCard(2)}>
                                             <CheckCircleIcon sx={{width:'20px', height:'auto'}}/>
                                             <Typography variant="h6" color="#fb7185" fontSize={'16px'}> Cantidad</Typography>
                                         </Grid>
-                                        <TextField
-                                            type="number"
-                                            fullWidth
-                                            InputProps={{
-                                                inputProps: {
-                                                    min: 0,
-                                                    max: product.existencias,
-                                                    step: 1,
-                                                },
-                                            }}
-                                            onChange={()=>HandlecantidadProducto(product.existencias)}
-                                        />
+                                        {dataInfoAddShoppingCard2 &&
+                                            <TextField
+                                                type="number"
+                                                fullWidth
+                                                InputProps={{
+                                                    inputProps: {
+                                                        min: 0,
+                                                        max: product.existencias,
+                                                        step: 1,
+                                                    },
+                                                }}
+                                                onChange={()=>HandlecantidadProducto(product.existencias)}
+                                            />
+                                        }
                                     </Grid>
                                     {/* Fecha y hora de entrega */}
                                     <Grid m={2}>
-                                        <Grid sx={{display:'flex', color:'#fb7185'}}>
+                                        <Grid sx={{display:'flex', color:'#fb7185'}} onClick={()=>changeDataAddShoppingCard(3)}>
                                             <CheckCircleIcon sx={{width:'20px', height:'auto'}}/>
                                             <Typography variant="h6" color="#fb7185" fontSize={'16px'}> Elije una Fecha y hora de entrega</Typography>
                                         </Grid>
-                                        <LocalizationProvider dateAdapter={AdapterDayjs}>
-                                            <DemoContainer components={['DatePicker']} sx={{justifyContent:'center', width:'100%'}}>
-                                                <DatePicker sx={{justifyContent:'center', width:'100%'}}
-                                                    value={date}
-                                                    onChange={(newDate)=>handleDateValidation(newDate)}
-                                                    disablePast
-                                                />
-                                            </DemoContainer >
-                                        </LocalizationProvider>
+                                        {dataInfoAddShoppingCard3 &&
+                                            <LocalizationProvider dateAdapter={AdapterDayjs}>
+                                                <DemoContainer components={['DatePicker']} sx={{justifyContent:'center', width:'100%'}}>
+                                                    <DatePicker sx={{justifyContent:'center', width:'100%'}}
+                                                        value={date}
+                                                        onChange={(newDate)=>handleDateValidation(newDate)}
+                                                        disablePast
+                                                    />
+                                                </DemoContainer >
+                                            </LocalizationProvider>
+                                        }
                                     </Grid>
                                     {/* Hora de entrega */}
                                     <Grid  m={2}>
-                                        {visibleHorarios &&
+                                        {visibleHorarios && dataInfoAddShoppingCard3 &&
                                             <FormControl sx={{width:'100%', textalign:'center'}} >
                                                 <InputLabel id="demo-simple-select-label">Hora de entrega</InputLabel>
                                                 <Select
@@ -452,7 +518,7 @@ function ProductId(){
                                                 (
                                                     <>
                                                         <Grid  m={2}>
-                                                                <Grid sx={{display:'flex', color:'#fb7185'}}>
+                                                                <Grid sx={{display:'flex', color:'#fb7185'}} onClick={()=>changeDataAddShoppingCard(4)}>
                                                                     <CheckCircleIcon sx={{width:'20px', height:'auto'}}/>
                                                                     <Typography variant="h6" color="#fb7185" fontSize={'16px'}> Producto Extra</Typography>
                                                                 </Grid>
@@ -460,11 +526,12 @@ function ProductId(){
                                                                 (
                                                                     <Typography component={Button} variant="h6" color="#fb7185" fontSize={'16px'} onClick={handleVisibleProductoExtra2}>Cancelar</Typography>
                                                                 ):(
-                                                                    <Typography component={Button} variant="h6" color="#fb7185" fontSize={'16px'} onClick={handleVisibleProductoExtra}>Añadir Producto Extra</Typography>
+
+                                                                    dataInfoAddShoppingCard4 && <Typography component={Button} variant="h6" color="#fb7185" fontSize={'16px'} onClick={handleVisibleProductoExtra}>Añadir Producto Extra</Typography>
                                                                 )
                                                             }
                                                         </Grid>
-                                                        {visibleProductoExtra &&
+                                                        {visibleProductoExtra && dataInfoAddShoppingCard4 &&
                                                             <Grid m={2} sx={{textAlign:'center'}}>
                                                                 <Grid sx={{ Width: '100%', flexGrow: 1 }}>
                                                                     <Grid  xs={12}>
@@ -545,10 +612,11 @@ function ProductId(){
                                     }
                                     {/* Dedicatoria */}
                                     <Grid m={2}>
-                                        <Grid sx={{display:'flex', color:'#fb7185'}}>
-                                        <CheckCircleIcon sx={{width:'20px', height:'auto'}}/>
-                                            <Typography variant="h6" color="#fb7185" fontSize={'16px'}> Dedicatoria</Typography>
-                                        </Grid>
+                                        <Grid sx={{display:'flex', color:'#fb7185'}} onClick={()=>changeDataAddShoppingCard(5)}>
+                                            <CheckCircleIcon sx={{width:'20px', height:'auto'}}/>
+                                                <Typography variant="h6" color="#fb7185" fontSize={'16px'}> Dedicatoria</Typography>
+                                            </Grid>
+                                        {dataInfoAddShoppingCard5 &&
                                         <TextField
                                             id="outlined-basic"
                                             variant="outlined"
@@ -558,25 +626,25 @@ function ProductId(){
                                             value={dedicatoria} // Muestra el valor actual de dedicatoria en el TextField
                                             onChange={handleChangeDedicatoria}
                                         />
+                                    }
                                     </Grid>
                                     <Grid>
                                         {habilitarDesabilitarBottonCompra ? (
                                             product.descuento ? (
-                                                <Button sx={stylesComponents.button} onClick={()=>guardarDatosConDescuento(product.id,product.nombre, product.precio, product.descuento, product.imagen)} >
+                                                <Button sx={{backgroundColor:'black', color:'white', width:'100%', fontSize:'11px', paddingTop:'15px', paddingBottom:'15px'}} onClick={()=>guardarDatosConDescuento(product.id,product.nombre, product.precio, product.descuento, product.imagen)} >
                                                     Añadir al carrito
                                                 </Button>
                                             )
                                             :
                                             (
-                                                <Button sx={stylesComponents.button} onClick={()=>guardarDatos(product.id,product.nombre, product.precio, product.imagen)} >
+                                                <Button sx={{backgroundColor:'black', color:'white', width:'100%', fontSize:'11px', paddingTop:'15px', paddingBottom:'15px'}} onClick={()=>guardarDatos(product.id,product.nombre, product.precio, product.imagen)} >
                                                     Añadir al carrito
                                                 </Button>
                                             )
 
 
                                         ):(
-                                            
-                                            <Button sx={stylesComponents.button} disabled={product.existencias != 0}>
+                                            <Button sx={{backgroundColor:'black', color:'white', width:'100%', fontSize:'11px' }} disabled={product.existencias != 0}>
                                                 Añadir al carrito
                                             </Button>
                                         )}
@@ -662,11 +730,20 @@ function ProductId(){
                                 </Button>
                         </Box>
                         </Grid>
-
                     </Grid>
                 </Grid>
 
             </Grid>
+
+            <Drawer
+                anchor={"right"}
+                open={state["right"]}
+                onClose={toggleDrawer("right", false)}
+            >
+                {/* <ShopingCarNav anchor={'right'}/> */}
+                <ShopingCarNav/>
+                {/* {shopCar("right")} */}
+            </Drawer>
 
 
         </>
