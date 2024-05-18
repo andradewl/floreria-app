@@ -113,44 +113,87 @@ function ShopingCarNav() {
 
                     <Toolbar sx={{display:'block'}}>
                         {items && items.map((item, index) => (
-                            <Grid container pt={1}>
+                            <Grid container sx={{
+                                borderBottomWidth: '1px',
+                                borderBottomColor: '#80808040',
+                                borderBottomStyle: 'solid',
+
+                            }}  pt={1}>
                                 <Grid item xs={3} >
-                                    <img src={item.imagen} alt="" style={{width:'100%', borderRadius:'10px'}}/>
+                                    <img src={item.imagen} alt="" style={{width:'80%', borderRadius:'10px'}}/>
                                 </Grid>
                                 <Grid item xs={9} p={1}>
                                     <Grid container >
                                         <Grid item xs={8}>
                                             <Typography variant="body1" color="initial"
                                             sx={{
-                                            fontFamily: "Cormorant",
-                                            fontOpticalSizing: "auto",
-                                            fontWeight: "<weight>",
-                                            fontStyle: "normal",
-                                            fontSize:'15px'
+                                                fontSize:'13px'
                                             }}
                                             >{item.nombre }</Typography>
                                         </Grid>
                                         <Grid item xs={4}>
                                             <Typography variant="body2" color="initial"
                                             sx={{
-                                            
-                                            fontSize:'15px',
-                                            textAlign:'end'
+                                                fontSize:'12px',
+                                                textAlign:'end',
+                                                fontWeight: "bold",
+
                                             }}
-                                            >x{item.cantidad } {item.precio}</Typography>
+                                            >x{item.cantidad } ${item.precio}</Typography>
                                         </Grid>
                                     </Grid>
                                     <Grid container>
                                         <Grid item xs={4}>
                                             <Typography variant="body1" color="initial"
                                             sx={{
-                                            fontFamily: "Cormorant",
-                                            fontOpticalSizing: "auto",
-                                            fontWeight: "bold",
-                                            fontStyle: "normal",
-                                            fontSize:'15px'
+                                                fontWeight: "bold",
+                                                color:'#6a6a6a',
+                                                fontStyle: "normal",
+                                                fontSize:'12px'
                                             }}
                                             >Entrega</Typography>
+                                        </Grid>
+                                        <Grid item xs={8}>
+                                            <Typography variant="body2" color="initial"
+                                            sx={{
+                                                fontSize:'12px',
+                                                textAlign:'end'
+                                            }}
+                                            >En tienda</Typography>
+                                        </Grid>
+                                    </Grid>
+                                    <Grid container>
+                                        <Grid item xs={4}>
+                                            <Typography variant="body1" color="initial"
+                                            sx={{
+                                                color:'#6a6a6a',
+                                                fontWeight: "bold",
+                                                fontStyle: "normal",
+                                                fontSize:'12px'
+                                            }}
+                                            >Fecha</Typography>
+                                        </Grid>
+                                        <Grid item xs={8}>
+                                        <Typography variant="body2" color="initial"
+                                        sx={{
+                                            fontSize:'12px',
+                                            textAlign:'end'
+                                        }}
+                                        >
+                                            {item.fecha } - {item.hora }
+                                        </Typography>
+                                        </Grid>
+                                    </Grid>
+                                    <Grid container sx={{marginBottom:'20px'}}>
+                                        <Grid item xs={4}>
+                                            <Typography variant="body1" color="initial"
+                                            sx={{
+                                                color:'#6a6a6a',
+                                                fontWeight: "bold",
+                                                fontStyle: "normal",
+                                                fontSize:'12px'
+                                            }}
+                                            >Dedicatoria</Typography>
                                         </Grid>
                                         <Grid item xs={8}>
                                             <Typography variant="body2" color="initial"
@@ -162,61 +205,9 @@ function ShopingCarNav() {
                                                 fontSize:'15px',
                                                 textAlign:'end'
                                             }}
-                                            >En tienda</Typography>
-                                        </Grid>
-                                    </Grid>
-                                    <Grid container>
-                                        <Grid item xs={4}>
-                                            <Typography variant="body1" color="initial"
-                                            sx={{
-                                            fontFamily: "Cormorant",
-                                            fontOpticalSizing: "auto",
-                                            fontWeight: "bold",
-                                            fontStyle: "normal",
-                                            fontSize:'15px'
-                                            }}
-                                            >Fecha</Typography>
-                                        </Grid>
-                                        <Grid item xs={8}>
-                                        <Typography variant="body2" color="initial"
-                                        sx={{
-                                            fontFamily: "Cormorant",
-                                            fontOpticalSizing: "auto",
-                                            fontWeight: "<weight>",
-                                            fontStyle: "normal",
-                                            fontSize:'15px',
-                                            textAlign:'end'
-                                        }}
-                                        >
-                                            {item.fecha } - {item.hora }
-                                        </Typography>
-                                        </Grid>
-                                    </Grid>
-                                    <Grid container>
-                                        <Grid item xs={4}>
-                                            <Typography variant="body1" color="initial"
-                                            sx={{
-                                            fontFamily: "Cormorant",
-                                            fontOpticalSizing: "auto",
-                                            fontWeight: "bold",
-                                            fontStyle: "normal",
-                                            fontSize:'15px'
-                                            }}
-                                            >Dedicatoria</Typography>
-                                        </Grid>
-                                        <Grid item xs={8}>
-                                        <Typography variant="body2" color="initial"
-                                        sx={{
-                                            fontFamily: "Cormorant",
-                                            fontOpticalSizing: "auto",
-                                            fontWeight: "<weight>",
-                                            fontStyle: "normal",
-                                            fontSize:'15px',
-                                            textAlign:'end'
-                                        }}
-                                        >
-                                            {item.dedicatoria }
-                                        </Typography>
+                                            >
+                                                {item.dedicatoria }
+                                            </Typography>
                                         </Grid>
                                     </Grid>
 
