@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable react-hooks/exhaustive-deps */
 
 import * as React from 'react';
@@ -41,18 +42,23 @@ function ProductId(){
     const [date, setDate] = React.useState(dayjs());
     const [hora, sethora] = React.useState('');
     const [productoExtra, setproductoExtra] = React.useState({nombreProductoExtra: 'Sin producto extra',precioProductoExtra: 0});
-    const [dedicatoria, setDedicatoria] = React.useState('sin dedicatorias');
+    const [dedicatoria, setDedicatoria] = React.useState('');
     const [visibleProductoExtra, setvisibleProductoExtra] = React.useState(false) //muestra los productos extras
     const [isProductoExtraEmpty, setisProductoExtraEmpty] = React.useState(true) //comprueba si hay producto extra ya seleccionado
     const [changeProductExtra, setChangeProductExtra] = React.useState(true) //comprueba si hay producto extra ya seleccionado
     const [habilitarDesabilitarBottonCompra, setHabilitarDesabilitarBottonCompra] = React.useState(false)
     const [productosExtra, setProductosExtras] = React.useState<ProductoExtra[]>([]);
-    const [cantidadProducto, setcantidadProducto] = React.useState(0);
+    // const [cantidadProducto, setcantidadProducto] = React.useState(1);
     const [dataInfoAddShoppingCard1,setdataInfoAddShoppingCard1] = React.useState(true)
-    const [dataInfoAddShoppingCard2,setdataInfoAddShoppingCard2] = React.useState(false)
+    // const [dataInfoAddShoppingCard2,setdataInfoAddShoppingCard2] = React.useState(false)
+    const [,setdataInfoAddShoppingCard2] = React.useState(false)
     const [dataInfoAddShoppingCard3,setdataInfoAddShoppingCard3] = React.useState(false)
     const [dataInfoAddShoppingCard4,setdataInfoAddShoppingCard4] = React.useState(false)
     const [dataInfoAddShoppingCard5,setdataInfoAddShoppingCard5] = React.useState(false)
+
+    const [opcion1entrega,setOpcion1entrega] = React.useState(true)
+    const [opcion2entrega,setOpcion2entrega] = React.useState(false)
+    const [entrega, setEntrega] = React.useState('En tienda')
 
     let maxSteps = productosExtra.length
 
@@ -68,7 +74,7 @@ function ProductId(){
 
     React.useEffect(() => {
         // const algunDatoPresente = !!productoExtra && dedicatoria != '' && !!hora && productoExtra.nombreProductoExtra !='Sin producto extra' && productoExtra.precioProductoExtra != 0;
-        const algunDatoPresente = !!hora && cantidadProducto!=0;
+        const algunDatoPresente = !!hora && entrega;
 
         if (algunDatoPresente) {
             setHabilitarDesabilitarBottonCompra(true)
@@ -167,7 +173,7 @@ function ProductId(){
 
     const handleChangeDedicatoria = (event: { target: { value: React.SetStateAction<string>; }; }) => {
         if(event.target.value == ''){
-            setDedicatoria('sin dedicatorias');
+            setDedicatoria('');
         }else{
             setDedicatoria(event.target.value);
         }
@@ -177,25 +183,33 @@ function ProductId(){
         sethora(event.target.value);
     };
 
-    const HandlecantidadProducto = (existencias:number) => {
-        const newValue = existencias;
+    // const HandlecantidadProducto = async (event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement> , id:string) => {
 
 
+    //     const cantidad = event.target.value
 
-        // if (newValue < 0) {
-        //     newValue = 0;
-        // }
+    //     const cantidadNumber = parseInt(cantidad)
 
+    //     const data= await getexistenciaProductById(id)
 
-        // if (newValue > existencias) {
-        //     newValue = existencias
-        // }
+    //     if(data){
 
+    //         if(cantidadNumber <= 0){
+    //             alert('No puedes añadir 0 productos al carrito')
+    //             setcantidadProducto(1)
+    //             return
+    //         }
+    
+    //         if(cantidadNumber > data.existencias){
+    //             alert('Exede la existencia')
+    //             setcantidadProducto(data.existencias)
+    //             return
+    //         }
+    
+    //         setcantidadProducto(cantidadNumber)
 
-        // const newValue = parseInt(event.target.value, 10);
-        console.log("FLOR",newValue)
-        setcantidadProducto(newValue);
-    }
+    //     }
+    // }
 
     const handleNext = () => {
         setActiveStep((prevActiveStep) => prevActiveStep + 1);
@@ -270,7 +284,7 @@ function ProductId(){
             imagen:imagen,
             fecha: date.format('DD-MM-YYYY'),
             hora: hora,
-            cantidad:cantidadProducto,
+            cantidad:1,
             productoExtra: productoExtra ? {
                 nombreProductoExtra: productoExtra.nombreProductoExtra,
                 precioProductoExtra: productoExtra.precioProductoExtra,
@@ -298,7 +312,7 @@ function ProductId(){
             imagen:imagen,
             fecha: date.format('DD-MM-YYYY'),
             hora: hora,
-            cantidad:cantidadProducto,
+            cantidad:1,
             productoExtra: productoExtra ? {
                 nombreProductoExtra: productoExtra.nombreProductoExtra,
                 precioProductoExtra: productoExtra.precioProductoExtra,
@@ -329,6 +343,18 @@ function ProductId(){
         setvisibleProductoExtra(false)
         setisProductoExtraEmpty(true)
         setChangeProductExtra(true)
+    }
+
+    const cambiarOpcionDeEntrega=(entrega:string, opcion:number)=>{
+        if(opcion == 1){
+            setOpcion1entrega(true)
+            setOpcion2entrega(false)
+        }
+        if(opcion == 2){
+            setOpcion1entrega(false)
+            setOpcion2entrega(true)
+        }
+        setEntrega(entrega)
     }
 
     if (!product) {
@@ -384,6 +410,19 @@ function ProductId(){
                                 SKU: {product.sku}
                             </Typography>
                         </Grid>
+                        <Grid>
+                            <Typography variant="body1" color="initial" sx={{ color:'#525252',
+                            fontFamily: "Cormorant",
+                            fontOpticalSizing: "auto",
+                            fontWeight: "bold",
+                            fontStyle: "normal",
+                            fontSize:'15px'
+                            }}
+                            p={1}
+                            >
+                                Existencias: {product.existencias }
+                            </Typography>
+                        </Grid>
 
                         {/* <Grid>
                             <Rating name="read-only" value={4} readOnly />
@@ -428,7 +467,7 @@ function ProductId(){
                             )
                         }
                                 <Grid sx={{paddingTop:{  md:2, xs:1}}}>
-                                    {/* Donde revcoger */}
+                                    {/* Donde recoger */}
                                     <Grid m={2}>
                                         <Grid sx={{display:'flex', color:'#fb7185'}} onClick={()=>changeDataAddShoppingCard(1)}>
                                             <CheckCircleIcon sx={{width:'20px', height:'auto'}}/>
@@ -437,22 +476,36 @@ function ProductId(){
                                         {dataInfoAddShoppingCard1 &&
                                             <Grid container>
                                                 <Grid item xs={12} sx={{margin:'5px'}}>
-                                                    <Button key="one" sx={{display:'block',width:'100%', backgroundColor:'#fb7185', paddingTop:'15px', paddingBottom:'15px', borderRadius:'13px' }} >
-                                                        <Typography variant="h1" color="initial" fontSize={12} sx={{color:'white', fontWeight:'bold' }}>Recoger en tienda</Typography>
-                                                        <Typography variant="body1" color="initial" fontSize={12} sx={{color:'white'}}>Sin costo adicional</Typography>
+                                                    <Button key="one"
+                                                        sx={opcion1entrega ? stylesComponents.botonRecogerProductoOpcion1:stylesComponents.botonRecogerProductoOpcion2}
+                                                        onClick={()=>{cambiarOpcionDeEntrega('En tienda', 1), changeDataAddShoppingCard(2)}}
+                                                    >
+                                                        <Typography variant="h1" color="initial" fontSize={12}
+                                                            sx={opcion1entrega ? stylesComponents.botontipografia1RecogerProductoOpcion1:stylesComponents.botontipografia1RecogerProductoOpcion2}
+                                                        >Recoger en tienda</Typography>
+                                                        <Typography variant="body1" color="initial" fontSize={12}
+                                                            sx={opcion1entrega ? stylesComponents.botontipografia2RecogerProductoOpcion1:stylesComponents.botontipografia2RecogerProductoOpcion2}
+                                                        >Sin costo adicional</Typography>
                                                     </Button>
                                                 </Grid>
                                                 <Grid item xs={12} sx={{margin:'5px'}}>
-                                                    <Button key="two" sx={{display:'block', width:'100%' , backgroundColor:'white', paddingTop:'15px', paddingBottom:'15px', borderRadius:'13px'}}>
-                                                        <Typography variant="h1" color="initial" fontSize={12}>Enviar a domicilio</Typography>
-                                                        <Typography variant="body1" color="initial" fontSize={12} sx={{color:'#737373'}}>Con costo adicional</Typography>
+                                                    <Button key="two"
+                                                        sx={opcion2entrega ? stylesComponents.botonRecogerProductoOpcion1:stylesComponents.botonRecogerProductoOpcion2}
+                                                        onClick={()=>{cambiarOpcionDeEntrega('A domicilio', 2), changeDataAddShoppingCard(2)}}
+                                                    >
+                                                        <Typography variant="h1" color="initial" fontSize={12}
+                                                            sx={opcion2entrega ? stylesComponents.botontipografia1RecogerProductoOpcion1:stylesComponents.botontipografia1RecogerProductoOpcion2}
+                                                        >Enviar a domicilio</Typography>
+                                                        <Typography variant="body1" color="initial" fontSize={12}
+                                                            sx={opcion2entrega ? stylesComponents.botontipografia2RecogerProductoOpcion1:stylesComponents.botontipografia2RecogerProductoOpcion2}
+                                                        >Con costo adicional</Typography>
                                                     </Button>
                                                 </Grid>
                                             </Grid>
                                         }
                                     </Grid>
                                     {/* Cantidad a elejir */}
-                                    <Grid m={2}>
+                                    {/* <Grid m={2}>
                                         <Grid sx={{display:'flex', color:'#fb7185'}} onClick={()=>changeDataAddShoppingCard(2)}>
                                             <CheckCircleIcon sx={{width:'20px', height:'auto'}}/>
                                             <Typography variant="h6" color="#fb7185" fontSize={'16px'}> Cantidad</Typography>
@@ -461,17 +514,18 @@ function ProductId(){
                                             <TextField
                                                 type="number"
                                                 fullWidth
-                                                InputProps={{
-                                                    inputProps: {
-                                                        min: 0,
-                                                        max: product.existencias,
-                                                        step: 1,
-                                                    },
-                                                }}
-                                                onChange={()=>HandlecantidadProducto(product.existencias)}
+                                                value={cantidadProducto}
+                                                // InputProps={{
+                                                //     inputProps: {
+                                                //         min: 0,
+                                                //         max: product.existencias,
+                                                //         step: 1,
+                                                //     },
+                                                // }}
+                                                onChange={(event)=>HandlecantidadProducto(event, product.id)}
                                             />
                                         }
-                                    </Grid>
+                                    </Grid> */}
                                     {/* Fecha y hora de entrega */}
                                     <Grid m={2}>
                                         <Grid sx={{display:'flex', color:'#fb7185'}} onClick={()=>changeDataAddShoppingCard(3)}>
@@ -510,6 +564,7 @@ function ProductId(){
                                             </FormControl>
                                         }
                                     </Grid>
+
                                     {/* Producto Extra */}
                                     {
                                         productosExtra.length > 0 &&
@@ -533,26 +588,25 @@ function ProductId(){
                                                         </Grid>
                                                         {visibleProductoExtra && dataInfoAddShoppingCard4 &&
                                                             <Grid m={2} sx={{textAlign:'center'}}>
-                                                                <Grid sx={{ Width: '100%', flexGrow: 1 }}>
+                                                                <Grid sx={{ Width: '100%'}}>
                                                                     <Grid  xs={12}>
-                                                                        <Box sx={{ maxWidth: 390, flexGrow: 1 }}>
-                                                                            <Box
+                                                                        <Grid>
+                                                                            <Grid
                                                                                 sx={{
-                                                                                display: 'flex',
+                                                                                    display: 'flex',
                                                                                 }}
                                                                             >
-                                                                                <Typography variant="h6" color="initial"  fontSize={16} style={{textAlign:'center', width:'50%'}}>{productosExtra[activeStep].nombre}</Typography>
-                                                                                <Typography variant="h6" color="initial"  fontSize={16} style={{color:'red', textAlign:'center', width:'50%' }}>${productosExtra[activeStep].precio}</Typography>
-
-                                                                            </Box>
-                                                                            <Box sx={{ height: {md:300, xs:250}, maxWidth: {md:300, xs:250}, width: '100%', pr: 3, pb: 3, m:3 }}>
-                                                                                <img src={`${productosExtra[activeStep].imagen}`} alt=""  width={'100%'} height={'100%'} style={{ objectFit: 'cover'}}/>
-                                                                                <Button sx={stylesComponents.button} onClick={() =>  guardarProductoExtra(productosExtra[activeStep].nombre, productosExtra[activeStep].precio ) }>
-                                                                                    Añadir
+                                                                                <Button  sx={stylesComponents.button} onClick={() =>  guardarProductoExtra(productosExtra[activeStep].nombre, productosExtra[activeStep].precio ) }>
+                                                                                    Añadir {productosExtra[activeStep].nombre} ${productosExtra[activeStep].precio}
                                                                                 </Button>
-
-                                                                            </Box>
+                                                                                {/* <Typography variant="h6" color="initial"  fontSize={16} style={{textAlign:'center', width:'50%'}}>{productosExtra[activeStep].nombre}</Typography>
+                                                                                <Typography variant="h6" color="initial"  fontSize={16} style={{color:'red', textAlign:'center', width:'50%' }}>${productosExtra[activeStep].precio}</Typography> */}
+                                                                            </Grid>
+                                                                            <Grid sx={{ height: {md:300, xs:250},  width: '100%'}}>
+                                                                                <img src={`${productosExtra[activeStep].imagen}`} alt="" height={'100%'} style={{ objectFit: 'cover', maxWidth:'100%'}}/>
+                                                                            </Grid>
                                                                             <MobileStepper
+                                                                                sx={{backgroundColor:'#f5f1ec'}}
                                                                                 variant="text"
                                                                                 steps={maxSteps}
                                                                                 position="static"
@@ -582,7 +636,7 @@ function ProductId(){
                                                                                 </Button>
                                                                                 }
                                                                             />
-                                                                        </Box>
+                                                                        </Grid>
 
 
                                                                     </Grid>
@@ -594,16 +648,12 @@ function ProductId(){
                                                 ):(
                                                     <>
                                                         <Grid  m={2}>
+                                                            <Grid sx={{display:'flex', color:'#fb7185'}} onClick={()=>changeDataAddShoppingCard(4)}>
+                                                                <CheckCircleIcon sx={{width:'20px', height:'auto'}}/>
+                                                                <Typography variant="h6" color="#fb7185" fontSize={'16px'}> Producto Extra</Typography>
+                                                            </Grid>
                                                             <Typography variant="h6" component={Button} color="#B42981" fontSize={'16px'} onClick={canbiarProductoExtra}>Cambiar producto extra</Typography>
                                                             <Typography variant="h6" component={Button} color="#B42981" fontSize={'16px'} onClick={eliminarProducto}>Eliminar producto extra</Typography>
-
-                                                            <Typography variant="h6" color="initial">
-                                                                {productoExtra.nombreProductoExtra}
-                                                            </Typography>
-
-                                                            <Typography variant="h6" color="initial">
-                                                                {productoExtra.precioProductoExtra}
-                                                            </Typography>
                                                         </Grid>
                                                     </>
                                                 )
@@ -627,6 +677,107 @@ function ProductId(){
                                             onChange={handleChangeDedicatoria}
                                         />
                                     }
+                                    </Grid>
+                                    <Grid sx={{
+                                            backgroundColor: '#fb718545',
+                                            borderStyle: 'solid',
+                                            borderColor: '#fb7185',
+                                            padding: '10px'
+                                        }}>
+                                        <Typography variant="body1" color="initial"
+                                            sx={{
+                                                fontSize:'13px',
+                                                color: '#fb7185'
+                                            }}
+                                        >Detalles de pedido</Typography>
+
+                                        <Grid container >
+                                            <Grid item xs={8}>
+                                                <Typography variant="body1" color="initial"
+                                                sx={{
+                                                    fontSize:'13px',
+                                                    color: '#fb7185',
+                                                    fontWeight: "bold",
+                                                }}
+                                                >Tipo de entrega</Typography>
+                                            </Grid>
+                                            <Grid item xs={4}>
+                                                <Typography variant="body2" color="initial"
+                                                sx={{
+                                                    fontSize:'12px',
+                                                    textAlign:'end',
+                                                    fontWeight: "bold",
+                                                    color: '#fb7185'
+                                                }}
+                                                >{entrega}</Typography>
+                                            </Grid>
+                                        </Grid>
+
+                                        <Grid container >
+                                            <Grid item xs={8}>
+                                                <Typography variant="body1" color="initial"
+                                                sx={{
+                                                    fontSize:'13px',
+                                                    color: '#fb7185',
+                                                    fontWeight: "bold",
+                                                }}
+                                                >Fecha y hora</Typography>
+                                            </Grid>
+                                            <Grid item xs={4}>
+                                                <Typography variant="body2" color="initial"
+                                                sx={{
+                                                    fontSize:'12px',
+                                                    textAlign:'end',
+                                                    fontWeight: "bold",
+                                                    color: '#fb7185',
+                                                }}
+                                                >{date.format('DD-MM-YYYY') } - {hora}</Typography>
+                                            </Grid>
+                                        </Grid>
+                                        <Grid container >
+                                            <Grid item xs={8}>
+                                                <Typography variant="body1" color="initial"
+                                                sx={{
+                                                    fontSize:'13px',
+                                                    color: '#fb7185',
+                                                    fontWeight: "bold",
+                                                }}
+                                                >Producto Extra</Typography>
+                                            </Grid>
+                                            <Grid item xs={4}>
+                                                <Typography variant="body2" color="initial"
+                                                sx={{
+                                                    fontSize:'12px',
+                                                    textAlign:'end',
+                                                    fontWeight: "bold",
+                                                    color: '#fb7185'
+
+                                                }}
+                                                >{productoExtra.nombreProductoExtra}</Typography>
+                                            </Grid>
+                                        </Grid>
+                                        <Grid container >
+                                            <Grid item xs={8}>
+                                                <Typography variant="body1" color="initial"
+                                                sx={{
+                                                    fontSize:'13px',
+                                                    color: '#fb7185',
+                                                    fontWeight: "bold",
+                                                }}
+                                                >Mensaje</Typography>
+                                            </Grid>
+                                            <Grid item xs={4}>
+                                                <Typography variant="body2" color="initial"
+                                                sx={{
+                                                    fontSize:'12px',
+                                                    textAlign:'end',
+                                                    fontWeight: "bold",
+                                                    color: '#fb7185'
+
+                                                }}
+                                                >{dedicatoria}</Typography>
+                                            </Grid>
+                                        </Grid>
                                     </Grid>
                                     <Grid>
                                         {habilitarDesabilitarBottonCompra ? (

@@ -32,9 +32,6 @@ export const addUser = async (nombre: string, apellido: string, email: string, p
 };
 
 export const productoOcasionId = async(idOcasion:string): Promise<Flower[]>=>{
-    // const userQuery = query(collection(db, 'Flores'), where('ocasion', '==', "0yVDjdZV0mHgHr3yEAYL"));
-    // const userSnapshot = await getDocs(userQuery);
-    // console.log(userSnapshot.docs.map(doc => {doc.id }))
 
     const userQuery = query(collection(db, 'Flores'), where('ocasion', '==', idOcasion));
     const userSnapshot = await getDocs(userQuery);
@@ -58,9 +55,9 @@ export const productoOcasionId = async(idOcasion:string): Promise<Flower[]>=>{
         return flower;
     });
     return products;
-    // console.log( userSnapshot.docs.map(doc => ({ ...doc.data(), id: doc.id, collection: 'Flores' })));
-
 }
+
+
 
 export const login = async (email: string, password: string) => {
 
@@ -143,6 +140,28 @@ export const getOcasiones = async (): Promise<Ocasionest[]> => {
 
 
 export const getProductById = async (productId: string): Promise<Flower | null> => {
+    const productDocRef = doc(db, 'Flores', productId);
+
+    try {
+        const docSnap = await getDoc(productDocRef);
+        if (docSnap.exists()) {
+            const productData = docSnap.data();
+            if (productData) {
+                return {
+                    id: docSnap.id,
+                    ...productData
+                } as Flower;
+            }
+        }
+        return null; // Return null if document does not exist
+    } catch (error) {
+        console.error('Error getting product:', error);
+        return null;
+    }
+};
+
+
+export const getexistenciaProductById = async (productId: string): Promise<Flower | null> => {
     const productDocRef = doc(db, 'Flores', productId);
 
     try {

@@ -169,7 +169,7 @@ export const stylesComponents = {
         transition: '0.5s',
         color: 'white',
         borderStyle:'none',
-        borderRadius:'50px',
+        // borderRadius:'50px',
         fontFamily:'Archivo Black, sans-serif',
         padding:'10px',
         width:'100%'
@@ -266,6 +266,41 @@ export const stylesComponents = {
         // height:'100px',
         display:'flex',
         position: 'relative',
+    },
+
+    botonRecogerProductoOpcion1:{
+        display:'block',
+        width:'100%',
+        backgroundColor:'#fb7185',
+        paddingTop:'15px',
+        paddingBottom:'15px',
+        borderRadius:'13px'
+    },
+
+    botonRecogerProductoOpcion2:{
+        display:'block',
+        width:'100%' ,
+        backgroundColor:'white',
+        paddingTop:'15px',
+        paddingBottom:'15px',
+        borderRadius:'13px'
+    },
+
+    botontipografia1RecogerProductoOpcion1:{
+        color:'white',
+        fontWeight:'bold'
+    },
+
+    botontipografia1RecogerProductoOpcion2:{
+        fontWeight:'bold'
+    },
+
+    botontipografia2RecogerProductoOpcion1:{
+        color:'white'
+    },
+
+    botontipografia2RecogerProductoOpcion2:{
+        color:'#737373'
     },
 
     //------------------------------Filtros------------------------------//

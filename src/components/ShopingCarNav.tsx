@@ -221,24 +221,15 @@ function ShopingCarNav() {
                                     <Grid container>
                                     <Grid item xs={6} >
                                         <Grid sx={{display:'flex'}}>
-                                        <Button>
-                                            +
-                                        </Button>
-                                            <Typography variant="subtitle1" color="initial">{item.cantidad }</Typography>
-                                        <Button>
-                                            -
-                                        </Button>
+                                            <Button>
+                                                +
+                                            </Button>
+                                                <Typography variant="subtitle1" color="initial">{item.cantidad }</Typography>
+                                            <Button>
+                                                -
+                                            </Button>
 
                                         </Grid>
-                                        {/* <TextField
-                                        id="outlined-number"
-                                        type="number"
-                                        variant="standard"
-                                        InputLabelProps={{
-                                            shrink: true,
-                                        }}
-                                        /> */}
-                                        
                                     </Grid>
                                     <Grid item xs={6} sx={{textAlign:'end'}}>
                                         <Button variant="text" onClick={() => eliminarItem(index)}>
