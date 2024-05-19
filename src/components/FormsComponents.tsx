@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable react-hooks/rules-of-hooks */
 /* eslint-disable @typescript-eslint/no-unused-vars */
 
@@ -74,6 +75,14 @@ function shopProducts() {
                         && formDataEnvio.telefono !=''
 
 
+    React.useEffect(() => {
+        let sumaTotal = 0;
+            item.forEach((item) => {
+                sumaTotal += (item.precio * item.cantidad)+( item.productoExtra.precioProductoExtra);
+            })
+            setTotalNumerico(sumaTotal);
+    }, [item]);
+
 
     React.useEffect(() => {
         const storedItems = localStorage.getItem('Productos');
@@ -89,12 +98,19 @@ function shopProducts() {
             setisUidUserLogin(userCredential.uid)
         }
 
-        const dinero = precioApAGAR()
+        // const dinero = precioApAGAR()
 
-        if (storedItems && dinero && storedItemsEnvio) {
+        if (storedItemsEnvio) {
             const parsedItems: CarritoDeCompra[] = JSON.parse(storedItems);
-            // console.log(parsedItems)
             const ItemsEnvio = parseFloat(storedItemsEnvio);
+
+            let dinero = 0
+
+            parsedItems.forEach((item) => {
+                dinero += (item.precio * item.cantidad)+( item.productoExtra.precioProductoExtra);
+            })
+
+
             setTotalNumerico(dinero+ItemsEnvio)
             setItems(parsedItems)
             settotalEnvio(ItemsEnvio)
@@ -102,14 +118,24 @@ function shopProducts() {
 
     }, [])
 
-    const precioApAGAR = () =>{
-        const precioPagar = localStorage.getItem('PrecioApagar');
-        if(!precioPagar){
-            return 0
-        }
-        return parseInt(precioPagar)
+    // React.useEffect(() => {
+    //     let sumaTotal = 0;
+    //         item.forEach((item) => {
+    //             sumaTotal += (item.precio * item.cantidad)+( item.productoExtra.precioProductoExtra);
+    //         })
+    //         setTotalNumerico(sumaTotal);
+    // }, [item]);
 
-    }
+    // const precioApAGAR = () =>{
+    //     // const precioPagar = localStorage.getItem('PrecioApagar');
+    //     let sumaTotal = 0;
+    //     item.forEach((item) => {
+    //         sumaTotal += (item.precio * item.cantidad)+( item.productoExtra.precioProductoExtra);
+    //     })
+
+    //     return sumaTotal
+
+    // }
 
     const handleChangeFacturacion = (e: { target: { name: string; value: unknown; }; }) => {
         const { name, value } = e.target;
@@ -210,7 +236,8 @@ function shopProducts() {
 
 
     const onApprove = async (data: { orderID: string }) => {
-        const dinero = precioApAGAR();
+        console.log(totalNumerico)
+        const dinero = totalNumerico
         return fetch(`${servelUrl}/api/orders/${data.orderID}/capture`, {
             method: "POST",
             headers: {
@@ -231,10 +258,8 @@ function shopProducts() {
                 console.log("resuñtado pago",result.paymentIntent);
 
                 if( true== isFormValid && isFormValidEnvio == true){
-
                     const datosPedidos = facturacionYEnvioTrue(dinero)
                     const newItem: NuevoPedido = datosPedidos
-
                     addPedido(newItem)
                     .then((pedidoId) => {
                         deleteCarrito()
@@ -245,7 +270,6 @@ function shopProducts() {
                         alert('Error al crear el método de pago intentelo mas tarde')
                     });
                     console.log(newItem)
-
                 }else{
                     const datosPedidos = facturacionYEnviofalse(dinero)
                     const newItem: NuevoPedido = datosPedidos
@@ -272,7 +296,8 @@ function shopProducts() {
 
 
     const createOrder = async (_data: CreateOrderData) => {
-        const dinero = precioApAGAR();
+        const dinero = totalNumerico
+        console.log(totalNumerico)
 
         return fetch(`${servelUrl}/api/orders`, {
             method: "POST",
@@ -309,7 +334,8 @@ function shopProducts() {
 
     const handleSubmit2 = async (e: React.FormEvent) => {
         e.preventDefault();
-        const dinero = precioApAGAR();
+        const dinero = totalNumerico
+        console.log(totalNumerico)
 
         // console.log(isFormValid, isChecked, isFormValidEnvio)
         if(true== isChecked != isFormValidEnvio == true){
@@ -429,6 +455,20 @@ function shopProducts() {
         }
         setIsChecked(e)
     }
+
+    const eliminarItem = (index: number) => {
+        const updatedItems = [...item.slice(0, index), ...item.slice(index + 1)];
+        if (updatedItems.length === 0) {
+            localStorage.removeItem('Productos');
+            localStorage.removeItem('envio');
+            localStorage.removeItem('PrecioApagar');
+            setItems([]);
+            // setIsSetItems(false)
+        } else {
+            localStorage.setItem('Productos', JSON.stringify(updatedItems));
+            setItems(updatedItems);
+        }
+    };
 
 
     const cardElementOptions = {
@@ -736,15 +776,15 @@ function shopProducts() {
                         </Grid>
                         <Grid item xs={12} md={6}  p={10}>
                             <Grid>
-                                {item && item.map((item) => (
+                                {item && item.map((item, index) => (
                                     <Grid container pt={1} sx={{
                                         borderBottomWidth: '1px',
                                         borderBottomColor: '#80808040',
                                         borderBottomStyle: 'solid',
 
                                     }}>
-                                        <Grid item xs={3} >
-                                            <img src={item.imagen} alt="" style={{width:'80%', borderRadius:'10px'}}/>
+                                        <Grid item xs={3} sx={{height:'100px' }}>
+                                            <img src={item.imagen} alt="" style={{width:'90%', height:'100%', borderRadius:'10px'}}/>
                                         </Grid>
                                         <Grid item xs={9} p={1}>
                                             <Grid container >
@@ -783,7 +823,7 @@ function shopProducts() {
                                                         fontSize:'12px',
                                                         textAlign:'end'
                                                     }}
-                                                    >En tienda</Typography>
+                                                    >{item.entrega}</Typography>
                                                 </Grid>
                                             </Grid>
                                             <Grid container>
@@ -805,6 +845,50 @@ function shopProducts() {
                                                 }}
                                                 >
                                                     {item.fecha } - {item.hora }
+                                                </Typography>
+                                                </Grid>
+                                            </Grid>
+                                            <Grid container>
+                                                <Grid item xs={6}>
+                                                    <Typography variant="body1" color="initial"
+                                                    sx={{
+                                                        color:'#6a6a6a',
+                                                        fontWeight: "bold",
+                                                        fontStyle: "normal",
+                                                        fontSize:'12px'
+                                                    }}
+                                                    >Producto Extra</Typography>
+                                                </Grid>
+                                                <Grid item xs={6}>
+                                                <Typography variant="body2" color="initial"
+                                                sx={{
+                                                    fontSize:'12px',
+                                                    textAlign:'end'
+                                                }}
+                                                >
+                                                    {item.productoExtra.nombreProductoExtra }
+                                                </Typography>
+                                                </Grid>
+                                            </Grid>
+                                            <Grid container>
+                                                <Grid item xs={8}>
+                                                    <Typography variant="body1" color="initial"
+                                                    sx={{
+                                                        color:'#6a6a6a',
+                                                        fontWeight: "bold",
+                                                        fontStyle: "normal",
+                                                        fontSize:'12px'
+                                                    }}
+                                                    >Precio Producto Extra</Typography>
+                                                </Grid>
+                                                <Grid item xs={4}>
+                                                <Typography variant="body2" color="initial"
+                                                sx={{
+                                                    fontSize:'12px',
+                                                    textAlign:'end'
+                                                }}
+                                                >
+                                                    ${item.productoExtra.precioProductoExtra }
                                                 </Typography>
                                                 </Grid>
                                             </Grid>
@@ -836,7 +920,42 @@ function shopProducts() {
                                             </Grid>
 
                                         </Grid>
+
+
+                                        <Grid item xs={12} sx={{
+                                            borderBlockWidth: '1px',
+                                            borderBottomColor: '#dadada',
+                                            borderBottomStyle: 'double'
+                                        }}>
+                                            <Grid container>
+                                                <Grid item xs={6} >
+                                                    <Grid sx={{display:'flex'}}>
+                                                        <Button>
+                                                            +
+                                                        </Button>
+                                                            <Typography variant="subtitle1" color="initial">{item.cantidad }</Typography>
+                                                        <Button>
+                                                            -
+                                                        </Button>
+
+                                                    </Grid>
+                                                </Grid>
+                                                <Grid item xs={6} sx={{textAlign:'end'}}>
+                                                    <Button variant="text" onClick={() => eliminarItem(index)}>
+                                                    {/* <Button variant="text">  */}
+                                                        Eliminar
+                                                    </Button>
+                                                </Grid>
+                                            </Grid>
+                                        </Grid>
+
+
+
+
                                     </Grid>
+
+
+
                                 ))}
                             </Grid>
                             <Grid>

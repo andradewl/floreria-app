@@ -42,6 +42,7 @@ interface carritoDeCompra {
     fecha: string;
     hora: string;
     cantidad:number;
+    entrega:string;
     productoExtra: {
         nombreProductoExtra: string;
         precioProductoExtra: number;

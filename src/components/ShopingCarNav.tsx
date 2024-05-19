@@ -16,6 +16,7 @@ function ShopingCarNav() {
         bottom: false,
         right: false,
     });
+
     const navigate = useNavigate()
 
 
@@ -48,13 +49,13 @@ function ShopingCarNav() {
     }, []);
 
 
-    React.useEffect(() => {
-        let sumaTotal = 0;
-            items.forEach((item) => {
-                sumaTotal += (item.precio * item.cantidad)+( item.productoExtra.precioProductoExtra);
-            })
-            setTotalNumerico(sumaTotal);
-    }, [items]);
+    // React.useEffect(() => {
+    //     let sumaTotal = 0;
+    //         items.forEach((item) => {
+    //             sumaTotal += (item.precio * item.cantidad)+( item.productoExtra.precioProductoExtra);
+    //         })
+    //         setTotalNumerico(sumaTotal);
+    // }, [items]);
 
 
     const eliminarItem = (index: number) => {
@@ -71,8 +72,6 @@ function ShopingCarNav() {
         }
     };
 
-
-    
 
     const handleRedirectToShopingProducts = (total:number) => {
         localStorage.setItem('PrecioApagar', JSON.stringify(total));
@@ -119,8 +118,8 @@ function ShopingCarNav() {
                                 borderBottomStyle: 'solid',
 
                             }}  pt={1}>
-                                <Grid item xs={3} >
-                                    <img src={item.imagen} alt="" style={{width:'80%', borderRadius:'10px'}}/>
+                                <Grid item xs={3} sx={{height:'90px' }}>
+                                    <img src={item.imagen} alt="" style={{width:'90%', height:'100%', borderRadius:'10px'}}/>
                                 </Grid>
                                 <Grid item xs={9} p={1}>
                                     <Grid container >
@@ -159,7 +158,7 @@ function ShopingCarNav() {
                                                 fontSize:'12px',
                                                 textAlign:'end'
                                             }}
-                                            >En tienda</Typography>
+                                            >{item.entrega}</Typography>
                                         </Grid>
                                     </Grid>
                                     <Grid container>
@@ -184,7 +183,51 @@ function ShopingCarNav() {
                                         </Typography>
                                         </Grid>
                                     </Grid>
-                                    <Grid container sx={{marginBottom:'20px'}}>
+                                    <Grid container>
+                                        <Grid item xs={6}>
+                                            <Typography variant="body1" color="initial"
+                                            sx={{
+                                                color:'#6a6a6a',
+                                                fontWeight: "bold",
+                                                fontStyle: "normal",
+                                                fontSize:'12px'
+                                            }}
+                                            >Producto Extra</Typography>
+                                        </Grid>
+                                        <Grid item xs={6}>
+                                        <Typography variant="body2" color="initial"
+                                        sx={{
+                                            fontSize:'12px',
+                                            textAlign:'end'
+                                        }}
+                                        >
+                                            {item.productoExtra.nombreProductoExtra }
+                                        </Typography>
+                                        </Grid>
+                                    </Grid>
+                                    <Grid container>
+                                        <Grid item xs={8}>
+                                            <Typography variant="body1" color="initial"
+                                            sx={{
+                                                color:'#6a6a6a',
+                                                fontWeight: "bold",
+                                                fontStyle: "normal",
+                                                fontSize:'12px'
+                                            }}
+                                            >Precio Producto Extra</Typography>
+                                        </Grid>
+                                        <Grid item xs={4}>
+                                        <Typography variant="body2" color="initial"
+                                        sx={{
+                                            fontSize:'12px',
+                                            textAlign:'end'
+                                        }}
+                                        >
+                                            ${item.productoExtra.precioProductoExtra }
+                                        </Typography>
+                                        </Grid>
+                                    </Grid>
+                                    <Grid container sx={{marginBottom:'10px'}}>
                                         <Grid item xs={4}>
                                             <Typography variant="body1" color="initial"
                                             sx={{
@@ -216,26 +259,14 @@ function ShopingCarNav() {
                                 <Grid item xs={12} sx={{
                                         borderBlockWidth: '1px',
                                         borderBottomColor: '#dadada',
-                                        borderBottomStyle: 'double'
+                                        borderBottomStyle: 'double',
                                 }}>
-                                    <Grid container>
-                                    <Grid item xs={6} >
-                                        <Grid sx={{display:'flex'}}>
-                                            <Button>
-                                                +
+                                    <Grid container sx={{marginBottom:'10px'}}>
+                                        <Grid item xs={12} sx={{textAlign:'end'}}>
+                                            <Button variant="text" onClick={() => eliminarItem(index)}>
+                                                Eliminar
                                             </Button>
-                                                <Typography variant="subtitle1" color="initial">{item.cantidad }</Typography>
-                                            <Button>
-                                                -
-                                            </Button>
-
                                         </Grid>
-                                    </Grid>
-                                    <Grid item xs={6} sx={{textAlign:'end'}}>
-                                        <Button variant="text" onClick={() => eliminarItem(index)}>
-                                            Eliminar
-                                        </Button>
-                                    </Grid>
                                     </Grid>
                                 </Grid>
                             </Grid>

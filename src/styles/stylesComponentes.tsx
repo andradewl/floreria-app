@@ -271,6 +271,7 @@ export const stylesComponents = {
     botonRecogerProductoOpcion1:{
         display:'block',
         width:'100%',
+        color:'white',
         backgroundColor:'#fb7185',
         paddingTop:'15px',
         paddingBottom:'15px',
