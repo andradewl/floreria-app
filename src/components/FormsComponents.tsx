@@ -13,6 +13,7 @@ import { PaymentMethod } from '@stripe/stripe-js';
 import { WidthFull } from '@mui/icons-material';
 import { addPedido } from '../config/apiFirebase';
 import { useNavigate } from "react-router-dom";
+import { setLocalStorage } from '../config/LocalStorage';
 
 
 function shopProducts() {
@@ -28,6 +29,8 @@ function shopProducts() {
     const [totalEnvio, settotalEnvio] =  React.useState<number>(0);
     const [isChecked, setIsChecked] = React.useState(false);
     const [isUidUserLogin, setisUidUserLogin] = React.useState(null);
+
+    let totalPagoPaypal: number;
 
     const [formDataFacturacion, setFormDataFacturacion] =React.useState({
         nombre: '',
@@ -76,18 +79,9 @@ function shopProducts() {
 
 
     React.useEffect(() => {
-        let sumaTotal = 0;
-            item.forEach((item) => {
-                sumaTotal += (item.precio * item.cantidad)+( item.productoExtra.precioProductoExtra);
-            })
-            setTotalNumerico(sumaTotal);
-    }, [item]);
-
-
-    React.useEffect(() => {
         const storedItems = localStorage.getItem('Productos');
-        const storedItemsEnvio = localStorage.getItem('envio');
         const storedUserName = sessionStorage.getItem('credentials');
+        let dinero = 0
 
         if(!storedItems){
             return navigate("/");
@@ -98,25 +92,48 @@ function shopProducts() {
             setisUidUserLogin(userCredential.uid)
         }
 
+        const parsedItems: CarritoDeCompra[] = JSON.parse(storedItems);
+
+        parsedItems.forEach((item) => {
+            dinero += (item.precio * item.cantidad)+( item.productoExtra.precioProductoExtra);
+        })
+
+        setLocalStorage("precioTotal", dinero)
+
+        setTotalNumerico(dinero)
+        setItems(parsedItems)
+        // settotalEnvio(ItemsEnvio)
         // const dinero = precioApAGAR()
 
-        if (storedItemsEnvio) {
-            const parsedItems: CarritoDeCompra[] = JSON.parse(storedItems);
-            const ItemsEnvio = parseFloat(storedItemsEnvio);
+        // if (storedItemsEnvio) {
+        //     const parsedItems: CarritoDeCompra[] = JSON.parse(storedItems);
+        //     const ItemsEnvio = parseFloat(storedItemsEnvio);
 
-            let dinero = 0
+        //     let dinero = 0
 
-            parsedItems.forEach((item) => {
-                dinero += (item.precio * item.cantidad)+( item.productoExtra.precioProductoExtra);
-            })
+        //     parsedItems.forEach((item) => {
+        //         dinero += (item.precio * item.cantidad)+( item.productoExtra.precioProductoExtra);
+        //     })
 
 
-            setTotalNumerico(dinero+ItemsEnvio)
-            setItems(parsedItems)
-            settotalEnvio(ItemsEnvio)
-        }
+        //     setTotalNumerico(dinero)
+        //     setItems(parsedItems)
+        //     settotalEnvio(ItemsEnvio)
+        // }
 
     }, [])
+
+    React.useEffect(() => {
+        totalPagoPaypal=totalNumerico
+    }, [totalNumerico]);
+
+    React.useEffect(() => {
+        let sumaTotal = 0;
+            item.forEach((item) => {
+                sumaTotal += (item.precio * item.cantidad)+( item.productoExtra.precioProductoExtra);
+            })
+            setTotalNumerico(sumaTotal);
+    }, [item]);
 
     // React.useEffect(() => {
     //     let sumaTotal = 0;
@@ -126,16 +143,16 @@ function shopProducts() {
     //         setTotalNumerico(sumaTotal);
     // }, [item]);
 
-    // const precioApAGAR = () =>{
-    //     // const precioPagar = localStorage.getItem('PrecioApagar');
-    //     let sumaTotal = 0;
-    //     item.forEach((item) => {
-    //         sumaTotal += (item.precio * item.cantidad)+( item.productoExtra.precioProductoExtra);
-    //     })
+    const precioApAGAR = () =>{
+        // const precioPagar = localStorage.getItem('PrecioApagar');
+        let sumaTotal = 0;
+        item.forEach((nomber) => {
+            sumaTotal += (nomber.precio * nomber.cantidad)+( nomber.productoExtra.precioProductoExtra);
+        })
 
-    //     return sumaTotal
+        return sumaTotal
 
-    // }
+    }
 
     const handleChangeFacturacion = (e: { target: { name: string; value: unknown; }; }) => {
         const { name, value } = e.target;
@@ -295,41 +312,73 @@ function shopProducts() {
 
 
 
-    const createOrder = async (_data: CreateOrderData) => {
-        const dinero = totalNumerico
-        console.log(totalNumerico)
+    // const createOrder = async (_data: CreateOrderData) => {
+    //     const dinero = totalNumerico
+    //     const tostringDinero = dinero.toString()
+    //     // console.log(dinero.toString())
 
-        return fetch(`${servelUrl}/api/orders`, {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json",
-            },
-            body: JSON.stringify({
-            purchase_units: [
-                {
-                    amount: {
-                        value: dinero,
-                        currency_code: 'MXN'
+    //     return fetch(`${servelUrl}/api/orders`, {
+    //         method: "POST",
+    //         headers: {
+    //             "Content-Type": "application/json",
+    //         },
+    //         body: JSON.stringify({
+    //             cart: {
+    //                 id: "YOUR_PRODUCT_ID",
+    //                 descripcion: "Productos Floreria Rickys",
+    //                 quantity: tostringDinero
+    //             },
+    //         })
+    //     }).then((response) => {
+    //         if (!response.ok) {
+    //         throw new Error("Error al crear la orden.");
+    //         }
+    //         return response.json();
+    //     }).then((order) => {
+    //         console.log("Orden creada:", order);
+    //         return order.id;
+    //     }).catch((error) => {
+    //         console.error("Error al crear la orden:", error.message);
+    //     });
+    // };
+
+
+
+    const createOrder = async (_data: CreateOrderData, pago: number) => {
+        // let sumaTotal = 0;
+        // item.forEach((nomber) => {
+        //     sumaTotal += (nomber.precio * nomber.cantidad)+( nomber.productoExtra.precioProductoExtra);
+        // })
+
+        const value = localStorage.getItem("precioTotal");
+        // console.log(dinero, dinero2, dinero3, value)
+
+        try {
+            const response = await fetch(`${servelUrl}/api/orders`, {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify({
+                    cart: {
+                        id: "YOUR_PRODUCT_ID",
+                        descripcion: "Productos Floreria Rickys",
+                        quantity: value,
                     },
-                }
-            ],
-            cart: {
-                id: "YOUR_PRODUCT_ID",
-                descripcion: "Productos Floreria Rickys",
-                quantity: dinero
-            },
-            })
-        }).then((response) => {
+                }),
+            });
+
             if (!response.ok) {
-            throw new Error("Error al crear la orden.");
+                throw new Error("Error al crear la orden.");
             }
-            return response.json();
-        }).then((order) => {
+
+            const order = await response.json();
             console.log("Orden creada:", order);
             return order.id;
-        }).catch((error) => {
-            console.error("Error al crear la orden:", error.message);
-        });
+        } catch (error) {
+            console.error("Error al crear la orden:", error);
+            throw error; // rethrow the error after logging it
+        }
     };
 
     const handleSubmit2 = async (e: React.FormEvent) => {
@@ -765,7 +814,7 @@ function shopProducts() {
                                         fontStyle: "normal"
                                     }}>o pago con paypal</Typography>
                                     <PayPalButtons
-                                        createOrder={(data) => createOrder(data)}
+                                        createOrder={(data) => createOrder(data, totalNumerico)}
                                         onApprove={(data) => onApprove(data)}
                                         fundingSource={FUNDING.PAYPAL}
                                         disabled={!isFormValid}

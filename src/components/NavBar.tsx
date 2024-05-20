@@ -46,7 +46,7 @@ function ResponsiveAppBar() {
   const fetchOcasiones = async () => {
     try {
         const OcasionesData = await getOcasiones();
-        console.log(OcasionesData)
+        // console.log(OcasionesData)
         setOcasiones(OcasionesData);
     } catch (error) {
         console.error('Error fetching ocasiones:', error);
@@ -773,7 +773,10 @@ function ResponsiveAppBar() {
     if (storedUserCredentials && storedUserName) {
       const userCredential = JSON.parse(storedUserCredentials);
       const userInfo = JSON.parse(storedUserName);
-      console.log(userCredential.email, userInfo.email);
+
+      userCredential
+      userInfo
+      // console.log(userCredential.email, userInfo.email);
     }
   },[])
 
@@ -792,7 +795,7 @@ function ResponsiveAppBar() {
   const handleScroll = () => {
     const scrollTop = window.scrollY;
 
-    console.log(scrollTop)
+    // console.log(scrollTop)
     if (scrollTop == 0) {
       setIsScrolled(false);
     } else {
