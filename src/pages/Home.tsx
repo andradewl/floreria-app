@@ -8,7 +8,7 @@ import React from "react";
 import { Flower, Ocasionest } from "../interfaces/interfaces"
 import { useNavigate } from 'react-router-dom';
 import BarraDeBusqueda from "../components/BarraDeBusqueda";
-
+import videoBanner from '../assets/banners/videobanner.gif'
 function Home(){
 
     const navigate = useNavigate()
@@ -39,7 +39,7 @@ function Home(){
         <>
             <Grid sx={{width:'100%', position: 'relative'}}>
                 <Grid sx={{width:'100%', height: {xs:'300px', md:'auto'}, position:'relative', zIndex:1}}>
-                    <img src="https://firebasestorage.googleapis.com/v0/b/prowlflores.appspot.com/o/multimedia%2Fimagenes%2FFondos%2FCaptura%20de%20pantalla%202024-05-09%20121118.png?alt=media&token=5b4c51d7-b60f-4f9a-9504-31cb33650362" style={{width:'100%', height:'100%', objectFit:'cover', objectPosition:'left'}} alt="" />
+                    <img src={videoBanner} style={{width:'100%', height:'100%', objectFit:'cover', objectPosition:'left'}} alt="" />
                 </Grid>
                 <Grid sx={{position: 'absolute',top: 0, left: 0, width: '100%', height: '100%', backgroundColor: '#0000004d', zIndex: 2}}>
                     <Grid sx={{ paddingLeft:"2%", paddingTop:{xs: "20%", sm:"12%",md:"13%"} }}>
