@@ -26,11 +26,12 @@ function shopProducts() {
     const [item, setItems] = React.useState<CarritoDeCompra[]>([]);
     const [totalNumerico, setTotalNumerico] = React.useState<number>(0);
 
-    const [totalEnvio, settotalEnvio] =  React.useState<number>(0);
+    const [totalEnvio] =  React.useState<number>(0);
+
     const [isChecked, setIsChecked] = React.useState(false);
     const [isUidUserLogin, setisUidUserLogin] = React.useState(null);
 
-    let totalPagoPaypal: number;
+    // let totalPagoPaypal;
 
     const [formDataFacturacion, setFormDataFacturacion] =React.useState({
         nombre: '',
@@ -123,9 +124,9 @@ function shopProducts() {
 
     }, [])
 
-    React.useEffect(() => {
-        totalPagoPaypal=totalNumerico
-    }, [totalNumerico]);
+    // React.useEffect(() => {
+    //     totalPagoPaypal=totalNumerico
+    // }, [totalNumerico]);
 
     React.useEffect(() => {
         let sumaTotal = 0;
@@ -143,16 +144,16 @@ function shopProducts() {
     //         setTotalNumerico(sumaTotal);
     // }, [item]);
 
-    const precioApAGAR = () =>{
-        // const precioPagar = localStorage.getItem('PrecioApagar');
-        let sumaTotal = 0;
-        item.forEach((nomber) => {
-            sumaTotal += (nomber.precio * nomber.cantidad)+( nomber.productoExtra.precioProductoExtra);
-        })
+    // const precioApAGAR = () =>{
+    //     // const precioPagar = localStorage.getItem('PrecioApagar');
+    //     let sumaTotal = 0;
+    //     item.forEach((nomber) => {
+    //         sumaTotal += (nomber.precio * nomber.cantidad)+( nomber.productoExtra.precioProductoExtra);
+    //     })
 
-        return sumaTotal
+    //     return sumaTotal
 
-    }
+    // }
 
     const handleChangeFacturacion = (e: { target: { name: string; value: unknown; }; }) => {
         const { name, value } = e.target;
@@ -344,7 +345,7 @@ function shopProducts() {
 
 
 
-    const createOrder = async (_data: CreateOrderData, pago: number) => {
+    const createOrder = async (_data: CreateOrderData) => {
         // let sumaTotal = 0;
         // item.forEach((nomber) => {
         //     sumaTotal += (nomber.precio * nomber.cantidad)+( nomber.productoExtra.precioProductoExtra);
@@ -814,7 +815,7 @@ function shopProducts() {
                                         fontStyle: "normal"
                                     }}>o pago con paypal</Typography>
                                     <PayPalButtons
-                                        createOrder={(data) => createOrder(data, totalNumerico)}
+                                        createOrder={(data) => createOrder(data)}
                                         onApprove={(data) => onApprove(data)}
                                         fundingSource={FUNDING.PAYPAL}
                                         disabled={!isFormValid}
