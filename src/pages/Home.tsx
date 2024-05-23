@@ -8,7 +8,7 @@ import React from "react";
 import { Flower, Ocasionest } from "../interfaces/interfaces"
 import { useNavigate } from 'react-router-dom';
 import BarraDeBusqueda from "../components/BarraDeBusqueda";
-import videoBanner from '../assets/banners/videobanner.gif'
+import videoBanner from '../assets/banners/videobanner2.gif'
 function Home(){
 
     const navigate = useNavigate()
