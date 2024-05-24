@@ -10,6 +10,7 @@ export const stylesComponents = {
     },
     appBarScrolled:{
         color:'black',
+        width:'100%',
         background: "rgba(255, 255, 255, 0.95)",
         boxShadow: "0 4px 30px rgba(0, 0, 0, 0.1)",
         backdropFilter: "blur(11.7px)",
@@ -88,22 +89,23 @@ export const stylesComponents = {
         borderRadius:'30px',
         margin:'10px',
         color:'white',
-        width:'100px',
+        width:'150px',
     },
 
     butonMenuCarrito2:{
+        width:'150px',
         fontSize:'11px',
         borderRadius:'30px',
         margin:'10px',
-        color:'black',
-        width:'100px',
+        color:'black'
+        
     },
     butonMenuCarritoScroll:{
         fontSize:'11px',
         borderRadius:'30px',
         margin:'10px',
         color:'black',
-        width:'100px'
+        width:'150px'
     },
     menuResponsivo:{
         display:{xs:'flex', md:'none'},

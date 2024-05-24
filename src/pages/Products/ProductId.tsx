@@ -20,9 +20,10 @@ import { getProductById, getProductsExtraByIds } from '../../config/apiFirebase'
 import { Flower, CarritoDeCompra, ProductoExtra } from '../../interfaces/interfaces'
 
 import { setLocalStorage, getLocalStorage } from '../../config/LocalStorage'
-import { useNavigate } from 'react-router-dom';
+// import { useNavigate } from 'react-router-dom';
 import CheckCircleIcon from '@mui/icons-material/CheckCircle';
 import ShopingCarNav from '../../components/ShopingCarNav';
+import Carga from '../../components/Carga';
 
 
 type Anchor = 'top' | 'left' | 'bottom' | 'right';
@@ -31,7 +32,7 @@ function ProductId(){
     // const navigate = useNavigate()
     const { id } = useParams();
     const theme = useTheme();
-    const navigate = useNavigate()
+    // const navigate = useNavigate()
 
     const [product, setProduct] = React.useState<Flower | null>(null);
     const [activeStep, setActiveStep] = React.useState(0);
@@ -305,7 +306,9 @@ function ProductId(){
         const updatedCarritoDeCompra = [...carritoDeCompra, newItem];
         setCarritoDeCompra(updatedCarritoDeCompra);
         setLocalStorage('Productos', updatedCarritoDeCompra);
-        navigate('/shopProducts')
+        window.location.href = '/shopProducts';
+
+        // navigate('/shopProducts')
     }
 
     const guardarDatos =(id:string,nombre: string, precio: number, imagen:string)=>{
@@ -335,7 +338,8 @@ function ProductId(){
         setCarritoDeCompra(updatedCarritoDeCompra);
         setLocalStorage('Productos', updatedCarritoDeCompra);
         // navigate('/shoppingCart');
-        navigate('/shopProducts')
+        window.location.href = '/shopProducts';
+        // navigate('/shopProducts')
     }
 
 
@@ -375,7 +379,7 @@ function ProductId(){
     // }
 
     if (!product) {
-        return <div>Loading...</div>;
+        return <Carga />;
     }
 
     return(

@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import * as React from 'react';
 import AppBar from '@mui/material/AppBar';
 import Typography from '@mui/material/Typography';
@@ -8,7 +9,7 @@ import '../styles/estilosCss.css'
 import { Box, Collapse, Drawer, Grid, List, ListItem, ListItemButton, ListItemIcon, ListItemText, Menu, MenuItem } from '@mui/material';
 import { stylesComponents } from '../styles/stylesComponentes';
 import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useLocation  } from 'react-router-dom';
 import MenuIcon from '@mui/icons-material/Menu';
 import { Ocasionest } from '../interfaces/interfaces';
 import { getOcasiones } from '../config/apiFirebase';
@@ -23,11 +24,37 @@ import ShopingCarNav from './ShopingCarNav';
 type Anchor = 'top' | 'left' | 'bottom' | 'right';
 
 function ResponsiveAppBar() {
+
+  const location = useLocation();
+
   const navigate = useNavigate()
   const [isScrolled, setIsScrolled] = React.useState(false);
   const [ocasiones, setOcasiones] = React.useState<Ocasionest[]>([]);
   const [openOcasiones, setOpenOcasiones] = React.useState(true);
-  const [currentView, setCurrentView] = React.useState('inicio');
+  const [currentView, setCurrentView] = React.useState('/');
+  const [precioAPagar, setPrecioAPagarw] = React.useState('0');
+
+
+  React.useEffect(()=>{
+    const rutaActual = location.pathname
+    const storedUserCredentials = sessionStorage.getItem('credentials');
+    const storedUserName = sessionStorage.getItem('userlogIn');
+
+    const value = localStorage.getItem("precioTotal");
+
+    if (storedUserCredentials && storedUserName) {
+      const userCredential = JSON.parse(storedUserCredentials);
+      const userInfo = JSON.parse(storedUserName);
+
+      userCredential
+      userInfo
+      // console.log(userCredential.email, userInfo.email);
+    }
+
+    setCurrentView(rutaActual)
+    value ? setPrecioAPagarw(value) :setPrecioAPagarw("0")
+
+  },[])
 
   const changeView = (viewName: React.SetStateAction<string>) => {
     setCurrentView(viewName);
@@ -85,7 +112,7 @@ function ResponsiveAppBar() {
       onKeyDown={toggleDrawer(anchor, false)}
     >
       <List>
-        <ListItem key={"Inicio"}  onClick={()=>{changeView("inicio"),navigate('/')}} disablePadding>
+        <ListItem key={"Inicio"}  onClick={()=>{changeView("/"),navigate('/')}} disablePadding>
           <ListItemButton>
             <ListItemIcon>
               <HomeIcon />
@@ -766,19 +793,7 @@ function ResponsiveAppBar() {
   //   </Grid>
   // );
 
-  React.useEffect(()=>{
-    const storedUserCredentials = sessionStorage.getItem('credentials');
-    const storedUserName = sessionStorage.getItem('userlogIn');
-
-    if (storedUserCredentials && storedUserName) {
-      const userCredential = JSON.parse(storedUserCredentials);
-      const userInfo = JSON.parse(storedUserName);
-
-      userCredential
-      userInfo
-      // console.log(userCredential.email, userInfo.email);
-    }
-  },[])
+  
 
 
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
@@ -850,11 +865,11 @@ function ResponsiveAppBar() {
               sx={{width:'70%', display:{xs:'none', md:'flex'}, justifyContent:'end'}}
             >
               <Button
-                sx={isScrolled ? stylesComponents.butonMenuScroll : currentView=="inicio"?stylesComponents.butonMenu:stylesComponents.butonMenu2}
-                onClick={()=>{changeView("inicio"), navigate('/')}}
+                sx={isScrolled ? stylesComponents.butonMenuScroll : currentView=="/"?stylesComponents.butonMenu:stylesComponents.butonMenu2}
+                onClick={()=>{changeView("/"), navigate('/')}}
               >Inicio</Button>
               <Button
-                sx={isScrolled ? stylesComponents.butonMenuScroll : currentView=="inicio"?stylesComponents.butonMenu:stylesComponents.butonMenu2}
+                sx={isScrolled ? stylesComponents.butonMenuScroll : currentView=="/"?stylesComponents.butonMenu:stylesComponents.butonMenu2}
                 id="basic-button"
                 aria-controls={open ? 'basic-menu' : undefined}
                 aria-haspopup="true"
@@ -880,11 +895,11 @@ function ResponsiveAppBar() {
                 sx={isScrolled ? stylesComponents.butonMenuScroll : stylesComponents.butonMenu}
               >Ocasiones</Button> */}
               <Button
-                sx={isScrolled ? stylesComponents.butonMenuScroll : currentView=="inicio"?stylesComponents.butonMenu:stylesComponents.butonMenu2}
+                sx={isScrolled ? stylesComponents.butonMenuScroll : currentView=="/"?stylesComponents.butonMenu:stylesComponents.butonMenu2}
                 onClick={()=>{changeView("contacto"), navigate('/newContacto')}}
               >Contacto</Button>
               <Button
-                sx={isScrolled ? stylesComponents.butonMenuScroll : currentView=="inicio"?stylesComponents.butonMenu:stylesComponents.butonMenu2}
+                sx={isScrolled ? stylesComponents.butonMenuScroll : currentView=="/"?stylesComponents.butonMenu:stylesComponents.butonMenu2}
                 onClick={()=>{changeView("login"), navigate('/Login')}}
               >Login</Button>
             </Grid>
@@ -898,13 +913,13 @@ function ResponsiveAppBar() {
               textAlign:'end'
             }}>
               <Button
-                sx={isScrolled ? stylesComponents.butonMenuCarritoScroll : currentView=="inicio" ? stylesComponents.butonMenuCarrito:stylesComponents.butonMenuCarrito2}
+                sx={isScrolled ? stylesComponents.butonMenuCarritoScroll : currentView=="/" ? stylesComponents.butonMenuCarrito:stylesComponents.butonMenuCarrito2}
                 onClick={toggleDrawer("right", true)}
-              ><ShoppingCartIcon sx={{fontSize:'15px'}}/> Total ($0)</Button>
+              ><ShoppingCartIcon sx={{fontSize:'15px'}}/> Total (${precioAPagar})</Button>
             </Grid>
 
             {/* Menu movil */}
-            <Grid sx={currentView=="inicio"?stylesComponents.menuResponsivo:stylesComponents.menuResponsivo2} onClick={toggleDrawer("left", true)}>
+            <Grid sx={currentView=="/"?stylesComponents.menuResponsivo:stylesComponents.menuResponsivo2} onClick={toggleDrawer("left", true)}>
               <MenuIcon/>
             </Grid>
 

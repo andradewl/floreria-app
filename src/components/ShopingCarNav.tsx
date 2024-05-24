@@ -295,6 +295,6 @@ function ShopingCarNav() {
             </Grid>
         </Grid>
     )
-} 
+}
 
 export default ShopingCarNav

@@ -28,16 +28,29 @@ import Completeion from "./pages/ShopProduct/Completeion";
 import PerfilUsuario from "./pages/PerfilUsuario";
 import ocasionesProductos from "./pages/Products/ocasionesProductos";
 
-
+import Carga from "./components/Carga";
+import React from "react";
 
 
 function App() {
+
+  const [loading, setLoading] = React.useState(true);
 
   const initialOptions = {
     "clientId":"Ac5z9jFzq7vM1OfhlHDJca7sGVhMmyfXSQeSwJE0nxoXboxS_6hSVVy1ownxLWjmXD89Ad66Ql3ivC2V",
     "currency":"MXN",
     "intent":"capture"
   }
+
+  setTimeout(() => {
+    setLoading(false);
+  }, 3000);
+
+
+  if (loading) {
+    return <Carga />;
+  }
+
 
   return (
     <PayPalScriptProvider options={initialOptions}>
@@ -64,6 +77,7 @@ function App() {
           <Route path="/HistPedidosAdmin" Component={HistPedidosAdmin} />
           <Route path="/EstatusEnvioAdministrador" Component={EstatusEnvioAdministrador} />
           <Route path="/ocasion/:nombreOcasion/:id" Component={ocasionesProductos} />
+          <Route path="/pantallaCarga" Component={Carga} />
         </Routes>
 
         <Footer/>

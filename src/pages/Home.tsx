@@ -6,18 +6,25 @@ import '../styles/fuentes.css'
 import { getOcasiones, getProducts } from "../config/apiFirebase";
 import React from "react";
 import { Flower, Ocasionest } from "../interfaces/interfaces"
-import { useNavigate } from 'react-router-dom';
+// import { useNavigate } from 'react-router-dom';
 import BarraDeBusqueda from "../components/BarraDeBusqueda";
 import videoBanner from '../assets/banners/videobanner2.gif'
 function Home(){
 
-    const navigate = useNavigate()
+    // const navigate = useNavigate()
     const [flores, setFlores] = React.useState<Flower[]>([]);
     const [ocasinesDataId, setOcasinesDataId] = React.useState<Ocasionest[]>([]);
 
     React.useEffect(()=>{
         fetchFlores()
     },[])
+
+
+
+    const redireccionConRefresh = (nombre:string, id:string)=>{
+        const redireccion = "ocasion/"+nombre+"/"+id
+        window.location.href = redireccion
+    }
 
 
     const fetchFlores = async () => {
@@ -32,7 +39,9 @@ function Home(){
     };
 
     const handleRedirectToProductId = (id:string) => {
-        navigate('/Producto/'+id);
+        const redireccion = "Producto/"+id
+        window.location.href = redireccion
+        // navigate('/Producto/'+);
     };
 
     return(
@@ -117,7 +126,7 @@ function Home(){
                                     <Grid sx={stylesComponents.contenedorImagen}>
                                         <img src={item.imagen} alt="" width={'100%'} height={'100%'} style={{ objectFit: 'cover'}}/>
                                     </Grid>
-                                    <Paper sx={stylesComponents.animacionTextoSobreImagenOcasiones} onClick={()=>navigate("ocasion/"+item.nombre+"/"+item.id)}>
+                                    <Paper sx={stylesComponents.animacionTextoSobreImagenOcasiones} onClick={()=>redireccionConRefresh(item.nombre, item.id)}>
                                         <Typography variant="h4" color="initial" sx={stylesComponents.letraSobreImagen}>{item.nombre}</Typography>
                                     </Paper>
                                 </Box>
