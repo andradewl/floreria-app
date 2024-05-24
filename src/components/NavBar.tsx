@@ -20,6 +20,9 @@ import LoginIcon from '@mui/icons-material/Login';
 import { ExpandLess, ExpandMore } from '@mui/icons-material';
 import LocalFloristIcon from '@mui/icons-material/LocalFlorist';
 import ShopingCarNav from './ShopingCarNav';
+import AccountCircleIcon from '@mui/icons-material/AccountCircle';
+import LogoutIcon from '@mui/icons-material/Logout';
+import { UserLogin } from '../interfaces/interfaces';
 
 type Anchor = 'top' | 'left' | 'bottom' | 'right';
 
@@ -33,6 +36,7 @@ function ResponsiveAppBar() {
   const [openOcasiones, setOpenOcasiones] = React.useState(true);
   const [currentView, setCurrentView] = React.useState('/');
   const [precioAPagar, setPrecioAPagarw] = React.useState('0');
+  const [datauser, setdatauser] = React.useState<UserLogin>();
 
 
   React.useEffect(()=>{
@@ -46,9 +50,12 @@ function ResponsiveAppBar() {
       const userCredential = JSON.parse(storedUserCredentials);
       const userInfo = JSON.parse(storedUserName);
 
-      userCredential
-      userInfo
-      // console.log(userCredential.email, userInfo.email);
+      // userCredential
+      // userInfo
+      console.log(userCredential, userInfo);
+      if(userCredential.email == userInfo.email){
+        setdatauser(userInfo)
+      }
     }
 
     setCurrentView(rutaActual)
@@ -90,6 +97,14 @@ function ResponsiveAppBar() {
   const handleClickOcasiones = () => {
     setOpenOcasiones(!openOcasiones);
   };
+
+  const handleLogOut = () => {
+    sessionStorage.removeItem('credentials');
+    sessionStorage.removeItem('userlogIn');
+    window.location.href = "/"
+
+  };
+
 
 
   const toggleDrawer = (anchor: Anchor, open: boolean) =>(event: React.KeyboardEvent | React.MouseEvent) => {
@@ -140,6 +155,7 @@ function ResponsiveAppBar() {
             ))}
           </List>
         </Collapse>
+
         <ListItem key={"Contacto"} disablePadding onClick={()=>{changeView("contacto"), navigate('/Contacto')}}>
           <ListItemButton>
             <ListItemIcon>
@@ -149,14 +165,45 @@ function ResponsiveAppBar() {
           </ListItemButton>
         </ListItem>
 
-        <ListItem key={"Login"} disablePadding onClick={()=>{changeView("login"), navigate('/Login')}}>
-          <ListItemButton>
-            <ListItemIcon>
-              <LoginIcon />
-            </ListItemIcon>
-            <ListItemText primary={"Login"} />
-          </ListItemButton>
-        </ListItem>
+        {
+          datauser?
+          (
+            <>
+
+              <ListItem key={datauser.name} disablePadding onClick={()=>{changeView("userid"), navigate("/Usuario/"+datauser.id)}}>
+                <ListItemButton>
+                  <ListItemIcon>
+                    <AccountCircleIcon />
+                  </ListItemIcon>
+                  <ListItemText primary={datauser.name} />
+                </ListItemButton>
+              </ListItem>
+
+
+              <ListItem key="LogOut" disablePadding onClick={handleLogOut}>
+                <ListItemButton>
+                  <ListItemIcon>
+                    <LogoutIcon />
+                  </ListItemIcon>
+                  <ListItemText primary="LogOut" />
+                </ListItemButton>
+              </ListItem>
+            </>
+          )
+          :
+          (
+
+            <ListItem key={"Login"} disablePadding onClick={()=>{changeView("login"), navigate('/Login')}}>
+              <ListItemButton>
+                <ListItemIcon>
+                  <LoginIcon />
+                </ListItemIcon>
+                <ListItemText primary={"Login"} />
+              </ListItemButton>
+            </ListItem>
+
+          )
+        }
       </List>
     </Box>
   );
@@ -793,14 +840,22 @@ function ResponsiveAppBar() {
   //   </Grid>
   // );
 
-  
-
 
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
   const open = Boolean(anchorEl);
+  const [anchorE2, setAnchorE2] = React.useState<null | HTMLElement>(null);
+  const open2 = Boolean(anchorE2);
 
   const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
     setAnchorEl(event.currentTarget);
+  };
+
+  const handleClick2 = (event: React.MouseEvent<HTMLButtonElement>) => {
+    setAnchorE2(event.currentTarget);
+  };
+
+  const handleClose2 = () => {
+    setAnchorE2(null);
   };
   const handleClose = () => {
     setAnchorEl(null);
@@ -809,7 +864,6 @@ function ResponsiveAppBar() {
 
   const handleScroll = () => {
     const scrollTop = window.scrollY;
-
     // console.log(scrollTop)
     if (scrollTop == 0) {
       setIsScrolled(false);
@@ -888,8 +942,8 @@ function ResponsiveAppBar() {
                 }}
               >
                 {ocasiones && ocasiones.map((item) => (
-                    <MenuItem onClick={()=>{changeView("ocasion"), navigate("ocasion/"+item.nombre+"/"+item.id)}}>{item.nombre}</MenuItem>
-                  ))}
+                  <MenuItem onClick={()=>{changeView("ocasion"), navigate("ocasion/"+item.nombre+"/"+item.id)}}>{item.nombre}</MenuItem>
+                ))}
               </Menu>
               {/* <Button
                 sx={isScrolled ? stylesComponents.butonMenuScroll : stylesComponents.butonMenu}
@@ -898,10 +952,47 @@ function ResponsiveAppBar() {
                 sx={isScrolled ? stylesComponents.butonMenuScroll : currentView=="/"?stylesComponents.butonMenu:stylesComponents.butonMenu2}
                 onClick={()=>{changeView("contacto"), navigate('/newContacto')}}
               >Contacto</Button>
-              <Button
-                sx={isScrolled ? stylesComponents.butonMenuScroll : currentView=="/"?stylesComponents.butonMenu:stylesComponents.butonMenu2}
-                onClick={()=>{changeView("login"), navigate('/Login')}}
-              >Login</Button>
+
+            {
+              datauser?
+                (
+                  <>
+                  <Button
+                    sx={isScrolled ? stylesComponents.butonMenuScroll : currentView=="/"?stylesComponents.butonMenu:stylesComponents.butonMenu2}
+                    id="basic-button2"
+                    aria-controls={open2 ? 'basic-menu2' : undefined}
+                    aria-haspopup="true"
+                    aria-expanded={open2 ? 'true' : undefined}
+                    onClick={handleClick2}
+                  >
+                    {datauser.name}
+                  </Button>
+                    <Menu
+                      id="basic-menu2"
+                      anchorEl={anchorE2}
+                      open={open2}
+                      onClose={handleClose2}
+                      MenuListProps={{
+                        'aria-labelledby': 'basic-button2',
+                      }}
+                    >
+                      <MenuItem onClick={()=>{changeView("userid"), navigate("/Usuario/"+datauser.id)}}>{datauser.name}</MenuItem>
+                      <MenuItem onClick={handleLogOut}>Logout</MenuItem>
+                    </Menu>
+                  </>
+                )
+                :
+                (
+
+                <Button
+                  sx={isScrolled ? stylesComponents.butonMenuScroll : currentView=="/"?stylesComponents.butonMenu:stylesComponents.butonMenu2}
+                  onClick={()=>{changeView("login"), navigate('/Login')}}
+                >
+                  Login
+                </Button>
+
+                )
+              }
             </Grid>
 
             {/* Boton carrito */}
