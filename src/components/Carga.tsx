@@ -1,6 +1,6 @@
 import { Grid } from "@mui/material";
 import CircularProgress from '@mui/material/CircularProgress';
-import logo from '../assets/LOGO.png'
+import logo from '../assets/logo.png'
 
 
 function Carga() {
@@ -8,7 +8,7 @@ function Carga() {
     <>
         <Grid sx={{width:'100%', height:'100vh' }}>
             <Grid sx={{
-                width:'100%', 
+                width:'100%',
                 height:'100%',
                 textAlign:' center',
                 alignContent: 'center'
