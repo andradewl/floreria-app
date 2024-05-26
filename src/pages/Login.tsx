@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import React, { useState } from "react";
 import {
   Button,
@@ -19,12 +20,20 @@ import GoogleIcon from "../assets/icon/iconGoogleV2.svg";
 import logoFR from "../assets/logo.png"
 
 
+import { NotificacionSuccess, Notificacionerror, NotificacionInfo } from "../components/Alert";
+
+
 
 export default function Login() {
   const navigate = useNavigate();
   const [showPassword, setShowPassword] = useState(false);
   const [emailUser, setEmailUser] = useState<string>("");
   const [passwordUser, setPasswordUser] = useState<string>("");
+
+  const [notiError, setNotiError] = useState(false);
+  const [notiSucces, setNotiSucces] = useState(false);
+  const [notiInfo, setNotiInfo] = useState(false);
+  const [mensajeNotificacion, setMensajeNotificacion] = useState("");
 
   React.useEffect(() => {
     const storedUserName = sessionStorage.getItem("userlogIn");
@@ -50,114 +59,149 @@ export default function Login() {
   };
 
   const addNewUser = () => {
-    login(emailUser, passwordUser)
+    setMensajeNotificacion("Validando datos espere...")
+    setNotiInfo(true)
+
+    setTimeout(() => {
+      setNotiInfo(false)
+      login(emailUser, passwordUser)
       .then((result) => {
-        alert("Inicio de sesión exitoso");
-        console.log(result);
-        window.location.href = '/';
+        result
+        setMensajeNotificacion("Login exitoso redireccionando...")
+        setNotiSucces(true)
+
+        setTimeout(() => {
+          window.location.href = '/';
+        }, 5000);
+        // console.log(result);
       })
       .catch((error) => {
-        console.error("Failed to LOGIN user:", error);
-        alert("Ha ocurrido un error, intentelo de nuevo");
+        error;
+        setMensajeNotificacion("Ha ocurrio un error con su acceso, intente de nuevo")
+        setNotiError(true)
+
+        setTimeout(() => {
+          setNotiError(false)
+        }, 5000);
+        // return <Notificacionerror message="Ha ocurrido un error, intentelo de nuevo"/>
+        // console.error("Failed to LOGIN user:", error);
+        // setTimeout(() => {
+        // }, 5000);
+        // alert("Ha ocurrido un error, intentelo de nuevo");
       });
+    }, 3000);
   };
 
   return (
-    <Container
-      maxWidth="sm"
-      sx={{ backgroundColor: "#f8f9fa", py: 3, marginTop: "4%" }}
-    >
-      <Grid container spacing={2} pt={2} pb={8}>
-      <Grid item xs={12} sx={{ textAlign: "center" }}>
-          <img src={logoFR} alt="Logo" height="100" />
-        </Grid>
-        <Grid item xs={12}>
-          <Typography
-            variant="h4"
-            textAlign="center"
-            fontWeight={500}
-            sx={{ fontFamily: "Times New Roman", mb: 3 }}
-            gutterBottom
-          >
-            Bienvenido.
-          </Typography>
-        </Grid>
-        <Grid item xs={12}>
-          <Box sx={{ width: "100%" }}>
-            <Button
-              type="button"
-              fullWidth
+    <>
+      <Container
+        maxWidth="sm"
+        sx={{ backgroundColor: "#f8f9fa", py: 3, marginTop: "4%" }}
+      >
+        <Grid container spacing={2} pt={2} pb={8}>
+        <Grid item xs={12} sx={{ textAlign: "center" }}>
+            <img src={logoFR} alt="Logo" height="100" />
+          </Grid>
+          <Grid item xs={12}>
+            <Typography
+              variant="h4"
+              textAlign="center"
+              fontWeight={500}
+              sx={{ fontFamily: "Times New Roman", mb: 3 }}
+              gutterBottom
+            >
+              Bienvenido.
+            </Typography>
+          </Grid>
+          <Grid item xs={12}>
+            <Box sx={{ width: "100%" }}>
+              <Button
+                type="button"
+                fullWidth
+                variant="outlined"
+                aria-label="iniciar sesión con google"
+                startIcon={
+                  <img height="30rem" alt="googleIcon" src={GoogleIcon} />
+                }
+                sx={{
+                  backgroundColor: "#efeaed",
+                  textTransform: "none",
+                }}
+              >
+                Iniciar sesión con Google
+              </Button>
+            </Box>
+          </Grid>
+          <Box sx={{ width: "100%", mt: 2, mb:0, ml:2, mr:0 }}>
+            <Divider>O</Divider>
+          </Box>
+          <Grid item xs={12}>
+            <TextField
+              label="Correo electrónico"
               variant="outlined"
-              aria-label="iniciar sesión con google"
-              startIcon={
-                <img height="30rem" alt="googleIcon" src={GoogleIcon} />
-              }
-              sx={{
-                backgroundColor: "#efeaed",
-                textTransform: "none",
-              }}
-            >
-              Iniciar sesión con Google
-            </Button>
-          </Box>
-        </Grid>
-        <Box sx={{ width: "100%", mt: 2, mb:0, ml:2, mr:0 }}>
-          <Divider>O</Divider>
-        </Box>
-        <Grid item xs={12}>
-          <TextField
-            label="Correo electrónico"
-            variant="outlined"
-            fullWidth
-            onChange={newUserEmail}
-          />
-        </Grid>
-        <Grid item xs={12}>
-          <TextField
-            label="Contraseña"
-            variant="outlined"
-            type={showPassword ? "text" : "password"}
-            fullWidth
-            onChange={newUserPassword}
-            InputProps={{
-              endAdornment: (
-                <InputAdornment position="end">
-                  <IconButton
-                    onClick={handleClickShowPassword}
-                    onMouseDown={handleMouseDownPassword}
-                    edge="end"
-                  >
-                    {showPassword ? <VisibilityOff /> : <Visibility />}
-                  </IconButton>
-                </InputAdornment>
-              ),
-            }}
-          />
-        </Grid>
-        <Grid item xs={12}>
-          <Typography variant="body2" sx={{ mb: 2 }} gutterBottom>
-            ¿Olvidaste tu contraseña?
-          </Typography>
-        </Grid>
-        <Grid item xs={12}>
-          <Box sx={{ width: "100%", mb: 0.1 }}>
-            <Button
-              variant="contained"
-              color="primary"
-              onClick={addNewUser}
               fullWidth
-            >
-              Iniciar sesión
-            </Button>
-          </Box>
-        </Grid>
+              onChange={newUserEmail}
+            />
+          </Grid>
+          <Grid item xs={12}>
+            <TextField
+              label="Contraseña"
+              variant="outlined"
+              type={showPassword ? "text" : "password"}
+              fullWidth
+              onChange={newUserPassword}
+              InputProps={{
+                endAdornment: (
+                  <InputAdornment position="end">
+                    <IconButton
+                      onClick={handleClickShowPassword}
+                      onMouseDown={handleMouseDownPassword}
+                      edge="end"
+                    >
+                      {showPassword ? <VisibilityOff /> : <Visibility />}
+                    </IconButton>
+                  </InputAdornment>
+                ),
+              }}
+            />
+          </Grid>
+          <Grid item xs={12}>
+            <Typography variant="body2" sx={{ mb: 2 }} gutterBottom>
+              ¿Olvidaste tu contraseña?
+            </Typography>
+          </Grid>
+          <Grid item xs={12}>
+            <Box sx={{ width: "100%", mb: 0.1 }}>
+              <Button
+                variant="contained"
+                color="primary"
+                onClick={addNewUser}
+                fullWidth
+              >
+                Iniciar sesión
+              </Button>
+            </Box>
+          </Grid>
 
-        <Grid item xs={12}>
-          <Stack direction="column" spacing={2} alignItems="center">
-            <Link to="/SignIn">Crear cuenta</Link>
-          </Stack>
+          <Grid item xs={12}>
+            <Stack direction="column" spacing={2} alignItems="center">
+              <Link to="/SignIn">Crear cuenta</Link>
+            </Stack>
+          </Grid>
         </Grid>
-      </Grid>
-    </Container>
+      </Container>
+
+      {notiError &&
+        <Notificacionerror message={mensajeNotificacion}/>
+      }
+
+      {notiSucces &&
+        <NotificacionSuccess message={mensajeNotificacion}/>
+      }
+
+      {notiInfo &&
+        <NotificacionInfo message={mensajeNotificacion}/>
+      }
+    </>
   );
 }

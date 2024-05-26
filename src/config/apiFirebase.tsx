@@ -1,5 +1,5 @@
 import { auth, db} from './firfebase';
-import {collection, getDocs, getDoc, doc,  query, where, setDoc, addDoc  } from 'firebase/firestore';
+import {collection, getDocs, getDoc, doc,  query, where, setDoc, addDoc, updateDoc  } from 'firebase/firestore';
 import { Flower, ProductoExtra, NuevoPedido, Tipoflores, Ocasionest } from '../interfaces/interfaces';
 import { createUserWithEmailAndPassword, signInWithEmailAndPassword } from 'firebase/auth';
 
@@ -29,6 +29,32 @@ export const addUser = async (nombre: string, apellido: string, email: string, p
             reject(err); // User creation failed
         });
     });
+};
+
+
+export const apartarProducto = async (idProducto: string, cantidad: number) => {
+
+    console.log(idProducto,cantidad)
+    const userQuery = query(collection(db, 'productoApartados'), where('idProducto', '==', idProducto));
+    const userSnapshot = await getDocs(userQuery);
+
+    if (!userSnapshot.empty) {
+        // Producto encontrado, actualizar la cantidad
+        userSnapshot.forEach(async (documento) => {
+            const productoRef = doc(db, 'productoApartados', documento.id);
+            const nuevaCantidad = documento.data().cantidad + cantidad;
+            await updateDoc(productoRef, { cantidad: nuevaCantidad });
+        });
+    } else {
+        // Producto no encontrado, agregar nuevo producto apartado
+        await addDoc(collection(db, 'productoApartados'), {
+            idProducto: idProducto,
+            cantidad: cantidad,
+            // fechaApartado: new Date()
+        });
+    }
+
+    return true
 };
 
 export const productoOcasionId = async(idOcasion:string): Promise<Flower[]>=>{

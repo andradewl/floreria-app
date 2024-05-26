@@ -45,7 +45,7 @@ function ResponsiveAppBar() {
     const storedUserName = sessionStorage.getItem('userlogIn');
 
     const value = localStorage.getItem("precioTotal");
-
+    value ? setPrecioAPagarw(value) :setPrecioAPagarw("0")
     if (storedUserCredentials && storedUserName) {
       const userCredential = JSON.parse(storedUserCredentials);
       const userInfo = JSON.parse(storedUserName);
@@ -59,8 +59,6 @@ function ResponsiveAppBar() {
     }
 
     setCurrentView(rutaActual)
-    value ? setPrecioAPagarw(value) :setPrecioAPagarw("0")
-
   },[])
 
   const changeView = (viewName: React.SetStateAction<string>) => {
@@ -976,7 +974,7 @@ function ResponsiveAppBar() {
                         'aria-labelledby': 'basic-button2',
                       }}
                     >
-                      <MenuItem onClick={()=>{changeView("userid"), navigate("/Usuario/"+datauser.id)}}>{datauser.name}</MenuItem>
+                      <MenuItem onClick={()=>{changeView("userid"), navigate("/Usuario/"+datauser.id)}}>Perfil</MenuItem>
                       <MenuItem onClick={handleLogOut}>Logout</MenuItem>
                     </Menu>
                   </>

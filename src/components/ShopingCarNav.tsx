@@ -2,12 +2,14 @@
 // import { Anchor } from "@mui/icons-material";
 import { Button, Grid, Toolbar, Typography } from "@mui/material"
 import React from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 import { CarritoDeCompra } from "../interfaces/interfaces";
-
+// import { useNavigate,   } from 'react-router-dom';
 type Anchor = 'top' | 'left' | 'bottom' | 'right';
 
 function ShopingCarNav() {
+    const location = useLocation();
+
     const anchor='right'
 
     const [state, setState] = React.useState({
@@ -49,32 +51,25 @@ function ShopingCarNav() {
     }, []);
 
 
-    // React.useEffect(() => {
-    //     let sumaTotal = 0;
-    //         items.forEach((item) => {
-    //             sumaTotal += (item.precio * item.cantidad)+( item.productoExtra.precioProductoExtra);
-    //         })
-    //         setTotalNumerico(sumaTotal);
-    // }, [items]);
-
-
     const eliminarItem = (index: number) => {
         const updatedItems = [...items.slice(0, index), ...items.slice(index + 1)];
         if (updatedItems.length === 0) {
             localStorage.removeItem('Productos');
             localStorage.removeItem('envio');
-            localStorage.removeItem('PrecioApagar');
+            localStorage.removeItem('precioTotal');
             setItems([]);
             setIsSetItems(false)
         } else {
             localStorage.setItem('Productos', JSON.stringify(updatedItems));
             setItems(updatedItems);
         }
+        const rutaActual = location.pathname
+        window.location.href = rutaActual
     };
 
 
     const handleRedirectToShopingProducts = (total:number) => {
-        localStorage.setItem('PrecioApagar', JSON.stringify(total));
+        localStorage.setItem('precioTotal', JSON.stringify(total));
         navigate('/shopProducts');
     };
 
@@ -87,7 +82,9 @@ function ShopingCarNav() {
         ) {
             return;
         }
+        
         setState({ ...state, [anchor]: open });
+        
     };
 
     return(
@@ -95,8 +92,8 @@ function ShopingCarNav() {
             // sx={{ width: anchor == 'top' || anchor == 'bottom' ? 'auto' : {xs:350, md:450} }}
             sx={{ width: {xs:'350px', md:'450px'}, height:'100vh' }}
             role="presentation"
-            // onClick={toggleDrawer(anchor, false)}
-            onKeyDown={toggleDrawer(anchor, false)}
+            onClick={toggleDrawer(anchor, false)}
+            // onKeyDown={toggleDrawer(anchor, false)}
         >
             <Grid sx={{width:'100%', height:'100%'}}>
                 <Grid sx={{width:'100%',  paddingBottom:'200px'}} >
@@ -257,18 +254,33 @@ function ShopingCarNav() {
                                 </Grid>
 
                                 <Grid item xs={12} sx={{
-                                        borderBlockWidth: '1px',
-                                        borderBottomColor: '#dadada',
-                                        borderBottomStyle: 'double',
+                                    borderBlockWidth: '1px',
+                                    borderBottomColor: '#dadada',
+                                    borderBottomStyle: 'double'
                                 }}>
-                                    <Grid container sx={{marginBottom:'10px'}}>
-                                        <Grid item xs={12} sx={{textAlign:'end'}}>
+                                    <Grid container>
+                                        <Grid item xs={6} >
+                                            <Grid sx={{display:'flex'}}>
+                                                <Button>
+                                                    -
+                                                </Button>
+                                                    <Typography variant="subtitle1" color="initial">{item.cantidad }</Typography>
+                                                    <Button>
+                                                    +
+                                                </Button>
+                                                
+
+                                            </Grid>
+                                        </Grid>
+                                        <Grid item xs={6} sx={{textAlign:'end'}}>
                                             <Button variant="text" onClick={() => eliminarItem(index)}>
+                                            {/* <Button variant="text">  */}
                                                 Eliminar
                                             </Button>
                                         </Grid>
                                     </Grid>
                                 </Grid>
+
                             </Grid>
 
                         ))}

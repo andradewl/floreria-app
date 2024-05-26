@@ -16,7 +16,7 @@ import MobileStepper from '@mui/material/MobileStepper';
 import KeyboardArrowLeft from '@mui/icons-material/KeyboardArrowLeft';
 import KeyboardArrowRight from '@mui/icons-material/KeyboardArrowRight';
 import dayjs, { Dayjs } from 'dayjs'; // Asegúrate de importar Dayjs desde 'dayjs'
-import { getProductById, getProductsExtraByIds } from '../../config/apiFirebase';
+import { apartarProducto, getProductById, getProductsExtraByIds } from '../../config/apiFirebase';
 import { Flower, CarritoDeCompra, ProductoExtra } from '../../interfaces/interfaces'
 
 import { setLocalStorage, getLocalStorage } from '../../config/LocalStorage'
@@ -281,7 +281,8 @@ function ProductId(){
     }
 
 
-    const guardarDatosConDescuento =(id:string,nombre: string, precio: number, descuento: number, imagen:string)=>{
+    const guardarDatosConDescuento = async(id:string,nombre: string, precio: number, descuento: number, imagen:string)=>{
+        const dataApartado= await apartarProducto(id, 1)
         const newItem: CarritoDeCompra = {
             id:id,
             nombre: nombre,
@@ -301,17 +302,20 @@ function ProductId(){
             },
             dedicatoria:dedicatoria
         };
-
+        // apartarProducto(newItem.id, newItem.cantidad)
         console.log('Agregando producto al carrito...');
         const updatedCarritoDeCompra = [...carritoDeCompra, newItem];
         setCarritoDeCompra(updatedCarritoDeCompra);
         setLocalStorage('Productos', updatedCarritoDeCompra);
-        window.location.href = '/shopProducts';
-
-        // navigate('/shopProducts')
+        if(dataApartado){
+            setTimeout(() => {
+                window.location.href = '/shopProducts';
+          }, 5000);
+        }
     }
 
-    const guardarDatos =(id:string,nombre: string, precio: number, imagen:string)=>{
+    const guardarDatos =async (id:string,nombre: string, precio: number, imagen:string)=>{
+        const dataApartado= await apartarProducto(id, 1)
         const newItem: CarritoDeCompra = {
             id:id,
             nombre: nombre,
@@ -335,11 +339,17 @@ function ProductId(){
         console.log('Agregando producto al carrito...');
         // Si el producto no está en el carrito, lo agregamos
         const updatedCarritoDeCompra = [...carritoDeCompra, newItem];
+        // apartarProducto(newItem.id, newItem.cantidad)
         setCarritoDeCompra(updatedCarritoDeCompra);
         setLocalStorage('Productos', updatedCarritoDeCompra);
+        // apartarProducto(newItem.id, newItem.cantidad)
         // navigate('/shoppingCart');
-        window.location.href = '/shopProducts';
-        // navigate('/shopProducts')
+
+        if(dataApartado){
+            setTimeout(() => {
+                window.location.href = '/shopProducts';
+            }, 5000);
+        }
     }
 
 
@@ -389,12 +399,12 @@ function ProductId(){
                     <Grid item md={7} xs={12} sx={{justifyContent:'center'}}>
                         <Grid container>
                             <Grid item xs={3} sx={{textAlign:'center', display:{xs:'none', md:'block'}}}>
-                                <img src={product.imagen} alt="" style={{ width:'70%', height:'120px', borderRadius:'8px' }}/>
-                                <img src={product.imagen} alt="" style={{ width:'70%', height:'120px', borderRadius:'8px' }}/>
-                                <img src={product.imagen} alt="" style={{ width:'70%', height:'120px', borderRadius:'8px' }}/>
-                                <img src={product.imagen} alt="" style={{ width:'70%', height:'120px', borderRadius:'8px' }}/>
+                                <img src={product.imagen} alt="" style={{ width:'70%', height:'140px', borderRadius:'8px' }}/>
+                                <img src={product.imagen} alt="" style={{ width:'70%', height:'140px', borderRadius:'8px' }}/>
+                                <img src={product.imagen} alt="" style={{ width:'70%', height:'140px', borderRadius:'8px' }}/>
+                                <img src={product.imagen} alt="" style={{ width:'70%', height:'140px', borderRadius:'8px' }}/>
                             </Grid>
-                            <Grid item xs={12} md={9} sx={{width:'100%', height:{xs:'300px', sm:'400px', md:'500px', lg:'500px', xl:'650px'}}}>
+                            <Grid item xs={12} md={9} sx={{width:'100%', height:{xs:'300px', sm:'450px', md:'400px', lg:'500px', xl:'650px'}}}>
                                 <img src={product.imagen} alt="" style={{ width:'100%', height:'100%', borderRadius:'8px' }}/>
                             </Grid>
                             <Grid item xs={12} sx={{textAlign:'center', display:{xs:'flex', md:'none'}}}>
@@ -405,8 +415,6 @@ function ProductId(){
                             </Grid>
 
                         </Grid>
-                        {/* <Grid sx={{width:{xs:'270px', md:'350px'}, height:{xs:'390px', md:'450px'}}}> */}
-                        {/* </Grid> */}
                     </Grid>
                     <Grid item md={5} xs={12} sx={{ paddingLeft:{lg: 5, md:2, xs:0}, paddingRight:{md:5, xs:0} }}>
                         <Grid>

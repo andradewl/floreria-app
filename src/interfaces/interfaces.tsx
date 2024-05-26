@@ -116,12 +116,24 @@ interface Ocasiones {
     nombre: string;
 }
 
+interface ProductoApartado {
+    idProducto: string;
+    cantidad:number;
+}
+
+
+interface NotificacionProps {
+    message: string;
+  }
+
 export type Flower = FlowerWithOferta | FlowerWithoutOferta;
 export type CarritoDeCompra = carritoDeCompra;
 export type ProductoExtra = productoExtra;
 export type UserLogin = userLogin;
 export type Tipoflores = TipoFlores;
 export type Ocasionest = Ocasiones;
+export type Productoapartado = ProductoApartado;
+export type Notificacionprops = NotificacionProps;
 
 
 

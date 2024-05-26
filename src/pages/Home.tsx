@@ -9,6 +9,7 @@ import { Flower, Ocasionest } from "../interfaces/interfaces"
 // import { useNavigate } from 'react-router-dom';
 import BarraDeBusqueda from "../components/BarraDeBusqueda";
 import videoBanner from '../assets/banners/videobanner2.gif'
+// import { NotificacionSuccess } from "../components/Alert";
 function Home(){
 
     // const navigate = useNavigate()
@@ -310,6 +311,7 @@ function Home(){
                 </Grid>
 
             </Grid>
+            {/* <NotificacionSuccess message='este es nu mensaje nuevo'/> */}
         </>
     )
 }

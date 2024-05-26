@@ -42,7 +42,7 @@ function Footer(){
                             fontWeight: "<weight>",
                             fontStyle: "normal",
                         }}>
-                            Flores El Gato
+                            Flores Rickys
                         </Typography>
                         <Typography variant="body2" color="text.secondary" sx={{
                             fontSize:'15px',
@@ -51,7 +51,7 @@ function Footer(){
                             fontWeight: "<weight>",
                             fontStyle: "normal",
                         }}>
-                            En Flores el Gato encuentra una gran variedad de diseños florales para eventos y toda ocasión.
+                            En Flores Rickys encuentra una gran variedad de diseños florales para eventos y toda ocasión.
                         </Typography>
                         <Link href="https://www.facebook.com/" color="inherit">
                             <Facebook />
@@ -155,7 +155,7 @@ function Footer(){
                     <Typography variant="body2" color="text.secondary" align="center">
                     {" 2023 Copyright © "}
                     <Link color="inherit" href="https://your-website.com/">
-                        | FLORES EL GATO | DESIGN BY PIXELERO. TODOS LOS DERECHOS RESERVADOS.
+                        | FLORES RICKYS | TODOS LOS DERECHOS RESERVADOS.
 
 
                     </Link>{" "}
