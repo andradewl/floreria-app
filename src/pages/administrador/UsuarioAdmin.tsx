@@ -60,19 +60,9 @@ const UsuarioAdmin = () => {
         </Paper>
       </Grid>
       <Grid item xs={12} md={9}>
-        <Paper
-          elevation={3}
-          sx={{
-            p: 3,
-            backgroundColor: '#FFFFFF',
-            borderRadius: 2,
-            border: '1px solid #ccc',
-            boxShadow: '0 3px 5px rgba(0, 0, 0, 0.1)',
-            margin: '0 10px', // Agrega margen alrededor del Paper
-          }}
-        >
+
           {renderContent()}
-        </Paper>
+
       </Grid>
     </Grid>
   );
