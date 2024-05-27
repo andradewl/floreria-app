@@ -167,7 +167,6 @@ export const getOcasiones = async (): Promise<Ocasionest[]> => {
 
 export const getProductById = async (productId: string): Promise<Flower | null> => {
     const productDocRef = doc(db, 'Flores', productId);
-
     try {
         const docSnap = await getDoc(productDocRef);
         if (docSnap.exists()) {
@@ -239,3 +238,25 @@ export const addPedido = async (pedidoData:NuevoPedido) => {
         throw new Error("Error al añadir pedido a Firebase");
     }
 };
+
+
+export const descontarProdcutos = async(docId:string, subtractValue:number)=>{
+    const docRef = doc(db, "Flores", docId);
+
+    try {
+        const docSnap = await getDoc(docRef);
+        if (docSnap.exists()) {
+            const currentQuantity = docSnap.data().existencias;
+            const newQuantity = currentQuantity - subtractValue;
+            await updateDoc(docRef, {
+                existencias: newQuantity
+            });
+            return true
+        } else {
+            return false
+        }
+    } catch (error) {
+        return false
+    }
+}
+

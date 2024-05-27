@@ -11,10 +11,10 @@ import { CreateOrderData } from '@paypal/paypal-js';
 import { CardElement, useElements, useStripe } from "@stripe/react-stripe-js"
 import { PaymentMethod } from '@stripe/stripe-js';
 import { WidthFull } from '@mui/icons-material';
-import { addPedido } from '../config/apiFirebase';
+import { addPedido, descontarProdcutos } from '../config/apiFirebase';
 import { useNavigate } from "react-router-dom";
 import { setLocalStorage } from '../config/LocalStorage';
-
+import { NotificacionSuccess, Notificacionerror, NotificacionInfo } from "../components/Alert";
 
 function shopProducts() {
     const navigate = useNavigate();
@@ -30,6 +30,10 @@ function shopProducts() {
 
     const [isChecked, setIsChecked] = React.useState(false);
     const [isUidUserLogin, setisUidUserLogin] = React.useState(null);
+    const [notiError, ] = React.useState(false);
+    const [notiSucces, ] = React.useState(false);
+    const [notiInfo, setNotiInfo] = React.useState(false);
+    const [mensajeNotificacion, setMensajeNotificacion] = React.useState("");
 
     // let totalPagoPaypal;
 
@@ -103,30 +107,8 @@ function shopProducts() {
 
         setTotalNumerico(dinero)
         setItems(parsedItems)
-        // settotalEnvio(ItemsEnvio)
-        // const dinero = precioApAGAR()
-
-        // if (storedItemsEnvio) {
-        //     const parsedItems: CarritoDeCompra[] = JSON.parse(storedItems);
-        //     const ItemsEnvio = parseFloat(storedItemsEnvio);
-
-        //     let dinero = 0
-
-        //     parsedItems.forEach((item) => {
-        //         dinero += (item.precio * item.cantidad)+( item.productoExtra.precioProductoExtra);
-        //     })
-
-
-        //     setTotalNumerico(dinero)
-        //     setItems(parsedItems)
-        //     settotalEnvio(ItemsEnvio)
-        // }
-
+        
     }, [])
-
-    // React.useEffect(() => {
-    //     totalPagoPaypal=totalNumerico
-    // }, [totalNumerico]);
 
     React.useEffect(() => {
         let sumaTotal = 0;
@@ -135,25 +117,6 @@ function shopProducts() {
             })
             setTotalNumerico(sumaTotal);
     }, [item]);
-
-    // React.useEffect(() => {
-    //     let sumaTotal = 0;
-    //         item.forEach((item) => {
-    //             sumaTotal += (item.precio * item.cantidad)+( item.productoExtra.precioProductoExtra);
-    //         })
-    //         setTotalNumerico(sumaTotal);
-    // }, [item]);
-
-    // const precioApAGAR = () =>{
-    //     // const precioPagar = localStorage.getItem('PrecioApagar');
-    //     let sumaTotal = 0;
-    //     item.forEach((nomber) => {
-    //         sumaTotal += (nomber.precio * nomber.cantidad)+( nomber.productoExtra.precioProductoExtra);
-    //     })
-
-    //     return sumaTotal
-
-    // }
 
     const handleChangeFacturacion = (e: { target: { name: string; value: unknown; }; }) => {
         const { name, value } = e.target;
@@ -171,16 +134,13 @@ function shopProducts() {
         });
     }
 
-
     const handleRedirect = () =>{
-
         const storedUserName = sessionStorage.getItem("credentials");
         if (storedUserName) {
             const userInfo = JSON.parse(storedUserName);
             navigate("/Usuario/"+userInfo.uid);
         }else{
             navigate("/");
-
         }
     }
 
@@ -248,12 +208,14 @@ function shopProducts() {
 
     const deleteCarrito=()=>{
         localStorage.removeItem('Productos');
-        localStorage.removeItem('PrecioApagar');
+        localStorage.removeItem('precioTotal');
         localStorage.removeItem('envio');
     }
 
 
     const onApprove = async (data: { orderID: string }) => {
+        setMensajeNotificacion("Añadiendo Pedido Espere un Momento")
+        setNotiInfo(true)
         console.log(totalNumerico)
         const dinero = totalNumerico
         return fetch(`${servelUrl}/api/orders/${data.orderID}/capture`, {
@@ -280,9 +242,15 @@ function shopProducts() {
                     const newItem: NuevoPedido = datosPedidos
                     addPedido(newItem)
                     .then((pedidoId) => {
-                        deleteCarrito()
-                        alert('Pedido añadido exitosamente con id de seguimiento: '+pedidoId)
-                        handleRedirect()
+                        item.forEach(async element => {
+                            await descontarProdcutos(element.id, element.cantidad)
+                        })
+                        setTimeout(() => {
+                            setNotiInfo(false)
+                            alert('Pedido añadido exitosamente con id de seguimiento: '+pedidoId)
+                            deleteCarrito()
+                            handleRedirect()
+                        }, 5000);
                     })
                     .catch((_error) => {
                         alert('Error al crear el método de pago intentelo mas tarde')
@@ -294,11 +262,22 @@ function shopProducts() {
 
                     addPedido(newItem)
                     .then((pedidoId) => {
-                        deleteCarrito()
-                        alert('Pedido añadido exitosamente con id de seguimiento: '+pedidoId)
-                        handleRedirect()
-                    })
-                    .catch((_error) => {
+                        // deleteCarrito()
+                        item.forEach(async element => {
+                            await descontarProdcutos(element.id, element.cantidad)
+                        })
+                        setMensajeNotificacion("Añadiendo Pedido Espere un Momento")
+                        setNotiInfo(true)
+
+                        setTimeout(() => {
+                            setNotiInfo(false)
+                            alert('Pedido añadido exitosamente con id de seguimiento: '+pedidoId)
+                            deleteCarrito()
+                            handleRedirect()
+                        }, 5000);
+                        // deleteCarrito()
+                        // handleRedirect()
+                    }).catch((_error) => {
                         alert('Error al crear el método de pago intentelo mas tarde')
                     });
                     console.log(newItem)
@@ -384,6 +363,8 @@ function shopProducts() {
 
     const handleSubmit2 = async (e: React.FormEvent) => {
         e.preventDefault();
+        setMensajeNotificacion("Añadiendo Pedido Espere un Momento")
+        setNotiInfo(true)
         const dinero = totalNumerico
         console.log(totalNumerico)
 
@@ -444,10 +425,19 @@ function shopProducts() {
 
                             addPedido(newItem)
                             .then((pedidoId) => {
-                                deleteCarrito()
-                                alert('Pedido añadido exitosamente con id de seguimiento: '+pedidoId)
-                                handleRedirect()
+                                item.forEach(async element => {
+                                    await descontarProdcutos(element.id, element.cantidad)
+                                })
+                                
 
+                                setTimeout(() => {
+                                    
+                                    alert('Pedido añadido exitosamente con id de seguimiento: '+pedidoId)
+                                    deleteCarrito()
+                                    handleRedirect()
+                                }, 5000);
+                                // deleteCarrito()
+                                // handleRedirect()
                             })
                             .catch((_error) => {
                                 alert('Error al añadir pedido intentelo mas tarde')
@@ -459,9 +449,17 @@ function shopProducts() {
                             const newItem: NuevoPedido = datosPedidos
                             addPedido(newItem)
                             .then((pedidoId) => {
-                                deleteCarrito()
-                                alert('Pedido añadido exitosamente con id de seguimiento: '+pedidoId)
-                                handleRedirect()
+                                item.forEach(async element => {
+                                    await descontarProdcutos(element.id, element.cantidad)
+                                })
+                                setTimeout(() => {
+                                    
+                                    alert('Pedido añadido exitosamente con id de seguimiento: '+pedidoId)
+                                    deleteCarrito()
+                                    handleRedirect()
+                                }, 5000);
+                                // deleteCarrito()
+                                // handleRedirect()
 
                             })
                             .catch((_error) => {
@@ -506,19 +504,19 @@ function shopProducts() {
         setIsChecked(e)
     }
 
-    const eliminarItem = (index: number) => {
-        const updatedItems = [...item.slice(0, index), ...item.slice(index + 1)];
-        if (updatedItems.length === 0) {
-            localStorage.removeItem('Productos');
-            localStorage.removeItem('envio');
-            localStorage.removeItem('PrecioApagar');
-            setItems([]);
-            // setIsSetItems(false)
-        } else {
-            localStorage.setItem('Productos', JSON.stringify(updatedItems));
-            setItems(updatedItems);
-        }
-    };
+    // const eliminarItem = (index: number) => {
+    //     const updatedItems = [...item.slice(0, index), ...item.slice(index + 1)];
+    //     if (updatedItems.length === 0) {
+    //         localStorage.removeItem('Productos');
+    //         localStorage.removeItem('envio');
+    //         localStorage.removeItem('PrecioApagar');
+    //         setItems([]);
+    //         // setIsSetItems(false)
+    //     } else {
+    //         localStorage.setItem('Productos', JSON.stringify(updatedItems));
+    //         setItems(updatedItems);
+    //     }
+    // };
 
 
     const cardElementOptions = {
@@ -978,24 +976,7 @@ function shopProducts() {
                                             borderBottomStyle: 'double'
                                         }}>
                                             <Grid container>
-                                                <Grid item xs={6} >
-                                                    <Grid sx={{display:'flex'}}>
-                                                        <Button>
-                                                            +
-                                                        </Button>
-                                                            <Typography variant="subtitle1" color="initial">{item.cantidad }</Typography>
-                                                        <Button>
-                                                            -
-                                                        </Button>
 
-                                                    </Grid>
-                                                </Grid>
-                                                <Grid item xs={6} sx={{textAlign:'end'}}>
-                                                    <Button variant="text" onClick={() => eliminarItem(index)}>
-                                                    {/* <Button variant="text">  */}
-                                                        Eliminar
-                                                    </Button>
-                                                </Grid>
                                             </Grid>
                                         </Grid>
 
@@ -1052,6 +1033,17 @@ function shopProducts() {
 
                 </Grid>
             </Grid>
+            {notiError &&
+                <Notificacionerror message={mensajeNotificacion}/>
+            }
+
+            {notiSucces &&
+                <NotificacionSuccess message={mensajeNotificacion}/>
+            }
+
+            {notiInfo &&
+                <NotificacionInfo message={mensajeNotificacion}/>
+            }
         </>
     );
 

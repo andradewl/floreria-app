@@ -24,7 +24,7 @@ import { setLocalStorage, getLocalStorage } from '../../config/LocalStorage'
 import CheckCircleIcon from '@mui/icons-material/CheckCircle';
 import ShopingCarNav from '../../components/ShopingCarNav';
 import Carga from '../../components/Carga';
-
+import { NotificacionInfo } from '../../components/Alert';
 
 type Anchor = 'top' | 'left' | 'bottom' | 'right';
 
@@ -65,6 +65,9 @@ function ProductId(){
 
     const [cambiarProductoExtra, ] = React.useState(true)
     const [eliminarProductoExtra, ] = React.useState(false)
+
+    const [notiInfo, setNotiInfo] = React.useState(false);
+    const [mensajeNotificacion, setMensajeNotificacion] = React.useState("");
 
     let maxSteps = productosExtra.length
 
@@ -189,34 +192,6 @@ function ProductId(){
         sethora(event.target.value);
     };
 
-    // const HandlecantidadProducto = async (event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement> , id:string) => {
-
-
-    //     const cantidad = event.target.value
-
-    //     const cantidadNumber = parseInt(cantidad)
-
-    //     const data= await getexistenciaProductById(id)
-
-    //     if(data){
-
-    //         if(cantidadNumber <= 0){
-    //             alert('No puedes añadir 0 productos al carrito')
-    //             setcantidadProducto(1)
-    //             return
-    //         }
-    
-    //         if(cantidadNumber > data.existencias){
-    //             alert('Exede la existencia')
-    //             setcantidadProducto(data.existencias)
-    //             return
-    //         }
-    
-    //         setcantidadProducto(cantidadNumber)
-
-    //     }
-    // }
-
     const handleNext = () => {
         setActiveStep((prevActiveStep) => prevActiveStep + 1);
     };
@@ -269,7 +244,6 @@ function ProductId(){
         }
     }
 
-
     const guardarProductoExtra = (nombre: string, precio: number)=>{
         setproductoExtra({
             nombreProductoExtra: nombre,
@@ -303,7 +277,9 @@ function ProductId(){
             dedicatoria:dedicatoria
         };
         // apartarProducto(newItem.id, newItem.cantidad)
-        console.log('Agregando producto al carrito...');
+        setMensajeNotificacion('Agregando producto al carrito...');
+        setNotiInfo(true)
+        // console.log
         const updatedCarritoDeCompra = [...carritoDeCompra, newItem];
         setCarritoDeCompra(updatedCarritoDeCompra);
         setLocalStorage('Productos', updatedCarritoDeCompra);
@@ -336,7 +312,8 @@ function ProductId(){
             dedicatoria: dedicatoria,
         };
 
-        console.log('Agregando producto al carrito...');
+        setMensajeNotificacion('Agregando producto al carrito...');
+        setNotiInfo(true)
         // Si el producto no está en el carrito, lo agregamos
         const updatedCarritoDeCompra = [...carritoDeCompra, newItem];
         // apartarProducto(newItem.id, newItem.cantidad)
@@ -820,87 +797,7 @@ function ProductId(){
                     </Grid>
                 </Grid>
             </Grid>
-            <Grid p={5}>
-                <Grid style={{textAlign:'center', padding:'8px'}} >
-                    <Typography variant="h3" color="initial" fontSize='34px'  style={{color:'#B29426'}} >
-                        Productos Relacionados
-                    </Typography>
-                </Grid>
-
-                <Grid>
-                    <Grid container sx={stylesComponents.ContenedorProductos} >
-
-                        <Grid item sm={12}  md={4} lg={3} sx={stylesComponents.contenedorProducto}>
-                            <Box display={'flex'} style={{justifyContent:'center'}}>
-                                <Grid sx={stylesComponents.contenerdorImagenProducto}>
-                                    <img src={product.imagen} alt="" width={'100%'} height={'100%'} style={{ objectFit: 'cover'}}/>
-                                </Grid>
-                            </Box>
-                            <Box p={1}>
-                                <Typography variant="h6" color="initial" fontFamily={'Montserrat, sans-serif'} fontSize={16} textAlign={'start'} style={{color:'#404040', textAlign:'center'}} >Arreglo Multicolor</Typography>
-                                <Typography variant="h6" color="initial"  fontSize={16} textAlign={'start'} style={{color:'#404040', textAlign:'center' }}>$100.00</Typography>
-                            </Box>
-                            <Box >
-                                <Button style={{border:'2px solid #b42981', backgroundImage:'linear-gradient(to right, #FF6464 0%, #FF6464  51%, #FF81CE  100%)', textTransform: 'uppercase', transition: '0.5s', color: 'white', borderStyle:'none', borderRadius:'50px',  padding:'10px', width:'200px' }}>
-                                    Ver
-                                </Button>
-                            </Box>
-                        </Grid>
-                        <Grid item sm={12}  md={4} lg={3} sx={stylesComponents.contenedorProducto}>
-                                <Box display={'flex'} style={{justifyContent:'center'}}>
-                                    <Grid sx={stylesComponents.contenerdorImagenProducto}>
-                                        <img src={product.imagen} alt="" width={'100%'} height={'100%'} style={{ objectFit: 'cover'}}/>
-                                    </Grid>
-                                </Box>
-                                <Box p={1}>
-                                    <Typography variant="h6" color="initial" fontFamily={'Montserrat, sans-serif'} fontSize={16} textAlign={'start'} style={{color:'#404040', textAlign:'center'}}>Arreglo Multicolor</Typography>
-                                    <Typography variant="h6" color="initial"  fontSize={16} textAlign={'start'} style={{color:'#404040', textAlign:'center' }}>$100.00</Typography>
-                                </Box>
-                                <Box >
-                                    <Button style={{border:'2px solid #b42981', backgroundImage:'linear-gradient(to right, #FF6464 0%, #FF6464  51%, #FF81CE  100%)', textTransform: 'uppercase', transition: '0.5s', color: 'white', borderStyle:'none', borderRadius:'50px',  padding:'10px', width:'200px' }}>
-                                        Ver
-                                    </Button>
-                            </Box>
-                        </Grid>
-                        <Grid item sm={12}  md={4} lg={3} sx={stylesComponents.contenedorProducto}>
-                            <Box display={'flex'} style={{justifyContent:'center'}}>
-                                <Grid sx={stylesComponents.contenerdorImagenProducto}>
-                                    <img src={product.imagen} alt="" width={'100%'} height={'100%'} style={{ objectFit: 'cover'}}/>
-                                </Grid>
-                            </Box>
-                            <Box p={1}>
-                                <Typography variant="h6" color="initial" fontFamily={'Montserrat, sans-serif'} fontSize={16} textAlign={'start'} style={{color:'#404040', textAlign:'center'}}>Arreglo Multicolor</Typography>
-                                <Typography variant="h6" color="initial"  fontSize={16} textAlign={'start'} style={{color:'#404040', textAlign:'center' }}>$100.00</Typography>
-                            </Box>
-                            <Box >
-                                <Button style={{border:'2px solid #b42981', backgroundImage:'linear-gradient(to right, #FF6464 0%, #FF6464  51%, #FF81CE  100%)', textTransform: 'uppercase', transition: '0.5s', color: 'white', borderStyle:'none', borderRadius:'50px',  padding:'10px', width:'200px' }}>
-                                    Ver
-                                </Button>
-                        </Box>
-                        </Grid>
-                        <Grid item sm={12}  md={4} lg={3} sx={stylesComponents.contenedorProducto}>
-                            <Box display={'flex'} style={{justifyContent:'center'}}>
-                                <Grid sx={stylesComponents.contenerdorImagenProducto}>
-                                    <img src={product.imagen} alt="" width={'100%'} height={'100%'} style={{ objectFit: 'cover'}}/>
-                                </Grid>
-                            </Box>
-                            <Box p={1}>
-                                <Typography variant="h6" color="initial" fontFamily={'Montserrat, sans-serif'} fontSize={16} textAlign={'start'} style={{color:'#404040', textAlign:'center'}}>Arreglo Multicolor</Typography>
-                            </Box>
-                            <Box display={'flex'}>
-                                <Typography variant="h6" color="initial"  fontSize={16} textAlign={'start'} style={{color:'red', textAlign:'center', width:'50%',  textDecorationLine: 'line-through' }}>$100.00</Typography>
-                                <Typography variant="h6" color="initial"  fontSize={16} textAlign={'start'} style={{color:'blue', textAlign:'center', width:'50%' }}>$83.00</Typography>
-                            </Box>
-                            <Box >
-                                <Button style={{border:'2px solid #b42981', backgroundImage:'linear-gradient(to right, #FF6464 0%, #FF6464  51%, #FF81CE  100%)', textTransform: 'uppercase', transition: '0.5s', color: 'white', borderStyle:'none', borderRadius:'50px',  padding:'10px', width:'200px' }}>
-                                    Ver
-                                </Button>
-                        </Box>
-                        </Grid>
-                    </Grid>
-                </Grid>
-
-            </Grid>
+          
 
             <Drawer
                 anchor={"right"}
@@ -911,6 +808,10 @@ function ProductId(){
                 <ShopingCarNav/>
                 {/* {shopCar("right")} */}
             </Drawer>
+
+            {notiInfo &&
+                <NotificacionInfo message={mensajeNotificacion} />
+            }
 
 
         </>

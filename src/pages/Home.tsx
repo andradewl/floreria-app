@@ -8,7 +8,7 @@ import React from "react";
 import { Flower, Ocasionest } from "../interfaces/interfaces"
 // import { useNavigate } from 'react-router-dom';
 import BarraDeBusqueda from "../components/BarraDeBusqueda";
-import videoBanner from '../assets/banners/videobanner2.gif'
+// import videoBanner from '../assets/banners/videobanner2.gif'
 // import { NotificacionSuccess } from "../components/Alert";
 function Home(){
 
@@ -49,7 +49,7 @@ function Home(){
         <>
             <Grid sx={{width:'100%', position: 'relative'}}>
                 <Grid sx={{width:'100%', height: {xs:'300px', md:'auto'}, position:'relative', zIndex:1}}>
-                    <img src={videoBanner} style={{width:'100%', height:'100%', objectFit:'cover', objectPosition:'left'}} alt="" />
+                    <img src="https://firebasestorage.googleapis.com/v0/b/prowlflores.appspot.com/o/multimedia%2Fimagenes%2FFondos%2Fvideobanner2.gif?alt=media&token=8ed486c2-5f84-43e7-93c7-0ae9d4103c0d" style={{width:'100%', height:'100%', objectFit:'cover', objectPosition:'left'}} alt="" />
                 </Grid>
                 <Grid sx={{position: 'absolute',top: 0, left: 0, width: '100%', height: '100%', backgroundColor: '#0000004d', zIndex: 2}}>
                     <Grid sx={{ paddingLeft:"2%", paddingTop:{xs: "20%", sm:"12%",md:"13%"} }}>

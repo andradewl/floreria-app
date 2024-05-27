@@ -2,13 +2,15 @@
 // import { Anchor } from "@mui/icons-material";
 import { Button, Grid, Toolbar, Typography } from "@mui/material"
 import React from "react";
-import { useNavigate, useLocation } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { CarritoDeCompra } from "../interfaces/interfaces";
 // import { useNavigate,   } from 'react-router-dom';
 type Anchor = 'top' | 'left' | 'bottom' | 'right';
 
+import { getexistenciaProductById } from "../config/apiFirebase";
+
 function ShopingCarNav() {
-    const location = useLocation();
+    // const location = useLocation();
 
     const anchor='right'
 
@@ -23,8 +25,10 @@ function ShopingCarNav() {
 
 
     const [items, setItems] = React.useState<CarritoDeCompra[]>([]);
+    // const [, setItemsRespaldo] = React.useState<CarritoDeCompra[]>([]);
     const [isSetItems, setIsSetItems] = React.useState(false);
     const [totalNumerico, setTotalNumerico] = React.useState<number>(0);
+    const [actializarCarrito, setActializarCarrito] = React.useState(false);
     // const [totalEnvio, settotalEnvio] = React.useState<number>(500);
 
     React.useEffect(() => {
@@ -44,6 +48,7 @@ function ShopingCarNav() {
             const parsedItems: CarritoDeCompra[] = JSON.parse(storedItems);
             console.log(parsedItems)
             setItems(parsedItems);
+            // setItemsRespaldo(parsedItems)
             setIsSetItems(true)
         }else{
             console.log('No hay producto en el carrito');
@@ -60,11 +65,12 @@ function ShopingCarNav() {
             setItems([]);
             setIsSetItems(false)
         } else {
-            localStorage.setItem('Productos', JSON.stringify(updatedItems));
+            // localStorage.setItem('Productos', JSON.stringify(updatedItems));
             setItems(updatedItems);
         }
-        const rutaActual = location.pathname
-        window.location.href = rutaActual
+        // const rutaActual = location.pathname
+        // window.location.href = rutaActual
+        setActializarCarrito(true)
     };
 
 
@@ -86,6 +92,75 @@ function ShopingCarNav() {
         setState({ ...state, [anchor]: open });
         
     };
+
+    const actualizarCarritoHandle = (total:number) =>{
+        localStorage.setItem('Productos', JSON.stringify(items));
+        localStorage.setItem('precioTotal', JSON.stringify(total));
+        window.location.href = '/shopProducts';
+    }
+
+
+    const añadirMasProductos = async(id:string)=>{
+        const index = items.findIndex(item => item.id === id);
+
+        if (index !== -1) {
+            const nuevaCantidad = items[index].cantidad + 1;
+            const dataExistencia = await getexistenciaProductById(id)
+            if(dataExistencia){
+                if(dataExistencia.existencias == nuevaCantidad){
+                    alert("maxima existencia")
+                }else{
+                    const updatedItem = {
+                        ...items[index],
+                        cantidad: nuevaCantidad
+                    };
+                    const updatedItems = [
+                        ...items.slice(0, index),
+                        updatedItem,
+                        ...items.slice(index + 1)
+                    ];
+                    setItems(updatedItems);
+                }
+            }
+            setActializarCarrito(true)
+        }
+    }
+
+
+    const quitarProductos=(id:string)=>{
+        const index = items.findIndex(item => item.id === id);
+
+        if (index !== -1) {
+            const nuevaCantidad = items[index].cantidad - 1;
+            if(nuevaCantidad <= 1){
+                const updatedItem = {
+                    ...items[index],
+                    cantidad: 1
+                };
+                const updatedItems = [
+                    ...items.slice(0, index),
+                    updatedItem,
+                    ...items.slice(index + 1)
+                ];
+                setItems(updatedItems);
+                setActializarCarrito(true)
+            }else{
+                const updatedItem = {
+                    ...items[index],
+                    cantidad: nuevaCantidad
+                };
+                const updatedItems = [
+                    ...items.slice(0, index),
+                    updatedItem,
+                    ...items.slice(index + 1)
+                ];
+                setItems(updatedItems);
+                setActializarCarrito(true)
+            }
+
+            
+        }
+    }
 
     return(
         <Grid
@@ -261,15 +336,13 @@ function ShopingCarNav() {
                                     <Grid container>
                                         <Grid item xs={6} >
                                             <Grid sx={{display:'flex'}}>
-                                                <Button>
+                                                <Button onClick={()=>quitarProductos(item.id)}>
                                                     -
                                                 </Button>
                                                     <Typography variant="subtitle1" color="initial">{item.cantidad }</Typography>
-                                                    <Button>
+                                                <Button onClick={()=>añadirMasProductos(item.id)}>
                                                     +
                                                 </Button>
-                                                
-
                                             </Grid>
                                         </Grid>
                                         <Grid item xs={6} sx={{textAlign:'end'}}>
@@ -300,9 +373,18 @@ function ShopingCarNav() {
                             </Typography>
                         </Grid>
                     </Grid>
-                    <Button sx={{ width:"100%", backgroundColor:'black', color:'white'}} onClick={()=>handleRedirectToShopingProducts(totalNumerico)} disabled={!isSetItems}>
-                        Completar pedido
-                    </Button>
+
+                    {
+                        actializarCarrito  ? (
+                            <Button sx={{ width:"100%", backgroundColor:'black', color:'white'}} onClick={()=>actualizarCarritoHandle(totalNumerico)} disabled={!isSetItems}>
+                                Actualizar y Completar pedido
+                            </Button>
+                        ):(
+                            <Button sx={{ width:"100%", backgroundColor:'black', color:'white'}} onClick={()=>handleRedirectToShopingProducts(totalNumerico)} disabled={!isSetItems}>
+                                Completar pedido
+                            </Button>
+                        )
+                    }
                 </Grid>
             </Grid>
         </Grid>
