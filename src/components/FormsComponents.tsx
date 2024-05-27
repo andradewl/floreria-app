@@ -824,7 +824,7 @@ function shopProducts() {
                         </Grid>
                         <Grid item xs={12} md={6}  p={10}>
                             <Grid>
-                                {item && item.map((item, index) => (
+                                {item && item.map((item) => (
                                     <Grid container pt={1} sx={{
                                         borderBottomWidth: '1px',
                                         borderBottomColor: '#80808040',
