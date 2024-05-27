@@ -11,7 +11,12 @@ import {
   Paper,
   Button,
   Tooltip,
+  TextField,
+  Box,
+  Menu,
+  MenuItem,
 } from "@mui/material";
+import FilterListIcon from '@mui/icons-material/FilterList';
 import { getPedidosUsuario, actualizarEstatusPedido } from "../../config/backEndAdmin/backEstatusAdmin";
 
 interface Pedido {
@@ -34,6 +39,16 @@ interface Pedido {
 export default function EstatusEnvioAdministrador() {
   const [pedidos, setPedidos] = React.useState<Pedido[] | null>(null);
   const [botonesDeshabilitados, setBotonesDeshabilitados] = React.useState<Record<string, boolean>>({});
+  const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
+  const open = Boolean(anchorEl);
+
+  const handleClick = (event: React.MouseEvent<HTMLElement>) => {
+    setAnchorEl(event.currentTarget);
+  };
+
+  const handleClose = () => {
+    setAnchorEl(null);
+  };
 
   React.useEffect(() => {
     async function fetchPedidos() {
@@ -99,54 +114,54 @@ export default function EstatusEnvioAdministrador() {
   return (
     <Grid container justifyContent="center">
       <Grid item xs={12} md={10} lg={8}>
-        <Typography variant="h5" align="center" gutterBottom>
+        <Typography variant="h5" align="center" gutterBottom sx={{ fontWeight: '600' }}>
           Estatus de Envío
         </Typography>
-        <TableContainer component={Paper}>
+        
+        {/* Barra de búsqueda y botón de filtro */}
+        <Box display="flex" justifyContent="center" sx={{ maxWidth: 1500, margin: '0 auto 20px auto' }}>
+          <TextField
+            label="Buscar"
+            variant="outlined"
+            sx={{ flex: 1, marginRight: 1 }}
+          />
+          <Button
+            variant="contained"
+            color="primary"
+            onClick={handleClick}
+            startIcon={<FilterListIcon />}
+          >
+            Filtrar
+          </Button>
+          <Menu
+            anchorEl={anchorEl}
+            open={open}
+            onClose={handleClose}
+          >
+            <MenuItem onClick={handleClose}>Preparando</MenuItem>
+            <MenuItem onClick={handleClose}>Enviado</MenuItem>
+            <MenuItem onClick={handleClose}>En camino</MenuItem>
+            <MenuItem onClick={handleClose}>Entregado</MenuItem>
+          </Menu>
+        </Box>
+
+        <TableContainer component={Paper} sx={{ maxWidth: 1500, margin: '0 auto', border: '2px solid', borderColor: 'primary.main', borderRadius: 2, boxShadow: 5 }}>
           <Table aria-label="simple table">
             <TableHead>
-              <TableRow>
-                <TableCell align="left">
-                  <Typography variant="subtitle1" sx={{ fontWeight: "bold" }}>
-                    Nombre
-                  </Typography>
-                </TableCell>
-                <TableCell align="center">
-                  <Typography variant="subtitle1" sx={{ fontWeight: "bold" }}>
-                    Imagen
-                  </Typography>
-                </TableCell>
-                <TableCell align="right">
-                  <Typography variant="subtitle1" sx={{ fontWeight: "bold" }}>
-                    Cantidad
-                  </Typography>
-                </TableCell>
-                <TableCell align="right">
-                  <Typography variant="subtitle1" sx={{ fontWeight: "bold" }}>
-                    Total
-                  </Typography>
-                </TableCell>
-                <TableCell align="center">
-                  <Typography variant="subtitle1" sx={{ fontWeight: "bold" }}>
-                    Detalles
-                  </Typography>
-                </TableCell>
-                <TableCell align="right">
-                  <Typography variant="subtitle1" sx={{ fontWeight: "bold" }}>
-                    Estatus de Envío
-                  </Typography>
-                </TableCell>
-                <TableCell align="right">
-                  <Typography variant="subtitle1" sx={{ fontWeight: "bold" }}>
-                    Actualizar Estatus
-                  </Typography>
-                </TableCell>
+              <TableRow sx={{ backgroundColor: 'primary.main' }}>
+                <TableCell sx={{ fontWeight: 'bold', color: 'primary.contrastText' }}>Nombre</TableCell>
+                <TableCell sx={{ fontWeight: 'bold', color: 'primary.contrastText' }} align="center">Imagen</TableCell>
+                <TableCell sx={{ fontWeight: 'bold', color: 'primary.contrastText' }} align="right">Cantidad</TableCell>
+                <TableCell sx={{ fontWeight: 'bold', color: 'primary.contrastText' }} align="right">Total</TableCell>
+                <TableCell sx={{ fontWeight: 'bold', color: 'primary.contrastText' }} align="center">Detalles</TableCell>
+                <TableCell sx={{ fontWeight: 'bold', color: 'primary.contrastText' }} align="right">Estatus de Envío</TableCell>
+                <TableCell sx={{ fontWeight: 'bold', color: 'primary.contrastText' }} align="right">Actualizar Estatus</TableCell>
               </TableRow>
             </TableHead>
             <TableBody>
               {pedidos ? (
                 pedidos.map((pedido: Pedido) => (
-                  <TableRow key={pedido.id}>
+                  <TableRow key={pedido.id} sx={{ '&:nth-of-type(odd)': { backgroundColor: 'action.hover' }, '&:nth-of-type(even)': { backgroundColor: 'background.default' } }}>
                     <TableCell>{pedido.nombre}</TableCell>
                     <TableCell align="center">
                       <img
@@ -208,6 +223,13 @@ export default function EstatusEnvioAdministrador() {
                 </TableRow>
               )}
             </TableBody>
+            <tfoot>
+              <TableRow>
+                <TableCell colSpan={7} sx={{ textAlign: 'center', padding: 2 }}>
+                  Fin del Estatus de Envío
+                </TableCell>
+              </TableRow>
+            </tfoot>
           </Table>
         </TableContainer>
       </Grid>
