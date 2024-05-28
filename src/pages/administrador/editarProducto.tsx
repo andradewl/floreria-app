@@ -14,6 +14,8 @@ const EditarProducto = () => {
     existencias: 0,
     descripcion: '',
     descuento: 0,
+    imagen: '',
+    imagenFile: null,
   });
 
   useEffect(() => {
@@ -34,10 +36,12 @@ const EditarProducto = () => {
   }, [id]);
 
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    const { name, value } = event.target;
-    // Convertir el precio a número si el campo es "precio"
-    const newValue = name === 'precio' ? parseFloat(value) : value;
-    setProducto({ ...producto, [name]: newValue });
+    const { name, value, files } = event.target;
+    if (name === 'imagenFile' && files && files[0]) {
+      setProducto({ ...producto, [name]: files[0], imagen: URL.createObjectURL(files[0]) });
+    } else {
+      setProducto({ ...producto, [name]: value });
+    }
   };
 
   const handleActualizarProducto = async () => {
@@ -57,7 +61,8 @@ const EditarProducto = () => {
             producto.descuento,
             producto.existencias,
             producto.nombre,
-            producto.precio
+            producto.precio,
+            producto.imagenFile // Enviar la imagen como parte de la actualización
           );
           console.log('Producto actualizado exitosamente.');
           alert('Producto actualizado correctamente');
@@ -142,6 +147,19 @@ const EditarProducto = () => {
                 fullWidth
                 type="number"
                 value={producto.descuento}
+                onChange={handleChange}
+              />
+            </Grid>
+            <Grid item xs={12}>
+              {producto.imagen && (
+                <img src={producto.imagen} alt="Producto" style={{ maxWidth: '100%', maxHeight: '300px', margin: 'auto', display: 'block' }} />
+              )}
+            </Grid>
+            <Grid item xs={12}>
+              <input
+                type="file"
+                accept="image/*"
+                name="imagenFile"
                 onChange={handleChange}
               />
             </Grid>

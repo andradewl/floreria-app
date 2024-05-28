@@ -1,4 +1,5 @@
-import { db } from "../firfebase"; // Importa la instancia de Firestore
+import { db, storage } from "../firfebase"; // Importa la instancia de Firestore y Firebase Storage
+import { ref, uploadBytes, getDownloadURL } from "firebase/storage"; // Importa los métodos necesarios de Firebase Storage
 import {
   collection,
   addDoc,
@@ -91,20 +92,28 @@ export const actualizarProducto = async (
   descuento: number,
   existencias: number,
   nombre: string,
-  precio: number
+  precio: number,
+  imagenFile: File // Agregar la imagen como un argumento adicional
 ) => {
   try {
+    // Subir la nueva imagen a Firebase Storage y obtener la URL de la imagen
+    const storageRef = ref(storage, `productos/${idProducto}/${imagenFile.name}`);
+    const uploadTaskSnapshot = await uploadBytes(storageRef, imagenFile);
+    const imagenURL = await getDownloadURL(uploadTaskSnapshot.ref);
+
+    // Actualizar el documento del producto en Firestore con la nueva URL de la imagen
     await updateDoc(doc(db, "Flores", idProducto), {
       descripcion,
       descuento,
       existencias,
       nombre,
       precio,
+      imagen: imagenURL // Actualizar la URL de la imagen en Firestore
     });
 
-    console.log("Producto actualizado correctamente");
+    console.log('Producto actualizado correctamente con nueva imagen');
   } catch (error) {
-    console.error("Error al actualizar el producto:", error);
+    console.error('Error al actualizar el producto:', error);
     throw error;
   }
 };
