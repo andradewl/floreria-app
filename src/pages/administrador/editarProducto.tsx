@@ -3,11 +3,15 @@ import { useParams, useNavigate } from 'react-router-dom';
 import { obtenerProductoPorId, actualizarProducto } from '../../config/backEndAdmin/backProductos';
 import { Typography, Grid, TextField, Button, Box, Paper } from '@mui/material';
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
+import { getAuth } from 'firebase/auth'; // Importar getAuth para obtener el usuario actual
+import { NotificacionSuccess } from '../../components/Alert'; // Importar NotificacionSuccess
 
 const EditarProducto = () => {
   const { id } = useParams<{ id: string }>(); // Obtener el id del URL
   const navigate = useNavigate();
-
+  const auth = getAuth();
+  const user = auth.currentUser;
+  
   const [producto, setProducto] = useState<any>({
     nombre: '',
     precio: 0,
@@ -17,6 +21,7 @@ const EditarProducto = () => {
     imagen: '',
     imagenFile: null,
   });
+  const [showSuccessNotification, setShowSuccessNotification] = useState(false); // Estado para la notificación de éxito
 
   useEffect(() => {
     const fetchProducto = async () => {
@@ -46,40 +51,49 @@ const EditarProducto = () => {
 
   const handleActualizarProducto = async () => {
     try {
-      if (id) {
-        // Verificar que todos los campos necesarios estén definidos
-        if (
-          producto.nombre &&
-          producto.descripcion &&
-          producto.descuento &&
-          producto.existencias &&
-          producto.precio
-        ) {
-          await actualizarProducto(
-            id,
-            producto.descripcion,
-            producto.descuento,
-            producto.existencias,
-            producto.nombre,
-            producto.precio,
-            producto.imagenFile // Enviar la imagen como parte de la actualización
-          );
-          console.log('Producto actualizado exitosamente.');
-          alert('Producto actualizado correctamente');
-          navigate(`/Producto/${id}`);
-        } else {
-          console.error('Algunos campos del producto no están definidos.');
-        }
-      } else {
-        console.error('El ID del producto no está definido.');
+      if (!user) {
+        console.error('Usuario no autenticado.');
+        return;
       }
+
+      if (!id) {
+        console.error('El ID del producto no está definido.');
+        return;
+      }
+
+      // Verificar que todos los campos necesarios estén definidos
+      if (
+        !producto.nombre ||
+        !producto.descripcion ||
+        !producto.descuento ||
+        !producto.existencias ||
+        !producto.precio
+      ) {
+        console.error('Algunos campos del producto no están definidos.');
+        return;
+      }
+
+      await actualizarProducto(
+        id,
+        producto.descripcion,
+        producto.descuento,
+        producto.existencias,
+        producto.nombre,
+        producto.precio,
+        producto.imagenFile // Enviar la imagen como parte de la actualización
+      );
+      
+      setShowSuccessNotification(true); // Mostrar la notificación de éxito
+      setTimeout(() => {
+        navigate(`/Usuario/${user.uid}`);
+      }, 2500); // Esperar 2.5 segundos antes de redirigir
     } catch (error) {
       console.error('Error al actualizar el producto:', error);
     }
   };
   
   const handleRegresar = () => {
-    navigate(`/Producto/${id}`);
+    navigate(`/Usuario/${user?.uid}`);
   };
 
   return (
@@ -107,17 +121,6 @@ const EditarProducto = () => {
             </Grid>
             <Grid item xs={12}>
               <TextField
-                name="precio"
-                label="Precio"
-                variant="outlined"
-                fullWidth
-                type="number"
-                value={producto.precio}
-                onChange={handleChange}
-              />
-            </Grid>
-            <Grid item xs={12}>
-              <TextField
                 name="descripcion"
                 label="Descripción"
                 variant="outlined"
@@ -128,7 +131,18 @@ const EditarProducto = () => {
                 onChange={handleChange}
               />
             </Grid>
-            <Grid item xs={12}>
+            <Grid item xs={12} sm={6}>
+              <TextField
+                name="precio"
+                label="Precio"
+                variant="outlined"
+                fullWidth
+                type="number"
+                value={producto.precio}
+                onChange={handleChange}
+              />
+            </Grid>
+            <Grid item xs={12} sm={6}>
               <TextField
                 name="existencias"
                 label="Existencias"
@@ -151,11 +165,6 @@ const EditarProducto = () => {
               />
             </Grid>
             <Grid item xs={12}>
-              {producto.imagen && (
-                <img src={producto.imagen} alt="Producto" style={{ maxWidth: '100%', maxHeight: '300px', margin: 'auto', display: 'block' }} />
-              )}
-            </Grid>
-            <Grid item xs={12}>
               <input
                 type="file"
                 accept="image/*"
@@ -163,12 +172,18 @@ const EditarProducto = () => {
                 onChange={handleChange}
               />
             </Grid>
+            {producto.imagen && (
+              <Grid item xs={12}>
+                <img src={producto.imagen} alt="Producto" style={{ maxWidth: '100%', maxHeight: '300px', margin: 'auto', display: 'block' }} />
+              </Grid>
+            )}
           </Grid>
           <Box sx={{ textAlign: 'center', marginTop: 2 }}>
             <Button variant="contained" onClick={handleActualizarProducto}>Guardar cambios</Button>
           </Box>
         </Paper>
       </Grid>
+      {showSuccessNotification && <NotificacionSuccess message="Producto actualizado correctamente, redirigiendo..." />}
     </Grid>
   );
 };

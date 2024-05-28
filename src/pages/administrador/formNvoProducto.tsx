@@ -3,6 +3,7 @@ import { agregarProducto, subirImagen } from '../../config/backEndAdmin/backProd
 import { useNavigate } from 'react-router-dom';
 import { TextField, Button, Container, Typography, Box } from '@mui/material';
 import { getAuth } from 'firebase/auth'; // Importar getAuth para obtener el usuario actual
+import { NotificacionSuccess } from '../../components/Alert'; // Importar NotificacionSuccess
 
 const FormNvoProducto = () => {
   const [nombre, setNombre] = useState('');
@@ -12,6 +13,7 @@ const FormNvoProducto = () => {
   const [precio, setPrecio] = useState(0);
   const [imagenFile, setImagenFile] = useState<File | null>(null);
   const [imagenPreview, setImagenPreview] = useState<string | null>(null); // Estado para la vista preliminar de la imagen
+  const [showSuccessNotification, setShowSuccessNotification] = useState(false); // Estado para la notificación
   const navigate = useNavigate();
   const auth = getAuth();
   const user = auth.currentUser;
@@ -25,8 +27,10 @@ const FormNvoProducto = () => {
         const imagenURL = await subirImagen(idProducto, imagenFile);
 
         await agregarProducto(descripcion, descuento, existencias, nombre, precio, imagenURL);
-        alert('Producto agregado correctamente');
-        navigate(`/Usuario/${user.uid}`);
+        setShowSuccessNotification(true); // Mostrar la notificación de éxito
+        setTimeout(() => {
+          navigate(`/Usuario/${user.uid}`);
+        }, 2500); // Esperar 3 segundos antes de redirigir
       } else {
         alert('Por favor, selecciona una imagen y asegúrate de estar autenticado.');
       }
@@ -136,6 +140,7 @@ const FormNvoProducto = () => {
           Agregar Producto
         </Button>
       </Box>
+      {showSuccessNotification && <NotificacionSuccess message="Producto Agregado Correctamente, redirigiendo..." />}
     </Container>
   );
 };
