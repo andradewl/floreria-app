@@ -1,10 +1,10 @@
 import React, { useState } from 'react';
-import { Typography, Grid, Tabs, Tab } from '@mui/material';
+import { Typography, Grid, Tabs, Tab, Paper } from '@mui/material';
 import LocalFloristIcon from '@mui/icons-material/LocalFlorist';
 import LoyaltyIcon from '@mui/icons-material/Loyalty';
 import HistPedidosAdmin from './HistPedidosAdmin';
 import EstatusEnvioAdministrador from './EstatusEnvioAdmin';
-
+import ProductosAdmin from './ProductosAdmin';
 const UsuarioAdmin = () => {
   const [tabValue, setTabValue] = useState<number>(0);
 
@@ -19,6 +19,7 @@ const UsuarioAdmin = () => {
       case 1:
         return <EstatusEnvioAdministrador />;
       case 2:
+        return <ProductosAdmin />; // Renderiza el componente de Productos para el caso 2
       default:
         return null;
     }
@@ -26,23 +27,42 @@ const UsuarioAdmin = () => {
 
   return (
     <Grid container spacing={4} justifyContent="center" sx={{ py: 12 }}>
-      <Grid item xs={12} sm={12} md={12} lg={3} xl={2}>
-        <Typography variant="h5" sx={{ fontWeight: 'bold', color: '#B95389', mb: 2 }}>Opciones Administrador</Typography>
-        <Tabs value={tabValue} onChange={handleChange} orientation="vertical" sx={{ borderRight: 1, borderColor: 'divider' }}>
-          <Tab
-            icon={<LocalFloristIcon sx={{ color: '#C81987' }} />}
-            label="Historial de pedidos"
-            sx={{ mb: 2 }}
-          />
-          <Tab
-            icon={<LoyaltyIcon sx={{ color: '#C81987' }} />}
-            label="Estatus de envío"
-            sx={{ mb: 2 }}
-          />
-        </Tabs>
+      <Grid item xs={12} md={3}>
+        <Paper elevation={3} sx={{ p: 2, backgroundColor: '#F3F3F3', borderRadius: 2 }}>
+          <Typography variant="h5" sx={{ fontWeight: 'bold', color: '#B95389', mb: 2, textAlign: 'center' }}>
+            Opciones Administrador
+          </Typography>
+          <Tabs
+            value={tabValue}
+            onChange={handleChange}
+            orientation="vertical"
+            variant="scrollable"
+            scrollButtons="auto"
+            sx={{ '& .MuiTabs-indicator': { backgroundColor: '#C81987' } }}
+          >
+            <Tab
+              icon={<LocalFloristIcon fontSize="medium" sx={{ color: '#C81987' }} />}
+              iconPosition="start"
+              label="Historial de pedidos"
+              sx={{ alignSelf: 'start', textAlign: 'left' }}
+            />
+            <Tab
+              icon={<LoyaltyIcon fontSize="medium" sx={{ color: '#C81987' }} />}
+              iconPosition="start"
+              label="Estatus de envío"
+              sx={{ alignSelf: 'start', textAlign: 'left' }}
+            />
+            <Tab
+              label="Productos" // Agrega la pestaña para Productos
+              sx={{ alignSelf: 'start', textAlign: 'left' }}
+            />
+          </Tabs>
+        </Paper>
       </Grid>
-      <Grid item xs={12} sm={12} md={12} lg={9} xl={10} sx={{ borderLeft: 1, borderColor: 'divider', pl: 4 }}>
-        {renderContent()}
+      <Grid item xs={12} md={9}>
+
+          {renderContent()}
+
       </Grid>
     </Grid>
   );

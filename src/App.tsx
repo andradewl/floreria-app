@@ -20,6 +20,7 @@ import editDirecciones from "./pages/User/editDirecciones";
 import editDireccionFact from "./pages/User/editDireccionFact";
 import EstatusEnvioAdministrador from "./pages/administrador/EstatusEnvioAdmin";
 import HistPedidosAdmin from "./pages/administrador/HistPedidosAdmin";
+import EditarProducto from "./pages/administrador/editarProducto";
 
 
 import shopProducts from "./pages/ShopProduct/shopProducts";
@@ -78,6 +79,7 @@ function App() {
           <Route path="/EstatusEnvioAdministrador" Component={EstatusEnvioAdministrador} />
           <Route path="/ocasion/:nombreOcasion/:id" Component={ocasionesProductos} />
           <Route path="/pantallaCarga" Component={Carga} />
+          <Route path="/EditarProducto/:id" Component={EditarProducto} />
         </Routes>
 
         <Footer/>
