@@ -4,14 +4,14 @@
 
 import React from 'react'
 import {TextField, Grid,Typography, Button, FormControlLabel, Checkbox } from '@mui/material'
-import { CarritoDeCompra, NuevoPedido } from '../interfaces/interfaces';
+import { CarritoDeCompra, NuevoPedido, facturacionLogin } from '../interfaces/interfaces';
 import { PayPalButtons, FUNDING   } from '@paypal/react-paypal-js'
 import { CreateOrderData } from '@paypal/paypal-js';
 
 import { CardElement, useElements, useStripe } from "@stripe/react-stripe-js"
 import { PaymentMethod } from '@stripe/stripe-js';
 import { WidthFull } from '@mui/icons-material';
-import { addPedido, descontarProdcutos } from '../config/apiFirebase';
+import { addPedido, descontarProdcutos, getDatosEntrega, getDatosFacturacionidUser } from '../config/apiFirebase';
 import { useNavigate } from "react-router-dom";
 import { setLocalStorage } from '../config/LocalStorage';
 import { NotificacionSuccess, Notificacionerror, NotificacionInfo } from "../components/Alert";
@@ -42,7 +42,7 @@ function shopProducts() {
         apellido: '',
         direccion: '',
         colonia: '',
-        ciudad: '',
+        municipio: '',
         estado: '',
         cp: '',
         email: '',
@@ -53,7 +53,7 @@ function shopProducts() {
                         && formDataFacturacion.apellido !=''
                         && formDataFacturacion.direccion !=''
                         && formDataFacturacion.colonia !=''
-                        && formDataFacturacion.ciudad !=''
+                        && formDataFacturacion.municipio !=''
                         && formDataFacturacion.estado !=''
                         && formDataFacturacion.cp !=''
                         && formDataFacturacion.email !=''
@@ -65,7 +65,7 @@ function shopProducts() {
         apellido: '',
         direccion: '',
         colonia: '',
-        ciudad: '',
+        municipio: '',
         estado: '',
         cp: '',
         email: '',
@@ -76,12 +76,11 @@ function shopProducts() {
                         && formDataEnvio.apellido !=''
                         && formDataEnvio.direccion !=''
                         && formDataEnvio.colonia !=''
-                        && formDataEnvio.ciudad !=''
+                        && formDataEnvio.municipio !=''
                         && formDataEnvio.estado !=''
                         && formDataEnvio.cp !=''
                         && formDataEnvio.email !=''
                         && formDataEnvio.telefono !=''
-
 
     React.useEffect(() => {
         const storedItems = localStorage.getItem('Productos');
@@ -94,6 +93,9 @@ function shopProducts() {
 
         if(storedUserName){
             const userCredential = JSON.parse(storedUserName);
+            console.log(userCredential)
+            dataFcat(userCredential.uid)
+            dataEntrega(userCredential.uid)
             setisUidUserLogin(userCredential.uid)
         }
 
@@ -104,11 +106,11 @@ function shopProducts() {
         })
 
         setLocalStorage("precioTotal", dinero)
-
         setTotalNumerico(dinero)
         setItems(parsedItems)
-        
     }, [])
+
+
 
     React.useEffect(() => {
         let sumaTotal = 0;
@@ -117,6 +119,70 @@ function shopProducts() {
             })
             setTotalNumerico(sumaTotal);
     }, [item]);
+
+    const dataFcat = async (idUsuario: string) => {
+        const datosFact: facturacionLogin[] = await getDatosFacturacionidUser(idUsuario);
+        console.log(datosFact)
+    
+        if (datosFact.length > 0) {
+            const fact = datosFact[0]; // Access the first element
+            setFormDataFacturacion({
+                nombre: fact.nombre,
+                apellido: fact.apellidos,
+                direccion: fact.direccion,
+                colonia: fact.colonia,
+                municipio: fact.municipio,
+                estado: fact.estado,
+                cp: fact.zip,
+                email: fact.email,
+                telefono: fact.telefono
+            });
+        } else {
+            setFormDataFacturacion({
+                nombre: '',
+                apellido: '',
+                direccion: '',
+                colonia: '',
+                municipio: '',
+                estado: '',
+                cp: '',
+                email: '',
+                telefono: ''
+            });
+        }
+    };
+
+    const dataEntrega = async (idUsuario: string) => {
+        const datosFact: facturacionLogin[] = await getDatosEntrega(idUsuario);
+        console.log(datosFact)
+    
+        if (datosFact.length > 0) {
+            const fact = datosFact[0]; // Access the first element
+            setFormDataEnvio({
+                nombre: fact.nombre,
+                apellido: fact.apellidos,
+                direccion: fact.direccion,
+                colonia: fact.colonia,
+                municipio: fact.municipio,
+                estado: fact.estado,
+                cp: fact.zip,
+                email: fact.email,
+                telefono: fact.telefono
+            });
+        } else {
+            setFormDataEnvio({
+                nombre: '',
+                apellido: '',
+                direccion: '',
+                colonia: '',
+                municipio: '',
+                estado: '',
+                cp: '',
+                email: '',
+                telefono: ''
+            });
+        }
+    };
 
     const handleChangeFacturacion = (e: { target: { name: string; value: unknown; }; }) => {
         const { name, value } = e.target;
@@ -291,39 +357,6 @@ function shopProducts() {
 
 
 
-
-    // const createOrder = async (_data: CreateOrderData) => {
-    //     const dinero = totalNumerico
-    //     const tostringDinero = dinero.toString()
-    //     // console.log(dinero.toString())
-
-    //     return fetch(`${servelUrl}/api/orders`, {
-    //         method: "POST",
-    //         headers: {
-    //             "Content-Type": "application/json",
-    //         },
-    //         body: JSON.stringify({
-    //             cart: {
-    //                 id: "YOUR_PRODUCT_ID",
-    //                 descripcion: "Productos Floreria Rickys",
-    //                 quantity: tostringDinero
-    //             },
-    //         })
-    //     }).then((response) => {
-    //         if (!response.ok) {
-    //         throw new Error("Error al crear la orden.");
-    //         }
-    //         return response.json();
-    //     }).then((order) => {
-    //         console.log("Orden creada:", order);
-    //         return order.id;
-    //     }).catch((error) => {
-    //         console.error("Error al crear la orden:", error.message);
-    //     });
-    // };
-
-
-
     const createOrder = async (_data: CreateOrderData) => {
         // let sumaTotal = 0;
         // item.forEach((nomber) => {
@@ -428,10 +461,8 @@ function shopProducts() {
                                 item.forEach(async element => {
                                     await descontarProdcutos(element.id, element.cantidad)
                                 })
-                                
 
                                 setTimeout(() => {
-                                    
                                     alert('Pedido añadido exitosamente con id de seguimiento: '+pedidoId)
                                     deleteCarrito()
                                     handleRedirect()
@@ -453,7 +484,6 @@ function shopProducts() {
                                     await descontarProdcutos(element.id, element.cantidad)
                                 })
                                 setTimeout(() => {
-                                    
                                     alert('Pedido añadido exitosamente con id de seguimiento: '+pedidoId)
                                     deleteCarrito()
                                     handleRedirect()
@@ -493,7 +523,7 @@ function shopProducts() {
                     apellido: '',
                     direccion:'',
                     colonia: '',
-                    ciudad: '',
+                    municipio: '',
                     estado: '',
                     cp: '',
                     email: '',
@@ -602,7 +632,7 @@ function shopProducts() {
                                                 fullWidth
                                                 label="Cuidad"
                                                 name="ciudad"
-                                                value={formDataFacturacion.ciudad}
+                                                value={formDataFacturacion.estado}
                                                 onChange={handleChangeFacturacion}
                                                 required
                                                 />
@@ -612,7 +642,7 @@ function shopProducts() {
                                                 fullWidth
                                                 label="Estado"
                                                 name="estado"
-                                                value={formDataFacturacion.estado}
+                                                value={formDataFacturacion.municipio}
                                                 onChange={handleChangeFacturacion}
                                                 required
                                                 />
@@ -732,7 +762,7 @@ function shopProducts() {
                                                     fullWidth
                                                     label="Cuidad"
                                                     name="ciudad"
-                                                    value={formDataEnvio.ciudad}
+                                                    value={formDataEnvio.municipio}
                                                     onChange={handleChangeEnvio}
                                                     required
                                                     />

@@ -1,7 +1,7 @@
-import { auth, db} from './firfebase';
+import { auth, db, provider} from './firfebase';
 import {collection, getDocs, getDoc, doc,  query, where, setDoc, addDoc, updateDoc  } from 'firebase/firestore';
-import { Flower, ProductoExtra, NuevoPedido, Tipoflores, Ocasionest } from '../interfaces/interfaces';
-import { createUserWithEmailAndPassword, signInWithEmailAndPassword } from 'firebase/auth';
+import { Flower, ProductoExtra, NuevoPedido, Tipoflores, Ocasionest, facturacionLogin } from '../interfaces/interfaces';
+import { createUserWithEmailAndPassword, signInWithEmailAndPassword, signInWithPopup } from 'firebase/auth';
 
 
 export const addUser = async (nombre: string, apellido: string, email: string, password: string) => {
@@ -30,6 +30,61 @@ export const addUser = async (nombre: string, apellido: string, email: string, p
         });
     });
 };
+
+export const loginWithLogin = async()=>{
+    try {
+        const result = await signInWithPopup(auth, provider);
+        const nameUser = result.user.displayName;
+        const emailUser =result.user.email;
+
+        const userQuery = query(collection(db, 'usuarios'), where('email', '==', emailUser));
+        const userSnapshot = await getDocs(userQuery);
+
+        if (userSnapshot.empty) {
+            await setDoc(doc(db, "usuarios", result.user.uid), {
+                // uid: result.user.uid,
+                nombre: nameUser,
+                apellido:'',
+                email: emailUser,
+                tipoUsuario: "comprador"
+            });
+
+            const ref = doc(db, "usuarios", result.user.uid);
+
+            const docSnap = await getDoc(ref)
+
+            if(docSnap.exists()){
+                    sessionStorage.setItem("userlogIn", JSON.stringify({
+                        id:result.user.uid,
+                        name: docSnap.data().nombre,
+                        email:docSnap.data().email,
+                        tipoUsuario: docSnap.data().tipoUsuario
+                    }) )
+                    sessionStorage.setItem("credentials", JSON.stringify(result.user))
+            }
+            window.location.href = '/';
+
+        }else{
+            const ref = doc(db, "usuarios", result.user.uid);
+
+            const docSnap = await getDoc(ref)
+
+            if(docSnap.exists()){
+                    sessionStorage.setItem("userlogIn", JSON.stringify({
+                        id:result.user.uid,
+                        name: docSnap.data().nombre,
+                        email:docSnap.data().email,
+                        tipoUsuario: docSnap.data().tipoUsuario
+                    }) )
+                    sessionStorage.setItem("credentials", JSON.stringify(result.user))
+            }
+            window.location.href = '/';
+        }
+
+    } catch (error) {
+        console.error("Error al iniciar sesión con Google: ", error);
+    }
+}
 
 
 export const apartarProducto = async (idProducto: string, cantidad: number) => {
@@ -82,8 +137,6 @@ export const productoOcasionId = async(idOcasion:string): Promise<Flower[]>=>{
     });
     return products;
 }
-
-
 
 export const login = async (email: string, password: string) => {
 
@@ -260,3 +313,60 @@ export const descontarProdcutos = async(docId:string, subtractValue:number)=>{
     }
 }
 
+
+export const getDatosFacturacionidUser = async (idUser: string): Promise<facturacionLogin[]> => {
+    const userQuery = query(collection(db, 'dirFacturacion'), where('relUsuario', '==', idUser));
+
+    try {
+        const userSnapshot = await getDocs(userQuery);
+        const facturacion: facturacionLogin[] = userSnapshot.docs.map(doc => {
+            const data = doc.data();
+            const fact: facturacionLogin = {
+                id: doc.id,
+                nombre: data.nombre,
+                apellidos: data.apellido,
+                direccion: data.refCalle1,
+                colonia: data.colonia,
+                estado: data.estado,
+                municipio: data.municipio,
+                zip: data.zip,
+                email: data.email,
+                telefono: data.telefono,
+            };
+            return fact;
+        });
+        return facturacion;
+    } catch (error) {
+        console.error('Error getting product:', error);
+        return [];
+    }
+};
+
+
+export const getDatosEntrega = async (idUser: string): Promise<facturacionLogin[]> => {
+    const userQuery = query(collection(db, 'direcciones'), where('relUsuario', '==', idUser));
+
+    try {
+        const userSnapshot = await getDocs(userQuery);
+        const facturacion: facturacionLogin[] = userSnapshot.docs.map(doc => {
+            const data = doc.data();
+            const fact: facturacionLogin = {
+                id: doc.id,
+                nombre: data.nombre,
+                apellidos: data.apellido,
+                direccion: data.refCalle1,
+                colonia: data.colonia,
+                estado: data.estado,
+                municipio: data.municipio,
+                zip: data.zip,
+                email: '',
+                telefono: data.telDestinatario,
+            };
+            return fact;
+        });
+        return facturacion;
+    } catch (error) {
+        console.error('Error getting product:', error);
+        return [];
+    }
+};

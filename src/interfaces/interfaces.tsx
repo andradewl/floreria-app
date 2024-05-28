@@ -76,7 +76,7 @@ interface Pedido {
         apellido: string;
         direccion: string;
         colonia: string;
-        ciudad: string;
+        municipio: string;
         estado: string;
         cp: string;
         email: string;
@@ -87,7 +87,7 @@ interface Pedido {
         apellido: string;
         direccion: string;
         colonia: string;
-        ciudad: string;
+        municipio: string;
         estado: string;
         cp: string;
         email: string;
@@ -124,7 +124,21 @@ interface ProductoApartado {
 
 interface NotificacionProps {
     message: string;
-  }
+}
+
+
+interface facturacion {
+    id:string;
+    nombre: string;
+    apellidos: string;
+    direccion: string;
+    colonia: string;
+    estado: string;
+    municipio: string;
+    zip: string;
+    email: string;
+    telefono: string;
+}
 
 export type Flower = FlowerWithOferta | FlowerWithoutOferta;
 export type CarritoDeCompra = carritoDeCompra;
@@ -134,6 +148,7 @@ export type Tipoflores = TipoFlores;
 export type Ocasionest = Ocasiones;
 export type Productoapartado = ProductoApartado;
 export type Notificacionprops = NotificacionProps;
+export type facturacionLogin= facturacion;
 
 
 

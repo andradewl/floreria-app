@@ -1,3 +1,4 @@
+/* eslint-disable no-inner-declarations */
 import { useEffect, useState } from "react";
 import {
   Grid,

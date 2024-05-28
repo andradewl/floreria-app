@@ -14,7 +14,7 @@ import {
 } from "@mui/material";
 import { Visibility, VisibilityOff } from "@mui/icons-material";
 import { Link } from "react-router-dom";
-import { login } from "../config/apiFirebase";
+import { login, loginWithLogin } from "../config/apiFirebase";
 import { useNavigate } from "react-router-dom";
 import GoogleIcon from "../assets/icon/iconGoogleV2.svg";
 import logoFR from "../assets/logo.png"
@@ -57,6 +57,11 @@ export default function Login() {
   const newUserPassword = (e: React.ChangeEvent<HTMLInputElement>) => {
     setPasswordUser(e.target.value);
   };
+
+
+  const loginGooogle = () =>{
+    loginWithLogin()
+  }
 
   const addNewUser = () => {
     setMensajeNotificacion("Validando datos espere...")
@@ -127,6 +132,7 @@ export default function Login() {
                   backgroundColor: "#efeaed",
                   textTransform: "none",
                 }}
+                onClick={loginGooogle}
               >
                 Iniciar sesión con Google
               </Button>
