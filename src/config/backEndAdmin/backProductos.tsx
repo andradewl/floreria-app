@@ -63,12 +63,13 @@ export const obtenerProductoPorId = async (idProducto: string) => {
   }
 };
 
-// Función para agregar un producto a la colección "Flores"
 export const agregarProducto = async (
   descripcion: string,
   descuento: number,
   existencias: number,
-  nombre: string
+  nombre: string,
+  precio: number, // Agregar precio aquí
+  imagenURL: string // Agregar la URL de la imagen
 ) => {
   try {
     await addDoc(collection(db, "Flores"), {
@@ -76,11 +77,27 @@ export const agregarProducto = async (
       descuento,
       existencias,
       nombre,
+      precio, // Asegurarse de incluir el precio
+      imagen: imagenURL // Guardar la URL de la imagen
     });
 
     console.log("Producto agregado correctamente");
   } catch (error) {
     console.error("Error al agregar el producto:", error);
+    throw error;
+  }
+};
+
+
+// Función para subir una imagen a Firebase Storage y obtener la URL de descarga
+export const subirImagen = async (idProducto: string, imagenFile: File) => {
+  try {
+    const storageRef = ref(storage, `productos/${idProducto}/${imagenFile.name}`);
+    const uploadTaskSnapshot = await uploadBytes(storageRef, imagenFile);
+    const imagenURL = await getDownloadURL(uploadTaskSnapshot.ref);
+    return imagenURL;
+  } catch (error) {
+    console.error('Error al subir la imagen:', error);
     throw error;
   }
 };
@@ -97,9 +114,7 @@ export const actualizarProducto = async (
 ) => {
   try {
     // Subir la nueva imagen a Firebase Storage y obtener la URL de la imagen
-    const storageRef = ref(storage, `productos/${idProducto}/${imagenFile.name}`);
-    const uploadTaskSnapshot = await uploadBytes(storageRef, imagenFile);
-    const imagenURL = await getDownloadURL(uploadTaskSnapshot.ref);
+    const imagenURL = await subirImagen(idProducto, imagenFile);
 
     // Actualizar el documento del producto en Firestore con la nueva URL de la imagen
     await updateDoc(doc(db, "Flores", idProducto), {

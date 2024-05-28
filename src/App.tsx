@@ -21,7 +21,7 @@ import editDireccionFact from "./pages/User/editDireccionFact";
 import EstatusEnvioAdministrador from "./pages/administrador/EstatusEnvioAdmin";
 import HistPedidosAdmin from "./pages/administrador/HistPedidosAdmin";
 import EditarProducto from "./pages/administrador/editarProducto";
-
+import FormNvoProducto from "./pages/administrador/formNvoProducto";
 
 import shopProducts from "./pages/ShopProduct/shopProducts";
 import { PayPalScriptProvider } from "@paypal/react-paypal-js";
@@ -80,6 +80,7 @@ function App() {
           <Route path="/ocasion/:nombreOcasion/:id" Component={ocasionesProductos} />
           <Route path="/pantallaCarga" Component={Carga} />
           <Route path="/EditarProducto/:id" Component={EditarProducto} />
+          <Route path="/FormNvoProducto" Component={FormNvoProducto} />
         </Routes>
 
         <Footer/>

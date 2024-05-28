@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { obtenerProductos } from '../../config/backEndAdmin/backProductos';
-import { Typography, Grid, Paper, Container, Box, IconButton } from '@mui/material';
-import { Link } from 'react-router-dom';
+import { Typography, Grid, Paper, Container, Box, IconButton, TextField, Button } from '@mui/material';
+import { Link, useNavigate } from 'react-router-dom';
 import EditIcon from '@mui/icons-material/Edit';
 
 interface Producto {
@@ -14,6 +14,8 @@ interface Producto {
 
 const ProductosAdmin = () => {
   const [productos, setProductos] = useState<Producto[]>([]);
+  const [searchTerm, setSearchTerm] = useState('');
+  const navigate = useNavigate();
 
   useEffect(() => {
     const fetchData = async () => {
@@ -34,6 +36,14 @@ const ProductosAdmin = () => {
     fetchData();
   }, []);
 
+  const handleSearch = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setSearchTerm(event.target.value);
+  };
+
+  const filteredProductos = productos.filter(producto =>
+    producto.nombre.toLowerCase().includes(searchTerm.toLowerCase())
+  );
+
   const getColor = (existencias: number) => {
     if (existencias <= 5) return 'red';
     if (existencias < 10) return 'orange';
@@ -41,12 +51,28 @@ const ProductosAdmin = () => {
   };
 
   return (
-    <Container maxWidth="md" sx={{ mt: 4 }}>
-      <Typography variant="h5" align="center" gutterBottom sx={{ fontWeight: '600', paddingBottom: '2%', fontFamily: "Cormorant", }}>
+    <Container maxWidth="md" sx={{ mt: 4}}>
+      <Typography variant="h5" align="center" gutterBottom sx={{ fontWeight: '600', paddingBottom: '2%', fontFamily: "Cormorant" }}>
         Productos en exhibición 
       </Typography>
+      <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', mb: 4 }}>
+        <TextField
+          label="Buscar Producto"
+          variant="outlined"
+          value={searchTerm}
+          onChange={handleSearch}
+          sx={{ width: '70%' }}
+        />
+        <Button
+          variant="contained"
+          color="primary"
+          onClick={() => navigate('/FormNvoProducto')}
+        >
+          Nuevo Producto
+        </Button>
+      </Box>
       <Grid container spacing={3}>
-        {productos.map((producto) => (
+        {filteredProductos.map((producto) => (
           <Grid item xs={12} sm={6} md={4} key={producto.id}>
             <Paper
               elevation={3}
