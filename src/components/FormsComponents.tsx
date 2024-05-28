@@ -1,6 +1,8 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
+/* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable react-hooks/rules-of-hooks */
-/* eslint-disable @typescript-eslint/no-unused-vars */
+
 
 import React from 'react'
 import {TextField, Grid,Typography, Button, FormControlLabel, Checkbox } from '@mui/material'
@@ -11,7 +13,7 @@ import { CreateOrderData } from '@paypal/paypal-js';
 import { CardElement, useElements, useStripe } from "@stripe/react-stripe-js"
 import { PaymentMethod } from '@stripe/stripe-js';
 import { WidthFull } from '@mui/icons-material';
-import { addPedido, descontarProdcutos, getDatosEntrega, getDatosFacturacionidUser } from '../config/apiFirebase';
+import { addPedido, dataCodigoPosta, descontarProdcutos, getDatosEntrega, getDatosFacturacionidUser } from '../config/apiFirebase';
 import { useNavigate } from "react-router-dom";
 import { setLocalStorage } from '../config/LocalStorage';
 import { NotificacionSuccess, Notificacionerror, NotificacionInfo } from "../components/Alert";
@@ -26,7 +28,7 @@ function shopProducts() {
     const [item, setItems] = React.useState<CarritoDeCompra[]>([]);
     const [totalNumerico, setTotalNumerico] = React.useState<number>(0);
 
-    const [totalEnvio] =  React.useState<number>(0);
+    const [totalEnvio, setTotalEnvio] =  React.useState<number>(0);
 
     const [isChecked, setIsChecked] = React.useState(false);
     const [isUidUserLogin, setisUidUserLogin] = React.useState(null);
@@ -34,6 +36,7 @@ function shopProducts() {
     const [notiSucces, ] = React.useState(false);
     const [notiInfo, setNotiInfo] = React.useState(false);
     const [mensajeNotificacion, setMensajeNotificacion] = React.useState("");
+    // const [precioEnvio, setPrecioEnvio] = React.useState(0);
 
     // let totalPagoPaypal;
 
@@ -183,6 +186,37 @@ function shopProducts() {
             });
         }
     };
+
+    const handleChangeCodioPostalFacturacion = async(e: { target: {value:string;} }) => {
+        const {value} = e.target;
+
+        
+
+        if(value.length > 5 ){
+            return alert("ingrese un codigo postal valido")
+        }
+
+        setFormDataFacturacion({
+            ...formDataFacturacion,
+            'cp': value
+        });
+
+        if(value.length == 5 ){
+            const dinero = await dataCodigoPosta(value)
+            if(dinero){
+                dinero.forEach(element => {
+                    // console.log(element.envio)
+                    const stringNumber = element.envio
+                    const number = parseInt(stringNumber)
+                    setTotalEnvio(number)
+                });
+            }else{
+                return alert("solo envios a monterrey")
+            }
+        }
+        
+    };
+
 
     const handleChangeFacturacion = (e: { target: { name: string; value: unknown; }; }) => {
         const { name, value } = e.target;
@@ -653,7 +687,7 @@ function shopProducts() {
                                                 label="Codigo Postal"
                                                 name="cp"
                                                 value={formDataFacturacion.cp}
-                                                onChange={handleChangeFacturacion}
+                                                onChange={handleChangeCodioPostalFacturacion}
                                                 required
                                                 />
                                             </Grid>

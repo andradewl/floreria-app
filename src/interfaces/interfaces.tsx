@@ -140,6 +140,12 @@ interface facturacion {
     telefono: string;
 }
 
+interface precioEnvio {
+    cp:string;
+    envio:string;
+    
+}
+
 export type Flower = FlowerWithOferta | FlowerWithoutOferta;
 export type CarritoDeCompra = carritoDeCompra;
 export type ProductoExtra = productoExtra;
@@ -149,6 +155,7 @@ export type Ocasionest = Ocasiones;
 export type Productoapartado = ProductoApartado;
 export type Notificacionprops = NotificacionProps;
 export type facturacionLogin= facturacion;
+export type PrecioEnvio= precioEnvio;
 
 
 

@@ -1,7 +1,8 @@
 import { auth, db, provider} from './firfebase';
 import {collection, getDocs, getDoc, doc,  query, where, setDoc, addDoc, updateDoc  } from 'firebase/firestore';
-import { Flower, ProductoExtra, NuevoPedido, Tipoflores, Ocasionest, facturacionLogin } from '../interfaces/interfaces';
+import { Flower, ProductoExtra, NuevoPedido, Tipoflores, Ocasionest, facturacionLogin, PrecioEnvio } from '../interfaces/interfaces';
 import { createUserWithEmailAndPassword, signInWithEmailAndPassword, signInWithPopup } from 'firebase/auth';
+
 
 
 export const addUser = async (nombre: string, apellido: string, email: string, password: string) => {
@@ -370,3 +371,27 @@ export const getDatosEntrega = async (idUser: string): Promise<facturacionLogin[
         return [];
     }
 };
+
+
+export const dataCodigoPosta = async (cp:string):Promise<PrecioEnvio[]> => {
+    try {
+        const q = query(collection(db, "codigosPostales"), where("cp", "==", cp));
+        const querySnapshot = await getDocs(q);
+        // console.log(querySnapshot.data())
+        const docs:PrecioEnvio[] = querySnapshot.docs.map(doc => {
+            const data = doc.data();
+            const envi:PrecioEnvio = {
+                cp:data.cp,
+                envio:data.envio
+            }
+            return envi
+        });
+        return docs
+        // console.log(docs)
+        // setData(docs);
+    } catch (error) {
+        // console.error("Error fetching data: ", error);
+        console.error('Error getting product:', error);
+        return [];
+    }
+}
