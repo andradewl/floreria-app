@@ -9,6 +9,7 @@ interface Producto {
   nombre: string;
   precio: number;
   existencias: number;
+  imagen: string;
 }
 
 const ProductosAdmin = () => {
@@ -23,6 +24,7 @@ const ProductosAdmin = () => {
           nombre: producto.nombre,
           precio: producto.precio,
           existencias: producto.existencias,
+          imagen: producto.imagen, // Agregar la URL de la imagen
         })));
       } catch (error) {
         console.error("Error al obtener los productos: ", error);
@@ -40,7 +42,7 @@ const ProductosAdmin = () => {
 
   return (
     <Container maxWidth="md" sx={{ mt: 4 }}>
-      <Typography variant="h5" align="center" gutterBottom sx={{ fontWeight: '600', paddingBottom:'5%' }}>
+      <Typography variant="h5" align="center" gutterBottom sx={{ fontWeight: '600', paddingBottom: '2%', fontFamily: "Cormorant", }}>
         Productos en exhibición 
       </Typography>
       <Grid container spacing={3}>
@@ -57,7 +59,22 @@ const ProductosAdmin = () => {
                 p: 2,
               }}
             >
-              <Box sx={{ textAlign: 'center' }}>
+              <Box sx={{ textAlign: 'center', mb: 2 }}>
+                {producto.imagen && (
+                  <Box 
+                    component="img"
+                    src={producto.imagen}
+                    alt={producto.nombre}
+                    sx={{ 
+                      width: '100%',
+                      height: '200px',
+                      objectFit: 'cover',
+                      borderRadius: '4px'
+                    }}
+                  />
+                )}
+              </Box>
+              <Box sx={{ textAlign: 'center', flexGrow: 1 }}>
                 <Typography variant="h6" gutterBottom>{producto.nombre}</Typography>
                 <Typography variant="body1" color="text.secondary" gutterBottom>${producto.precio.toFixed(2)}</Typography>
                 <Typography
@@ -67,7 +84,7 @@ const ProductosAdmin = () => {
                   Existencias: {producto.existencias}
                 </Typography>
               </Box>
-              <Box sx={{ display: 'flex', justifyContent: 'flex-end' }}>
+              <Box sx={{ display: 'flex', justifyContent: 'flex-end', mt: 2 }}>
                 <Link to={`/editarProducto/${producto.id}`}>
                   <IconButton aria-label="editar">
                     <EditIcon />

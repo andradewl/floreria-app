@@ -60,7 +60,7 @@ export default function HistPedidos() {
   return (
     <Grid container justifyContent="center">
       <Grid item xs={12} md={10} lg={8}>
-        <Typography variant="h5" align="center" gutterBottom sx={{ fontWeight: '600' }}>
+      <Typography variant="h5" align="center" gutterBottom sx={{ fontWeight: '600', paddingBottom: '2%', fontFamily: "Cormorant", }}>
           Historial de Pedidos
         </Typography>
         

@@ -1,10 +1,11 @@
-import React, { useState } from 'react';
-import { Typography, Grid, Tabs, Tab, Paper } from '@mui/material';
-import LocalFloristIcon from '@mui/icons-material/LocalFlorist';
-import LoyaltyIcon from '@mui/icons-material/Loyalty';
-import HistPedidosAdmin from './HistPedidosAdmin';
-import EstatusEnvioAdministrador from './EstatusEnvioAdmin';
-import ProductosAdmin from './ProductosAdmin';
+import React, { useState } from "react";
+import { Typography, Grid, Tabs, Tab, Paper } from "@mui/material";
+import LocalFloristIcon from "@mui/icons-material/LocalFlorist";
+import LoyaltyIcon from "@mui/icons-material/Loyalty";
+import DescriptionIcon from "@mui/icons-material/Description";
+import HistPedidosAdmin from "./HistPedidosAdmin";
+import EstatusEnvioAdministrador from "./EstatusEnvioAdmin";
+import ProductosAdmin from "./ProductosAdmin";
 const UsuarioAdmin = () => {
   const [tabValue, setTabValue] = useState<number>(0);
 
@@ -28,8 +29,20 @@ const UsuarioAdmin = () => {
   return (
     <Grid container spacing={4} justifyContent="center" sx={{ py: 12 }}>
       <Grid item xs={12} md={3}>
-        <Paper elevation={3} sx={{ p: 2, backgroundColor: '#F3F3F3', borderRadius: 2 }}>
-          <Typography variant="h5" sx={{ fontWeight: 'bold', color: '#B95389', mb: 2, textAlign: 'center' }}>
+        <Paper
+          elevation={3}
+          sx={{ p: 2, backgroundColor: "#F3F3F3", borderRadius: 2 }}
+        >
+          <Typography
+            variant="h5"
+            align="center"
+            gutterBottom
+            sx={{
+              fontWeight: "600",
+              paddingBottom: "1%",
+              fontFamily: "Cormorant",
+            }}
+          >
             Opciones Administrador
           </Typography>
           <Tabs
@@ -38,31 +51,53 @@ const UsuarioAdmin = () => {
             orientation="vertical"
             variant="scrollable"
             scrollButtons="auto"
-            sx={{ '& .MuiTabs-indicator': { backgroundColor: '#C81987' } }}
+            sx={{ "& .MuiTabs-indicator": { backgroundColor: "#C81987" } }}
           >
             <Tab
-              icon={<LocalFloristIcon fontSize="medium" sx={{ color: '#C81987' }} />}
+              icon={
+                <LocalFloristIcon fontSize="medium" sx={{ color: "#C81987" }} />
+              }
               iconPosition="start"
               label="Historial de pedidos"
-              sx={{ alignSelf: 'start', textAlign: 'left' }}
+              sx={{
+                alignSelf: "start",
+                textAlign: "left",
+                fontWeight: "600",
+                paddingBottom: "2%",
+                fontFamily: "Cormorant",
+              }}
             />
             <Tab
-              icon={<LoyaltyIcon fontSize="medium" sx={{ color: '#C81987' }} />}
+              icon={<LoyaltyIcon fontSize="medium" sx={{ color: "#C81987" }} />}
               iconPosition="start"
               label="Estatus de envío"
-              sx={{ alignSelf: 'start', textAlign: 'left' }}
+              sx={{
+                alignSelf: "start",
+                textAlign: "left",
+                fontWeight: "600",
+                paddingBottom: "2%",
+                fontFamily: "Cormorant",
+              }}
             />
             <Tab
-              label="Productos" // Agrega la pestaña para Productos
-              sx={{ alignSelf: 'start', textAlign: 'left' }}
+            icon={
+              <DescriptionIcon fontSize="medium" sx={{ color: "#C81987" }} />
+            }
+              label="Productos"
+              iconPosition="start"
+              sx={{
+                alignSelf: "start",
+                textAlign: "left",
+                fontWeight: "600",
+                paddingBottom: "2%",
+                fontFamily: "Cormorant",
+              }}
             />
           </Tabs>
         </Paper>
       </Grid>
       <Grid item xs={12} md={9}>
-
-          {renderContent()}
-
+        {renderContent()}
       </Grid>
     </Grid>
   );

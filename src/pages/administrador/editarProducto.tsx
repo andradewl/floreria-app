@@ -88,7 +88,7 @@ const EditarProducto = () => {
         <Button startIcon={<ArrowBackIcon />} onClick={handleRegresar}>
           Regresar
         </Button>
-        <Typography variant="h4" align="center" gutterBottom>
+        <Typography variant="h5" align="center" gutterBottom sx={{ fontWeight: '600', paddingBottom: '2%', fontFamily: "Cormorant", }}>
           Editar Producto
         </Typography>
       </Grid>

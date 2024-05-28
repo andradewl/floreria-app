@@ -53,6 +53,9 @@ export default function DatosFac() {
   return (
     <Grid container spacing={2} justifyContent="center">
       <Grid item xs={12}>
+      <Typography variant="h5" align="center" gutterBottom sx={{ fontWeight: '600', paddingBottom: '2%', fontFamily: "Cormorant", }}>
+        Datos de facturación
+        </Typography>
         <DemoPaper variant="outlined">
           {direcciones.map((direccion, index) => (
             <div

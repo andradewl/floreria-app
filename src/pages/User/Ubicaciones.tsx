@@ -57,6 +57,9 @@ export default function Ubicaciones() {
   return (
     <Grid container spacing={2} justifyContent="center">
       <Grid item xs={12}>
+      <Typography variant="h5" align="center" gutterBottom sx={{ fontWeight: '600', paddingBottom: '2%', fontFamily: "Cormorant", }}>
+        Direcciones.
+        </Typography>
         <DemoPaper variant="outlined">
           {direcciones.map((direccion, index) => (
             <div
