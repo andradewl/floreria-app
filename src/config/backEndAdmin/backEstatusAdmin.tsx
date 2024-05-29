@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { db } from "../firfebase";
 import { collection, doc, getDocs, updateDoc } from "firebase/firestore";
 export const getPedidosUsuario = async () => {
@@ -33,7 +34,7 @@ export const getPedidosUsuario = async () => {
   });
 
   const pedidosFlat = pedidos.flat(); // Aplanar el array de pedidos
-  console.log("Pedidos obtenidos:", pedidosFlat);
+  // console.log("Pedidos obtenidos:", pedidosFlat);
   return pedidosFlat;
 };
 
@@ -53,7 +54,7 @@ export const actualizarEstatusPedido = async (pedidoId: string, nuevoEstatus: st
       // Usamos la notación de puntos para acceder a campos anidados
       "datosEnvio.estatusEnv": nuevoEstatus,
     });
-    console.log("Estatus del pedido actualizado correctamente.");
+    // console.log("Estatus del pedido actualizado correctamente.");
   } catch (error) {
     console.error("Error al actualizar el estatus del pedido:", error);
     throw error;

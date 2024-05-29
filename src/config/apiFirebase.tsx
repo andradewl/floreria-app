@@ -16,7 +16,7 @@ export const addUser = async (nombre: string, apellido: string, email: string, p
     return new Promise((resolve, reject) => {
         createUserWithEmailAndPassword(auth, email, password)
         .then(async (credential) => {
-            console.log(credential);
+            // console.log(credential);
             const ref = doc(db, "usuarios", credential.user.uid);
             await setDoc(ref, {
                 nombre: nombre,
@@ -90,7 +90,7 @@ export const loginWithLogin = async()=>{
 
 export const apartarProducto = async (idProducto: string, cantidad: number) => {
 
-    console.log(idProducto,cantidad)
+    // console.log(idProducto,cantidad)
     const userQuery = query(collection(db, 'productoApartados'), where('idProducto', '==', idProducto));
     const userSnapshot = await getDocs(userQuery);
 
@@ -144,7 +144,7 @@ export const login = async (email: string, password: string) => {
     return new Promise((resolve, reject) => {
         signInWithEmailAndPassword(auth, email, password)
         .then(async (credential) => {
-            console.log(credential);
+            // console.log(credential);
             const ref = doc(db, "usuarios", credential.user.uid);
 
             const docSnap = await getDoc(ref)
@@ -158,7 +158,7 @@ export const login = async (email: string, password: string) => {
                     }) )
                     sessionStorage.setItem("credentials", JSON.stringify(credential.user))
             }
-            console.log(docSnap)
+            // console.log(docSnap)
             resolve(true);
         })
         .catch((err) => {
@@ -285,7 +285,7 @@ export const getProductsExtraByIds = async (productIds: string[]): Promise<Produ
 export const addPedido = async (pedidoData:NuevoPedido) => {
     try {
         const pedidoRef = await addDoc(collection(db, 'pedidos'), pedidoData);
-        console.log("Pedido añadido con ID: ", pedidoRef.id);
+        // console.log("Pedido añadido con ID: ", pedidoRef.id);
         return pedidoRef.id; // Devuelve el ID del nuevo pedido
     } catch (error) {
         console.error("Error añadiendo pedido: ", error);

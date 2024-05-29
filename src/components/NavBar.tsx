@@ -52,7 +52,7 @@ function ResponsiveAppBar() {
 
       // userCredential
       // userInfo
-      console.log(userCredential, userInfo);
+      // console.log(userCredential, userInfo);
       if(userCredential.email == userInfo.email){
         setdatauser(userInfo)
       }

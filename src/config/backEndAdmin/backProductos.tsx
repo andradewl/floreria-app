@@ -40,7 +40,7 @@ export const obtenerProductosPorCampo = async (campo: string, valor: string) => 
 export const eliminarProducto = async (idProducto: string) => {
   try {
     await deleteDoc(doc(db, "Flores", idProducto));
-    console.log("Producto eliminado correctamente");
+    // console.log("Producto eliminado correctamente");
   } catch (error) {
     console.error("Error al eliminar el producto:", error);
     throw error;
@@ -81,7 +81,7 @@ export const agregarProducto = async (
       imagen: imagenURL // Guardar la URL de la imagen
     });
 
-    console.log("Producto agregado correctamente");
+    // console.log("Producto agregado correctamente");
   } catch (error) {
     console.error("Error al agregar el producto:", error);
     throw error;
@@ -126,7 +126,7 @@ export const actualizarProducto = async (
       imagen: imagenURL // Actualizar la URL de la imagen en Firestore
     });
 
-    console.log('Producto actualizado correctamente con nueva imagen');
+    // console.log('Producto actualizado correctamente con nueva imagen');
   } catch (error) {
     console.error('Error al actualizar el producto:', error);
     throw error;

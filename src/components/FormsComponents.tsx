@@ -16,7 +16,7 @@ import { WidthFull } from '@mui/icons-material';
 import { addPedido, dataCodigoPosta, descontarProdcutos, getDatosEntrega, getDatosFacturacionidUser } from '../config/apiFirebase';
 import { useNavigate } from "react-router-dom";
 import { setLocalStorage } from '../config/LocalStorage';
-import { NotificacionSuccess, Notificacionerror, NotificacionInfo } from "../components/Alert";
+import { NotificacionInfo, NotificacionSuccess, Notificacionerror } from '../components/Alert';
 
 function shopProducts() {
     const navigate = useNavigate();
@@ -33,10 +33,14 @@ function shopProducts() {
     const [isEnvio, setIsEnvio] =  React.useState(false);
     const [isChecked, setIsChecked] = React.useState(false);
     const [isUidUserLogin, setisUidUserLogin] = React.useState(null);
-    const [notiError, ] = React.useState(false);
+
+    const [notiError, setNotiError ] = React.useState(false);
     const [notiSucces, ] = React.useState(false);
     const [notiInfo, setNotiInfo] = React.useState(false);
     const [mensajeNotificacion, setMensajeNotificacion] = React.useState("");
+
+    
+    
 
     const [formDataFacturacion, setFormDataFacturacion] =React.useState({
         nombre: '',
@@ -94,7 +98,7 @@ function shopProducts() {
 
         if(storedUserName){
             const userCredential = JSON.parse(storedUserName);
-            console.log(userCredential)
+            // console.log(userCredential)
             dataFcat(userCredential.uid)
             dataEntrega(userCredential.uid)
             setisUidUserLogin(userCredential.uid)
@@ -138,7 +142,7 @@ function shopProducts() {
 
     const dataFcat = async (idUsuario: string) => {
         const datosFact: facturacionLogin[] = await getDatosFacturacionidUser(idUsuario);
-        console.log(datosFact)
+        // console.log(datosFact)
     
         if (datosFact.length > 0) {
             const fact = datosFact[0]; // Access the first element
@@ -170,7 +174,7 @@ function shopProducts() {
 
     const dataEntrega = async (idUsuario: string) => {
         const datosFact: facturacionLogin[] = await getDatosEntrega(idUsuario);
-        console.log(datosFact)
+        // console.log(datosFact)
     
         if (datosFact.length > 0) {
             const fact = datosFact[0]; // Access the first element
@@ -203,7 +207,13 @@ function shopProducts() {
     const handleChangeCodioPostalFacturacion = async (e: { target: { value: string; } }) => {
         const { value } = e.target;
         if (value.length > 5) {
-            return alert("Ingrese un código postal válido");
+            setMensajeNotificacion("Ingrese un código postal válido")
+            setNotiError(true)
+            setTimeout(() => {
+                setNotiError(false)
+            }, 2000);
+            // setNotiError(true)
+            return
         }
         setFormDataFacturacion({
             ...formDataFacturacion,
@@ -219,11 +229,24 @@ function shopProducts() {
                         if (!isNaN(envioNumber)) {
                             setTotalEnvioFactura(envioNumber);
                         } else {
-                            console.error("El valor de envio no es un número válido:", envioString);
+                            setMensajeNotificacion("El valor de envio no es un número válido:")
+                            setNotiError(true)
+                            setTimeout(() => {
+                                setNotiError(false)
+                            }, 2000);
+                            // console.error("El valor de envio no es un número válido:", envioString);
                         }
                     });
                 } else {
-                    alert("Solo envíos a Monterrey");
+
+                    setMensajeNotificacion("Solo Envios a Monterrey")
+                    setNotiError(true)
+                    setTimeout(() => {
+                        setNotiError(false)
+                    }, 2000);
+                    // setMensajeNotificacion("Ingrese un código postal válido")
+                    // setNotiError(true)
+                    // alert("Solo envíos a Monterrey");
                     setFormDataFacturacion({
                         ...formDataFacturacion,
                         'cp': ''
@@ -231,23 +254,32 @@ function shopProducts() {
                 }
             } catch (error) {
                 console.error("Error al obtener datos de código postal:", error);
-                alert("Hubo un error al verificar el código postal. Inténtelo de nuevo.");
+                setMensajeNotificacion("Hubo un error al verificar el código postal. Inténtelo de nuevo.")
+                setNotiError(true)
+                setTimeout(() => {
+                    setNotiError(false)
+                }, 2000);
+                // alert("Hubo un error al verificar el código postal. Inténtelo de nuevo.");
             }
         }
     };
 
 
     const handleChangeCodioPostalEnvio = async(e: { target: {value:string;} }) => {
-        const {value} = e.target;
-        if(value.length > 5 ){
-            return alert("ingrese un codigo postal valido")
+        const { value } = e.target;
+        if (value.length > 5) {
+            setMensajeNotificacion("Ingrese un código postal válido")
+            setNotiError(true)
+            setTimeout(() => {
+                setNotiError(false)
+            }, 2000);
+            // setNotiError(true)
+            return
         }
-
         setFormDataEnvio({
             ...formDataEnvio,
             'cp': value
         });
-
         if (value.length === 5) {
             try {
                 const dinero = await dataCodigoPosta(value);
@@ -258,11 +290,24 @@ function shopProducts() {
                         if (!isNaN(envioNumber)) {
                             settotalEnvioDomicilio(envioNumber);
                         } else {
-                            console.error("El valor de envio no es un número válido:", envioString);
+                            setMensajeNotificacion("El valor de envio no es un número válido:")
+                            setNotiError(true)
+                            setTimeout(() => {
+                                setNotiError(false)
+                            }, 2000);
+                            // console.error("El valor de envio no es un número válido:", envioString);
                         }
                     });
                 } else {
-                    alert("Solo envíos a Monterrey");
+
+                    setMensajeNotificacion("Solo Envios a Monterrey")
+                    setNotiError(true)
+                    setTimeout(() => {
+                        setNotiError(false)
+                    }, 2000);
+                    // setMensajeNotificacion("Ingrese un código postal válido")
+                    // setNotiError(true)
+                    // alert("Solo envíos a Monterrey");
                     setFormDataEnvio({
                         ...formDataEnvio,
                         'cp': ''
@@ -270,22 +315,14 @@ function shopProducts() {
                 }
             } catch (error) {
                 console.error("Error al obtener datos de código postal:", error);
-                alert("Hubo un error al verificar el código postal. Inténtelo de nuevo.");
+                setMensajeNotificacion("Hubo un error al verificar el código postal. Inténtelo de nuevo.")
+                setNotiError(true)
+                setTimeout(() => {
+                    setNotiError(false)
+                }, 2000);
+                // alert("Hubo un error al verificar el código postal. Inténtelo de nuevo.");
             }
         }
-
-        // if(value.length == 5 ){
-        //     const dinero = await dataCodigoPosta(value)
-        //     if(dinero != []){
-        //         dinero.forEach(element => {
-        //                 const stringNumber = element.envio
-        //                 const number = parseInt(stringNumber)
-        //                 settotalEnvioDomicilio(number)
-        //         });
-        //     }else{
-        //         alert("solo envios a monterrey")
-        //     }
-        // }
     };
 
 
@@ -383,7 +420,10 @@ function shopProducts() {
     const onApprove = async (data: { orderID: string }) => {
         setMensajeNotificacion("Añadiendo Pedido Espere un Momento")
         setNotiInfo(true)
-        console.log(totalNumerico)
+        setTimeout(() => {
+            setNotiInfo(false)
+        }, 2000);
+        // console.log(totalNumerico)
         const dinero = totalNumerico+totalEnvio
         return fetch(`${servelUrl}/api/orders/${data.orderID}/capture`, {
             method: "POST",
@@ -393,16 +433,28 @@ function shopProducts() {
         })
         .then((response) => {
             if (!response.ok) {
-                throw new Error("Error al capturar el pago.");
+                setMensajeNotificacion("Error al capturar el pago.")
+                setNotiError(true)
+                setTimeout(() => {
+                    setNotiError(false)
+                }, 2000);
+                // throw new Error();
             }
             return response.json();
         })
         .then((result) => {
-            console.log("Pago exitoso", result);
+            result
+            // console.log("Pago exitoso", result);
             if (result.error) {
-                console.error("error pago",result.error.message);
+                setMensajeNotificacion("Error de pago intentelo mas Tarde...")
+                setNotiError(true)
+                setTimeout(() => {
+                    setNotiError(false)
+                }, 2000);
+                result.error.message
+                // console.error("error pago",result.error.message);
             } else {
-                console.log("resuñtado pago",result.paymentIntent);
+                // console.log("resuñtado pago",result.paymentIntent);
 
                 if( true== isFormValid && isFormValidEnvio == true){
                     const datosPedidos = facturacionYEnvioTrue(dinero)
@@ -420,9 +472,15 @@ function shopProducts() {
                         }, 5000);
                     })
                     .catch((_error) => {
-                        alert('Error al crear el método de pago intentelo mas tarde')
+                        setNotiInfo(false)
+                        setMensajeNotificacion("Error al crear el método de pago intentelo mas tarde")
+                        setNotiError(true)
+                        setTimeout(() => {
+                            setNotiError(false)
+                        }, 2000);
+                        // alert('Error al crear el método de pago intentelo mas tarde')
                     });
-                    console.log(newItem)
+                    // console.log(newItem)
                 }else{
                     const datosPedidos = facturacionYEnviofalse(dinero)
                     const newItem: NuevoPedido = datosPedidos
@@ -433,8 +491,8 @@ function shopProducts() {
                         item.forEach(async element => {
                             await descontarProdcutos(element.id, element.cantidad)
                         })
-                        setMensajeNotificacion("Añadiendo Pedido Espere un Momento")
-                        setNotiInfo(true)
+                        // setMensajeNotificacion("Añadiendo Pedido Espere un Momento")
+                        // setNotiInfo(true)
 
                         setTimeout(() => {
                             setNotiInfo(false)
@@ -445,14 +503,24 @@ function shopProducts() {
                         // deleteCarrito()
                         // handleRedirect()
                     }).catch((_error) => {
-                        alert('Error al crear el método de pago intentelo mas tarde')
+                        setMensajeNotificacion("Error al crear el método de pago intentelo mas tarde...")
+                        setNotiError(true)
+                        setTimeout(() => {
+                            setNotiError(false)
+                        }, 2000);
+                        // alert()
                     });
-                    console.log(newItem)
+                    // console.log(newItem)
                 }
             }
         })
         .catch((_error) => {
-            alert('Error al crear el método de pago intentelo mas tarde')
+            setMensajeNotificacion("Error al crear el método de pago intentelo mas tarde...")
+            setNotiError(true)
+            setTimeout(() => {
+                setNotiError(false)
+            }, 2000);
+            // alert('Error al crear el método de pago intentelo mas tarde')
         });
     };
 
@@ -493,7 +561,7 @@ function shopProducts() {
             }
 
             const order = await response.json();
-            console.log("Orden creada:", order);
+            // console.log("Orden creada:", order);
             return order.id;
         } catch (error) {
             console.error("Error al crear la orden:", error);
@@ -506,11 +574,17 @@ function shopProducts() {
         setMensajeNotificacion("Añadiendo Pedido Espere un Momento")
         setNotiInfo(true)
         const dinero = totalNumerico+totalEnvio
-        console.log(totalNumerico)
+        // console.log(totalNumerico)
 
         // console.log(isFormValid, isChecked, isFormValidEnvio)
         if(true== isChecked != isFormValidEnvio == true){
-            return alert("Debe llenar todos los datos de envio")
+
+            setMensajeNotificacion("Debe llenar todos los datos de envio")
+            setNotiError(true)
+            setTimeout(() => {
+                setNotiError(false)
+            }, 2000);
+            // return alert("Debe llenar todos los datos de envio")
         }
 
         if (!stripe || !elements) {
@@ -522,15 +596,21 @@ function shopProducts() {
                 type: 'card',
                 card: elements.getElement(CardElement)!,
             });
-            console.log(paymentMethod)
+            // console.log(paymentMethod)
 
             if (error) {
+                // const mesageError = error.message
+                // setMensajeNotificacion(mesageError)
+                // setNotiError(true)
+                // setTimeout(() => {
+                //     setNotiError(false)
+                // }, 2000);
                 return alert(error.message)
             }
 
             if (paymentMethod) {
                 const { id } = paymentMethod as PaymentMethod;
-                console.log(id)
+                // console.log(id)
 
                 const response = await fetch('https://stripe-server-blue.vercel.app/payment', {
                     method: 'POST',
@@ -548,7 +628,7 @@ function shopProducts() {
                 }
 
                 const responseData = await response.json();
-                console.log(responseData.paymentIntent)
+                // console.log(responseData.paymentIntent)
 
                 if(responseData){
 
@@ -557,7 +637,7 @@ function shopProducts() {
                     if (result.error) {
                         console.error("error pago",result.error.message);
                     } else {
-                        console.log("resuñtado pago",result.paymentIntent);
+                        // console.log("resuñtado pago",result.paymentIntent);
                         if( true== isFormValid && isFormValidEnvio == true){
 
                             const datosPedidos = facturacionYEnvioTrue(dinero)
@@ -578,9 +658,14 @@ function shopProducts() {
                                 // handleRedirect()
                             })
                             .catch((_error) => {
-                                alert('Error al añadir pedido intentelo mas tarde')
+                                setMensajeNotificacion("Error al añadir pedido intentelo mas tarde")
+                                setNotiError(true)
+                                setTimeout(() => {
+                                    setNotiError(false)
+                                }, 2000);
+                                // alert('Error al añadir pedido intentelo mas tarde')
                             });
-                            console.log(newItem)
+                            // console.log(newItem)
 
                         }else{
                             const datosPedidos = facturacionYEnviofalse(dinero)
@@ -600,18 +685,33 @@ function shopProducts() {
 
                             })
                             .catch((_error) => {
-                                alert('Error al añadir pedido intentelo mas tarde')
+                                setMensajeNotificacion("Error al añadir pedido intentelo mas tarde")
+                                setNotiError(true)
+                                setTimeout(() => {
+                                    setNotiError(false)
+                                }, 2000);
+                                // alert('Error al añadir pedido intentelo mas tarde')
                             });
 
-                            console.log(newItem)
+                            // console.log(newItem)
                         }
                     }
                 }else{
-                    alert('Error al crear el método de pago intentelo mas tarde')
+                    setMensajeNotificacion("Error al crear el método de pago intentelo mas tarde")
+                    setNotiError(true)
+                    setTimeout(() => {
+                        setNotiError(false)
+                    }, 2000);
+                    // alert('Error al crear el método de pago intentelo mas tarde')
                 }
             }
         } catch (error) {
-            alert('Error al crear el método de pago intentelo mas tarde')
+            setMensajeNotificacion("Error al crear el método de pago intentelo mas tarde")
+            setNotiError(true)
+            setTimeout(() => {
+                setNotiError(false)
+            }, 2000);
+            // alert('Error al crear el método de pago intentelo mas tarde')
         }
     };
 
@@ -658,7 +758,212 @@ function shopProducts() {
 
                 <Grid  >
                     <Grid container>
-                        <Grid item xs={12} md={6} p={4}>
+
+                        <Grid item xs={12} md={6}  sx={{padding:{xs:'0px', md:'4%', lg:'8%', xl:'10%'}, display:{xs:'block', md:'none'}}}>
+                            <Grid>
+                                {item && item.map((item) => (
+                                    <Grid container pt={1} sx={{
+                                        borderBottomWidth: '1px',
+                                        borderBottomColor: '#80808040',
+                                        borderBottomStyle: 'solid',
+
+                                    }}>
+                                        <Grid item xs={3} sx={{height:'80px' }}>
+                                            <img src={item.imagen} alt="" style={{width:'90%', height:'100%', borderRadius:'10px'}}/>
+                                        </Grid>
+                                        <Grid item xs={9} p={1}>
+                                            <Grid container >
+                                                <Grid item xs={8}>
+                                                    <Typography variant="body1" color="initial"
+                                                    sx={{
+                                                        fontSize:'13px'
+                                                    }}
+                                                    >{item.nombre }</Typography>
+                                                </Grid>
+                                                <Grid item xs={4}>
+                                                    <Typography variant="body2" color="initial"
+                                                    sx={{
+                                                        fontSize:'12px',
+                                                        textAlign:'end',
+                                                        fontWeight: "bold",
+
+                                                    }}
+                                                    >x{item.cantidad } ${item.precio}</Typography>
+                                                </Grid>
+                                            </Grid>
+                                            <Grid container>
+                                                <Grid item xs={4}>
+                                                    <Typography variant="body1" color="initial"
+                                                    sx={{
+                                                        fontWeight: "bold",
+                                                        color:'#6a6a6a',
+                                                        fontStyle: "normal",
+                                                        fontSize:'12px'
+                                                    }}
+                                                    >Entrega</Typography>
+                                                </Grid>
+                                                <Grid item xs={8}>
+                                                    <Typography variant="body2" color="initial"
+                                                    sx={{
+                                                        fontSize:'12px',
+                                                        textAlign:'end'
+                                                    }}
+                                                    >{item.entrega}</Typography>
+                                                </Grid>
+                                            </Grid>
+                                            <Grid container>
+                                                <Grid item xs={4}>
+                                                    <Typography variant="body1" color="initial"
+                                                    sx={{
+                                                        color:'#6a6a6a',
+                                                        fontWeight: "bold",
+                                                        fontStyle: "normal",
+                                                        fontSize:'12px'
+                                                    }}
+                                                    >Fecha</Typography>
+                                                </Grid>
+                                                <Grid item xs={8}>
+                                                <Typography variant="body2" color="initial"
+                                                sx={{
+                                                    fontSize:'12px',
+                                                    textAlign:'end'
+                                                }}
+                                                >
+                                                    {item.fecha } - {item.hora }
+                                                </Typography>
+                                                </Grid>
+                                            </Grid>
+                                            <Grid container>
+                                                <Grid item xs={6}>
+                                                    <Typography variant="body1" color="initial"
+                                                    sx={{
+                                                        color:'#6a6a6a',
+                                                        fontWeight: "bold",
+                                                        fontStyle: "normal",
+                                                        fontSize:'12px'
+                                                    }}
+                                                    >Producto Extra</Typography>
+                                                </Grid>
+                                                <Grid item xs={6}>
+                                                <Typography variant="body2" color="initial"
+                                                sx={{
+                                                    fontSize:'12px',
+                                                    textAlign:'end'
+                                                }}
+                                                >
+                                                    {item.productoExtra.nombreProductoExtra }
+                                                </Typography>
+                                                </Grid>
+                                            </Grid>
+                                            <Grid container>
+                                                <Grid item xs={8}>
+                                                    <Typography variant="body1" color="initial"
+                                                    sx={{
+                                                        color:'#6a6a6a',
+                                                        fontWeight: "bold",
+                                                        fontStyle: "normal",
+                                                        fontSize:'12px'
+                                                    }}
+                                                    >Precio Producto Extra</Typography>
+                                                </Grid>
+                                                <Grid item xs={4}>
+                                                <Typography variant="body2" color="initial"
+                                                sx={{
+                                                    fontSize:'12px',
+                                                    textAlign:'end'
+                                                }}
+                                                >
+                                                    ${item.productoExtra.precioProductoExtra }
+                                                </Typography>
+                                                </Grid>
+                                            </Grid>
+                                            <Grid container sx={{marginBottom:'20px'}}>
+                                                <Grid item xs={4}>
+                                                    <Typography variant="body1" color="initial"
+                                                    sx={{
+                                                        color:'#6a6a6a',
+                                                        fontWeight: "bold",
+                                                        fontStyle: "normal",
+                                                        fontSize:'12px'
+                                                    }}
+                                                    >Dedicatoria</Typography>
+                                                </Grid>
+                                                <Grid item xs={8}>
+                                                    <Typography variant="body2" color="initial"
+                                                    sx={{
+                                                        fontFamily: "Cormorant",
+                                                        fontOpticalSizing: "auto",
+                                                        fontWeight: "<weight>",
+                                                        fontStyle: "normal",
+                                                        fontSize:'15px',
+                                                        textAlign:'end'
+                                                    }}
+                                                    >
+                                                        {item.dedicatoria }
+                                                    </Typography>
+                                                </Grid>
+                                            </Grid>
+
+                                        </Grid>
+
+
+                                        <Grid item xs={12} sx={{
+                                            borderBlockWidth: '1px',
+                                            borderBottomColor: '#dadada',
+                                            borderBottomStyle: 'double'
+                                        }}>
+                                            <Grid container>
+
+                                            </Grid>
+                                        </Grid>
+
+
+
+
+                                    </Grid>
+                                ))}
+                            </Grid>
+                            <Grid>
+                                <Grid container sx={{padding:'4px'}}>
+                                    <Grid item xs={6}>
+                                        <Typography variant="body1" color="initial" sx={{ textAlign:'end' }}>Subtotal</Typography>
+                                    </Grid>
+                                    <Grid item xs={6}>
+                                        <Typography variant="body1" color="initial" sx={{ textAlign:'end' }}>${totalNumerico}</Typography>
+                                    </Grid>
+                                </Grid>
+                                <Grid container sx={{padding:'4px'}}>
+                                    <Grid item xs={6}>
+                                        <Typography variant="body1" color="initial" sx={{ textAlign:'end' }}>Envio</Typography>
+                                    </Grid>
+                                    <Grid item xs={6}>
+                                        <Typography variant="body1" color="initial" sx={{ textAlign:'end' }}>${totalEnvio}</Typography>
+                                    </Grid>
+                                </Grid>
+                                <Grid container sx={{
+                                    borderBottomWidth: '1px',
+                                    borderBottomColor: '#80808040',
+                                    borderBottomStyle: 'solid',
+                                    padding:'4px'
+                                }}>
+                                    <Grid item xs={6}>
+                                        <Typography variant="body1" color="initial" sx={{ textAlign:'end' }}>Descuento</Typography>
+                                    </Grid>
+                                    <Grid item xs={6}>
+                                        <Typography variant="body1" color="initial" sx={{ textAlign:'end' }}>$0</Typography>
+                                    </Grid>
+                                </Grid>
+                                <Grid container sx={{padding:'4px'}}>
+                                    <Grid item xs={6}>
+                                        <Typography variant="body1" color="initial" sx={{ textAlign:'end', fontWeight: "bold" }}>Total</Typography>
+                                    </Grid>
+                                    <Grid item xs={6}>
+                                        <Typography variant="body1" color="initial" sx={{ textAlign:'end' }}>${totalNumerico + totalEnvio}</Typography>
+                                    </Grid>
+                                </Grid>
+                            </Grid>
+                        </Grid>
+                        <Grid item xs={12} md={6} sx={{padding:{xs:'0px', md:'2%', lg:'4%'}}}>
                             <Grid p={3}>
                                 <Typography variant="h4" gutterBottom
                                 sx={{
@@ -935,7 +1240,7 @@ function shopProducts() {
                             </Grid>
 
                         </Grid>
-                        <Grid item xs={12} md={6}  p={10}>
+                        <Grid item xs={12} md={6}  sx={{padding:{xs:'0px', md:'4%', lg:'8%', xl:'10%'}, display:{xs:'none', md:'block'}}}>
                             <Grid>
                                 {item && item.map((item) => (
                                     <Grid container pt={1} sx={{
@@ -1097,9 +1402,6 @@ function shopProducts() {
 
 
                                     </Grid>
-
-
-
                                 ))}
                             </Grid>
                             <Grid>

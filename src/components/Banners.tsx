@@ -52,8 +52,8 @@ function Banners(){
         if (storedUserCredentials && storedUserName) {
             const userCredential = JSON.parse(storedUserCredentials);
             const userInfo = JSON.parse(storedUserName);
-
-            console.log(userCredential.email, userInfo.email);
+            userCredential
+            // console.log(userCredential.email, userInfo.email);
             setUserLogin(userInfo)
 
         }

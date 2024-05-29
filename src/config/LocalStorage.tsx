@@ -21,7 +21,8 @@ export const getLocalStorage = (key: string) => {
 export const getLocalStorageOneItem = (key: string) => {
     try {
         const value = localStorage.getItem(key);
-        console.log(value)
+        value
+        // console.log(value)
     } catch (error) {
         console.error('Error getting localStorage:', error);
         return null;

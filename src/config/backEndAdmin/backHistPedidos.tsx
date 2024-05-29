@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { db } from "../firfebase";
 import {
   collection,
@@ -26,6 +27,6 @@ export const getPedidosUsuario = async () => { // Elimina el parámetro uidUser
     }
   });
 
-  console.log("Pedidos obtenidos:", pedidos);
+  // console.log("Pedidos obtenidos:", pedidos);
   return pedidos;
 };

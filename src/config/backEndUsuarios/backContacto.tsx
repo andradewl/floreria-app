@@ -13,7 +13,7 @@ interface ContactoData {
 export const agregarRegistroContacto = async (datosContacto: ContactoData) => {
   try {
     await addDoc(collection(db, "Contacto"), datosContacto);
-    console.log("Registro de contacto agregado correctamente.");
+    // console.log("Registro de contacto agregado correctamente.");
   } catch (error) {
     console.error("Error al agregar registro de contacto:", error);
     throw new Error("Ocurrió un error al procesar tu solicitud. Por favor, inténtalo de nuevo más tarde."); 
