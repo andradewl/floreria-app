@@ -117,22 +117,6 @@ export default function EstatusEnvioAdministrador() {
       <Typography variant="h5" align="center" gutterBottom sx={{ fontWeight: '600', paddingBottom: '2%', fontFamily: "Cormorant", }}>
           Estatus de Envío
         </Typography>
-        
-        {/* Barra de búsqueda y botón de filtro */}
-        <Box display="flex" justifyContent="center" sx={{ maxWidth: 1500, margin: '0 auto 20px auto' }}>
-          <TextField
-            label="Buscar"
-            variant="outlined"
-            sx={{ flex: 1, marginRight: 1 }}
-          />
-          <Button
-            variant="contained"
-            color="primary"
-            onClick={handleClick}
-            startIcon={<FilterListIcon />}
-          >
-            Filtrar
-          </Button>
           <Menu
             anchorEl={anchorEl}
             open={open}
@@ -143,7 +127,7 @@ export default function EstatusEnvioAdministrador() {
             <MenuItem onClick={handleClose}>En camino</MenuItem>
             <MenuItem onClick={handleClose}>Entregado</MenuItem>
           </Menu>
-        </Box>
+
 
         <TableContainer component={Paper} sx={{ maxWidth: 1500, margin: '0 auto', border: '2px solid', borderColor: 'primary.main', borderRadius: 2, boxShadow: 5 }}>
           <Table aria-label="simple table">
