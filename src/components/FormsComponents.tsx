@@ -27,18 +27,16 @@ function shopProducts() {
 
     const [item, setItems] = React.useState<CarritoDeCompra[]>([]);
     const [totalNumerico, setTotalNumerico] = React.useState<number>(0);
-
     const [totalEnvio, setTotalEnvio] =  React.useState<number>(0);
-
+    const [totalEnvioFactura, setTotalEnvioFactura] =  React.useState<number>(0);
+    const [totalEnvioDomicilio, settotalEnvioDomicilio] =  React.useState<number>(0);
+    const [isEnvio, setIsEnvio] =  React.useState(false);
     const [isChecked, setIsChecked] = React.useState(false);
     const [isUidUserLogin, setisUidUserLogin] = React.useState(null);
     const [notiError, ] = React.useState(false);
     const [notiSucces, ] = React.useState(false);
     const [notiInfo, setNotiInfo] = React.useState(false);
     const [mensajeNotificacion, setMensajeNotificacion] = React.useState("");
-    // const [precioEnvio, setPrecioEnvio] = React.useState(0);
-
-    // let totalPagoPaypal;
 
     const [formDataFacturacion, setFormDataFacturacion] =React.useState({
         nombre: '',
@@ -103,17 +101,16 @@ function shopProducts() {
         }
 
         const parsedItems: CarritoDeCompra[] = JSON.parse(storedItems);
+        const hasActiveStatus = parsedItems.some(item => item.entrega === 'A domicilio');
 
         parsedItems.forEach((item) => {
             dinero += (item.precio * item.cantidad)+( item.productoExtra.precioProductoExtra);
         })
-
         setLocalStorage("precioTotal", dinero)
+        setIsEnvio(hasActiveStatus)
         setTotalNumerico(dinero)
         setItems(parsedItems)
     }, [])
-
-
 
     React.useEffect(() => {
         let sumaTotal = 0;
@@ -122,6 +119,22 @@ function shopProducts() {
             })
             setTotalNumerico(sumaTotal);
     }, [item]);
+
+
+    React.useEffect(() => {
+        if(isEnvio){
+            if(isChecked){
+                localStorage.setItem('totalEnvio', JSON.stringify(totalEnvioDomicilio));
+                setTotalEnvio(totalEnvioDomicilio)
+            }else{
+                localStorage.setItem('totalEnvio', JSON.stringify(totalEnvioFactura));
+                setTotalEnvio(totalEnvioFactura)
+            }
+        }else{
+            localStorage.setItem('totalEnvio', JSON.stringify(0));
+            setTotalEnvio(0)
+        }
+    }, [totalEnvioFactura, totalEnvioDomicilio ]);
 
     const dataFcat = async (idUsuario: string) => {
         const datosFact: facturacionLogin[] = await getDatosFacturacionidUser(idUsuario);
@@ -187,34 +200,92 @@ function shopProducts() {
         }
     };
 
-    const handleChangeCodioPostalFacturacion = async(e: { target: {value:string;} }) => {
-        const {value} = e.target;
-
-        
-
-        if(value.length > 5 ){
-            return alert("ingrese un codigo postal valido")
+    const handleChangeCodioPostalFacturacion = async (e: { target: { value: string; } }) => {
+        const { value } = e.target;
+        if (value.length > 5) {
+            return alert("Ingrese un código postal válido");
         }
-
         setFormDataFacturacion({
             ...formDataFacturacion,
             'cp': value
         });
-
-        if(value.length == 5 ){
-            const dinero = await dataCodigoPosta(value)
-            if(dinero){
-                dinero.forEach(element => {
-                    // console.log(element.envio)
-                    const stringNumber = element.envio
-                    const number = parseInt(stringNumber)
-                    setTotalEnvio(number)
-                });
-            }else{
-                return alert("solo envios a monterrey")
+        if (value.length === 5) {
+            try {
+                const dinero = await dataCodigoPosta(value);
+                if (dinero.length > 0) {
+                    dinero.forEach(element => {
+                        const envioString = element.envio.toString(); // Asegúrate de que sea un string
+                        const envioNumber = parseInt(envioString);
+                        if (!isNaN(envioNumber)) {
+                            setTotalEnvioFactura(envioNumber);
+                        } else {
+                            console.error("El valor de envio no es un número válido:", envioString);
+                        }
+                    });
+                } else {
+                    alert("Solo envíos a Monterrey");
+                    setFormDataFacturacion({
+                        ...formDataFacturacion,
+                        'cp': ''
+                    });
+                }
+            } catch (error) {
+                console.error("Error al obtener datos de código postal:", error);
+                alert("Hubo un error al verificar el código postal. Inténtelo de nuevo.");
             }
         }
-        
+    };
+
+
+    const handleChangeCodioPostalEnvio = async(e: { target: {value:string;} }) => {
+        const {value} = e.target;
+        if(value.length > 5 ){
+            return alert("ingrese un codigo postal valido")
+        }
+
+        setFormDataEnvio({
+            ...formDataEnvio,
+            'cp': value
+        });
+
+        if (value.length === 5) {
+            try {
+                const dinero = await dataCodigoPosta(value);
+                if (dinero.length > 0) {
+                    dinero.forEach(element => {
+                        const envioString = element.envio.toString(); // Asegúrate de que sea un string
+                        const envioNumber = parseInt(envioString);
+                        if (!isNaN(envioNumber)) {
+                            settotalEnvioDomicilio(envioNumber);
+                        } else {
+                            console.error("El valor de envio no es un número válido:", envioString);
+                        }
+                    });
+                } else {
+                    alert("Solo envíos a Monterrey");
+                    setFormDataEnvio({
+                        ...formDataEnvio,
+                        'cp': ''
+                    });
+                }
+            } catch (error) {
+                console.error("Error al obtener datos de código postal:", error);
+                alert("Hubo un error al verificar el código postal. Inténtelo de nuevo.");
+            }
+        }
+
+        // if(value.length == 5 ){
+        //     const dinero = await dataCodigoPosta(value)
+        //     if(dinero != []){
+        //         dinero.forEach(element => {
+        //                 const stringNumber = element.envio
+        //                 const number = parseInt(stringNumber)
+        //                 settotalEnvioDomicilio(number)
+        //         });
+        //     }else{
+        //         alert("solo envios a monterrey")
+        //     }
+        // }
     };
 
 
@@ -243,7 +314,6 @@ function shopProducts() {
             navigate("/");
         }
     }
-
 
     const facturacionYEnvioTrue=(total:number)=>{
         let entrega="";
@@ -275,7 +345,6 @@ function shopProducts() {
         return newItem
     }
 
-
     const facturacionYEnviofalse=(total:number)=>{
         let entrega="";
         totalEnvio == 0 ? entrega="Recoge en tienda" : entrega="Entregar a cliente";
@@ -305,19 +374,17 @@ function shopProducts() {
         return newItem
     }
 
-
     const deleteCarrito=()=>{
         localStorage.removeItem('Productos');
         localStorage.removeItem('precioTotal');
         localStorage.removeItem('envio');
     }
 
-
     const onApprove = async (data: { orderID: string }) => {
         setMensajeNotificacion("Añadiendo Pedido Espere un Momento")
         setNotiInfo(true)
         console.log(totalNumerico)
-        const dinero = totalNumerico
+        const dinero = totalNumerico+totalEnvio
         return fetch(`${servelUrl}/api/orders/${data.orderID}/capture`, {
             method: "POST",
             headers: {
@@ -389,15 +456,21 @@ function shopProducts() {
         });
     };
 
-
-
     const createOrder = async (_data: CreateOrderData) => {
-        // let sumaTotal = 0;
-        // item.forEach((nomber) => {
-        //     sumaTotal += (nomber.precio * nomber.cantidad)+( nomber.productoExtra.precioProductoExtra);
-        // })
 
         const value = localStorage.getItem("precioTotal");
+        const valorEnvio = localStorage.getItem("totalEnvio");
+
+        let totalString=value
+
+        if(value && valorEnvio){
+            const number = parseInt(value)
+            const number2 = parseInt(valorEnvio)
+            const total = number + number2
+            totalString =  total.toString()
+        }else{
+            totalString = value
+        }
         // console.log(dinero, dinero2, dinero3, value)
 
         try {
@@ -410,7 +483,7 @@ function shopProducts() {
                     cart: {
                         id: "YOUR_PRODUCT_ID",
                         descripcion: "Productos Floreria Rickys",
-                        quantity: value,
+                        quantity: totalString,
                     },
                 }),
             });
@@ -432,7 +505,7 @@ function shopProducts() {
         e.preventDefault();
         setMensajeNotificacion("Añadiendo Pedido Espere un Momento")
         setNotiInfo(true)
-        const dinero = totalNumerico
+        const dinero = totalNumerico+totalEnvio
         console.log(totalNumerico)
 
         // console.log(isFormValid, isChecked, isFormValidEnvio)
@@ -542,11 +615,6 @@ function shopProducts() {
         }
     };
 
-
-    // const datosDeEnvio=(e: { target: { value: boolean | ((prevState: boolean /* eslint-disable @typescript-eslint/no-unused-vars */) => boolean); }; })=>{
-    //     setEntregaDeFlores(e.target.value)
-    // }
-
     const isChecketEnvios=(e: boolean)=>{
         // setEntregaDeFlores(e.target.value)
 
@@ -568,21 +636,6 @@ function shopProducts() {
         setIsChecked(e)
     }
 
-    // const eliminarItem = (index: number) => {
-    //     const updatedItems = [...item.slice(0, index), ...item.slice(index + 1)];
-    //     if (updatedItems.length === 0) {
-    //         localStorage.removeItem('Productos');
-    //         localStorage.removeItem('envio');
-    //         localStorage.removeItem('PrecioApagar');
-    //         setItems([]);
-    //         // setIsSetItems(false)
-    //     } else {
-    //         localStorage.setItem('Productos', JSON.stringify(updatedItems));
-    //         setItems(updatedItems);
-    //     }
-    // };
-
-
     const cardElementOptions = {
         style: {
             base: {
@@ -598,8 +651,6 @@ function shopProducts() {
             },
         },
     };
-
-
 
     return (
         <>
@@ -664,9 +715,9 @@ function shopProducts() {
                                             <Grid item xs={6}>
                                                 <TextField
                                                 fullWidth
-                                                label="Cuidad"
-                                                name="ciudad"
-                                                value={formDataFacturacion.estado}
+                                                label="Municipio"
+                                                name="municipio"
+                                                value={formDataFacturacion.municipio}
                                                 onChange={handleChangeFacturacion}
                                                 required
                                                 />
@@ -676,7 +727,7 @@ function shopProducts() {
                                                 fullWidth
                                                 label="Estado"
                                                 name="estado"
-                                                value={formDataFacturacion.municipio}
+                                                value={formDataFacturacion.estado}
                                                 onChange={handleChangeFacturacion}
                                                 required
                                                 />
@@ -717,136 +768,134 @@ function shopProducts() {
                                 </form>
                             </Grid>
 
-                            <Grid p={3}>
-                                <Grid>
+                            {isEnvio &&
+                                <Grid p={3}>
                                     <Grid>
-                                        <Typography variant="h4" gutterBottom sx={{
-                                        fontFamily: "Cormorant",
-                                        fontOpticalSizing: "auto",
-                                        fontWeight: "bold",
-                                        fontStyle: "normal"
-                                    }}>
-                                            Entrega
-                                        </Typography>
-                                    </Grid>
-                                    <Grid>
-                                        <FormControlLabel
-                                            label="¿Mismo que la facturacion?"
-                                            control={
-                                                <Checkbox
-                                                value=""
-                                                //   checked={}
-                                                checked={!isChecked}
-                                                onChange={() => isChecketEnvios(!isChecked)}
-                                                color="primary"
-                                                />
-                                            }
-                                        />
-                                        {/* <Typography variant="h4" gutterBottom>
-                                            Mismo que la facturacion?
-                                        </Typommgraphy> */}
-                                    </Grid>
-                                </Grid>
-                                {
-                                    isChecked &&
-                                    <form>
-                                        <Grid container spacing={2}>
-                                                <Grid item xs={12}>
-                                                    <TextField
-                                                    fullWidth
-                                                    label="Nombre"
-                                                    name="nombre"
-                                                    value={formDataEnvio.nombre}
-                                                    onChange={handleChangeEnvio}
-                                                    required
-                                                    />
-                                                </Grid>
-                                                <Grid item xs={12}>
-                                                    <TextField
-                                                    fullWidth
-                                                    label="Apellido"
-                                                    name="apellido"
-                                                    value={formDataEnvio.apellido}
-                                                    onChange={handleChangeEnvio}
-                                                    required
-                                                    />
-                                                </Grid>
-                                                <Grid item xs={12}>
-                                                    <TextField
-                                                    fullWidth
-                                                    label="Direccion"
-                                                    name="direccion"
-                                                    value={formDataEnvio.direccion}
-                                                    onChange={handleChangeEnvio}
-                                                    required
-                                                    />
-                                                </Grid>
-                                                <Grid item xs={6}>
-                                                    <TextField
-                                                    fullWidth
-                                                    label="Colonia"
-                                                    name="colonia"
-                                                    value={formDataEnvio.colonia}
-                                                    onChange={handleChangeEnvio}
-                                                    required
-                                                    />
-                                                </Grid>
-                                                <Grid item xs={6}>
-                                                    <TextField
-                                                    fullWidth
-                                                    label="Cuidad"
-                                                    name="ciudad"
-                                                    value={formDataEnvio.municipio}
-                                                    onChange={handleChangeEnvio}
-                                                    required
-                                                    />
-                                                </Grid>
-                                                <Grid item xs={6}>
-                                                    <TextField
-                                                    fullWidth
-                                                    label="Estado"
-                                                    name="estado"
-                                                    value={formDataEnvio.estado}
-                                                    onChange={handleChangeEnvio}
-                                                    required
-                                                    />
-                                                </Grid>
-                                                <Grid item xs={6}>
-                                                    <TextField
-                                                    fullWidth
-                                                    label="Codigo Postal"
-                                                    name="cp"
-                                                    value={formDataEnvio.cp}
-                                                    onChange={handleChangeEnvio}
-                                                    required
-                                                    />
-                                                </Grid>
-                                                <Grid item xs={6}>
-                                                    <TextField
-                                                    fullWidth
-                                                    type="email"
-                                                    label="Email"
-                                                    name="email"
-                                                    value={formDataEnvio.email}
-                                                    onChange={handleChangeEnvio}
-                                                    required
-                                                    />
-                                                </Grid>
-                                                <Grid item xs={6}>
-                                                    <TextField
-                                                    fullWidth
-                                                    type="phone"
-                                                    label="Teléfono"
-                                                    name="telefono"
-                                                    value={formDataEnvio.telefono}
-                                                    onChange={handleChangeEnvio}
-                                                    required
-                                                    />
-                                                </Grid>
+                                        <Grid>
+                                            <Typography variant="h4" gutterBottom sx={{
+                                            fontFamily: "Cormorant",
+                                            fontOpticalSizing: "auto",
+                                            fontWeight: "bold",
+                                            fontStyle: "normal"
+                                        }}>
+                                                Entrega
+                                            </Typography>
                                         </Grid>
-                                    </form>
-                                }
-                            </Grid>
+                                        <Grid>
+                                            <FormControlLabel
+                                                label="¿Mismo que la facturacion?"
+                                                control={
+                                                    <Checkbox
+                                                    value=""
+                                                    checked={!isChecked}
+                                                    onChange={() => isChecketEnvios(!isChecked)}
+                                                    color="primary"
+                                                    />
+                                                }
+                                            />
+                                        </Grid>
+                                    </Grid>
+                                    {
+                                        isChecked &&
+                                        <form>
+                                            <Grid container spacing={2}>
+                                                    <Grid item xs={12}>
+                                                        <TextField
+                                                        fullWidth
+                                                        label="Nombre"
+                                                        name="nombre"
+                                                        value={formDataEnvio.nombre}
+                                                        onChange={handleChangeEnvio}
+                                                        required
+                                                        />
+                                                    </Grid>
+                                                    <Grid item xs={12}>
+                                                        <TextField
+                                                        fullWidth
+                                                        label="Apellido"
+                                                        name="apellido"
+                                                        value={formDataEnvio.apellido}
+                                                        onChange={handleChangeEnvio}
+                                                        required
+                                                        />
+                                                    </Grid>
+                                                    <Grid item xs={12}>
+                                                        <TextField
+                                                        fullWidth
+                                                        label="Direccion"
+                                                        name="direccion"
+                                                        value={formDataEnvio.direccion}
+                                                        onChange={handleChangeEnvio}
+                                                        required
+                                                        />
+                                                    </Grid>
+                                                    <Grid item xs={6}>
+                                                        <TextField
+                                                        fullWidth
+                                                        label="Colonia"
+                                                        name="colonia"
+                                                        value={formDataEnvio.colonia}
+                                                        onChange={handleChangeEnvio}
+                                                        required
+                                                        />
+                                                    </Grid>
+                                                    <Grid item xs={6}>
+                                                        <TextField
+                                                        fullWidth
+                                                        label="Municipio"
+                                                        name="municipio"
+                                                        value={formDataEnvio.municipio}
+                                                        onChange={handleChangeEnvio}
+                                                        required
+                                                        />
+                                                    </Grid>
+                                                    <Grid item xs={6}>
+                                                        <TextField
+                                                        fullWidth
+                                                        label="Estado"
+                                                        name="estado"
+                                                        value={formDataEnvio.estado}
+                                                        onChange={handleChangeEnvio}
+                                                        required
+                                                        />
+                                                    </Grid>
+                                                    <Grid item xs={6}>
+                                                        <TextField
+                                                        fullWidth
+                                                        label="Codigo Postal"
+                                                        name="cp"
+                                                        value={formDataEnvio.cp}
+                                                        onChange={handleChangeCodioPostalEnvio}
+                                                        required
+                                                        />
+                                                    </Grid>
+                                                    <Grid item xs={6}>
+                                                        <TextField
+                                                        fullWidth
+                                                        type="email"
+                                                        label="Email"
+                                                        name="email"
+                                                        value={formDataEnvio.email}
+                                                        onChange={handleChangeEnvio}
+                                                        required
+                                                        />
+                                                    </Grid>
+                                                    <Grid item xs={6}>
+                                                        <TextField
+                                                        fullWidth
+                                                        type="phone"
+                                                        label="Teléfono"
+                                                        name="telefono"
+                                                        value={formDataEnvio.telefono}
+                                                        onChange={handleChangeEnvio}
+                                                        required
+                                                        />
+                                                    </Grid>
+                                            </Grid>
+                                        </form>
+                                    }
+                                </Grid>
+                            }
 
                             <Grid>
                                 <Grid m={1} ml={3} mr={3} pb={1} sx={{ borderBottom:'1px solid #afafaf', textAlign:'center' }}>

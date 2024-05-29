@@ -373,25 +373,25 @@ export const getDatosEntrega = async (idUser: string): Promise<facturacionLogin[
 };
 
 
-export const dataCodigoPosta = async (cp:string):Promise<PrecioEnvio[]> => {
+export const dataCodigoPosta = async (cp: string): Promise<PrecioEnvio[]> => {
     try {
         const q = query(collection(db, "codigosPostales"), where("cp", "==", cp));
         const querySnapshot = await getDocs(q);
-        // console.log(querySnapshot.data())
-        const docs:PrecioEnvio[] = querySnapshot.docs.map(doc => {
+        if (querySnapshot.empty) {
+            return []
+        }
+
+        const docs: PrecioEnvio[] = querySnapshot.docs.map(doc => {
             const data = doc.data();
-            const envi:PrecioEnvio = {
-                cp:data.cp,
-                envio:data.envio
+            const envi: PrecioEnvio = {
+                cp: data.cp,
+                envio: data.envio
             }
-            return envi
+            return envi;
         });
-        return docs
-        // console.log(docs)
-        // setData(docs);
+
+        return docs;
     } catch (error) {
-        // console.error("Error fetching data: ", error);
-        console.error('Error getting product:', error);
-        return [];
+        throw new Error("Error al obtener datos de Firebase");
     }
 }

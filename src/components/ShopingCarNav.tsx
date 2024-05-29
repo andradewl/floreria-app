@@ -157,8 +157,6 @@ function ShopingCarNav() {
                 setItems(updatedItems);
                 setActializarCarrito(true)
             }
-
-            
         }
     }
 
