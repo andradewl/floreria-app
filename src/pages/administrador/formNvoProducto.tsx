@@ -3,7 +3,7 @@ import { agregarProducto, subirImagen } from '../../config/backEndAdmin/backProd
 import { useNavigate } from 'react-router-dom';
 import { TextField, Button, Container, Typography, Box } from '@mui/material';
 import { getAuth } from 'firebase/auth'; // Importar getAuth para obtener el usuario actual
-import { NotificacionSuccess } from '../../components/Alert'; // Importar NotificacionSuccess
+import { NotificacionSuccess, Notificacionerror } from '../../components/Alert'; // Importar NotificacionSuccess
 
 const FormNvoProducto = () => {
   const [nombre, setNombre] = useState('');

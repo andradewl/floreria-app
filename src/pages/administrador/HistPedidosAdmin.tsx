@@ -29,7 +29,8 @@ export default function HistPedidosAdmin() {
   const [pedidos, setPedidos] = useState<Pedido[][]>([]);
   const [busqueda, setBusqueda] = useState<string>("");
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
-  const [filtroSeleccionado, setFiltroSeleccionado] = useState<string | null>(null);
+  const [, setFiltroSeleccionado] = useState<string | null>(null);
+  // const [filtroSeleccionado, setFiltroSeleccionado] = useState<string | null>(null);
   const open = Boolean(anchorEl);
 
   const parseFecha = (fechaString: string) => {

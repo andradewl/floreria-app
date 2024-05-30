@@ -12,6 +12,8 @@ import { useNavigate } from "react-router-dom";
 import { addDireccion } from "../../config/backEndUsuarios/backUbicaciones";
 import { useState } from "react";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
+import React from "react";
+import { NotificacionSuccess } from "../../components/Alert";
 
 export default function FormUbicaciones() {
   const navigate = useNavigate();
