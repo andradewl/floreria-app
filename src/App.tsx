@@ -1,3 +1,4 @@
+import React from "react";
 import NavBar from "./components/NavBar"
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 
@@ -30,7 +31,7 @@ import PerfilUsuario from "./pages/PerfilUsuario";
 import ocasionesProductos from "./pages/Products/ocasionesProductos";
 
 import Carga from "./components/Carga";
-import React from "react";
+
 
 
 function App() {
