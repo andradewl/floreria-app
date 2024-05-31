@@ -1,3 +1,4 @@
+/* eslint-disable react-refresh/only-export-components */
 import {  Box, Button, Grid, Pagination, PaginationItem, Paper, Typography } from "@mui/material";
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
@@ -10,11 +11,16 @@ import { Flower, Ocasionest } from "../interfaces/interfaces"
 import BarraDeBusqueda from "../components/BarraDeBusqueda";
 // import videoBanner from '../assets/banners/videobanner2.gif'
 // import { NotificacionSuccess } from "../components/Alert";
+// import { Navigate } from 'react-router-dom';
+
+
+
 function Home(){
 
     // const navigate = useNavigate()
     const [flores, setFlores] = React.useState<Flower[]>([]);
     const [ocasinesDataId, setOcasinesDataId] = React.useState<Ocasionest[]>([]);
+    // const history = useHistory();
 
     React.useEffect(()=>{
         fetchFlores()
@@ -24,7 +30,10 @@ function Home(){
 
     const redireccionConRefresh = (nombre:string, id:string)=>{
         const redireccion = "ocasion/"+nombre+"/"+id
-        window.location.href = redireccion
+        // history.push(redireccion);
+
+        // this.props.history.push(redireccion)
+        window.location.replace(redireccion)
     }
 
 
@@ -42,7 +51,7 @@ function Home(){
     const handleRedirectToProductId = (id:string) => {
         const redireccion = "Producto/"+id
         window.location.href = redireccion
-        // navigate('/Producto/'+);
+        // navigate('/Producto/'+redireccion);
     };
 
     return(
