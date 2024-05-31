@@ -57,8 +57,10 @@ function Home(){
     return(
         <>
             <Grid sx={{width:'100%', height:{xs:'300px', sm:'600px',md:'500px', lg:'600px', xl:'750px'}, position: 'relative'}}>
-                <Grid sx={{width:'100%', height: '100%', position:'relative', zIndex:1}}>
+                <Grid sx={{width:'100%', height: '100%', position:'relative', zIndex:1}} >
+                    
                     <img src="https://firebasestorage.googleapis.com/v0/b/prowlflores.appspot.com/o/multimedia%2Fimagenes%2FFondos%2Fvideobanner2.gif?alt=media&token=8ed486c2-5f84-43e7-93c7-0ae9d4103c0d" style={{width:'100%', height:'100%', objectFit:'cover', objectPosition:'left'}} alt="" />
+                    
                 </Grid>
                 <Grid sx={{position: 'absolute',top: 0, left: 0, bottom:0 ,width: '100%', height: '100%', backgroundColor: '#0000004d', zIndex: 2}}>
                     <Grid sx={{ paddingLeft:"2%", paddingTop:{xs: "20%", sm:"12%",md:"13%"} }}>

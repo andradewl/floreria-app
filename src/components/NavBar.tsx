@@ -905,11 +905,13 @@ function ResponsiveAppBar() {
                 // display: { xs: 'none', md: 'flex' },
               }}
             >
-              <img
-              src={Logo}
-              alt="Logo"
-              style={{ width: '90px' }}
-            />
+              <Box onClick={()=>{changeView("/"), navigate('/')}}>
+                <img
+                src={Logo}
+                alt="Logo"
+                style={{ width: '90px' }}/>
+              </Box>
+
             </Grid>
 
             {/* Menu escritorio */}
@@ -1008,7 +1010,7 @@ function ResponsiveAppBar() {
             </Grid>
 
             {/* Menu movil */}
-            <Grid sx={currentView=="/"?stylesComponents.menuResponsivo:stylesComponents.menuResponsivo2} onClick={toggleDrawer("left", true)}>
+            <Grid sx={isScrolled ? stylesComponents.menuResponsivo2 : currentView=="/"?stylesComponents.menuResponsivo:stylesComponents.menuResponsivo2} onClick={toggleDrawer("left", true)}>
               <MenuIcon/>
             </Grid>
 
