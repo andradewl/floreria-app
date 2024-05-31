@@ -33,7 +33,7 @@ function Home(){
         // history.push(redireccion);
 
         // this.props.history.push(redireccion)
-        window.location.replace(redireccion)
+        window.location.href= redireccion
     }
 
 

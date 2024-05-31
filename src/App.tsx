@@ -1,6 +1,8 @@
 import React from "react";
 import NavBar from "./components/NavBar"
-import { BrowserRouter, Route, Routes } from "react-router-dom";
+import {
+  // BrowserRouter,
+  Route, Routes, HashRouter } from "react-router-dom";
 
 
 import Home from "./pages/Home";
@@ -56,37 +58,38 @@ function App() {
 
   return (
     <PayPalScriptProvider options={initialOptions}>
-      <BrowserRouter>
-        <NavBar/>
-        <Routes>
-          <Route path="/" Component={Home} />
-          <Route path="/Productos" Component={Productos}/>
-          <Route path="/Producto/:id" Component={ProductId}/>
-          <Route path="/Nosotros" Component={Nosotros}/>
-          <Route path="/newContacto" Component={newContacto}/>
-          <Route path="/Usuario/:id" Component={PerfilUsuario}/>
-          <Route path="/EstatusEnvio" Component={EstatusEnvio}/>
-          <Route path="/Ubicaciones" Component={Ubicaciones}/>
-          <Route path="/FormUbicaciones" Component={FormUbicaciones}/>
-          <Route path="/FormDetaFac" Component={FormDetaFac}/>
-          <Route path="/shoppingCart" Component={shoppingCart}/>
-          <Route path="/Login" Component={Login}/>
-          <Route path="/SignIn" Component={ SignIn }/>
-          <Route path="/shopProducts" Component={shopProducts}/>
-          <Route path="/Completeion" Component={ Completeion }/>
-          <Route path="/editDirecciones/:id" Component={editDirecciones} />
-          <Route path="/editDireccionFact/:id" Component={editDireccionFact} />
-          <Route path="/HistPedidosAdmin" Component={HistPedidosAdmin} />
-          <Route path="/EstatusEnvioAdministrador" Component={EstatusEnvioAdministrador} />
-          <Route path="/ocasion/:nombreOcasion/:id" Component={ocasionesProductos} />
-          <Route path="/pantallaCarga" Component={Carga} />
-          <Route path="/EditarProducto/:id" Component={EditarProducto} />
-          <Route path="/FormNvoProducto" Component={FormNvoProducto} />
-        </Routes>
+      {/* <BrowserRouter> */}
+        <HashRouter>
+          <NavBar/>
+          <Routes>
+            <Route path="/" Component={Home} />
+            <Route path="/Productos" Component={Productos}/>
+            <Route path="/Producto/:id" Component={ProductId}/>
+            <Route path="/Nosotros" Component={Nosotros}/>
+            <Route path="/newContacto" Component={newContacto}/>
+            <Route path="/Usuario/:id" Component={PerfilUsuario}/>
+            <Route path="/EstatusEnvio" Component={EstatusEnvio}/>
+            <Route path="/Ubicaciones" Component={Ubicaciones}/>
+            <Route path="/FormUbicaciones" Component={FormUbicaciones}/>
+            <Route path="/FormDetaFac" Component={FormDetaFac}/>
+            <Route path="/shoppingCart" Component={shoppingCart}/>
+            <Route path="/Login" Component={Login}/>
+            <Route path="/SignIn" Component={ SignIn }/>
+            <Route path="/shopProducts" Component={shopProducts}/>
+            <Route path="/Completeion" Component={ Completeion }/>
+            <Route path="/editDirecciones/:id" Component={editDirecciones} />
+            <Route path="/editDireccionFact/:id" Component={editDireccionFact} />
+            <Route path="/HistPedidosAdmin" Component={HistPedidosAdmin} />
+            <Route path="/EstatusEnvioAdministrador" Component={EstatusEnvioAdministrador} />
+            <Route path="/ocasion/:nombreOcasion/:id" Component={ocasionesProductos} />
+            <Route path="/pantallaCarga" Component={Carga} />
+            <Route path="/EditarProducto/:id" Component={EditarProducto} />
+            <Route path="/FormNvoProducto" Component={FormNvoProducto} />
+          </Routes>
+        </HashRouter>
 
         <Footer/>
-
-      </BrowserRouter>
+      {/* </BrowserRouter> */}
     </PayPalScriptProvider>
 
   )
