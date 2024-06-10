@@ -7,17 +7,9 @@ export function NotificacionSuccess({ message }: Notificacionprops){
         <Snackbar open={true}>
             <Alert variant="filled" severity="success"
             sx={{
-                md:{
-                    position: 'fixed',
-                    bottom: '50px',
-                    right: '50px'
-                },
-                xs:{
-                    position: 'fixed',
-                    top: '50px',
-                    right: '50px'
-                }
-                
+                position: 'fixed',
+                bottom: '50px',
+                right: '50px'
             }}
             >
                 <AlertTitle>
@@ -58,16 +50,9 @@ export function NotificacionWarning({ message }: Notificacionprops){
         <Snackbar open={true}>
             <Alert variant="filled" severity="warning"
             sx={{
-                md:{
-                    position: 'fixed',
-                    bottom: '50px',
-                    right: '50px'
-                },
-                xs:{
-                    position: 'fixed',
-                    top: '50px',
-                    right: '50px'
-                }
+                position: 'fixed',
+                bottom: '50px',
+                right: '50px'
             }}
             >
                 <AlertTitle>

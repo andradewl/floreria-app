@@ -125,7 +125,7 @@ function Home(){
                             fontWeight: "<weight>",
                             fontStyle: "normal",
                             fontSize:{md:'25px'}}} >
-                        En Flores El Gato encontrarás lo que necesitas para cada ocasión.
+                        En Flores Rickys encontrarás lo que necesitas para cada ocasión.
                     </Typography>
                 </Grid>
 

@@ -143,7 +143,12 @@ interface facturacion {
 interface precioEnvio {
     cp:string;
     envio:string;
-    
+}
+
+interface CodigosPostales {
+    id:string
+    cp:string;
+    envio:number;
 }
 
 export type Flower = FlowerWithOferta | FlowerWithoutOferta;
@@ -156,7 +161,5 @@ export type Productoapartado = ProductoApartado;
 export type Notificacionprops = NotificacionProps;
 export type facturacionLogin= facturacion;
 export type PrecioEnvio= precioEnvio;
-
-
-
 export type NuevoPedido = Pedido;
+export type Codigospostales = CodigosPostales;

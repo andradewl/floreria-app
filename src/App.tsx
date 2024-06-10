@@ -31,6 +31,11 @@ import PerfilUsuario from "./pages/PerfilUsuario";
 import ocasionesProductos from "./pages/Products/ocasionesProductos";
 
 import Carga from "./components/Carga";
+import AñadirCodigoPostal from "./pages/administrador/AñadirCodigoPostal";
+import NuevaOcasion from "./pages/administrador/NuevaOcasion";
+import EditarCodigoPostal from "./pages/administrador/EditarCodigoPostal";
+import EditarOcasionId from "./pages/administrador/EditarOcasionId";
+// import EditarCodigoPostal from "./pages/administrador/editarCodigoPostal";
 
 
 
@@ -82,6 +87,10 @@ function App() {
           <Route path="/pantallaCarga" Component={Carga} />
           <Route path="/EditarProducto/:id" Component={EditarProducto} />
           <Route path="/FormNvoProducto" Component={FormNvoProducto} />
+          <Route path="/FormularioCP" Component={AñadirCodigoPostal} />
+          <Route path="/EditarCodigoPostal/:id" Component={EditarCodigoPostal} />
+          <Route path="/NuevaOcasion" Component={NuevaOcasion} />
+          <Route path="/EditarOcasion/:id" Component={EditarOcasionId} />
         </Routes>
 
         <Footer/>

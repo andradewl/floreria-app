@@ -5,6 +5,8 @@ import LoyaltyIcon from "@mui/icons-material/Loyalty";
 import DescriptionIcon from "@mui/icons-material/Description";
 import HistPedidosAdmin from "./HistPedidosAdmin";
 import EstatusEnvioAdministrador from "./EstatusEnvioAdmin";
+// import Ocasiones from "./Ocasiones";
+// import CodigosPostales from "./CodigosPostales";
 import ProductosAdmin from "./ProductosAdmin";
 const UsuarioAdmin = () => {
   const [tabValue, setTabValue] = useState<number>(0);
