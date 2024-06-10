@@ -4,10 +4,22 @@ import {
   obtenerProductoPorId,
   actualizarProducto,
 } from "../../config/backEndAdmin/backProductos";
-import { Typography, Grid, TextField, Button, Box, Paper } from "@mui/material";
+import {
+  Typography,
+  Grid,
+  TextField,
+  Button,
+  Box,
+  Paper,
+  FormControl,
+  InputLabel,
+  Select,
+  MenuItem,
+} from "@mui/material";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import { getAuth } from "firebase/auth";
 import { NotificacionSuccess } from "../../components/Alert";
+import { SelectChangeEvent } from "@mui/material";
 
 const EditarProducto = () => {
   const { id } = useParams<{ id: string }>();
@@ -23,6 +35,8 @@ const EditarProducto = () => {
     descuento: 0,
     imagen: "",
     imagenFile: null,
+    sku: "", // Nuevo campo SKU
+    ocasiones: "", // Nuevo campo Ocasión
   });
   const [showSuccessNotification, setShowSuccessNotification] = useState(false);
 
@@ -43,14 +57,10 @@ const EditarProducto = () => {
     fetchProducto();
   }, [id]);
 
-  const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+ const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value, files } = event.target;
-    if (name === "imagenFile" && files && files[0]) {
-      setProducto({
-        ...producto,
-        [name]: files[0],
-        imagen: URL.createObjectURL(files[0]),
-      });
+    if (name === 'imagenFile' && files && files[0]) {
+      setProducto({ ...producto, [name]: files[0], imagen: URL.createObjectURL(files[0]) });
     } else {
       setProducto({ ...producto, [name]: value });
     }
@@ -94,7 +104,9 @@ const EditarProducto = () => {
         productoActualizado.existencias,
         productoActualizado.nombre,
         productoActualizado.precio,
-        producto.imagenFile
+        producto.imagenFile,
+        productoActualizado.ocasiones,
+        productoActualizado.sku
       );
 
       setShowSuccessNotification(true);
@@ -108,6 +120,9 @@ const EditarProducto = () => {
 
   const handleRegresar = () => {
     navigate(`/Usuario/${user?.uid}`);
+  };
+  const handleOcasionesChange = (event: SelectChangeEvent<string>) => {
+    setProducto({ ...producto, ocasiones: event.target.value });
   };
 
   return (
@@ -186,6 +201,42 @@ const EditarProducto = () => {
                 value={producto.descuento}
                 onChange={handleChange}
               />
+            </Grid>
+            <Grid item xs={12}>
+              <TextField
+                name="sku"
+                label="SKU" // Agregar campo SKU
+                variant="outlined"
+                fullWidth
+                value={producto.sku}
+                onChange={handleChange}
+              />
+            </Grid>
+            <Grid item xs={12}>
+              <FormControl variant="outlined" fullWidth>
+                <InputLabel id="ocasion-label">Ocasión</InputLabel>
+                <Select
+                  labelId="ocasion-label"
+                  id="ocasion"
+                  name="ocasiones"
+                  value={producto.ocasiones} // Establecer el valor del Select con el estado del producto
+                  onChange={handleOcasionesChange}
+                  label="Ocasión"
+                >
+                  <MenuItem value="0yVDjdZV0mHgHr3yEAYL">Cumpleaños</MenuItem>
+                  <MenuItem value="NYgxe9cNReefkqpfDJwP">Combos</MenuItem>
+                  <MenuItem value="O9KkqcH19LmVyYEoImI2">Funerales</MenuItem>
+                  <MenuItem value="VPsWrkoUwhfNsAl2hhgi">Para Mamá</MenuItem>
+                  <MenuItem value="aP1IaxCTSZwMStDc7Imf">Para Ella</MenuItem>
+                  <MenuItem value="lCjmAOg75ZW5egsmrRWG">Regalos</MenuItem>
+                  <MenuItem value="ngJWcrzXs73P8v40Tgqy">Ofertas</MenuItem>
+                  <MenuItem value="paEglukYtsTk8F0D0M9I">Para Él</MenuItem>
+                  <MenuItem value="tVoHFTujxBqvzH9z4ycd">
+                    Centros de Mesa
+                  </MenuItem>
+                  <MenuItem value="vsHhw8nY1G1mHJKw097c">Kits</MenuItem>
+                </Select>
+              </FormControl>
             </Grid>
             <Grid item xs={12}>
               <input

@@ -7,7 +7,6 @@ import { useNavigate } from "react-router-dom";
 import {
   TextField,
   Button,
-  Container,
   Typography,
   Grid,
   Select,
@@ -221,18 +220,16 @@ const FormNvoProducto = () => {
                         onChange={handleOcasionesChange}
                         required
                       >
-                        <MenuItem value="Cumpleaños">Cumpleaños</MenuItem>
-                        <MenuItem value="Combos">Combos</MenuItem>
-                        <MenuItem value="Funerales">Funerales</MenuItem>
-                        <MenuItem value="Para Mamá">Para Mamá</MenuItem>
-                        <MenuItem value="Para Ella">Para Ella</MenuItem>
-                        <MenuItem value="Regalos">Regalos</MenuItem>
-                        <MenuItem value="Ofertas">Ofertas</MenuItem>
-                        <MenuItem value="Para Él">Para Él</MenuItem>
-                        <MenuItem value="Centros de Mesa">
-                          Centros de Mesa
-                        </MenuItem>
-                        <MenuItem value="Kits">Kits</MenuItem>
+                        <MenuItem value="0yVDjdZV0mHgHr3yEAYL">Cumpleaños</MenuItem>
+                  <MenuItem value="NYgxe9cNReefkqpfDJwP">Combos</MenuItem>
+                  <MenuItem value="O9KkqcH19LmVyYEoImI2">Funerales</MenuItem>
+                  <MenuItem value="VPsWrkoUwhfNsAl2hhgi">Para Mamá</MenuItem>
+                  <MenuItem value="aP1IaxCTSZwMStDc7Imf">Para Ella</MenuItem>
+                  <MenuItem value="lCjmAOg75ZW5egsmrRWG">Regalos</MenuItem>
+                  <MenuItem value="ngJWcrzXs73P8v40Tgqy">Ofertas</MenuItem>
+                  <MenuItem value="paEglukYtsTk8F0D0M9I">Para Él</MenuItem>
+                  <MenuItem value="tVoHFTujxBqvzH9z4ycd">Centros de Mesa</MenuItem>
+                  <MenuItem value="vsHhw8nY1G1mHJKw097c">Kits</MenuItem>
                       </Select>
                     </FormControl>
                   </Grid>

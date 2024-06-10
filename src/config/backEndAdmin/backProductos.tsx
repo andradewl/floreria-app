@@ -47,21 +47,6 @@ export const eliminarProducto = async (idProducto: string) => {
   }
 };
 
-// Función para obtener un producto por su ID
-export const obtenerProductoPorId = async (idProducto: string) => {
-  try {
-    const productoDocRef = doc(db, "Flores", idProducto);
-    const productoDocSnapshot = await getDoc(productoDocRef);
-    if (productoDocSnapshot.exists()) {
-      return { id: productoDocSnapshot.id, ...productoDocSnapshot.data() };
-    } else {
-      throw new Error(`No se encontró ningún producto con el ID ${idProducto}`);
-    }
-  } catch (error) {
-    console.error("Error al obtener el producto por ID: ", error);
-    throw new Error("Error al obtener el producto por ID");
-  }
-};
 
 export const agregarProducto = async (
   descripcion: string,
@@ -108,6 +93,23 @@ export const subirImagen = async (idProducto: string, imagenFile: File) => {
 };
 
 // Función para actualizar un producto de la colección "Flores"
+// Función para obtener un producto por su ID
+export const obtenerProductoPorId = async (idProducto: string) => {
+  try {
+    const productoDocRef = doc(db, "Flores", idProducto);
+    const productoDocSnapshot = await getDoc(productoDocRef);
+    if (productoDocSnapshot.exists()) {
+      return { id: productoDocSnapshot.id, ...productoDocSnapshot.data() };
+    } else {
+      throw new Error(`No se encontró ningún producto con el ID ${idProducto}`);
+    }
+  } catch (error) {
+    console.error("Error al obtener el producto por ID: ", error);
+    throw new Error("Error al obtener el producto por ID");
+  }
+};
+
+// Función para actualizar un producto de la colección "Flores"
 export const actualizarProducto = async (
   idProducto: string,
   descripcion: string,
@@ -115,7 +117,9 @@ export const actualizarProducto = async (
   existencias: number,
   nombre: string,
   precio: number,
-  imagenFile: File // Agregar la imagen como un argumento adicional
+  imagenFile: File, // Agregar la imagen como un argumento adicional
+  ocasion: string,
+  sku: string
 ) => {
   try {
     // Subir la nueva imagen a Firebase Storage y obtener la URL de la imagen
@@ -128,7 +132,9 @@ export const actualizarProducto = async (
       existencias,
       nombre,
       precio,
-      imagen: imagenURL // Actualizar la URL de la imagen en Firestore
+      imagen: imagenURL, // Actualizar la URL de la imagen en Firestore
+      ocasion,
+      sku
     });
 
     // console.log('Producto actualizado correctamente con nueva imagen');
