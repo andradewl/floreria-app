@@ -38,7 +38,8 @@ function shopProducts() {
     const [notiSucces, ] = React.useState(false);
     const [notiInfo, setNotiInfo] = React.useState(false);
     const [mensajeNotificacion, setMensajeNotificacion] = React.useState("");
-
+    const [idUsuario, setIdUsuario] = React.useState('');
+    
     
     
 
@@ -99,6 +100,7 @@ function shopProducts() {
         if(storedUserName){
             const userCredential = JSON.parse(storedUserName);
             // console.log(userCredential)
+            setIdUsuario(userCredential.uid)
             dataFcat(userCredential.uid)
             dataEntrega(userCredential.uid)
             setisUidUserLogin(userCredential.uid)
@@ -715,23 +717,39 @@ function shopProducts() {
         }
     };
 
-    const isChecketEnvios=(e: boolean)=>{
+    const isChecketEnvios=async (e: boolean)=>{
         // setEntregaDeFlores(e.target.value)
 
-        if(e == false){
-            setFormDataEnvio(
-                {
-                    nombre: '',
-                    apellido: '',
-                    direccion:'',
-                    colonia: '',
-                    municipio: '',
-                    estado: '',
-                    cp: '',
-                    email: '',
-                    telefono: ''
-                }
-            )
+        // idUsuario
+
+        const datosFact: facturacionLogin[] = await getDatosEntrega(idUsuario);
+        // console.log(datosFact)
+    
+        if (datosFact.length > 0) {
+            const fact = datosFact[0]; // Access the first element
+            setFormDataEnvio({
+                nombre: fact.nombre,
+                apellido: fact.apellidos,
+                direccion: fact.direccion,
+                colonia: fact.colonia,
+                municipio: fact.municipio,
+                estado: fact.estado,
+                cp: fact.zip,
+                email: fact.email,
+                telefono: fact.telefono
+            });
+        } else {
+            setFormDataEnvio({
+                nombre: '',
+                apellido: '',
+                direccion: '',
+                colonia: '',
+                municipio: '',
+                estado: '',
+                cp: '',
+                email: '',
+                telefono: ''
+            });
         }
         setIsChecked(e)
     }
