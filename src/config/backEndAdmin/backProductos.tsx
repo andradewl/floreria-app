@@ -68,8 +68,10 @@ export const agregarProducto = async (
   descuento: number,
   existencias: number,
   nombre: string,
-  precio: number, // Agregar precio aquí
-  imagenURL: string // Agregar la URL de la imagen
+  precio: number,
+  imagenURL: string,
+  ocasion: string,
+  sku: string
 ) => {
   try {
     await addDoc(collection(db, "Flores"), {
@@ -77,8 +79,10 @@ export const agregarProducto = async (
       descuento,
       existencias,
       nombre,
-      precio, // Asegurarse de incluir el precio
-      imagen: imagenURL // Guardar la URL de la imagen
+      precio,
+      imagen: imagenURL,
+      ocasion,
+      sku
     });
 
     // console.log("Producto agregado correctamente");
@@ -87,6 +91,7 @@ export const agregarProducto = async (
     throw error;
   }
 };
+
 
 
 // Función para subir una imagen a Firebase Storage y obtener la URL de descarga

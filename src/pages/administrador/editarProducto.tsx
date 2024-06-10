@@ -1,10 +1,13 @@
-import React, { useEffect, useState } from 'react';
-import { useParams, useNavigate } from 'react-router-dom';
-import { obtenerProductoPorId, actualizarProducto } from '../../config/backEndAdmin/backProductos';
-import { Typography, Grid, TextField, Button, Box, Paper } from '@mui/material';
-import ArrowBackIcon from '@mui/icons-material/ArrowBack';
-import { getAuth } from 'firebase/auth';
-import { NotificacionSuccess } from '../../components/Alert';
+import React, { useEffect, useState } from "react";
+import { useParams, useNavigate } from "react-router-dom";
+import {
+  obtenerProductoPorId,
+  actualizarProducto,
+} from "../../config/backEndAdmin/backProductos";
+import { Typography, Grid, TextField, Button, Box, Paper } from "@mui/material";
+import ArrowBackIcon from "@mui/icons-material/ArrowBack";
+import { getAuth } from "firebase/auth";
+import { NotificacionSuccess } from "../../components/Alert";
 
 const EditarProducto = () => {
   const { id } = useParams<{ id: string }>();
@@ -13,12 +16,12 @@ const EditarProducto = () => {
   const user = auth.currentUser;
 
   const [producto, setProducto] = useState<any>({
-    nombre: '',
+    nombre: "",
     precio: 0,
     existencias: 0,
-    descripcion: '',
+    descripcion: "",
     descuento: 0,
-    imagen: '',
+    imagen: "",
     imagenFile: null,
   });
   const [showSuccessNotification, setShowSuccessNotification] = useState(false);
@@ -30,10 +33,10 @@ const EditarProducto = () => {
           const productoData = await obtenerProductoPorId(id);
           setProducto(productoData);
         } else {
-          console.error('El ID del producto no está definido.');
+          console.error("El ID del producto no está definido.");
         }
       } catch (error) {
-        console.error('Error al obtener el producto:', error);
+        console.error("Error al obtener el producto:", error);
       }
     };
 
@@ -42,8 +45,12 @@ const EditarProducto = () => {
 
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value, files } = event.target;
-    if (name === 'imagenFile' && files && files[0]) {
-      setProducto({ ...producto, [name]: files[0], imagen: URL.createObjectURL(files[0]) });
+    if (name === "imagenFile" && files && files[0]) {
+      setProducto({
+        ...producto,
+        [name]: files[0],
+        imagen: URL.createObjectURL(files[0]),
+      });
     } else {
       setProducto({ ...producto, [name]: value });
     }
@@ -52,12 +59,12 @@ const EditarProducto = () => {
   const handleActualizarProducto = async () => {
     try {
       if (!user) {
-        console.error('Usuario no autenticado.');
+        console.error("Usuario no autenticado.");
         return;
       }
 
       if (!id) {
-        console.error('El ID del producto no está definido.');
+        console.error("El ID del producto no está definido.");
         return;
       }
 
@@ -68,7 +75,7 @@ const EditarProducto = () => {
         producto.existencias === undefined ||
         producto.precio === undefined
       ) {
-        console.error('Algunos campos del producto no están definidos.');
+        console.error("Algunos campos del producto no están definidos.");
         return;
       }
 
@@ -95,7 +102,7 @@ const EditarProducto = () => {
         navigate(`/Usuario/${user.uid}`);
       }, 2500);
     } catch (error) {
-      console.error('Error al actualizar el producto:', error);
+      console.error("Error al actualizar el producto:", error);
     }
   };
 
@@ -109,7 +116,16 @@ const EditarProducto = () => {
         <Button startIcon={<ArrowBackIcon />} onClick={handleRegresar}>
           Regresar
         </Button>
-        <Typography variant="h5" align="center" gutterBottom sx={{ fontWeight: '600', paddingBottom: '2%', fontFamily: "Cormorant", }}>
+        <Typography
+          variant="h5"
+          align="center"
+          gutterBottom
+          sx={{
+            fontWeight: "600",
+            paddingBottom: "2%",
+            fontFamily: "Cormorant",
+          }}
+        >
           Editar Producto
         </Typography>
       </Grid>
@@ -181,16 +197,29 @@ const EditarProducto = () => {
             </Grid>
             {producto.imagen && (
               <Grid item xs={12}>
-                <img src={producto.imagen} alt="Producto" style={{ maxWidth: '100%', maxHeight: '300px', margin: 'auto', display: 'block' }} />
+                <img
+                  src={producto.imagen}
+                  alt="Producto"
+                  style={{
+                    maxWidth: "100%",
+                    maxHeight: "300px",
+                    margin: "auto",
+                    display: "block",
+                  }}
+                />
               </Grid>
             )}
           </Grid>
-          <Box sx={{ textAlign: 'center', marginTop: 2 }}>
-            <Button variant="contained" onClick={handleActualizarProducto}>Guardar cambios</Button>
+          <Box sx={{ textAlign: "center", marginTop: 2 }}>
+            <Button variant="contained" onClick={handleActualizarProducto}>
+              Guardar cambios
+            </Button>
           </Box>
         </Paper>
       </Grid>
-      {showSuccessNotification && <NotificacionSuccess message="Producto actualizado correctamente, redirigiendo..." />}
+      {showSuccessNotification && (
+        <NotificacionSuccess message="Producto actualizado correctamente, redirigiendo..." />
+      )}
     </Grid>
   );
 };
