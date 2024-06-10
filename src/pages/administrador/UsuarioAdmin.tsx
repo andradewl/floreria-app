@@ -6,8 +6,8 @@ import DescriptionIcon from "@mui/icons-material/Description";
 import HistPedidosAdmin from "./HistPedidosAdmin";
 import EstatusEnvioAdministrador from "./EstatusEnvioAdmin";
 import ProductosExtra from "./ProductosExtra";
-// import Ocasiones from "./Ocasiones";
-// import CodigosPostales from "./CodigosPostales";
+import Ocasiones from "./Ocasiones";
+import CodigosPostales from "./CodigosPostales";
 import ProductosAdmin from "./ProductosAdmin";
 const UsuarioAdmin = () => {
   const [tabValue, setTabValue] = useState<number>(0);
@@ -26,6 +26,10 @@ const UsuarioAdmin = () => {
         return <ProductosAdmin />; // Renderiza el componente de Productos para el caso 2
       case 3:
         return <ProductosExtra/>;
+      case 4: 
+        return <Ocasiones/>;
+      case 5:
+        return <CodigosPostales/>;
       default:
         return null;
     }
@@ -102,6 +106,34 @@ const UsuarioAdmin = () => {
               icon={<LoyaltyIcon fontSize="medium" sx={{ color: "#C81987" }} />}
               iconPosition="start"
               label="Productos Extras"
+              sx={{
+                alignSelf: "start",
+                textAlign: "left",
+                fontWeight: "600",
+                paddingBottom: "2%",
+                fontFamily: "Cormorant",
+              }}
+            />
+            <Tab
+            icon={
+              <DescriptionIcon fontSize="medium" sx={{ color: "#C81987" }} />
+            }
+              label="Ocasiones"
+              iconPosition="start"
+              sx={{
+                alignSelf: "start",
+                textAlign: "left",
+                fontWeight: "600",
+                paddingBottom: "2%",
+                fontFamily: "Cormorant",
+              }}
+            />
+            <Tab
+            icon={
+              <DescriptionIcon fontSize="medium" sx={{ color: "#C81987" }} />
+            }
+              label="Códigos Postales"
+              iconPosition="start"
               sx={{
                 alignSelf: "start",
                 textAlign: "left",

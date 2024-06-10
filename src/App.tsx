@@ -19,10 +19,7 @@ import Login from "./pages/Login";
 import SignIn from "./pages/SignIn";
 import editDirecciones from "./pages/User/editDirecciones";
 import editDireccionFact from "./pages/User/editDireccionFact";
-import EstatusEnvioAdministrador from "./pages/administrador/EstatusEnvioAdmin";
-import HistPedidosAdmin from "./pages/administrador/HistPedidosAdmin";
-import EditarProducto from "./pages/administrador/editarProducto";
-import FormNvoProducto from "./pages/administrador/formNvoProducto";
+
 
 import ProductosExtra from "./pages/administrador/ProductosExtra";
 
@@ -33,12 +30,20 @@ import PerfilUsuario from "./pages/PerfilUsuario";
 import ocasionesProductos from "./pages/Products/ocasionesProductos";
 
 import Carga from "./components/Carga";
+
+// import EditarCodigoPostal from "./pages/administrador/editarCodigoPostal";
+
+              //Administrador
+import Ocasiones from "./pages/administrador/Ocasiones";
+import CodigosPostales from "./pages/administrador/CodigosPostales";
 import AñadirCodigoPostal from "./pages/administrador/AñadirCodigoPostal";
 import NuevaOcasion from "./pages/administrador/NuevaOcasion";
 import EditarCodigoPostal from "./pages/administrador/EditarCodigoPostal";
 import EditarOcasionId from "./pages/administrador/EditarOcasionId";
-// import EditarCodigoPostal from "./pages/administrador/editarCodigoPostal";
-
+import EstatusEnvioAdministrador from "./pages/administrador/EstatusEnvioAdmin";
+import HistPedidosAdmin from "./pages/administrador/HistPedidosAdmin";
+import EditarProducto from "./pages/administrador/editarProducto";
+import FormNvoProducto from "./pages/administrador/formNvoProducto";
 
 
 function App() {
@@ -93,7 +98,8 @@ function App() {
           <Route path="/EditarCodigoPostal/:id" Component={EditarCodigoPostal} />
           <Route path="/NuevaOcasion" Component={NuevaOcasion} />
           <Route path="/EditarOcasion/:id" Component={EditarOcasionId} />
-          <Route path="/ProductosExtra" Component={ProductosExtra} />
+          <Route path="/Ocasiones" Component={Ocasiones} />
+          <Route path="/CodigosPostales" Component={CodigosPostales} />
         </Routes>
 
         <Footer/>
