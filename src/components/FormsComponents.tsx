@@ -353,19 +353,19 @@ function shopProducts() {
     }
 
     const facturacionYEnvioTrue=(total:number)=>{
-        let entrega="";
+        // let entrega="";
         let newItem;
 
-        totalEnvio == 0 ? entrega="Recoge en tienda" : entrega="Entregar a cliente";
+        // totalEnvio == 0 ? entrega="Recoge en tienda" : entrega="Entregar a cliente";
 
         if(isUidUserLogin != null){
             newItem={
                 facturacion:formDataFacturacion,
                 datosEnvio:formDataEnvio,
                 carritoCompra:item,
-                idEstado:"lihdGU56KMY6sblyD9xb",
+                // idEstado:"lihdGU56KMY6sblyD9xb",
                 uidUserLogin:isUidUserLogin,
-                entrega:entrega,
+                // entrega:entrega,
                 total:total
             }
         }else{
@@ -373,9 +373,9 @@ function shopProducts() {
                 facturacion:formDataFacturacion,
                 datosEnvio:formDataEnvio,
                 carritoCompra:item,
-                idEstado:"lihdGU56KMY6sblyD9xb",
+                // idEstado:"lihdGU56KMY6sblyD9xb",
                 uidUserLogin:"no user",
-                entrega:entrega,
+                // entrega:entrega,
                 total:total
             }
         }
@@ -383,8 +383,8 @@ function shopProducts() {
     }
 
     const facturacionYEnviofalse=(total:number)=>{
-        let entrega="";
-        totalEnvio == 0 ? entrega="Recoge en tienda" : entrega="Entregar a cliente";
+        // let entrega="";
+        // totalEnvio == 0 ? entrega="Recoge en tienda" : entrega="Entregar a cliente";
 
         let newItem;
         if(isUidUserLogin != null){
@@ -392,9 +392,9 @@ function shopProducts() {
                 facturacion:formDataFacturacion,
                 datosEnvio:formDataFacturacion,
                 carritoCompra:item,
-                idEstado:"lihdGU56KMY6sblyD9xb",
+                // idEstado:"lihdGU56KMY6sblyD9xb",
                 uidUserLogin:isUidUserLogin,
-                entrega:entrega,
+                // entrega:entrega,
                 total:total
             }
         }else{
@@ -402,9 +402,9 @@ function shopProducts() {
                 facturacion:formDataFacturacion,
                 datosEnvio:formDataFacturacion,
                 carritoCompra:item,
-                idEstado:"lihdGU56KMY6sblyD9xb",
+                // idEstado:"lihdGU56KMY6sblyD9xb",
                 uidUserLogin:"no user",
-                entrega:entrega,
+                // entrega:entrega,
                 total:total
             }
         }

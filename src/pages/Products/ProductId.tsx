@@ -43,6 +43,7 @@ function ProductId(){
     const [visibleHorarios, setVisibleHorarios] = React.useState(false)
     const [date, setDate] = React.useState(dayjs());
     const [hora, sethora] = React.useState('');
+    const [idReferenciaEstatus, setidReferenciaEstatus] = React.useState('');
     const [productoExtra, setproductoExtra] = React.useState({nombreProductoExtra: 'Sin producto extra',precioProductoExtra: 0});
     const [dedicatoria, setDedicatoria] = React.useState('');
     const [visibleProductoExtra, setvisibleProductoExtra] = React.useState(false) //muestra los productos extras
@@ -267,6 +268,7 @@ function ProductId(){
             hora: hora,
             cantidad:1,
             entrega:entrega,
+            estatus:idReferenciaEstatus,
             productoExtra: productoExtra ? {
                 nombreProductoExtra: productoExtra.nombreProductoExtra,
                 precioProductoExtra: productoExtra.precioProductoExtra,
@@ -302,6 +304,7 @@ function ProductId(){
             hora: hora,
             cantidad:1,
             entrega:entrega,
+            estatus:idReferenciaEstatus,
             productoExtra: productoExtra ? {
                 nombreProductoExtra: productoExtra.nombreProductoExtra,
                 precioProductoExtra: productoExtra.precioProductoExtra,
@@ -346,10 +349,12 @@ function ProductId(){
         if(opcion == 1){
             setOpcion1entrega(true)
             setOpcion2entrega(false)
+            setidReferenciaEstatus('Preparando')
         }
         if(opcion == 2){
             setOpcion1entrega(false)
             setOpcion2entrega(true)
+            setidReferenciaEstatus('Recoge en Tienda')
         }
         setEntrega(entrega)
     }

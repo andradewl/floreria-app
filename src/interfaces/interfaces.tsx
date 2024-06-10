@@ -43,6 +43,7 @@ interface carritoDeCompra {
     hora: string;
     cantidad:number;
     entrega:string;
+    estatus:string;
     productoExtra: {
         nombreProductoExtra: string;
         precioProductoExtra: number;
@@ -92,11 +93,12 @@ interface Pedido {
         cp: string;
         email: string;
         telefono: string;
+        // envio:string
     };
     carritoCompra: carritoDeCompra[];
-    idEstado:string;
+    // idEstado:string;
     uidUserLogin:string,
-    entrega:string,
+    // entrega:string,
     total:number,
 
 }
