@@ -5,6 +5,7 @@ import LoyaltyIcon from "@mui/icons-material/Loyalty";
 import DescriptionIcon from "@mui/icons-material/Description";
 import HistPedidosAdmin from "./HistPedidosAdmin";
 import EstatusEnvioAdministrador from "./EstatusEnvioAdmin";
+import ProductosExtra from "./ProductosExtra";
 // import Ocasiones from "./Ocasiones";
 // import CodigosPostales from "./CodigosPostales";
 import ProductosAdmin from "./ProductosAdmin";
@@ -23,6 +24,8 @@ const UsuarioAdmin = () => {
         return <EstatusEnvioAdministrador />;
       case 2:
         return <ProductosAdmin />; // Renderiza el componente de Productos para el caso 2
+      case 3:
+        return <ProductosExtra/>;
       default:
         return null;
     }
@@ -95,7 +98,20 @@ const UsuarioAdmin = () => {
                 fontFamily: "Cormorant",
               }}
             />
+            <Tab
+              icon={<LoyaltyIcon fontSize="medium" sx={{ color: "#C81987" }} />}
+              iconPosition="start"
+              label="Productos Extras"
+              sx={{
+                alignSelf: "start",
+                textAlign: "left",
+                fontWeight: "600",
+                paddingBottom: "2%",
+                fontFamily: "Cormorant",
+              }}
+            />
           </Tabs>
+          
         </Paper>
       </Grid>
       <Grid item xs={12} md={9}>

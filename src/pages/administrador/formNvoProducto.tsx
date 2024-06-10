@@ -220,18 +220,51 @@ const FormNvoProducto = () => {
                         onChange={handleOcasionesChange}
                         required
                       >
-                        <MenuItem value="0yVDjdZV0mHgHr3yEAYL">Cumpleaños</MenuItem>
-                  <MenuItem value="NYgxe9cNReefkqpfDJwP">Combos</MenuItem>
-                  <MenuItem value="O9KkqcH19LmVyYEoImI2">Funerales</MenuItem>
-                  <MenuItem value="VPsWrkoUwhfNsAl2hhgi">Para Mamá</MenuItem>
-                  <MenuItem value="aP1IaxCTSZwMStDc7Imf">Para Ella</MenuItem>
-                  <MenuItem value="lCjmAOg75ZW5egsmrRWG">Regalos</MenuItem>
-                  <MenuItem value="ngJWcrzXs73P8v40Tgqy">Ofertas</MenuItem>
-                  <MenuItem value="paEglukYtsTk8F0D0M9I">Para Él</MenuItem>
-                  <MenuItem value="tVoHFTujxBqvzH9z4ycd">Centros de Mesa</MenuItem>
-                  <MenuItem value="vsHhw8nY1G1mHJKw097c">Kits</MenuItem>
+                        <MenuItem value="0yVDjdZV0mHgHr3yEAYL">
+                          Cumpleaños
+                        </MenuItem>
+                        <MenuItem value="NYgxe9cNReefkqpfDJwP">Combos</MenuItem>
+                        <MenuItem value="O9KkqcH19LmVyYEoImI2">
+                          Funerales
+                        </MenuItem>
+                        <MenuItem value="VPsWrkoUwhfNsAl2hhgi">
+                          Para Mamá
+                        </MenuItem>
+                        <MenuItem value="aP1IaxCTSZwMStDc7Imf">
+                          Para Ella
+                        </MenuItem>
+                        <MenuItem value="lCjmAOg75ZW5egsmrRWG">
+                          Regalos
+                        </MenuItem>
+                        <MenuItem value="ngJWcrzXs73P8v40Tgqy">
+                          Ofertas
+                        </MenuItem>
+                        <MenuItem value="paEglukYtsTk8F0D0M9I">
+                          Para Él
+                        </MenuItem>
+                        <MenuItem value="tVoHFTujxBqvzH9z4ycd">
+                          Centros de Mesa
+                        </MenuItem>
+                        <MenuItem value="vsHhw8nY1G1mHJKw097c">Kits</MenuItem>
                       </Select>
                     </FormControl>
+                  </Grid>
+                  <Grid item xs={12}>
+                    <Typography
+                      variant="h5"
+                      align="center"
+                      gutterBottom
+                      sx={{
+                        fontWeight: "600",
+                        paddingBottom: "2%",
+                        fontFamily: "Cormorant",
+                      }}
+                    >
+                      Productos Extras
+                    </Typography>
+                  </Grid>
+                  <Grid item xs={12}>
+                    
                   </Grid>
                   <Grid item xs={12}>
                     <Button variant="contained" component="label" fullWidth>

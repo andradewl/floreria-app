@@ -24,6 +24,8 @@ import HistPedidosAdmin from "./pages/administrador/HistPedidosAdmin";
 import EditarProducto from "./pages/administrador/editarProducto";
 import FormNvoProducto from "./pages/administrador/formNvoProducto";
 
+import ProductosExtra from "./pages/administrador/ProductosExtra";
+
 import shopProducts from "./pages/ShopProduct/shopProducts";
 import { PayPalScriptProvider } from "@paypal/react-paypal-js";
 import Completeion from "./pages/ShopProduct/Completeion";
@@ -91,6 +93,7 @@ function App() {
           <Route path="/EditarCodigoPostal/:id" Component={EditarCodigoPostal} />
           <Route path="/NuevaOcasion" Component={NuevaOcasion} />
           <Route path="/EditarOcasion/:id" Component={EditarOcasionId} />
+          <Route path="/ProductosExtra" Component={ProductosExtra} />
         </Routes>
 
         <Footer/>
