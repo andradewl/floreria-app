@@ -48,6 +48,7 @@ export const eliminarProducto = async (idProducto: string) => {
 };
 
 
+// Función para agregar un producto a la colección "Flores"
 export const agregarProducto = async (
   descripcion: string,
   descuento: number,
@@ -56,10 +57,11 @@ export const agregarProducto = async (
   precio: number,
   imagenURL: string,
   ocasion: string,
-  sku: string
+  sku: string,
+  productosExtra: string[] // Agregar un array de IDs de productos extra
 ) => {
   try {
-    await addDoc(collection(db, "Flores"), {
+    const newDocRef = await addDoc(collection(db, "Flores"), {
       descripcion,
       descuento,
       existencias,
@@ -67,7 +69,8 @@ export const agregarProducto = async (
       precio,
       imagen: imagenURL,
       ocasion,
-      sku
+      sku,
+      productosExtra // Agregar los IDs de los productos extra al documento del producto
     });
 
     // console.log("Producto agregado correctamente");
@@ -76,6 +79,7 @@ export const agregarProducto = async (
     throw error;
   }
 };
+
 
 
 
