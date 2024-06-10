@@ -3,15 +3,15 @@ import { useParams, useNavigate } from 'react-router-dom';
 import { obtenerProductoPorId, actualizarProducto } from '../../config/backEndAdmin/backProductos';
 import { Typography, Grid, TextField, Button, Box, Paper } from '@mui/material';
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
-import { getAuth } from 'firebase/auth'; // Importar getAuth para obtener el usuario actual
-import { NotificacionSuccess } from '../../components/Alert'; // Importar NotificacionSuccess
+import { getAuth } from 'firebase/auth';
+import { NotificacionSuccess } from '../../components/Alert';
 
 const EditarProducto = () => {
-  const { id } = useParams<{ id: string }>(); // Obtener el id del URL
+  const { id } = useParams<{ id: string }>();
   const navigate = useNavigate();
   const auth = getAuth();
   const user = auth.currentUser;
-  
+
   const [producto, setProducto] = useState<any>({
     nombre: '',
     precio: 0,
@@ -21,13 +21,13 @@ const EditarProducto = () => {
     imagen: '',
     imagenFile: null,
   });
-  const [showSuccessNotification, setShowSuccessNotification] = useState(false); // Estado para la notificación de éxito
+  const [showSuccessNotification, setShowSuccessNotification] = useState(false);
 
   useEffect(() => {
     const fetchProducto = async () => {
       try {
         if (id) {
-          const productoData = await obtenerProductoPorId(id); // Utilizar el id para cargar los datos del producto
+          const productoData = await obtenerProductoPorId(id);
           setProducto(productoData);
         } else {
           console.error('El ID del producto no está definido.');
@@ -36,7 +36,7 @@ const EditarProducto = () => {
         console.error('Error al obtener el producto:', error);
       }
     };
-  
+
     fetchProducto();
   }, [id]);
 
@@ -61,37 +61,44 @@ const EditarProducto = () => {
         return;
       }
 
-      // Verificar que todos los campos necesarios estén definidos
       if (
         !producto.nombre ||
         !producto.descripcion ||
-        !producto.descuento ||
-        !producto.existencias ||
-        !producto.precio
+        producto.descuento === undefined ||
+        producto.existencias === undefined ||
+        producto.precio === undefined
       ) {
         console.error('Algunos campos del producto no están definidos.');
         return;
       }
 
+      // Convertir los campos numéricos a number antes de la actualización
+      const productoActualizado = {
+        ...producto,
+        precio: Number(producto.precio),
+        existencias: Number(producto.existencias),
+        descuento: Number(producto.descuento),
+      };
+
       await actualizarProducto(
         id,
-        producto.descripcion,
-        producto.descuento,
-        producto.existencias,
-        producto.nombre,
-        producto.precio,
-        producto.imagenFile // Enviar la imagen como parte de la actualización
+        productoActualizado.descripcion,
+        productoActualizado.descuento,
+        productoActualizado.existencias,
+        productoActualizado.nombre,
+        productoActualizado.precio,
+        producto.imagenFile
       );
-      
-      setShowSuccessNotification(true); // Mostrar la notificación de éxito
+
+      setShowSuccessNotification(true);
       setTimeout(() => {
         navigate(`/Usuario/${user.uid}`);
-      }, 2500); // Esperar 2.5 segundos antes de redirigir
+      }, 2500);
     } catch (error) {
       console.error('Error al actualizar el producto:', error);
     }
   };
-  
+
   const handleRegresar = () => {
     navigate(`/Usuario/${user?.uid}`);
   };
