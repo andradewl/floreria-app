@@ -113,7 +113,7 @@ const ProductosExtra = () => {
                   </Typography>
                 </Box>
                 <Box sx={{ display: "flex", justifyContent: "flex-end", mt: 2 }}>
-                  <Link to={`/editarProducto/${producto.id}`} style={{ textDecoration: "none" }}>
+                  <Link to={`/EditarProductoExtra/${producto.id}`} style={{ textDecoration: "none" }}>
                     <IconButton aria-label="editar">
                       <EditIcon />
                     </IconButton>

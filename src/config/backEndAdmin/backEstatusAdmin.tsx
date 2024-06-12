@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 import { db } from "../firfebase";
 import { collection, doc, getDocs, updateDoc } from "firebase/firestore";
 export const getPedidosUsuario = async () => {
@@ -17,7 +16,7 @@ export const getPedidosUsuario = async () => {
         cantidad: item.cantidad,
         total: total,
         fecha: item.fecha,
-        estatusEnv: datosEnvio?.estatusEnv,
+        estatusEnv: item.estatuss,
         direccion: datosEnvio?.direccion || "",
         colonia: datosEnvio?.colonia || "",
         ciudad: datosEnvio?.ciudad || "",
@@ -33,28 +32,21 @@ export const getPedidosUsuario = async () => {
     }
   });
 
-  const pedidosFlat = pedidos.flat(); // Aplanar el array de pedidos
-  // console.log("Pedidos obtenidos:", pedidosFlat);
+  const pedidosFlat = pedidos.flat(); 
   return pedidosFlat;
 };
-
-
 export const actualizarEstatusPedido = async (pedidoId: string, nuevoEstatus: string) => {
   if (!pedidoId) {
     console.error("El ID del pedido es nulo o indefinido.");
     return;
   }
 
-  // Construir referencia al documento del pedido utilizando su ID
   const pedidoRef = doc(db, "pedidos", pedidoId);
 
   try {
-    // Actualizar el campo estatusEnv dentro del campo datosEnv del documento
     await updateDoc(pedidoRef, {
-      // Usamos la notación de puntos para acceder a campos anidados
       "datosEnvio.estatusEnv": nuevoEstatus,
     });
-    // console.log("Estatus del pedido actualizado correctamente.");
   } catch (error) {
     console.error("Error al actualizar el estatus del pedido:", error);
     throw error;
