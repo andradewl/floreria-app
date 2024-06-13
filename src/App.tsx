@@ -21,7 +21,7 @@ import editDirecciones from "./pages/User/editDirecciones";
 import editDireccionFact from "./pages/User/editDireccionFact";
 
 
-import ProductosExtra from "./pages/administrador/ProductosExtra";
+// import ProductosExtra from "./pages/administrador/ProductosExtra";
 
 import shopProducts from "./pages/ShopProduct/shopProducts";
 import { PayPalScriptProvider } from "@paypal/react-paypal-js";
@@ -44,7 +44,7 @@ import EstatusEnvioAdministrador from "./pages/administrador/EstatusEnvioAdmin";
 import HistPedidosAdmin from "./pages/administrador/HistPedidosAdmin";
 import EditarProducto from "./pages/administrador/editarProducto";
 import FormNvoProducto from "./pages/administrador/formNvoProducto";
-import EditarProductoExtra from "./pages/administrador/EditarProductoExtra";
+
 
 function App() {
 
@@ -100,7 +100,6 @@ function App() {
           <Route path="/EditarOcasion/:id" Component={EditarOcasionId} />
           <Route path="/Ocasiones" Component={Ocasiones} />
           <Route path="/CodigosPostales" Component={CodigosPostales} />
-          <Route path="/EditarProductoExtra/:id" Component={EditarProductoExtra} />
         </Routes>
 
         <Footer/>

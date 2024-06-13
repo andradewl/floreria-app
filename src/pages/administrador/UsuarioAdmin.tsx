@@ -9,6 +9,7 @@ import ProductosExtra from "./ProductosExtra";
 import Ocasiones from "./Ocasiones";
 import CodigosPostales from "./CodigosPostales";
 import ProductosAdmin from "./ProductosAdmin";
+import MensajeContacto from "./MensajesContacto";
 const UsuarioAdmin = () => {
   const [tabValue, setTabValue] = useState<number>(0);
 
@@ -19,7 +20,7 @@ const UsuarioAdmin = () => {
   const renderContent = () => {
     switch (tabValue) {
       case 0:
-        return <HistPedidosAdmin />;
+        return <MensajeContacto />;
       case 1:
         return <EstatusEnvioAdministrador />;
       case 2:
