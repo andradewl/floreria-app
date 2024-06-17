@@ -36,7 +36,7 @@ function Contacto() {
   const handleSubmit = async () => {
     try {
       await agregarRegistroContacto(formData);
-      setMensajeNotificacion("Mensaje enviado sdasdasds")
+      setMensajeNotificacion("Mensaje enviado correctamente")
       setNotiSucces(true)
       setTimeout(() => {
         setNotiSucces(false)
