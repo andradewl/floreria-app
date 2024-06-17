@@ -9,6 +9,7 @@ import ProductosExtra from "./ProductosExtra";
 import Ocasiones from "./Ocasiones";
 import CodigosPostales from "./CodigosPostales";
 import ProductosAdmin from "./ProductosAdmin";
+import MensajeContacto from "./MensajesContacto";
 const UsuarioAdmin = () => {
   const [tabValue, setTabValue] = useState<number>(0);
 
@@ -26,10 +27,12 @@ const UsuarioAdmin = () => {
         return <ProductosAdmin />; // Renderiza el componente de Productos para el caso 2
       case 3:
         return <ProductosExtra/>;
-      case 4: 
+      case 4:
         return <Ocasiones/>;
       case 5:
         return <CodigosPostales/>;
+      case 6:
+        return <MensajeContacto/>;
       default:
         return null;
     }
@@ -142,8 +145,21 @@ const UsuarioAdmin = () => {
                 fontFamily: "Cormorant",
               }}
             />
+            <Tab
+            icon={
+              <DescriptionIcon fontSize="medium" sx={{ color: "#C81987" }} />
+            }
+              label="Mensajes de contacto"
+              iconPosition="start"
+              sx={{
+                alignSelf: "start",
+                textAlign: "left",
+                fontWeight: "600",
+                paddingBottom: "2%",
+                fontFamily: "Cormorant",
+              }}
+            />
           </Tabs>
-          
         </Paper>
       </Grid>
       <Grid item xs={12} md={9}>

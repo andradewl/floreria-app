@@ -21,7 +21,7 @@ import editDirecciones from "./pages/User/editDirecciones";
 import editDireccionFact from "./pages/User/editDireccionFact";
 
 
-import ProductosExtra from "./pages/administrador/ProductosExtra";
+// import ProductosExtra from "./pages/administrador/ProductosExtra";
 
 import shopProducts from "./pages/ShopProduct/shopProducts";
 import { PayPalScriptProvider } from "@paypal/react-paypal-js";

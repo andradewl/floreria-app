@@ -7,14 +7,14 @@ export const getPedidosUsuario = async () => {
     const data = doc.data();
     const carritoCompra = data.carritoCompra;
     const datosEnvio = data.datosEnvio;
-    const total = data.total;
+    // const total = data.total;
 
     if (carritoCompra && carritoCompra.length > 0) {
       return carritoCompra.map((item: any) => ({
         id: doc.id, // Añadir el ID del pedido
-        nombre: item.nombre,
+        nombre: item.nombre +", "+ item.productoExtra.nombreProductoExtra,
         cantidad: item.cantidad,
-        total: total,
+        total: item.precio + item.productoExtra.precioProductoExtra,
         fecha: item.fecha,
         estatusEnv: item.estatuss,
         direccion: datosEnvio?.direccion || "",

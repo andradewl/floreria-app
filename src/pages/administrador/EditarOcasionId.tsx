@@ -73,7 +73,7 @@ const EditarOcasionId = () => {
         id,
         producto.descripcion,
         producto.nombre,
-        // producto.imagenFile // Enviar la imagen como parte de la actualización
+        producto.imagenFile // Enviar la imagen como parte de la actualización
       );
       
       setShowSuccessNotification(true); // Mostrar la notificación de éxito
@@ -123,6 +123,13 @@ const EditarOcasionId = () => {
                 value={producto.descripcion}
                 onChange={handleChange}
               />
+            </Grid>
+            <Grid>
+              <input
+                type="file"
+                accept="image/*"
+                name="imagenFile"
+                onChange={handleChange}/>
             </Grid>
             {producto.imagen && (
               <Grid item xs={12}>

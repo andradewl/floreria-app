@@ -376,25 +376,25 @@ function ProductId(){
 
     return(
         <>
-            <Grid sx={{ paddingTop:10, paddingLeft:{xs:5, md:8, lg:10, xl:25}, paddingRight:{xs:5, md:8, lg:10, xl:25}, backgroundColor:'#f5f1ec'}}>
+            <Grid sx={{ paddingTop:10, paddingLeft:{xs:5, md:8, lg:10, xl:35}, paddingRight:{xs:5, md:8, lg:10, xl:35}, backgroundColor:'#f5f1ec'}}>
                 <Grid container>
                     <Grid item md={7} xs={12} sx={{justifyContent:'center'}}>
                         <Grid container>
-                            <Grid item xs={3} sx={{textAlign:'center', display:{xs:'none', md:'block'}}}>
+                            {/* <Grid item xs={3} sx={{textAlign:'center', display:{xs:'none', md:'block'}}}>
                                 <img src={product.imagen} alt="" style={{ width:'70%', height:'140px', borderRadius:'8px' }}/>
                                 <img src={product.imagen} alt="" style={{ width:'70%', height:'140px', borderRadius:'8px' }}/>
                                 <img src={product.imagen} alt="" style={{ width:'70%', height:'140px', borderRadius:'8px' }}/>
                                 <img src={product.imagen} alt="" style={{ width:'70%', height:'140px', borderRadius:'8px' }}/>
-                            </Grid>
-                            <Grid item xs={12} md={9} sx={{width:'100%', height:{xs:'300px', sm:'450px', md:'400px', lg:'500px', xl:'650px'}}}>
+                            </Grid> */}
+                            <Grid item xs={12}  sx={{width:'80%', height:{xs:'360px', sm:'560px', md:'460px', lg:'700px', xl:'600px'}}}>
                                 <img src={product.imagen} alt="" style={{ width:'100%', height:'100%', borderRadius:'8px' }}/>
                             </Grid>
-                            <Grid item xs={12} sx={{textAlign:'center', display:{xs:'flex', md:'none'}}}>
+                            {/* <Grid item xs={12} sx={{textAlign:'center', display:{xs:'flex', md:'none'}}}>
                                 <img src={product.imagen} alt="" style={{ width:'60px', height:'60px', borderRadius:'8px', margin:'4px' }}/>
                                 <img src={product.imagen} alt="" style={{ width:'60px', height:'60px', borderRadius:'8px', margin:'4px' }}/>
                                 <img src={product.imagen} alt="" style={{ width:'60px', height:'60px', borderRadius:'8px', margin:'4px' }}/>
                                 <img src={product.imagen} alt="" style={{ width:'60px', height:'60px', borderRadius:'8px', margin:'4px' }}/>
-                            </Grid>
+                            </Grid> */}
 
                         </Grid>
                     </Grid>

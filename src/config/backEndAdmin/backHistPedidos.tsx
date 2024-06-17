@@ -11,13 +11,13 @@ export const getPedidosUsuario = async () => { // Elimina el parámetro uidUser
   const pedidos = result.docs.map((doc) => {
     const data = doc.data();
     const carritoCompra = data.carritoCompra;
-    const total = data.total;
+    // const total = data.total;
 
     if (carritoCompra && carritoCompra.length > 0) {
       const carritoData = carritoCompra.map((item: any) => ({
-        nombre: item.nombre,
+        nombre: item.nombre+", "+ item.productoExtra.nombreProductoExtra,
         cantidad: item.cantidad,
-        total: total, // Reemplaza precio por total
+        total: item.precio + item.productoExtra.precioProductoExtra, // Reemplaza precio por total
         fecha: item.fecha
       }));
       return carritoData;

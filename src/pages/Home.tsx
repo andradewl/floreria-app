@@ -1,7 +1,7 @@
 /* eslint-disable react-refresh/only-export-components */
-import {  Box, Button, Grid, Pagination, PaginationItem, Paper, Typography } from "@mui/material";
-import ArrowBackIcon from '@mui/icons-material/ArrowBack';
-import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
+import {  Box, Button, Grid, Paper, Typography } from "@mui/material";
+// import ArrowBackIcon from '@mui/icons-material/ArrowBack';
+// import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
 import { stylesComponents } from "../styles/stylesComponentes"
 import '../styles/fuentes.css'
 import { getOcasiones, getProducts } from "../config/apiFirebase";
@@ -306,15 +306,7 @@ function Home(){
                             </Grid>
                         ))}
 
-                        <Pagination
-                            count={10}
-                            renderItem={(flores) => (
-                                <PaginationItem
-                                slots={{ previous: ArrowBackIcon, next: ArrowForwardIcon }}
-                                {...flores}
-                                />
-                            )}
-                        />
+                       
 
 
 

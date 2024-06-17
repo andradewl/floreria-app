@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import { db, storage } from "../firfebase"; // Importa la instancia de Firestore y Firebase Storage
 import { ref, uploadBytes, getDownloadURL } from "firebase/storage"; // Importa los métodos necesarios de Firebase Storage
 import {
@@ -61,18 +62,31 @@ export const agregarProducto = async (
   productosExtra: string[] // Agregar un array de IDs de productos extra
 ) => {
   try {
-    const newDocRef = await addDoc(collection(db, "Flores"), {
-      descripcion,
-      descuento,
-      existencias,
-      nombre,
-      precio,
-      imagen: imagenURL,
-      ocasion,
-      sku,
-      productosExtra // Agregar los IDs de los productos extra al documento del producto
-    });
-
+    if(descuento != 0){
+      await addDoc(collection(db, "Flores"), {
+        descripcion,
+        // descuento,
+        existencias,
+        nombre,
+        precio,
+        imagen: imagenURL,
+        ocasion,
+        sku,
+        productosExtra // Agregar los IDs de los productos extra al documento del producto
+      })
+    }else{
+      await addDoc(collection(db, "Flores"), {
+        descripcion,
+        descuento,
+        existencias,
+        nombre,
+        precio,
+        imagen: imagenURL,
+        ocasion,
+        sku,
+        productosExtra // Agregar los IDs de los productos extra al documento del producto
+      })
+    }
     // console.log("Producto agregado correctamente");
   } catch (error) {
     console.error("Error al agregar el producto:", error);

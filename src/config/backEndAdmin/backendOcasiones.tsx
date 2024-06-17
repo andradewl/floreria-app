@@ -108,17 +108,17 @@ export const actualizarOcasion = async (
   idProducto: string,
   descripcion: string,
   nombre: string,
-  // imagenFile: File // Agregar la imagen como un argumento adicional
+  imagenFile: File // Agregar la imagen como un argumento adicional
 ) => {
   try {
     // Subir la nueva imagen a Firebase Storage y obtener la URL de la imagen
-    // const imagenURL = it subirImagenOcasion(idProducto, imagenFile);
+    const imagenURL = await subirImagenOcasion(idProducto, imagenFile);
 
     // Actualizar el documento del producto en Firestore con la nueva URL de la imagen
     await updateDoc(doc(db, "ocasiones", idProducto), {
       descripcion,
-      nombre
-      // imagen: L // Actualizar la URL de la imagen en Firestore
+      nombre,
+      imagen: imagenURL // Actualizar la URL de la imagen en Firestore
     });
 
     // console.log('Producto actualizado correctamente con nueva imagen');
