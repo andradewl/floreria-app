@@ -63,6 +63,10 @@ export const deleteOcasionByid = async(id:string) =>{
     await deleteDoc(docRef);
 }
 
+export const deleteContaco = async(id:string) =>{
+  const docRef = doc(db, 'Contacto', id);
+  await deleteDoc(docRef);
+}
 
 export const obtenerOcasionPorId = async (idProducto: string) => {
   try {

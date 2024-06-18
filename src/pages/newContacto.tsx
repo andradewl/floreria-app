@@ -11,6 +11,7 @@ import SmartphoneIcon from "@mui/icons-material/Smartphone";
 import MailOutlineIcon from "@mui/icons-material/MailOutline";
 import LocationOnIcon from "@mui/icons-material/LocationOn";
 import { NotificacionSuccess, Notificacionerror } from "../components/Alert";
+import { agregarRegistroContacto } from "../config/backEndUsuarios/backContacto";
 
 function NewContacto() {
 
@@ -36,6 +37,7 @@ function NewContacto() {
   const handleSubmit = async () => {
     try {
       // Aquí iría tu lógica para enviar el formulario
+        await agregarRegistroContacto(formData);
       setMensajeNotificacion("Mensaje enviado correctamente")
       setNotiSucces(true)
       setTimeout(() => {

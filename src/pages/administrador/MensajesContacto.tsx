@@ -22,7 +22,8 @@ import DeleteIcon from '@mui/icons-material/Delete';
 // import { getPedidosUsuario } from "../../config/backEndAdmin/backHistPedidos";
 import { getContactoUusarios } from "../../config/backEndAdmin/backendContacto";
 import { NotificacionSuccess, Notificacionerror } from "../../components/Alert";
-import { deleteOcasionByid } from "../../config/backEndAdmin/backendOcasiones";
+import { deleteContaco } from "../../config/backEndAdmin/backendOcasiones";
+// import { deleteOcasionByid } from "../../config/backEndAdmin/backendOcasiones";
 
 interface Contacto {
     id: string;
@@ -113,7 +114,7 @@ const deleteOcasion = async (id:string) =>{
     // console.log("goaf,lsfmsad")
     console.log(id)
       try{
-        await deleteOcasionByid(id)
+        await deleteContaco(id)
         setMensajeNotificacion("Borrado con exito, espere")
         setNotiSucces (true)
         setTimeout(() => {

@@ -5,19 +5,19 @@ import LocationOnIcon from "@mui/icons-material/LocationOn";
 import AccessTimeIcon from "@mui/icons-material/AccessTime";
 import { Icon } from "@mui/material";
 import { useState } from "react";
-import { agregarRegistroContacto } from "../config/backEndUsuarios/backContacto";
+// import { agregarRegistroContacto } from "../config/backEndUsuarios/backContacto";
 import React from "react";
-import { NotificacionSuccess, Notificacionerror } from "../components/Alert";
+// import { NotificacionSuccess, Notificacionerror } from "../components/Alert";
 
 // Definir un tipo para el icono
 type IconType = React.ReactElement<typeof Icon>;
 
 function Contacto() {
 
-  const [notiError, setNotiError ] = React.useState(false);
-  const [notiSucces, setNotiSucces ] = React.useState(false);
+  // const [notiError, setNotiError ] = React.useState(false);
+  // const [notiSucces, setNotiSucces ] = React.useState(false);
   // const [notiInfo, ] = React.useState(false);
-  const [mensajeNotificacion, setMensajeNotificacion] = React.useState("");
+  // const [mensajeNotificacion, setMensajeNotificacion] = React.useState("");
 
   
   const [formData, setFormData] = useState({
@@ -34,32 +34,33 @@ function Contacto() {
   };
 
   const handleSubmit = async () => {
-    try {
-      await agregarRegistroContacto(formData);
-      setMensajeNotificacion("Mensaje enviado correctamente")
-      setNotiSucces(true)
-      setTimeout(() => {
-        setNotiSucces(false)
-      }, 2000);
-      // alert("Mensaje enviado correctamente");
-      setFormData({
-        nombre: "",
-        apellido: "",
-        correoElectronico: "",
-        telefono: "",
-        asunto: "",
-        mensaje: "",
-      });
-    } catch (error) {
-      console.error(error);
+    console.log(formData)
+    // try {
+    //   await agregarRegistroContacto(formData);
+    //   setMensajeNotificacion("Mensaje enviado correctamente")
+    //   setNotiSucces(true)
+    //   setTimeout(() => {
+    //     setNotiSucces(false)
+    //   }, 2000);
+    //   // alert("Mensaje enviado correctamente");
+    //   setFormData({
+    //     nombre: "",
+    //     apellido: "",
+    //     correoElectronico: "",
+    //     telefono: "",
+    //     asunto: "",
+    //     mensaje: "",
+    //   });
+    // } catch (error) {
+    //   console.error(error);
 
-      setMensajeNotificacion("Ocurrió un error al enviar el mensaje. Por favor, inténtalo de nuevo más tarde.")
-      setNotiError(true)
-      setTimeout(() => {
-        setNotiError(false)
-      }, 2000);
-      // alert("Ocurrió un error al enviar el mensaje. Por favor, inténtalo de nuevo más tarde.");
-    }
+    //   setMensajeNotificacion("Ocurrió un error al enviar el mensaje. Por favor, inténtalo de nuevo más tarde.")
+    //   setNotiError(true)
+    //   setTimeout(() => {
+    //     setNotiError(false)
+    //   }, 2000);
+    //   // alert("Ocurrió un error al enviar el mensaje. Por favor, inténtalo de nuevo más tarde.");
+    // }
   };
 
   return (
@@ -117,13 +118,13 @@ function Contacto() {
         </Grid>
       </Container>
 
-      {notiError &&
+      {/* {notiError &&
         <Notificacionerror message={mensajeNotificacion}/>
       }
 
       {notiSucces &&
           <NotificacionSuccess message={mensajeNotificacion}/>
-      }
+      } */}
 
   
 
