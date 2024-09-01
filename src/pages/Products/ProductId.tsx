@@ -43,7 +43,7 @@ function ProductId(){
     const [visibleHorarios, setVisibleHorarios] = React.useState(false)
     const [date, setDate] = React.useState(dayjs());
     const [hora, sethora] = React.useState('');
-    const [idReferenciaEstatus, setidReferenciaEstatus] = React.useState('');
+    // const [idReferenciaEstatus, setidReferenciaEstatus] = React.useState('');
     const [productoExtra, setproductoExtra] = React.useState({nombreProductoExtra: 'Sin producto extra',precioProductoExtra: 0});
     const [dedicatoria, setDedicatoria] = React.useState('');
     const [visibleProductoExtra, setvisibleProductoExtra] = React.useState(false) //muestra los productos extras
@@ -268,7 +268,7 @@ function ProductId(){
             hora: hora,
             cantidad:1,
             entrega:entrega,
-            estatus:idReferenciaEstatus,
+            // estatus:idReferenciaEstatus,
             productoExtra: productoExtra ? {
                 nombreProductoExtra: productoExtra.nombreProductoExtra,
                 precioProductoExtra: productoExtra.precioProductoExtra,
@@ -304,7 +304,7 @@ function ProductId(){
             hora: hora,
             cantidad:1,
             entrega:entrega,
-            estatus:idReferenciaEstatus,
+            // estatus:idReferenciaEstatus,
             productoExtra: productoExtra ? {
                 nombreProductoExtra: productoExtra.nombreProductoExtra,
                 precioProductoExtra: productoExtra.precioProductoExtra,
@@ -349,12 +349,12 @@ function ProductId(){
         if(opcion == 1){
             setOpcion1entrega(true)
             setOpcion2entrega(false)
-            setidReferenciaEstatus('Preparando')
+            // setidReferenciaEstatus('Preparando')
         }
         if(opcion == 2){
             setOpcion1entrega(false)
             setOpcion2entrega(true)
-            setidReferenciaEstatus('Recoge en Tienda')
+            // setidReferenciaEstatus('Recoge en Tienda')
         }
         setEntrega(entrega)
     }
@@ -778,9 +778,9 @@ function ProductId(){
                                         </Grid>
                                     </Grid>
                                     <Grid>
-                                        {habilitarDesabilitarBottonCompra ? (
+                                        {product.existencias > 0 && habilitarDesabilitarBottonCompra ? (
                                             product.descuento ? (
-                                                <Button sx={{backgroundColor:'black', color:'white', width:'100%', fontSize:'11px', paddingTop:'15px', paddingBottom:'15px'}} onClick={()=>guardarDatosConDescuento(product.id,product.nombre, product.precio, product.descuento, product.imagen)} >
+                                                <Button sx={{backgroundColor:'black', color:'white', width:'100%', fontSize:'11px', paddingTop:'15px', paddingBottom:'15px'}} onClick={()=>guardarDatosConDescuento(product.id,product.nombre, product.precio, product.descuento, product.imagen)}  >
                                                     Añadir al carrito
                                                 </Button>
                                             )
@@ -793,7 +793,7 @@ function ProductId(){
 
 
                                         ):(
-                                            <Button sx={{backgroundColor:'black', color:'white', width:'100%', fontSize:'11px' }} disabled={product.existencias != 0}>
+                                            <Button sx={{backgroundColor:'black', color:'white', width:'100%', fontSize:'11px' }} disabled={product.existencias > 0}>
                                                 Añadir al carrito
                                             </Button>
                                         )}

@@ -367,7 +367,7 @@ function shopProducts() {
                 carritoCompra:item,
                 // idEstado:"lihdGU56KMY6sblyD9xb",
                 uidUserLogin:isUidUserLogin,
-                // entrega:entrega,
+                entrega:" JpWqiqoc2PRFThy3k8DT ",
                 total:total
             }
         }else{
@@ -377,7 +377,7 @@ function shopProducts() {
                 carritoCompra:item,
                 // idEstado:"lihdGU56KMY6sblyD9xb",
                 uidUserLogin:"no user",
-                // entrega:entrega,
+                entrega:" JpWqiqoc2PRFThy3k8DT",
                 total:total
             }
         }
@@ -396,7 +396,7 @@ function shopProducts() {
                 carritoCompra:item,
                 // idEstado:"lihdGU56KMY6sblyD9xb",
                 uidUserLogin:isUidUserLogin,
-                // entrega:entrega,
+                entrega:"JpWqiqoc2PRFThy3k8DT",
                 total:total
             }
         }else{
@@ -406,7 +406,7 @@ function shopProducts() {
                 carritoCompra:item,
                 // idEstado:"lihdGU56KMY6sblyD9xb",
                 uidUserLogin:"no user",
-                // entrega:entrega,
+                entrega:"JpWqiqoc2PRFThy3k8DT",
                 total:total
             }
         }

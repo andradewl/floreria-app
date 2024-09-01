@@ -43,7 +43,7 @@ interface carritoDeCompra {
     hora: string;
     cantidad:number;
     entrega:string;
-    estatus:string;
+    // estatus:string;
     productoExtra: {
         nombreProductoExtra: string;
         precioProductoExtra: number;
@@ -98,12 +98,44 @@ interface Pedido {
     carritoCompra: carritoDeCompra[];
     // idEstado:string;
     uidUserLogin:string,
-    // entrega:string,
+    entrega:string,
     total:number,
 
 }
 
 
+interface PedidoBackend {
+    id:string,
+    facturacion: {
+        nombre: string;
+        apellido: string;
+        direccion: string;
+        colonia: string;
+        municipio: string;
+        estado: string;
+        cp: string;
+        email: string;
+        telefono: string;
+    };
+    datosEnvio: {
+        nombre: string;
+        apellido: string;
+        direccion: string;
+        colonia: string;
+        municipio: string;
+        estado: string;
+        cp: string;
+        email: string;
+        telefono: string;
+        // envio:string
+    };
+    carritoCompra: carritoDeCompra[];
+    // idEstado:string;
+    uidUserLogin:string,
+    entrega:string,
+    total:number,
+
+}
 
 
 interface TipoFlores {
@@ -153,6 +185,13 @@ interface CodigosPostales {
     envio:number;
 }
 
+
+interface estatdosPedidos {
+    Nombre: string;
+    id:string
+    // nombre:string;
+}
+
 export type Flower = FlowerWithOferta | FlowerWithoutOferta;
 export type CarritoDeCompra = carritoDeCompra;
 export type ProductoExtra = productoExtra;
@@ -164,4 +203,7 @@ export type Notificacionprops = NotificacionProps;
 export type facturacionLogin= facturacion;
 export type PrecioEnvio= precioEnvio;
 export type NuevoPedido = Pedido;
+export type NuevoPedidoback = PedidoBackend;
+export type EstadosPedidos = estatdosPedidos;
+
 export type Codigospostales = CodigosPostales;

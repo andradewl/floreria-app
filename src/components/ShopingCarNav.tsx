@@ -39,6 +39,9 @@ function ShopingCarNav() {
 
     React.useEffect(() => {
         let sumaTotal = 0;
+
+
+
             items.forEach((item) => {
                 sumaTotal += (item.precio * item.cantidad)+( item.productoExtra.precioProductoExtra);
             })
@@ -71,6 +74,8 @@ function ShopingCarNav() {
             localStorage.removeItem('precioTotal');
             setItems([]);
             setIsSetItems(false)
+            window.location.href = '/';
+
         } else {
             // localStorage.setItem('Productos', JSON.stringify(updatedItems));
             setItems(updatedItems);
@@ -108,11 +113,29 @@ function ShopingCarNav() {
 
 
     const añadirMasProductos = async(id:string)=>{
+
+        const dataExistencia = await getexistenciaProductById(id)
+        
+
+
         const index = items.findIndex(item => item.id === id);
+        const nuevaCantidad = items[index].cantidad + 1;
+
+        if(dataExistencia){
+            if(dataExistencia.existencias < nuevaCantidad){
+                
+                setMensajeNotificacion("maxima existencia")
+                setNotiError(true)
+                setTimeout(() => {
+                    setNotiError(false)
+                }, 2000);
+                return
+            }
+        }
+
 
         if (index !== -1) {
-            const nuevaCantidad = items[index].cantidad + 1;
-            const dataExistencia = await getexistenciaProductById(id)
+            
             if(dataExistencia){
                 if(dataExistencia.existencias == nuevaCantidad){
                     setMensajeNotificacion("maxima existencia")
