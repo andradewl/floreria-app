@@ -59,7 +59,7 @@ function Home(){
             <Grid sx={{width:'100%', height:{xs:'300px', sm:'600px',md:'500px', lg:'600px', xl:'750px'}, position: 'relative'}}>
                 <Grid sx={{width:'100%', height: '100%', position:'relative', zIndex:1}} >
                     
-                    <img src="https://firebasestorage.googleapis.com/v0/b/prowlflores.appspot.com/o/multimedia%2Fimagenes%2FFondos%2Fvideobanner2.gif?alt=media&token=8ed486c2-5f84-43e7-93c7-0ae9d4103c0d" style={{width:'100%', height:'100%', objectFit:'cover', objectPosition:'left'}} alt="" />
+                    <img src="https://firebasestorage.googleapis.com/v0/b/prowlflores.appspot.com/o/multimedia%2Fimagenes%2FFondos%2FCaptura%20de%20pantalla%202024-05-09%20121118.png?alt=media&token=5b4c51d7-b60f-4f9a-9504-31cb33650362" style={{width:'100%', height:'100%', objectFit:'cover', objectPosition:'left'}} alt="" />
                     
                 </Grid>
                 <Grid sx={{position: 'absolute',top: 0, left: 0, bottom:0 ,width: '100%', height: '100%', backgroundColor: '#0000004d', zIndex: 2}}>
@@ -96,17 +96,13 @@ function Home(){
                     </Grid>
                 </Grid>
             </Grid>
-
-            {/* <Grid>
-                <Banners/>
-            </Grid> */}
-
+            
             <Grid>
                 <BarraDeBusqueda/>
             </Grid>
 
-            <Grid  sx={{paddingLeft:{xl:'10%', md:'3%',xs:'5%'}, paddingRight:{xl:'10%',md:'3%', xs:'5%', backgroundColor:'#fbf8f4'}}} pb={8}>
-                <Grid style={{textAlign:'start', padding:'8px', paddingTop:'80px', paddingBottom:'80px' }} data-aos="fade-right">
+            <Grid sx={{...stylesComponents.contenedorPadre, background:'#fbf8f4'}}>
+                <Grid sx={stylesComponents.contenedorHijo}>
                     <Typography variant="h1" color="initial"
                         sx={{
                             color:'#fb7185',
@@ -128,54 +124,34 @@ function Home(){
                         En Flores Rickys encontrarás lo que necesitas para cada ocasión.
                     </Typography>
                 </Grid>
-
-                <Grid >
-                    <Grid container display={'flex'}>
-
-                        {ocasinesDataId && ocasinesDataId.map((item) => (
-                            <Grid item xs={6} md={4} sx={stylesComponents.contenedorOcasiones} p={'8px'}>
-                                <Box sx={stylesComponents.cajaDatosOcasioners}>
-                                    <Grid sx={stylesComponents.contenedorImagen}>
-                                        <img src={item.imagen} alt="" width={'100%'} height={'100%'} style={{ objectFit: 'cover'}}/>
-                                    </Grid>
-                                    <Paper sx={stylesComponents.animacionTextoSobreImagenOcasiones} onClick={()=>redireccionConRefresh(item.nombre, item.id)}>
-                                        <Typography variant="h4" color="initial" sx={stylesComponents.letraSobreImagen}>{item.nombre}</Typography>
-                                    </Paper>
-                                </Box>
-                            </Grid>
-                        ))}
-                    </Grid>
-                </Grid>
-
             </Grid>
 
-            <Grid sx={{paddingLeft:{xl:'15%', md:'1%',xs:'5%'}, paddingRight:{xl:'15%',md:'1%', xs:'5%'}, paddingTop:'80px', paddingBottom:'80px' }} >
-                <Grid style={{textAlign:'center', padding:'8px'}} >
-                    <Typography variant="h1" color="initial" fontSize='34px'  sx={{
-                            color:'#fb7185',
-                            fontFamily: "Cormorant",
-                            fontOpticalSizing: "auto",
-                            fontWeight: "bold",
-                            fontStyle: "normal",
-                            fontSize:{md:'45px', xs:'25px'}
-                            }} pb={4}>
-                        Mas Vendidos
-                    </Typography>
-                    <Typography variant="subtitle1" color="initial" fontSize='17px'
-                        sx={{color:'black',
-                            fontFamily: "Cormorant",
-                            fontOpticalSizing: "auto",
-                            fontWeight: "<weight>",
-                            fontStyle: "normal",
-                            fontSize:{md:'20px'}}} pb={8}>
-                        Ver Todo →
-                    </Typography>
-                </Grid>
-
-                <Grid>
+            <Grid sx={{...stylesComponents.contenedorPadre, background:'#fbf8f4'}}>
+                <Grid sx={stylesComponents.contenedorHijo}>
+                    <Grid style={{textAlign:'center', padding:'8px'}} >
+                        <Typography variant="h1" color="initial" fontSize='34px'  sx={{
+                                color:'#fb7185',
+                                fontFamily: "Cormorant",
+                                fontOpticalSizing: "auto",
+                                fontWeight: "bold",
+                                fontStyle: "normal",
+                                fontSize:{md:'45px', xs:'25px'}
+                                }} pb={4}>
+                            Mas Vendidos
+                        </Typography>
+                        <Typography variant="subtitle1" color="initial" fontSize='17px'
+                            sx={{color:'black',
+                                fontFamily: "Cormorant",
+                                fontOpticalSizing: "auto",
+                                fontWeight: "<weight>",
+                                fontStyle: "normal",
+                                fontSize:{md:'20px'}}} pb={8}>
+                            Ver Todo →
+                        </Typography>
+                    </Grid>
                     <Grid container sx={stylesComponents.ContenedorProductos} >
                         {flores && flores.map((item) => (
-                            <Grid item xs={6} md={3}  sx={stylesComponents.contenedorProducto}>
+                            <Grid item xs={12} sm={6} md={3}  sx={stylesComponents.contenedorProducto}>
                                 <Box display={'flex'} style={{justifyContent:'center'}}>
                                     <Grid sx={stylesComponents.contenerdorImagenProducto} onClick={()=>handleRedirectToProductId(item.id)}>
                                         <img src={item.imagen} alt="" width={'100%'} height={'100%'} style={{ objectFit: 'cover', position:'relative', borderRadius:'7px'}} />
@@ -305,16 +281,9 @@ function Home(){
 
                             </Grid>
                         ))}
-
-                       
-
-
-
                     </Grid>
                 </Grid>
-
-            </Grid>
-            {/* <NotificacionSuccess message='este es nu mensaje nuevo'/> */}
+            </Grid>            
         </>
     )
 }

@@ -376,8 +376,8 @@ function ProductId(){
 
     return(
         <>
-            <Grid sx={{ paddingTop:10, paddingLeft:{xs:5, md:8, lg:10, xl:35}, paddingRight:{xs:5, md:8, lg:10, xl:35}, backgroundColor:'#f5f1ec'}}>
-                <Grid container>
+            <Grid sx={{...stylesComponents.contenedorPadre, background:'#f5f1ec', paddingTop:'4%'}}>
+                <Grid container sx={stylesComponents.contenedorHijo}>
                     <Grid item md={7} xs={12} sx={{justifyContent:'center'}}>
                         <Grid container>
                             {/* <Grid item xs={3} sx={{textAlign:'center', display:{xs:'none', md:'block'}}}>

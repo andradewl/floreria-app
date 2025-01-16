@@ -90,9 +90,11 @@ function NewContacto() {
             Contacto
           </Typography>
         </Grid>
-        <Grid item xs={12} md={8} lg={8} xl={8} sx={{ marginTop: "1px" }}>
-          <Paper elevation={3} sx={{ padding: 3 }}>
-            <Grid container spacing={2} sx={{ marginLeft: "2rem" }}>
+
+        
+        <Grid item xs={12} sx={{ marginTop: "1px"}}>
+          <Paper elevation={3} sx={{ padding: 3}}>
+            <Grid container spacing={3} sx={{ marginLeft: "2rem"}}>
               <Grid
                 item
                 container

@@ -1,4 +1,3 @@
-
 export const stylesComponents = {
 
     //------------------------------Barra de navegacion------------------------------//
@@ -124,8 +123,25 @@ export const stylesComponents = {
 
     BoxFooter:{
         backgroundColor: '#f5f1ec',
-        
         paddingTop:'35px'
+    },
+
+//------------------------------Contenedor Padre-hijo------------------------------//
+    contenedorPadre:{
+        width:"100%",
+        display: "flex",
+        justifyContent: "center",
+        
+    },
+
+    contenedorHijo:{
+        left: "50%",
+        width:{
+            xs:"85%",
+            lg:"1150px"
+        },
+        paddingTop:'30px', 
+        paddingBottom:'30px' 
     },
 
     //------------------------------titulos banner------------------------------//
@@ -177,18 +193,6 @@ export const stylesComponents = {
         width:'100%'
     },
     //------------------------------Contenedor ocasiones------------------------------//
-
-    // megaContenedorOcasiones:{
-    //     paddingLeft:{
-    //         xs:'10px',
-    //         md:'50px'
-    //     },
-    //     paddingRight:{
-    //         xs:'10px',
-    //         md:'50px'
-
-    //     }
-    // },
 
     contenedorOcasiones:{
         textAlign:'center',
@@ -253,19 +257,17 @@ export const stylesComponents = {
         paddingRight:1,
         paddingButtom:5,
         paddingTop:5,
-
+        
     },
     contenerdorImagenProducto:{
         width:'100%',
         height:{
-            xs:'200px',
+            xs:'300px',
             sm:'380px',
             md:'260px',
             lg:'350px',
             xl:'323px'
         },
-        // width:'100px',
-        // height:'100px',
         display:'flex',
         position: 'relative',
     },
