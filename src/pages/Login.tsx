@@ -51,7 +51,20 @@ export default function Login() {
   };
 
   const newUserEmail = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setEmailUser(e.target.value);
+    const regex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+    const email = e.target.value;
+
+    if (regex.test(email)) {
+      console.log("Expresion valida para:"+ email)
+      setNotiError(false)
+      //setInputValue(value);
+    }else{
+      //console.log("Expresion invalida para:"+ email)
+      setNotiError(true)
+      setMensajeNotificacion("Error, Revisa el formato de tu correo...")
+    }
+    
+    //setEmailUser(e.target.value);
   };
 
   const newUserPassword = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -88,11 +101,7 @@ export default function Login() {
         setTimeout(() => {
           setNotiError(false)
         }, 5000);
-        // return <Notificacionerror message="Ha ocurrido un error, intentelo de nuevo"/>
-        // console.error("Failed to LOGIN user:", error);
-        // setTimeout(() => {
-        // }, 5000);
-        // alert("Ha ocurrido un error, intentelo de nuevo");
+        
       });
     }, 3000);
   };
@@ -104,7 +113,7 @@ export default function Login() {
         sx={{ backgroundColor: "#f8f9fa", py: 3, marginTop: "4%" }}
       >
         <Grid container spacing={2} pt={2} pb={8}>
-        <Grid item xs={12} sx={{ textAlign: "center" }}>
+          <Grid item xs={12} sx={{ textAlign: "center" }}>
             <img src={logoFR} alt="Logo" height="100" />
           </Grid>
           <Grid item xs={12}>
