@@ -1,5 +1,5 @@
 import { Alert, AlertTitle, Snackbar } from "@mui/material";
-import { Notificacionprops } from "../interfaces/interfaces";
+import { Notificacionprops, PruebasProps } from "../interfaces/interfaces";
 
 export function NotificacionSuccess({ message }: Notificacionprops){
     return (
@@ -21,7 +21,6 @@ export function NotificacionSuccess({ message }: Notificacionprops){
     </>
     )
 }
-
 
 export function NotificacionInfo( {message }: Notificacionprops){
     return (
@@ -86,3 +85,29 @@ export function Notificacionerror({ message }: Notificacionprops){
     </>
     )
 }
+
+interface NuevaNotificacionPruebaProps {
+    datosPruebas: PruebasProps;
+}
+
+export const NuevaNotificacionPruebaProps: React.FC<NuevaNotificacionPruebaProps> = ({
+    datosPruebas,
+}) => {
+    return (
+        <>
+            <Snackbar open={true}>
+                <Alert
+                    variant="filled" severity={datosPruebas.TipoMensaje}
+                    sx={{
+                        position: "fixed",
+                        bottom: "50px",
+                        right: "50px",
+                    }}
+                >
+                    <AlertTitle>{datosPruebas.Mensaje}</AlertTitle>
+                    
+                </Alert>
+            </Snackbar>
+        </>
+    );
+};

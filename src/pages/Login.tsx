@@ -19,8 +19,7 @@ import { useNavigate } from "react-router-dom";
 import GoogleIcon from "../assets/icon/iconGoogleV2.svg";
 import logoFR from "../assets/logo.png"
 
-
-import { NotificacionSuccess, Notificacionerror, NotificacionInfo } from "../components/Alert";
+import { useSnackbar } from "notistack";
 
 
 
@@ -30,17 +29,13 @@ export default function Login() {
   const [emailUser, setEmailUser] = useState<string>("");
   const [passwordUser, setPasswordUser] = useState<string>("");
 
-  const [notiError, setNotiError] = useState(false);
-  const [notiSucces, setNotiSucces] = useState(false);
-  const [notiInfo, setNotiInfo] = useState(false);
-  const [mensajeNotificacion, setMensajeNotificacion] = useState("");
+  const {enqueueSnackbar} = useSnackbar()
 
-  React.useEffect(() => {
-    const storedUserName = sessionStorage.getItem("userlogIn");
-    if (storedUserName) {
-      navigate("/");
-    }
-  }, []);
+  const handleClick = (Mensaje:string, tipoMensje: 'error' | 'warning' | 'info' | 'success')=>{
+    enqueueSnackbar(Mensaje,{
+      variant:tipoMensje
+    })
+  }
 
   const handleClickShowPassword = () => setShowPassword((show) => !show);
 
@@ -55,39 +50,28 @@ export default function Login() {
     const email = e.target.value;
 
     if (regex.test(email)) {
-      console.log("Expresion valida para:"+ email)
-      setNotiError(false)
-      //setInputValue(value);
+      handleClick("Correo Valido", 'success')
     }else{
-      //console.log("Expresion invalida para:"+ email)
-      setNotiError(true)
-      setMensajeNotificacion("Error, Revisa el formato de tu correo...")
+      handleClick("Correo invalido...:", 'error')
     }
-    
-    //setEmailUser(e.target.value);
   };
 
   const newUserPassword = (e: React.ChangeEvent<HTMLInputElement>) => {
     setPasswordUser(e.target.value);
   };
 
-
   const loginGooogle = () =>{
     loginWithLogin()
   }
 
   const addNewUser = () => {
-    setMensajeNotificacion("Validando datos espere...")
-    setNotiInfo(true)
 
+    handleClick("Valido datos espere", 'info')
     setTimeout(() => {
-      setNotiInfo(false)
       login(emailUser, passwordUser)
       .then((result) => {
         result
-        setMensajeNotificacion("Login exitoso redireccionando...")
-        setNotiSucces(true)
-
+        handleClick("Login exitoso redireccionando...", 'success')
         setTimeout(() => {
           window.location.href = '/';
         }, 5000);
@@ -95,16 +79,13 @@ export default function Login() {
       })
       .catch((error) => {
         error;
-        setMensajeNotificacion("Ha ocurrio un error con su acceso, intente de nuevo")
-        setNotiError(true)
+        handleClick("Ha ocurrio un error con su acceso, intente de nuevo", 'error')
 
-        setTimeout(() => {
-          setNotiError(false)
-        }, 5000);
-        
       });
     }, 3000);
   };
+
+  
 
   return (
     <>
@@ -204,19 +185,8 @@ export default function Login() {
             </Stack>
           </Grid>
         </Grid>
+        
       </Container>
-
-      {notiError &&
-        <Notificacionerror message={mensajeNotificacion}/>
-      }
-
-      {notiSucces &&
-        <NotificacionSuccess message={mensajeNotificacion}/>
-      }
-
-      {notiInfo &&
-        <NotificacionInfo message={mensajeNotificacion}/>
-      }
     </>
   );
 }

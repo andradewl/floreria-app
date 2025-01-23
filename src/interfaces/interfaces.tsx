@@ -192,6 +192,12 @@ interface estatdosPedidos {
     // nombre:string;
 }
 
+interface pruebaProps  {
+    TipoMensaje: 'error' | 'warning' | 'info' | 'success';
+    Mensaje: string;
+};
+
+export type PruebasProps =pruebaProps
 export type Flower = FlowerWithOferta | FlowerWithoutOferta;
 export type CarritoDeCompra = carritoDeCompra;
 export type ProductoExtra = productoExtra;
