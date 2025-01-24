@@ -78,14 +78,12 @@ export default function Login() {
         // console.log(result);
       })
       .catch((error) => {
-        error;
+        console.log(error)
         handleClick("Ha ocurrio un error con su acceso, intente de nuevo", 'error')
 
       });
     }, 3000);
   };
-
-  
 
   return (
     <>

@@ -1,53 +1,53 @@
 import React, { useState } from "react";
-import {
-  Button,
-  Grid,
-  Stack,
-  Typography,
-  Container,
-  Box,
-  TextField,
-  IconButton,
-  InputAdornment,
+import {Button, Grid, Stack, Typography, Container, Box, TextField, IconButton, InputAdornment,
 } from "@mui/material";
 
 import { Visibility, VisibilityOff } from "@mui/icons-material";
-import { addUser } from "../config/apiFirebase";
 import { useNavigate } from "react-router-dom";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
-import { NotificacionSuccess, Notificacionerror } from "../components/Alert";
-
-
-
+import { useSnackbar } from "notistack";
 
 function SignIn() {
   const navigate = useNavigate();
-  const [nombreUser, setNombreUser] = useState<string>("");
-  const [apellidoUser, setApellidoUser] = useState<string>("");
-  const [emailUser, setEmailUser] = useState<string>("");
-  const [passwordUser, setPasswordUser] = useState<string>("");
+  const [nombreUser, setNombreUser] = useState("");
+  const [apellidoUser, setApellidoUser] = useState("");
+  const [emailUser, setEmailUser] = useState("");
+  const [passwordUser, setPasswordUser] = useState("");
+  const [comparePassword, setComparePassword] = useState("");
+
+  const [isNombreUser, setIsNombreUser] = useState(false);
+  const [isApellidoUser, setIsApellidoUser] = useState(false);
+  const [isEmailUser, setIsEmailUser] = useState(false);
+  const [isPasswordUser, setIsPasswordUser] = useState(false);
+  const [isComparePassword, setIsComparePassword] = useState(false);
+
   const [showPassword, setShowPassword] = useState(false);
+  const {enqueueSnackbar} = useSnackbar()
+  
 
+  const handleClick = (Mensaje:string, tipoMensje: 'error' | 'warning' | 'info' | 'success')=>{
+    enqueueSnackbar(Mensaje,{
+      variant:tipoMensje
+    })
+  }
 
-  const [notiError, setNotiError] = React.useState(false);
-  const [notiSucces, setNotiSucces] = React.useState(false);
-  // const [notiInfo, setNotiInfo] = useState(false);
-  const [mensajeNotificacion, setMensajeNotificacion] = React.useState("");
-
-  const newUserName = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setNombreUser(e.target.value);
+  const validateName_lastName= (name:string) => {
+    const regex = /^[a-zA-ZáéíóúÁÉÍÓÚñÑ\s ]+$/; // Permitir letras, acentos y espacios
+    return !regex.test(name)
   };
 
-  const newUserApellido = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setApellidoUser(e.target.value);
+  const validateEmail = (email:string) => {
+    const regex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+    return !regex.test(email)
   };
 
-  const newUserEmail = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setEmailUser(e.target.value);
-  };
-
-  const newUserPassword = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setPasswordUser(e.target.value);
+  const validatePassword = (pass: string): string[] => {
+    const errors: string[] = [];
+    if (!/(?=.*[A-Za-z])/.test(pass)) errors.push("Debe contener al menos una letra.");
+    if (!/(?=.*\d)/.test(pass)) errors.push("Debe contener al menos un número.");
+    if (!/(?=.*[$@$!%*?&])/.test(pass)) errors.push("Debe contener al menos un carácter especial.");
+    if (pass.length < 8) errors.push("Debe tener al menos 8 caracteres.");
+    return errors;
   };
 
   const handleClickShowPassword = () => setShowPassword((show) => !show);
@@ -58,30 +58,54 @@ function SignIn() {
     event.preventDefault();
   };
 
-  const addNewUser = () => {
-    addUser(nombreUser, apellidoUser, emailUser, passwordUser)
-      .then((result) => {
-        result
-        setMensajeNotificacion("Usuario Registrado con éxito, redireccionando a login...")
-        setNotiSucces(true)
-        // alert();
-        // console.log(result);
+  const validateComparePasword = (pass:string, comparePass:string) => {
+    return pass === comparePass;
+  }
+
+
+  const addNewUser = (e: { preventDefault: () => void; }) => {
+    e.preventDefault()
+
+    if(validateName_lastName(nombreUser)) {
+      handleClick("No se permiten caracteres especiales/Numeros en Nombre...:", 'error');
+    } else {
+      setIsNombreUser(true);
+    }
+
+    if(validateName_lastName(apellidoUser)){
+      handleClick("No se permiten caracteres especiales/Numeros en Apellido...:", 'error')
+    }else{
+      setIsApellidoUser(true);
+    }
+
+    if(validateEmail(emailUser)){
+      handleClick("Correo Invalido reviselo de nuevo...:", 'error')
+    }else{
+      setIsEmailUser(true);
+    }
+
+    const errors = validatePassword(passwordUser);
+    if (errors.length > 0) {
+      handleClick(`Errores: ${errors.join(" ")}`, "error");
+    } else {
+      if(!validateComparePasword(passwordUser, comparePassword)){
+        handleClick("Las contraseñas no coinciden...:", 'error')
+      }else{
+        setIsPasswordUser(true);
+      }
+    }
+
+    if(isNombreUser && isApellidoUser && isEmailUser && isPasswordUser){
+      handleClick("Valido datos espere", 'info')
+      setTimeout(() => {
+        handleClick("Usuario Registrado con éxito, redireccionando a login...", 'success')
         setTimeout(() => {
-          navigate("/Login"); // Assuming navigate is defined and used for routing
+          navigate("/Login"); 
         }, 3000);
-        
-      })
-      .catch((error) => {
-        error
-        setMensajeNotificacion("Ha ocurrido un error, intente de nuevo...")
-        setNotiError(true)
-        setTimeout(() => {
-          setNotiError(false)
-        }, 3000);
-        // console.error(error);
-        // alert("Ha ocurrido un error, intente de nuevo");
-      });
+      }, 3000);
+    }
   };
+
   const handleRegresar = () => {
     navigate("/login");
   };
@@ -93,9 +117,9 @@ function SignIn() {
         sx={{ backgroundColor: "#f8f9fa", py: 3, marginTop: "4%" }}
       >
         <Grid container spacing={2} pt={4} pb={5}>
-        <Button startIcon={<ArrowBackIcon />} onClick={handleRegresar}>
-              Iniciar Sesión.
-            </Button>
+          <Button startIcon={<ArrowBackIcon />} onClick={handleRegresar}>
+            Iniciar Sesión.
+          </Button>
           <Grid item xs={12}>
             <Typography
               variant="h4"
@@ -114,7 +138,7 @@ function SignIn() {
               fullWidth
               required
               value={nombreUser}
-              onChange={newUserName}
+              onChange={(e)=>setNombreUser(e.target.value)}
             />
           </Grid>
           <Grid item xs={12}>
@@ -124,7 +148,7 @@ function SignIn() {
               fullWidth
               required
               value={apellidoUser}
-              onChange={newUserApellido}
+              onChange={(e)=>setApellidoUser(e.target.value)}
             />
           </Grid>
           <Grid item xs={12}>
@@ -134,7 +158,8 @@ function SignIn() {
               fullWidth
               required
               value={emailUser}
-              onChange={newUserEmail}
+              onChange={(e)=>setEmailUser(e.target.value)}
+              
             />
           </Grid>
           <Grid item xs={12}>
@@ -145,7 +170,7 @@ function SignIn() {
               fullWidth
               required
               value={passwordUser}
-              onChange={newUserPassword}
+              onChange={(e)=>setPasswordUser(e.target.value)}
               InputProps={{
                 endAdornment: (
                   <InputAdornment position="end">
@@ -168,6 +193,8 @@ function SignIn() {
               variant="outlined"
               type={showPassword ? "text" : "password"}
               fullWidth
+              value={comparePassword}
+              onChange={(e)=>setComparePassword(e.target.value)}
               InputProps={{
                 endAdornment: (
                   <InputAdornment position="end">
@@ -201,17 +228,7 @@ function SignIn() {
           </Grid>
         </Grid>
       </Container>
-      {notiError &&
-        <Notificacionerror message={mensajeNotificacion}/>
-      }
-
-      {notiSucces &&
-        <NotificacionSuccess message={mensajeNotificacion}/>
-      }
-
-      {/* {notiInfo &&
-        <NotificacionInfo message={mensajeNotificacion}/>
-      } */}
+      
     </>
   );
 }
