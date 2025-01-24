@@ -3,12 +3,12 @@ import NavBar from "./components/NavBar"
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 
 
+
 import Home from "./pages/Home";
 import newContacto from "./pages/newContacto";
 import Nosotros from "./pages/Nosotros";
 import Productos from "./pages/Products/Productos";
 import Footer from "./components/Footer";
-// import Usuario from "./pages/User/Usuario"
 import EstatusEnvio from "./pages/User/EstatusEnvio"
 import Ubicaciones from "./pages/User/Ubicaciones"
 import FormUbicaciones from "./pages/User/FormUbicaciones";
@@ -19,9 +19,6 @@ import Login from "./pages/Login";
 import SignIn from "./pages/SignIn";
 import editDirecciones from "./pages/User/editDirecciones";
 import editDireccionFact from "./pages/User/editDireccionFact";
-
-
-// import ProductosExtra from "./pages/administrador/ProductosExtra";
 
 import shopProducts from "./pages/ShopProduct/shopProducts";
 import { PayPalScriptProvider } from "@paypal/react-paypal-js";
@@ -47,7 +44,6 @@ import FormNvoProducto from "./pages/administrador/formNvoProducto";
 import EditarProductoExtra from "./pages/administrador/EditarProductoExtra";
 
 function App() {
-
   const [loading, setLoading] = React.useState(true);
 
   const initialOptions = {
