@@ -19,7 +19,6 @@ function SignIn() {
   const [isApellidoUser, setIsApellidoUser] = useState(false);
   const [isEmailUser, setIsEmailUser] = useState(false);
   const [isPasswordUser, setIsPasswordUser] = useState(false);
-  const [isComparePassword, setIsComparePassword] = useState(false);
 
   const [showPassword, setShowPassword] = useState(false);
   const {enqueueSnackbar} = useSnackbar()

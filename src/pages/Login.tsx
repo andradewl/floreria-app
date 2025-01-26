@@ -15,7 +15,6 @@ import {
 import { Visibility, VisibilityOff } from "@mui/icons-material";
 import { Link } from "react-router-dom";
 import { login, loginWithLogin } from "../config/apiFirebase";
-import { useNavigate } from "react-router-dom";
 import GoogleIcon from "../assets/icon/iconGoogleV2.svg";
 import logoFR from "../assets/logo.png"
 
@@ -24,9 +23,8 @@ import { useSnackbar } from "notistack";
 
 
 export default function Login() {
-  const navigate = useNavigate();
   const [showPassword, setShowPassword] = useState(false);
-  const [emailUser, setEmailUser] = useState<string>("");
+  const [emailUser, ] = useState<string>("");
   const [passwordUser, setPasswordUser] = useState<string>("");
 
   const {enqueueSnackbar} = useSnackbar()

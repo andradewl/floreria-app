@@ -1,17 +1,11 @@
 /* eslint-disable react-refresh/only-export-components */
-import {  Box, Button, Grid, Paper, Typography } from "@mui/material";
-// import ArrowBackIcon from '@mui/icons-material/ArrowBack';
-// import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
+import {  Box, Button, Grid, Typography } from "@mui/material";
 import { stylesComponents } from "../styles/stylesComponentes"
 import '../styles/fuentes.css'
 import { getOcasiones, getProducts } from "../config/apiFirebase";
 import React from "react";
 import { Flower, Ocasionest } from "../interfaces/interfaces"
-// import { useNavigate } from 'react-router-dom';
 import BarraDeBusqueda from "../components/BarraDeBusqueda";
-// import videoBanner from '../assets/banners/videobanner2.gif'
-// import { NotificacionSuccess } from "../components/Alert";
-// import { Navigate } from 'react-router-dom';
 
 
 
@@ -28,13 +22,13 @@ function Home(){
 
 
 
-    const redireccionConRefresh = (nombre:string, id:string)=>{
-        const redireccion = "ocasion/"+nombre+"/"+id
+    //const redireccionConRefresh = (nombre:string, id:string)=>{
+        //const redireccion = "ocasion/"+nombre+"/"+id
         // history.push(redireccion);
 
         // this.props.history.push(redireccion)
-        window.location.href= redireccion
-    }
+       // window.location.href= redireccion
+    //}
 
 
     const fetchFlores = async () => {
