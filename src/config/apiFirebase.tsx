@@ -2,34 +2,31 @@ import { auth, db, provider} from './firfebase';
 import {collection, getDocs, getDoc, doc,  query, where, setDoc, addDoc, updateDoc  } from 'firebase/firestore';
 import { Flower, ProductoExtra, NuevoPedido, Tipoflores, Ocasionest, facturacionLogin, PrecioEnvio } from '../interfaces/interfaces';
 import { createUserWithEmailAndPassword, signInWithEmailAndPassword, signInWithPopup } from 'firebase/auth';
+import { BadRequest, CalledBD } from './errors';
 
 
-
-export const addUser = async (nombre: string, apellido: string, email: string, password: string) => {
+export const addUser = async (name: string, lastname: string, email: string, phone:string, password: string) => {
     const userQuery = query(collection(db, 'usuarios'), where('email', '==', email));
     const userSnapshot = await getDocs(userQuery);
 
     if (!userSnapshot.empty) {
-        throw new Error('¡Este correo electrónico ya está registrado!');
+        throw new CalledBD('¡Este correo electrónico ya está registrado!');
     }
 
-    return new Promise((resolve, reject) => {
-        createUserWithEmailAndPassword(auth, email, password)
-        .then(async (credential) => {
-            // console.log(credential);
-            const ref = doc(db, "usuarios", credential.user.uid);
-            await setDoc(ref, {
-                nombre: nombre,
-                apellido: apellido,
-                email: email,
-                tipoUsuario: 'comprador'
-            });
-            resolve(true); // User creation successful
-        })
-        .catch((err) => {
-            reject(err); // User creation failed
+    try {
+        const credential = await createUserWithEmailAndPassword(auth, email, password);
+        const ref = doc(db, "usuarios", credential.user.uid);
+        await setDoc(ref, {
+            name: name,
+            lastname: lastname,
+            email: email,
+            telefono: phone,
+            tipoUsuario: 'comprador'
         });
-    });
+        return true; // Devuelve true si todo es exitoso
+    } catch (e) {
+        throw new BadRequest('Hubo un error al registraste, inténtelo de nuevo o más tarde');
+    }
 };
 
 export const loginWithLogin = async()=>{
@@ -139,32 +136,26 @@ export const productoOcasionId = async(idOcasion:string): Promise<Flower[]>=>{
     return products;
 }
 
+
 export const login = async (email: string, password: string) => {
-
-    return new Promise((resolve, reject) => {
-        signInWithEmailAndPassword(auth, email, password)
-        .then(async (credential) => {
-            // console.log(credential);
-            const ref = doc(db, "usuarios", credential.user.uid);
-
-            const docSnap = await getDoc(ref)
-
-            if(docSnap.exists()){
-                    sessionStorage.setItem("userlogIn", JSON.stringify({
-                        id:credential.user.uid,
-                        name: docSnap.data().nombre,
-                        email:docSnap.data().email,
-                        tipoUsuario: docSnap.data().tipoUsuario
-                    }) )
-                    sessionStorage.setItem("credentials", JSON.stringify(credential.user))
-            }
-            // console.log(docSnap)
-            resolve(true);
-        })
-        .catch((err) => {
-            reject(err);
-        });
-    });
+    try{
+        const credential = signInWithEmailAndPassword(auth, email, password)
+        const ref = doc(db, "usuarios", (await credential).user.uid);
+        const docSnap = await getDoc(ref)
+        
+        if(docSnap.exists()){
+            sessionStorage.setItem("userlogIn", JSON.stringify({
+                id:(await credential).user.uid,
+                name: docSnap.data().nombre,
+                email:docSnap.data().email,
+                tipoUsuario: docSnap.data().tipoUsuario
+            }) )
+            sessionStorage.setItem("credentials", JSON.stringify((await credential).user))
+        }
+        return true
+    }catch(e){
+        throw new BadRequest('Error en las crenciales');
+    }
 };
 
 export const getProducts = async (): Promise<Flower[]> => {

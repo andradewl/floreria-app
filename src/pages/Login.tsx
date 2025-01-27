@@ -1,39 +1,25 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import React, { useState } from "react";
-import {
-  Button,
-  Grid,
-  Stack,
-  TextField,
-  Typography,
-  Container,
-  Box,
-  IconButton,
-  InputAdornment,
-  Divider,
-} from "@mui/material";
+import { Button, Grid, Stack, TextField, Typography, Container, Box,IconButton, InputAdornment, Divider } from "@mui/material";
 import { Visibility, VisibilityOff } from "@mui/icons-material";
 import { Link } from "react-router-dom";
 import { login, loginWithLogin } from "../config/apiFirebase";
 import GoogleIcon from "../assets/icon/iconGoogleV2.svg";
 import logoFR from "../assets/logo.png"
-
 import { useSnackbar } from "notistack";
-
+import { handleClickNotificacion } from "../components/Alert";
+import { BadRequest, CalledBD } from "../config/errors";
 
 
 export default function Login() {
   const [showPassword, setShowPassword] = useState(false);
-  const [emailUser, ] = useState<string>("");
-  const [passwordUser, setPasswordUser] = useState<string>("");
+  const [emailUser, setEmailUser] = useState(String);
+  const [passwordUser, setPasswordUser] = useState(String);
 
-  const {enqueueSnackbar} = useSnackbar()
-
-  const handleClick = (Mensaje:string, tipoMensje: 'error' | 'warning' | 'info' | 'success')=>{
-    enqueueSnackbar(Mensaje,{
-      variant:tipoMensje
-    })
-  }
+  const validateEmail = (email:string) => {
+    const regex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+    return !regex.test(email)
+  };
 
   const handleClickShowPassword = () => setShowPassword((show) => !show);
 
@@ -43,7 +29,7 @@ export default function Login() {
     event.preventDefault();
   };
 
-  const newUserEmail = (e: React.ChangeEvent<HTMLInputElement>) => {
+  /*const newUserEmail = (e: React.ChangeEvent<HTMLInputElement>) => {
     const regex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
     const email = e.target.value;
 
@@ -56,31 +42,63 @@ export default function Login() {
 
   const newUserPassword = (e: React.ChangeEvent<HTMLInputElement>) => {
     setPasswordUser(e.target.value);
-  };
+  };*/
 
   const loginGooogle = () =>{
     loginWithLogin()
   }
+1
+  const addNewUser = (e: { preventDefault: () => void; }) => {
+    e.preventDefault()
+    
+    if(emailUser && passwordUser){
 
-  const addNewUser = () => {
+      if(validateEmail(emailUser)){
+        return handleClickNotificacion("Correo invalido vuelva a intentarlo...:", 'error')
+      }
+      
 
-    handleClick("Valido datos espere", 'info')
-    setTimeout(() => {
-      login(emailUser, passwordUser)
-      .then((result) => {
-        result
-        handleClick("Login exitoso redireccionando...", 'success')
-        setTimeout(() => {
-          window.location.href = '/';
-        }, 5000);
-        // console.log(result);
-      })
-      .catch((error) => {
-        console.log(error)
-        handleClick("Ha ocurrio un error con su acceso, intente de nuevo", 'error')
+      setTimeout(async () => {
 
-      });
-    }, 3000);
+        try {
+          const isLogin = await login(emailUser, passwordUser);
+      
+          if (isLogin) {
+              handleClickNotificacion('Login exitoso, redireccionando...', 'success');
+              setTimeout(() => {
+                  window.location.href = '/';
+              }, 3000);
+          }
+      } catch (error) {
+          if (error instanceof CalledBD) {
+              handleClickNotificacion(error.message, 'error');
+          } 
+          
+          if (error instanceof BadRequest) {
+              handleClickNotificacion(error.message, 'error');
+          } 
+      }
+      
+        
+        /*login(emailUser, passwordUser)
+        .then((result) => {
+          result
+          handleClickNotificacion("Login exitoso redireccionando...", 'success')
+          setTimeout(() => {
+            window.location.href = '/';
+          }, 5000);
+        })
+        .catch((error) => {
+          error
+          handleClickNotificacion(error.message, 'error')
+
+        });*/
+      }, 3000);
+      }else{
+        handleClickNotificacion("Llene Todos los campos...:", 'error')
+      }
+    
+    
   };
 
   return (
@@ -132,7 +150,8 @@ export default function Login() {
               label="Correo electrónico"
               variant="outlined"
               fullWidth
-              onChange={newUserEmail}
+              value={emailUser}
+              onChange={(e)=>setEmailUser(e.target.value)}
             />
           </Grid>
           <Grid item xs={12}>
@@ -141,7 +160,8 @@ export default function Login() {
               variant="outlined"
               type={showPassword ? "text" : "password"}
               fullWidth
-              onChange={newUserPassword}
+              value={passwordUser}
+              onChange={(e)=>setPasswordUser(e.target.value)}
               InputProps={{
                 endAdornment: (
                   <InputAdornment position="end">
@@ -174,7 +194,6 @@ export default function Login() {
               </Button>
             </Box>
           </Grid>
-
           <Grid item xs={12}>
             <Stack direction="column" spacing={2} alignItems="center">
               <Link to="/SignIn">Crear cuenta</Link>

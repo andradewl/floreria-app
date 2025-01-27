@@ -1,37 +1,26 @@
 import React, { useState } from "react";
-import {Button, Grid, Stack, Typography, Container, Box, TextField, IconButton, InputAdornment,
-} from "@mui/material";
-
+import {Button, Grid, Stack, Typography, Container, Box, TextField, IconButton, InputAdornment } from "@mui/material";
 import { Visibility, VisibilityOff } from "@mui/icons-material";
 import { useNavigate } from "react-router-dom";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
-import { useSnackbar } from "notistack";
+
+import { handleClickNotificacion } from "../components/Alert";
+import { addUser } from "../config/apiFirebase";
+import { CalledBD } from "../config/errors";
 
 function SignIn() {
   const navigate = useNavigate();
-  const [nombreUser, setNombreUser] = useState("");
-  const [apellidoUser, setApellidoUser] = useState("");
-  const [emailUser, setEmailUser] = useState("");
-  const [passwordUser, setPasswordUser] = useState("");
-  const [comparePassword, setComparePassword] = useState("");
-
-  const [isNombreUser, setIsNombreUser] = useState(false);
-  const [isApellidoUser, setIsApellidoUser] = useState(false);
-  const [isEmailUser, setIsEmailUser] = useState(false);
-  const [isPasswordUser, setIsPasswordUser] = useState(false);
-
+  const [nombreUser, setNombreUser] = useState(String);
+  const [apellidoUser, setApellidoUser] = useState(String);
+  const [emailUser, setEmailUser] = useState(String);
+  const [phoneUser, setPhoneUser] = useState(String);
+  const [passwordUser, setPasswordUser] = useState(String);
+  const [comparePassword, setComparePassword] = useState(String);
   const [showPassword, setShowPassword] = useState(false);
-  const {enqueueSnackbar} = useSnackbar()
-  
 
-  const handleClick = (Mensaje:string, tipoMensje: 'error' | 'warning' | 'info' | 'success')=>{
-    enqueueSnackbar(Mensaje,{
-      variant:tipoMensje
-    })
-  }
 
   const validateName_lastName= (name:string) => {
-    const regex = /^[a-zA-ZáéíóúÁÉÍÓÚñÑ\s ]+$/; // Permitir letras, acentos y espacios
+    const regex = /^[a-zA-ZáéíóúÁÉÍÓÚñÑ\s ]+$/; 
     return !regex.test(name)
   };
 
@@ -40,20 +29,23 @@ function SignIn() {
     return !regex.test(email)
   };
 
-  const validatePassword = (pass: string): string[] => {
+  const validatePhone = (phone:string) => {
+    const regex = /^\+52\d{10}$/; 
+    return !regex.test(phone)
+  };
+
+  const validatePassword = (pass: string): string[] => {   
     const errors: string[] = [];
-    if (!/(?=.*[A-Za-z])/.test(pass)) errors.push("Debe contener al menos una letra.");
-    if (!/(?=.*\d)/.test(pass)) errors.push("Debe contener al menos un número.");
-    if (!/(?=.*[$@$!%*?&])/.test(pass)) errors.push("Debe contener al menos un carácter especial.");
-    if (pass.length < 8) errors.push("Debe tener al menos 8 caracteres.");
+    if (!/(?=.*[A-Za-z])/.test(pass)) errors.push("La Contraseña debe contener al menos una letra.");
+    if (!/(?=.*\d)/.test(pass)) errors.push("La Contraseña debe contener al menos un número.");
+    if (!/(?=.*[$@$!%*?&-_])/.test(pass)) errors.push("La Contraseña debe contener al menos un carácter especial.");
+    if (pass.length < 8) errors.push("La Contraseña debe tener al menos 8 caracteres.");
     return errors;
   };
 
   const handleClickShowPassword = () => setShowPassword((show) => !show);
 
-  const handleMouseDownPassword = (
-    event: React.MouseEvent<HTMLButtonElement>
-  ) => {
+  const handleMouseDownPassword = (event: React.MouseEvent<HTMLButtonElement>) => {
     event.preventDefault();
   };
 
@@ -61,48 +53,61 @@ function SignIn() {
     return pass === comparePass;
   }
 
-
   const addNewUser = (e: { preventDefault: () => void; }) => {
     e.preventDefault()
 
-    if(validateName_lastName(nombreUser)) {
-      handleClick("No se permiten caracteres especiales/Numeros en Nombre...:", 'error');
-    } else {
-      setIsNombreUser(true);
-    }
-
-    if(validateName_lastName(apellidoUser)){
-      handleClick("No se permiten caracteres especiales/Numeros en Apellido...:", 'error')
-    }else{
-      setIsApellidoUser(true);
-    }
-
-    if(validateEmail(emailUser)){
-      handleClick("Correo Invalido reviselo de nuevo...:", 'error')
-    }else{
-      setIsEmailUser(true);
-    }
-
-    const errors = validatePassword(passwordUser);
-    if (errors.length > 0) {
-      handleClick(`Errores: ${errors.join(" ")}`, "error");
-    } else {
-      if(!validateComparePasword(passwordUser, comparePassword)){
-        handleClick("Las contraseñas no coinciden...:", 'error')
-      }else{
-        setIsPasswordUser(true);
+    if(nombreUser && apellidoUser && emailUser && passwordUser){
+      
+      if(validateName_lastName(nombreUser)) {
+        return handleClickNotificacion("No se permiten caracteres especiales/Numeros en Nombre...:", 'error');
+      } 
+  
+      if(validateName_lastName(apellidoUser)){
+        return handleClickNotificacion("No se permiten caracteres especiales/Numeros en Apellido...:", 'error')
       }
+  
+      if(validateEmail(emailUser)){
+        return handleClickNotificacion("Correo Invalido reviselo de nuevo...:", 'error')
+      }
+      if(validatePhone(phoneUser)){
+        return handleClickNotificacion("Solo Telefonos de Mexico, ingrese prefigo +52", 'error')
+      }
+  
+      const errors = validatePassword(passwordUser);
+      if (errors.length > 0) {
+        return handleClickNotificacion(`Error: ${errors.join(" ")}`, "error");
+      } 
+
+      if(!validateComparePasword(passwordUser, comparePassword)){
+        return handleClickNotificacion("Las contraseñas no coinciden...:", 'error')
+      }
+  
+      handleClickNotificacion("Valido datos espere", 'info')
+
+        setTimeout(async () => {
+
+          try{
+            const result = await addUser(nombreUser, apellidoUser, emailUser, phoneUser ,passwordUser)
+
+            if (result) {
+              handleClickNotificacion('Usuario registrado con éxito, redireccionando a login...', 'success');
+              setTimeout(() => {
+                window.location.href = '/';
+              }, 3000);
+            }
+
+          }catch(e){
+            if(e instanceof CalledBD){
+              handleClickNotificacion(e.message, 'error')
+            }
+          }
+        }, 3000);
+      
+    }else{
+      handleClickNotificacion("Llene Todos los campos...:", 'error')
     }
 
-    if(isNombreUser && isApellidoUser && isEmailUser && isPasswordUser){
-      handleClick("Valido datos espere", 'info')
-      setTimeout(() => {
-        handleClick("Usuario Registrado con éxito, redireccionando a login...", 'success')
-        setTimeout(() => {
-          navigate("/Login"); 
-        }, 3000);
-      }, 3000);
-    }
+    
   };
 
   const handleRegresar = () => {
@@ -159,6 +164,17 @@ function SignIn() {
               value={emailUser}
               onChange={(e)=>setEmailUser(e.target.value)}
               
+            />
+          </Grid>
+          <Grid item xs={12}>
+            <TextField
+              label="Telefono"
+              variant="outlined"
+              placeholder="+52"
+              fullWidth
+              required
+              value={phoneUser}
+              onChange={(e)=>setPhoneUser(e.target.value)}              
             />
           </Grid>
           <Grid item xs={12}>
