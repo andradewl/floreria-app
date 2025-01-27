@@ -6,7 +6,6 @@ import { Link } from "react-router-dom";
 import { login, loginWithLogin } from "../config/apiFirebase";
 import GoogleIcon from "../assets/icon/iconGoogleV2.svg";
 import logoFR from "../assets/logo.png"
-import { useSnackbar } from "notistack";
 import { handleClickNotificacion } from "../components/Alert";
 import { BadRequest, CalledBD } from "../config/errors";
 
