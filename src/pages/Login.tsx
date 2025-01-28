@@ -47,7 +47,7 @@ export default function Login() {
     loginWithLogin()
   }
 1
-  const addNewUser = (e: { preventDefault: () => void; }) => {
+  const addNewUser = async (e: { preventDefault: () => void; }) => {
     e.preventDefault()
     
     if(emailUser && passwordUser){
@@ -57,8 +57,7 @@ export default function Login() {
       }
       
 
-      setTimeout(async () => {
-
+   
         try {
           const isLogin = await login(emailUser, passwordUser);
       
@@ -77,22 +76,6 @@ export default function Login() {
               handleClickNotificacion(error.message, 'error');
           } 
       }
-      
-        
-        /*login(emailUser, passwordUser)
-        .then((result) => {
-          result
-          handleClickNotificacion("Login exitoso redireccionando...", 'success')
-          setTimeout(() => {
-            window.location.href = '/';
-          }, 5000);
-        })
-        .catch((error) => {
-          error
-          handleClickNotificacion(error.message, 'error')
-
-        });*/
-      }, 3000);
       }else{
         handleClickNotificacion("Llene Todos los campos...:", 'error')
       }

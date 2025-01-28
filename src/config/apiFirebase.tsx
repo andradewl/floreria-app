@@ -146,7 +146,7 @@ export const login = async (email: string, password: string) => {
         if(docSnap.exists()){
             sessionStorage.setItem("userlogIn", JSON.stringify({
                 id:(await credential).user.uid,
-                name: docSnap.data().nombre,
+                name: docSnap.data().name,
                 email:docSnap.data().email,
                 tipoUsuario: docSnap.data().tipoUsuario
             }) )
