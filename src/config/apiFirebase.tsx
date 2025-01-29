@@ -29,6 +29,7 @@ export const addUser = async (name: string, lastname: string, email: string, pho
     }
 };
 
+
 export const loginWithLogin = async()=>{
     try {
         const result = await signInWithPopup(auth, provider);
@@ -54,7 +55,7 @@ export const loginWithLogin = async()=>{
             if(docSnap.exists()){
                     sessionStorage.setItem("userlogIn", JSON.stringify({
                         id:result.user.uid,
-                        name: docSnap.data().nombre,
+                        name: docSnap.data().name,
                         email:docSnap.data().email,
                         tipoUsuario: docSnap.data().tipoUsuario
                     }) )
@@ -79,8 +80,8 @@ export const loginWithLogin = async()=>{
             window.location.href = '/';
         }
 
-    } catch (error) {
-        console.error("Error al iniciar sesión con Google: ", error);
+    } catch (e) {
+        throw new BadRequest('Error en el Login, intentelo de nuevo');
     }
 }
 
