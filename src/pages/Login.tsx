@@ -3,7 +3,7 @@ import React, { useState } from "react";
 import { Button, Grid, Stack, TextField, Typography, Container, Box,IconButton, InputAdornment, Divider } from "@mui/material";
 import { Visibility, VisibilityOff } from "@mui/icons-material";
 import { Link } from "react-router-dom";
-import { login, loginWithLogin } from "../config/apiFirebase";
+import { login, loginWithGoogle } from "../config/apiFirebase";
 import GoogleIcon from "../assets/icon/iconGoogleV2.svg";
 import logoFR from "../assets/logo.png"
 import { handleClickNotificacion } from "../components/Alert";
@@ -44,7 +44,16 @@ export default function Login() {
   };*/
 
   const loginGooogle = () =>{
-    loginWithLogin()
+    try{
+      loginWithGoogle()
+    }catch(e){
+      if (e instanceof CalledBD) {
+        handleClickNotificacion(e.message, 'error');
+      }
+      if (e instanceof BadRequest) {
+        handleClickNotificacion(e.message, 'error');
+      } 
+    }
   }
 1
   const addNewUser = async (e: { preventDefault: () => void; }) => {
@@ -56,30 +65,28 @@ export default function Login() {
         return handleClickNotificacion("Correo invalido vuelva a intentarlo...:", 'error')
       }
       
-
-   
-        try {
-          const isLogin = await login(emailUser, passwordUser);
+      try {
+        const isLogin = await login(emailUser, passwordUser);
       
-          if (isLogin) {
-              handleClickNotificacion('Login exitoso, redireccionando...', 'success');
-              setTimeout(() => {
-                  window.location.href = '/';
-              }, 3000);
-          }
+        if (isLogin) {
+          handleClickNotificacion('Login exitoso, redireccionando...', 'success');
+          setTimeout(() => {
+            window.location.href = '/';
+          }, 3000);
+        }
+        
       } catch (error) {
-          if (error instanceof CalledBD) {
-              handleClickNotificacion(error.message, 'error');
-          } 
-          
-          if (error instanceof BadRequest) {
-              handleClickNotificacion(error.message, 'error');
-          } 
+        if (error instanceof CalledBD) {
+          handleClickNotificacion(error.message, 'error');
+        }           
+        if (error instanceof BadRequest) {
+          handleClickNotificacion(error.message, 'error');
+        } 
       }
-      }else{
-        handleClickNotificacion("Llene Todos los campos...:", 'error')
-      }
-    
+
+    }else{
+      handleClickNotificacion("Llene Todos los campos...:", 'error')
+    }
     
   };
 

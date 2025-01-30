@@ -5,32 +5,43 @@ import { createUserWithEmailAndPassword, signInWithEmailAndPassword, signInWithP
 import { BadRequest, CalledBD } from './errors';
 
 
-export const addUser = async (name: string, lastname: string, email: string, phone:string, password: string) => {
-    const userQuery = query(collection(db, 'usuarios'), where('email', '==', email));
-    const userSnapshot = await getDocs(userQuery);
-
-    if (!userSnapshot.empty) {
-        throw new CalledBD('¡Este correo electrónico ya está registrado!');
+export const addUser = async (name: string, lastname: string, email: string, phone: string, password: string) => {
+    if (!name || !lastname || !email || !phone || !password) {
+        throw new BadRequest('Todos los campos son obligatorios');
     }
 
     try {
+        const userQuery = query(collection(db, 'usuarios'), where('email', '==', email));
+        const userSnapshot = await getDocs(userQuery);
+
+        if (!userSnapshot.empty) {
+            throw new CalledBD('¡Este correo electrónico ya está registrado!');
+        }
+
         const credential = await createUserWithEmailAndPassword(auth, email, password);
-        const ref = doc(db, "usuarios", credential.user.uid);
-        await setDoc(ref, {
-            name: name,
-            lastname: lastname,
-            email: email,
-            telefono: phone,
+        const userRef = doc(db, "usuarios", credential.user.uid);
+
+        await setDoc(userRef, {
+            name,
+            lastname,
+            email,
+            phone,
             tipoUsuario: 'comprador'
         });
-        return true; // Devuelve true si todo es exitoso
-    } catch (e) {
-        throw new BadRequest('Hubo un error al registraste, inténtelo de nuevo o más tarde');
+
+        return true; 
+    } catch (e: any) {
+        if (e.code === 'auth/email-already-in-use') {
+            throw new CalledBD('El correo ya está en uso');
+        } else if (e.code === 'auth/weak-password') {
+            throw new BadRequest('La contraseña es demasiado débil');
+        }
+        throw new BadRequest('Hubo un error al registrarse, inténtelo más tarde');
     }
 };
 
 
-export const loginWithLogin = async()=>{
+export const loginWithGoogle2 = async()=>{
     try {
         const result = await signInWithPopup(auth, provider);
         const nameUser = result.user.displayName;
@@ -41,7 +52,6 @@ export const loginWithLogin = async()=>{
 
         if (userSnapshot.empty) {
             await setDoc(doc(db, "usuarios", result.user.uid), {
-                // uid: result.user.uid,
                 nombre: nameUser,
                 apellido:'',
                 email: emailUser,
@@ -49,7 +59,6 @@ export const loginWithLogin = async()=>{
             });
 
             const ref = doc(db, "usuarios", result.user.uid);
-
             const docSnap = await getDoc(ref)
 
             if(docSnap.exists()){
@@ -65,7 +74,6 @@ export const loginWithLogin = async()=>{
 
         }else{
             const ref = doc(db, "usuarios", result.user.uid);
-
             const docSnap = await getDoc(ref)
 
             if(docSnap.exists()){
@@ -85,6 +93,45 @@ export const loginWithLogin = async()=>{
     }
 }
 
+export const loginWithGoogle = async () => {
+    try {
+        const result = await signInWithPopup(auth, provider);
+        const { displayName: nameUser, email: emailUser, uid } = result.user;
+
+        const userQuery = query(collection(db, 'usuarios'), where('email', '==', emailUser));
+        const userSnapshot = await getDocs(userQuery);
+
+        if (userSnapshot.empty) {
+            await setDoc(doc(db, "usuarios", uid), {
+                nombre: nameUser,
+                apellido: '',
+                email: emailUser,
+                tipoUsuario: "comprador"
+            });
+        }
+
+        const userDocRef = doc(db, "usuarios", uid);
+        const userDocSnap = await getDoc(userDocRef);
+
+        if (userDocSnap.exists()) {
+            const userData = userDocSnap.data();
+            sessionStorage.setItem("userlogIn", JSON.stringify({
+                id: uid,
+                name: userData.nombre,
+                email: userData.email,
+                tipoUsuario: userData.tipoUsuario
+            }));
+            sessionStorage.setItem("credentials", JSON.stringify(result.user));
+        }
+
+        window.location.href = '/';
+
+    } catch (e) {
+        //console.error('Error en el Login:', error);
+        throw new BadRequest('Hubo un error al registraste, inténtelo de nuevo o más tarde');
+
+    }
+};
 
 export const apartarProducto = async (idProducto: string, cantidad: number) => {
 
@@ -155,7 +202,7 @@ export const login = async (email: string, password: string) => {
         }
         return true
     }catch(e){
-        throw new BadRequest('Error en las crenciales');
+        throw new BadRequest('Error en las crenciales, intentelo de nuevo');
     }
 };
 

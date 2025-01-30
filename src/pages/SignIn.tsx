@@ -6,7 +6,7 @@ import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 
 import { handleClickNotificacion } from "../components/Alert";
 import { addUser } from "../config/apiFirebase";
-import { CalledBD } from "../config/errors";
+import { BadRequest, CalledBD } from "../config/errors";
 
 function SignIn() {
   const navigate = useNavigate();
@@ -17,6 +17,9 @@ function SignIn() {
   const [passwordUser, setPasswordUser] = useState(String);
   const [comparePassword, setComparePassword] = useState(String);
   const [showPassword, setShowPassword] = useState(false);
+
+  const delay = (ms: number) => new Promise(resolve => setTimeout(resolve, ms));
+
 
 
   const validateName_lastName= (name:string) => {
@@ -53,7 +56,7 @@ function SignIn() {
     return pass === comparePass;
   }
 
-  const addNewUser = (e: { preventDefault: () => void; }) => {
+  const addNewUser = async (e: { preventDefault: () => void; }) => {
     e.preventDefault()
 
     if(nombreUser && apellidoUser && emailUser && passwordUser){
@@ -61,14 +64,15 @@ function SignIn() {
       if(validateName_lastName(nombreUser)) {
         return handleClickNotificacion("No se permiten caracteres especiales/Numeros en Nombre...:", 'error');
       } 
-  
+
       if(validateName_lastName(apellidoUser)){
         return handleClickNotificacion("No se permiten caracteres especiales/Numeros en Apellido...:", 'error')
       }
-  
+
       if(validateEmail(emailUser)){
         return handleClickNotificacion("Correo Invalido reviselo de nuevo...:", 'error')
       }
+
       if(validatePhone(phoneUser)){
         return handleClickNotificacion("Solo Telefonos de Mexico, ingrese prefigo +52", 'error')
       }
@@ -81,27 +85,30 @@ function SignIn() {
       if(!validateComparePasword(passwordUser, comparePassword)){
         return handleClickNotificacion("Las contraseñas no coinciden...:", 'error')
       }
-  
-      handleClickNotificacion("Valido datos espere", 'info')
 
-        setTimeout(async () => {
-
-          try{
-            const result = await addUser(nombreUser, apellidoUser, emailUser, phoneUser ,passwordUser)
-
-            if (result) {
-              handleClickNotificacion('Usuario registrado con éxito, redireccionando a login...', 'success');
+      handleClickNotificacion("Validando datos, por favor espere...", 'info');
+      console.log(nombreUser, apellidoUser, emailUser, phoneUser, passwordUser);
+      
+      await delay(1500);
+      
+      try {
+          const result = await addUser(nombreUser, apellidoUser, emailUser, phoneUser, passwordUser);
+          
+          if (result) {
+              handleClickNotificacion('Usuario registrado con éxito, redireccionando...', 'success');
               setTimeout(() => {
-                window.location.href = '/';
-              }, 3000);
-            }
-
-          }catch(e){
-            if(e instanceof CalledBD){
-              handleClickNotificacion(e.message, 'error')
-            }
+                  window.location.href = '/';
+              }, 2000);
           }
-        }, 3000);
+      } catch (e) {
+          if (e instanceof CalledBD || e instanceof BadRequest) {
+              handleClickNotificacion(e.message, 'error');
+          } else {
+              handleClickNotificacion('Error desconocido, inténtelo de nuevo', 'error');
+          }
+      } finally {
+          console.log("Finalizando registro...");
+      }
       
     }else{
       handleClickNotificacion("Llene Todos los campos...:", 'error')
