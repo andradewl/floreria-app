@@ -50,14 +50,11 @@ function Home(){
 
     return(
         <>
-            <Grid sx={{width:'100%', height:{xs:'300px', sm:'600px',md:'500px', lg:'600px', xl:'750px'}, position: 'relative'}}>
-                <Grid sx={{width:'100%', height: '100%', position:'relative', zIndex:1}} >
-                    
-                    <img src="https://firebasestorage.googleapis.com/v0/b/prowlflores.appspot.com/o/multimedia%2Fimagenes%2FFondos%2FCaptura%20de%20pantalla%202024-05-09%20121118.png?alt=media&token=5b4c51d7-b60f-4f9a-9504-31cb33650362" style={{width:'100%', height:'100%', objectFit:'cover', objectPosition:'left'}} alt="" />
-                    
-                </Grid>
-                <Grid sx={{position: 'absolute',top: 0, left: 0, bottom:0 ,width: '100%', height: '100%', backgroundColor: '#0000004d', zIndex: 2}}>
-                    <Grid sx={{ paddingLeft:"2%", paddingTop:{xs: "20%", sm:"12%",md:"13%"} }}>
+           
+
+            <Grid sx={{height:'100%', backgroundSize:'cover', backgroundImage:"url('https://firebasestorage.googleapis.com/v0/b/prowlflores.appspot.com/o/multimedia%2Fimagenes%2FFondos%2FCaptura%20de%20pantalla%202024-05-09%20121118.png?alt=media&token=5b4c51d7-b60f-4f9a-9504-31cb33650362')"}}>
+                <Grid sx={{...stylesComponents.contenedorPadre, background:'#ffb3e2b3', paddingBottom:'1%', paddingTop:'1%', backgroundColor:"#37373747"}}>
+                    <Grid sx={{...stylesComponents.contenedorHijo, paddingBottom:'5%', paddingTop:{xs:'40%', md:'20%', lg:'15%'}}}>
                         <Typography variant="h1" color="initial" sx={{
                             color:'white',
                             fontFamily: "Cormorant",
@@ -78,7 +75,7 @@ function Home(){
                         sx={{
                             background:'white',
                             color:'black',
-                            fontSize:{xs: '12px',md:'17px'},
+                            fontSize:{xs: '8px', md:'17px'},
                             padding:'17px',
                             paddingLeft:'40px',
                             paddingRight:'40px',
@@ -96,7 +93,7 @@ function Home(){
             </Grid>
 
             <Grid sx={{...stylesComponents.contenedorPadre, background:'#fbf8f4'}}>
-                <Grid sx={stylesComponents.contenedorHijo}>
+                <Grid sx={{...stylesComponents.contenedorHijo, paddingTop:'30px', paddingBottom:'30px'} }>
                     <Typography variant="h1" color="initial"
                         sx={{
                             color:'#fb7185',
@@ -121,7 +118,7 @@ function Home(){
             </Grid>
 
             <Grid sx={{...stylesComponents.contenedorPadre, background:'#fbf8f4'}}>
-                <Grid sx={stylesComponents.contenedorHijo}>
+                <Grid sx={{...stylesComponents.contenedorHijo, paddingTop:'30px', paddingBottom:'30px'}}>
                     <Grid style={{textAlign:'center', padding:'8px'}} >
                         <Typography variant="h1" color="initial" fontSize='34px'  sx={{
                                 color:'#fb7185',
@@ -143,6 +140,8 @@ function Home(){
                             Ver Todo →
                         </Typography>
                     </Grid>
+
+                    
                     <Grid container sx={stylesComponents.ContenedorProductos} >
                         {flores && flores.map((item) => (
                             <Grid item xs={12} sm={6} md={3}  sx={stylesComponents.contenedorProducto}>

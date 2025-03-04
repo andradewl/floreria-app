@@ -1,224 +1,225 @@
 export const stylesComponents = {
 
     //------------------------------Barra de navegacion------------------------------//
-    appBar:{
-        position:"sticky",
-        width:'100%',
-        background:"#none",
-        height:'0px'
+    appBar: {
+        position: "sticky",
+        width: '100%',
+        background: "#none",
+        height: '0px'
     },
-    appBarScrolled:{
-        color:'black',
-        width:'100%',
+    appBarScrolled: {
+        color: 'black',
+        width: '100%',
         background: "rgba(255, 255, 255, 0.95)",
         boxShadow: "0 4px 30px rgba(0, 0, 0, 0.1)",
         backdropFilter: "blur(11.7px)",
         webkitBackdropFilter: "blur(11.7px)",
-        
     },
-    appSubBar:{
-        position:"sticky",
-        display:'flex', padding:'5px', paddingLeft:'5%', paddingRight:'5%', backgroundImage:'linear-gradient(to right, #ff646461 0%, #bb6e6e52 51%, #d62d9263 100%)'
+    appSubBar: {
+        position: "sticky",
+        display: 'flex',
+        padding: '5px',
+        paddingLeft: '5%', 
+        paddingRight: '5%', 
+        backgroundImage: 'linear-gradient(to right, #ff646461 0%, #bb6e6e52 51%, #d62d9263 100%)'
     },
-    toolbar:{
-        display:'flex',
+    toolbar: {
+        display: 'flex',
         justifyContent: 'space-around',
     },
-    boxMenuResponsive:{
+    boxMenuResponsive: {
         display: {
             xs: 'flex',
             md: 'none'
         }
     },
-    MenuResponsive:{
+    MenuResponsive: {
         display: {
             xs: 'block',
             md: 'none'
         }
 
     },
-    boxMenuDesk:{
+    boxMenuDesk: {
         display: {
             xs: 'none',
             md: 'flex'
         }
     },
-    navigationButton:{
+    navigationButton: {
         m: 2,
         color: '#B42981',
         display: 'block',
-        fontSize:'15px'
+        fontSize: '15px'
     },
-    logoResponsive:{
+    logoResponsive: {
         width: 150,
         display: {
             xs: 'flex',
             md: 'none'
         },
-        justifyContent:{
-            md:'center'
+        justifyContent: {
+            md: 'center'
         }
     },
-    iconsMovile:{
-        padding:'3px',
+    iconsMovile: {
+        padding: '3px',
         fontSize: 30,
-        color:'purple'
+        color: 'purple'
     },
-    butonMenu:{
-        fontSize:'11px',
-        borderRadius:'30px',
-        margin:'10px',
-        color:'white'
+    butonMenu: {
+        fontSize: '11px',
+        borderRadius: '30px',
+        margin: '10px',
+        color: 'white'
     },
-    butonMenu2:{
-        fontSize:'11px',
-        borderRadius:'30px',
-        margin:'10px',
-        color:'black'
+    butonMenu2: {
+        fontSize: '11px',
+        borderRadius: '30px',
+        margin: '10px',
+        color: 'black'
     },
-    butonMenuScroll:{
-        fontSize:'11px',
-        borderRadius:'30px',
-        margin:'10px',
-        color:'black'
-    },
-
-    butonMenuCarrito:{
-        fontSize:'11px',
-        borderRadius:'30px',
-        margin:'10px',
-        color:'white',
-        width:'150px',
+    butonMenuScroll: {
+        fontSize: '11px',
+        borderRadius: '30px',
+        margin: '10px',
+        color: 'black'
     },
 
-    butonMenuCarrito2:{
-        width:'150px',
-        fontSize:'11px',
-        borderRadius:'30px',
-        margin:'10px',
-        color:'black'
-        
+    butonMenuCarrito: {
+        fontSize: '11px',
+        borderRadius: '30px',
+        margin: '10px',
+        color: 'white',
+        width: '150px',
     },
-    butonMenuCarritoScroll:{
-        fontSize:'11px',
-        borderRadius:'30px',
-        margin:'10px',
-        color:'black',
-        width:'150px'
+
+    butonMenuCarrito2: {
+        width: '150px',
+        fontSize: '11px',
+        borderRadius: '30px',
+        margin: '10px',
+        color: 'black'
+
     },
-    menuResponsivo:{
-        display:{xs:'flex', md:'none'},
-        justifyContent:'end',
-        alignItems:'center',
-        color:"white"
+    butonMenuCarritoScroll: {
+        fontSize: '11px',
+        borderRadius: '30px',
+        margin: '10px',
+        color: 'black',
+        width: '150px'
     },
-    menuResponsivo2:{
-        display:{xs:'flex', md:'none'},
-        justifyContent:'end',
-        alignItems:'center',
-        color:"black"
+    menuResponsivo: {
+        display: { xs: 'flex', md: 'none' },
+        justifyContent: 'end',
+        alignItems: 'center',
+        color: "white"
+    },
+    menuResponsivo2: {
+        display: { xs: 'flex', md: 'none' },
+        justifyContent: 'end',
+        alignItems: 'center',
+        color: "black"
     },
 
     //------------------------------Footer------------------------------//
 
-    BoxFooter:{
+    BoxFooter: {
         backgroundColor: '#f5f1ec',
-        paddingTop:'35px'
+        paddingTop: '35px'
     },
 
-//------------------------------Contenedor Padre-hijo------------------------------//
-    contenedorPadre:{
-        width:"100%",
+    //------------------------------Contenedor Padre-hijo------------------------------//
+    contenedorPadre: {
+        width: "100%",
         display: "flex",
         justifyContent: "center",
-        
+
     },
 
-    contenedorHijo:{
+    contenedorHijo: {
         left: "50%",
-        width:{
-            xs:"85%",
-            lg:"1150px"
-        },
-        paddingTop:'30px', 
-        paddingBottom:'30px' 
-    },
-
-    //------------------------------titulos banner------------------------------//
-    titlesBanners:{
-        color:'#ffff',
-        fontFamily:'Archivo Black, sans-serif',
-        fontSize:{
-            md:'74px',
-            sm:'50px',
-            xs:'40px'
+        width: {
+            xs: "85%",
+            lg: "1150px"
         }
     },
 
-    titles3Banners:{
-        color:'#ffff',
-        fontFamily:'Archivo Black, sans-serif',
-        fontSize:{
-            md:'29px',
-            sm:'25px',
-            xs:'20px'
+    //------------------------------titulos banner------------------------------//
+    titlesBanners: {
+        color: '#ffff',
+        fontFamily: 'Archivo Black, sans-serif',
+        fontSize: {
+            md: '74px',
+            sm: '50px',
+            xs: '40px'
+        }
+    },
+
+    titles3Banners: {
+        color: '#ffff',
+        fontFamily: 'Archivo Black, sans-serif',
+        fontSize: {
+            md: '29px',
+            sm: '25px',
+            xs: '20px'
         }
     },
 
     //------------------------------boton para banners------------------------------//
 
-    buttonBanners:{
-        border:'2px solid #b42981',
-        backgroundImage:'linear-gradient(to right, #FF6464 0%, #FF6464  51%, #FF81CE  100%)',
-        margin: {xm:'2px', md:'10px'},
+    buttonBanners: {
+        border: '2px solid #b42981',
+        backgroundImage: 'linear-gradient(to right, #FF6464 0%, #FF6464  51%, #FF81CE  100%)',
+        margin: { xm: '2px', md: '10px' },
         textTransform: 'uppercase',
         transition: '0.5s',
         color: 'white',
-        borderStyle:'none',
-        borderRadius:'50px',
-        fontFamily:'Archivo Black, sans-serif',
-        padding:{xm:'2px', md:'10px'}
+        borderStyle: 'none',
+        borderRadius: '50px',
+        fontFamily: 'Archivo Black, sans-serif',
+        padding: { xm: '2px', md: '10px' }
     },
     //------------------------------Boton Global------------------------------//
-    button:{
-        border:'2px solid #b42981',
-        backgroundImage:'linear-gradient(to right, #FF6464 0%, #FF6464  51%, #FF81CE  100%)',
+    button: {
+        border: '2px solid #b42981',
+        backgroundImage: 'linear-gradient(to right, #FF6464 0%, #FF6464  51%, #FF81CE  100%)',
         textTransform: 'uppercase',
         transition: '0.5s',
         color: 'white',
-        borderStyle:'none',
+        borderStyle: 'none',
         // borderRadius:'50px',
-        fontFamily:'Archivo Black, sans-serif',
-        padding:'10px',
-        width:'100%'
+        fontFamily: 'Archivo Black, sans-serif',
+        padding: '10px',
+        width: '100%'
     },
     //------------------------------Contenedor ocasiones------------------------------//
 
-    contenedorOcasiones:{
-        textAlign:'center',
-        justifyContent:'center',
-        alignContent:'center'
+    contenedorOcasiones: {
+        textAlign: 'center',
+        justifyContent: 'center',
+        alignContent: 'center'
     },
 
-    cajaDatosOcasioners:{
-        justifyContent:'center',
-        maxWidth:'100%',
-        display:'flex',
+    cajaDatosOcasioners: {
+        justifyContent: 'center',
+        maxWidth: '100%',
+        display: 'flex',
         position: 'relative',
     },
 
-    contenedorImagen:{
-        width:'100%',
-        height:{
-            lg:'300px',
-            md:'200px',
-            sm:'300px',
-            xs:'170px'
+    contenedorImagen: {
+        width: '100%',
+        height: {
+            lg: '300px',
+            md: '200px',
+            sm: '300px',
+            xs: '170px'
         },
-        borderRadius:'100px'
+        borderRadius: '100px'
     },
 
-    animacionTextoSobreImagenOcasiones:{
+    animacionTextoSobreImagenOcasiones: {
         position: 'absolute',
         top: 0,
         left: 0,
@@ -229,138 +230,138 @@ export const stylesComponents = {
         justifyContent: 'center',
         alignItems: 'center',
         opacity: 0,
-        transition: 'opacity 0.3s ease','&:hover': {
+        transition: 'opacity 0.3s ease', '&:hover': {
             opacity: 1,
         },
     },
 
-    letraSobreImagen:{
-        color:'white',
-        fontFamily:'Archivo Black, sans-serif',
-        fontSize:{
-            md:'40px',
-            xs:'20px'
+    letraSobreImagen: {
+        color: 'white',
+        fontFamily: 'Archivo Black, sans-serif',
+        fontSize: {
+            md: '40px',
+            xs: '20px'
         }
     },
 
 
     //------------------------------Productos------------------------------//
 
-    ContenedorProductos:{
-        textAlign:'center',
-        display:'flex',
-        justifyContent:'center',
+    ContenedorProductos: {
+        textAlign: 'center',
+        display: 'flex',
+        justifyContent: 'center',
     },
 
-    contenedorProducto:{
-        paddingLeft:1,
-        paddingRight:1,
-        paddingButtom:5,
-        paddingTop:5,
-        
+    contenedorProducto: {
+        paddingLeft: 1,
+        paddingRight: 1,
+        paddingButtom: 5,
+        paddingTop: 5,
+
     },
-    contenerdorImagenProducto:{
-        width:'100%',
-        height:{
-            xs:'300px',
-            sm:'380px',
-            md:'260px',
-            lg:'350px',
-            xl:'323px'
+    contenerdorImagenProducto: {
+        width: '100%',
+        height: {
+            xs: '300px',
+            sm: '380px',
+            md: '260px',
+            lg: '350px',
+            xl: '323px'
         },
-        display:'flex',
+        display: 'flex',
         position: 'relative',
     },
 
-    botonRecogerProductoOpcion1:{
-        display:'block',
-        width:'100%',
-        color:'white',
-        backgroundColor:'#fb7185',
-        paddingTop:'15px',
-        paddingBottom:'15px',
-        borderRadius:'13px'
+    botonRecogerProductoOpcion1: {
+        display: 'block',
+        width: '100%',
+        color: 'white',
+        backgroundColor: '#fb7185',
+        paddingTop: '15px',
+        paddingBottom: '15px',
+        borderRadius: '13px'
     },
 
-    botonRecogerProductoOpcion2:{
-        display:'block',
-        width:'100%' ,
-        backgroundColor:'white',
-        paddingTop:'15px',
-        paddingBottom:'15px',
-        borderRadius:'13px'
+    botonRecogerProductoOpcion2: {
+        display: 'block',
+        width: '100%',
+        backgroundColor: 'white',
+        paddingTop: '15px',
+        paddingBottom: '15px',
+        borderRadius: '13px'
     },
 
-    botontipografia1RecogerProductoOpcion1:{
-        color:'white',
-        fontWeight:'bold'
+    botontipografia1RecogerProductoOpcion1: {
+        color: 'white',
+        fontWeight: 'bold'
     },
 
-    botontipografia1RecogerProductoOpcion2:{
-        fontWeight:'bold'
+    botontipografia1RecogerProductoOpcion2: {
+        fontWeight: 'bold'
     },
 
-    botontipografia2RecogerProductoOpcion1:{
-        color:'white'
+    botontipografia2RecogerProductoOpcion1: {
+        color: 'white'
     },
 
-    botontipografia2RecogerProductoOpcion2:{
-        color:'#737373'
+    botontipografia2RecogerProductoOpcion2: {
+        color: '#737373'
     },
 
     //------------------------------Filtros------------------------------//
 
-    espaciadoOrdenFiltroTitulo:{
-        padding:'10px',
-        color:'#fffff',
-        display:{
-            md:'block',
-            xs:'none'
+    espaciadoOrdenFiltroTitulo: {
+        padding: '10px',
+        color: '#fffff',
+        display: {
+            md: 'block',
+            xs: 'none'
         }
     },
 
-    espaciadoOrdenFiltro:{
-        padding:{
-            xs:'5px',
-            md:'10px'
+    espaciadoOrdenFiltro: {
+        padding: {
+            xs: '5px',
+            md: '10px'
         },
-        paddingTop:{xs:'20px'},
+        paddingTop: { xs: '20px' },
 
-        color:'#fffff',
+        color: '#fffff',
     },
 
 
-    botonFiltro:{
-        border:'2px solid #b42981',
-        backgroundImage:'linear-gradient(to right, #FF6464 0%, #FF6464  51%, #FF81CE  100%)',
+    botonFiltro: {
+        border: '2px solid #b42981',
+        backgroundImage: 'linear-gradient(to right, #FF6464 0%, #FF6464  51%, #FF81CE  100%)',
         textTransform: 'uppercase',
         transition: '0.5s',
         color: 'white',
-        borderStyle:'none',
-        borderRadius:'50px',
-        fontFamily:'Archivo Black, sans-serif',
-        fontSize:{
-            md:'12px',
-            xs:'9px'
+        borderStyle: 'none',
+        borderRadius: '50px',
+        fontFamily: 'Archivo Black, sans-serif',
+        fontSize: {
+            md: '12px',
+            xs: '9px'
         },
-        padding:'6px',
-        width:{
-            xs:'100%',
-            md:'250px'
+        padding: '6px',
+        width: {
+            xs: '100%',
+            md: '250px'
         },
     },
 
 
-    positionOfFilter:{
-        display:'flex',
-        height:'40px',
-        justifyContent:{
-            lg:'end',
-            sm:'center'
+    positionOfFilter: {
+        display: 'flex',
+        height: '40px',
+        justifyContent: {
+            lg: 'end',
+            sm: 'center'
         },
 
 
-        fontFamily:'Archivo Black, sans-serif'
+        fontFamily: 'Archivo Black, sans-serif'
 
     }
 

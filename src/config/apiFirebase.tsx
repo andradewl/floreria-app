@@ -1,5 +1,5 @@
-import { auth, db, provider} from './firfebase';
-import {collection, getDocs, getDoc, doc,  query, where, setDoc, addDoc, updateDoc  } from 'firebase/firestore';
+import { auth, db, provider } from './firfebase';
+import { collection, getDocs, getDoc, doc, query, where, setDoc, addDoc, updateDoc, limit, startAfter } from 'firebase/firestore';
 import { Flower, ProductoExtra, NuevoPedido, Tipoflores, Ocasionest, facturacionLogin, PrecioEnvio } from '../interfaces/interfaces';
 import { createUserWithEmailAndPassword, signInWithEmailAndPassword, signInWithPopup } from 'firebase/auth';
 import { BadRequest, CalledBD } from './errors';
@@ -29,7 +29,7 @@ export const addUser = async (name: string, lastname: string, email: string, pho
             tipoUsuario: 'comprador'
         });
 
-        return true; 
+        return true;
     } catch (e: any) {
         if (e.code === 'auth/email-already-in-use') {
             throw new CalledBD('El correo ya está en uso');
@@ -41,11 +41,11 @@ export const addUser = async (name: string, lastname: string, email: string, pho
 };
 
 
-export const loginWithGoogle2 = async()=>{
+export const loginWithGoogle2 = async () => {
     try {
         const result = await signInWithPopup(auth, provider);
         const nameUser = result.user.displayName;
-        const emailUser =result.user.email;
+        const emailUser = result.user.email;
 
         const userQuery = query(collection(db, 'usuarios'), where('email', '==', emailUser));
         const userSnapshot = await getDocs(userQuery);
@@ -53,7 +53,7 @@ export const loginWithGoogle2 = async()=>{
         if (userSnapshot.empty) {
             await setDoc(doc(db, "usuarios", result.user.uid), {
                 nombre: nameUser,
-                apellido:'',
+                apellido: '',
                 email: emailUser,
                 tipoUsuario: "comprador"
             });
@@ -61,29 +61,29 @@ export const loginWithGoogle2 = async()=>{
             const ref = doc(db, "usuarios", result.user.uid);
             const docSnap = await getDoc(ref)
 
-            if(docSnap.exists()){
-                    sessionStorage.setItem("userlogIn", JSON.stringify({
-                        id:result.user.uid,
-                        name: docSnap.data().name,
-                        email:docSnap.data().email,
-                        tipoUsuario: docSnap.data().tipoUsuario
-                    }) )
-                    sessionStorage.setItem("credentials", JSON.stringify(result.user))
+            if (docSnap.exists()) {
+                sessionStorage.setItem("userlogIn", JSON.stringify({
+                    id: result.user.uid,
+                    name: docSnap.data().name,
+                    email: docSnap.data().email,
+                    tipoUsuario: docSnap.data().tipoUsuario
+                }))
+                sessionStorage.setItem("credentials", JSON.stringify(result.user))
             }
             window.location.href = '/';
 
-        }else{
+        } else {
             const ref = doc(db, "usuarios", result.user.uid);
             const docSnap = await getDoc(ref)
 
-            if(docSnap.exists()){
-                    sessionStorage.setItem("userlogIn", JSON.stringify({
-                        id:result.user.uid,
-                        name: docSnap.data().nombre,
-                        email:docSnap.data().email,
-                        tipoUsuario: docSnap.data().tipoUsuario
-                    }) )
-                    sessionStorage.setItem("credentials", JSON.stringify(result.user))
+            if (docSnap.exists()) {
+                sessionStorage.setItem("userlogIn", JSON.stringify({
+                    id: result.user.uid,
+                    name: docSnap.data().nombre,
+                    email: docSnap.data().email,
+                    tipoUsuario: docSnap.data().tipoUsuario
+                }))
+                sessionStorage.setItem("credentials", JSON.stringify(result.user))
             }
             window.location.href = '/';
         }
@@ -158,7 +158,7 @@ export const apartarProducto = async (idProducto: string, cantidad: number) => {
     return true
 };
 
-export const productoOcasionId = async(idOcasion:string): Promise<Flower[]>=>{
+export const productoOcasionId = async (idOcasion: string): Promise<Flower[]> => {
 
     const userQuery = query(collection(db, 'Flores'), where('ocasion', '==', idOcasion));
     const userSnapshot = await getDocs(userQuery);
@@ -173,9 +173,9 @@ export const productoOcasionId = async(idOcasion:string): Promise<Flower[]>=>{
             imagen: data.imagen,
             precio: data.precio,
             oferta: data.oferta,
-            existencias:data.existencias,
-            tipoflor:data.tipoflor,
-            ocasion:data.ocasion,
+            existencias: data.existencias,
+            tipoflor: data.tipoflor,
+            ocasion: data.ocasion,
             descuento: data.descuento !== undefined ? data.descuento : undefined,
             productosExtra: data.productosExtra !== undefined ? data.productosExtra : []
         };
@@ -186,28 +186,28 @@ export const productoOcasionId = async(idOcasion:string): Promise<Flower[]>=>{
 
 
 export const login = async (email: string, password: string) => {
-    try{
+    try {
         const credential = signInWithEmailAndPassword(auth, email, password)
         const ref = doc(db, "usuarios", (await credential).user.uid);
         const docSnap = await getDoc(ref)
-        
-        if(docSnap.exists()){
+
+        if (docSnap.exists()) {
             sessionStorage.setItem("userlogIn", JSON.stringify({
-                id:(await credential).user.uid,
+                id: (await credential).user.uid,
                 name: docSnap.data().name,
-                email:docSnap.data().email,
+                email: docSnap.data().email,
                 tipoUsuario: docSnap.data().tipoUsuario
-            }) )
+            }))
             sessionStorage.setItem("credentials", JSON.stringify((await credential).user))
         }
         return true
-    }catch(e){
+    } catch (e) {
         throw new BadRequest('Error en las crenciales, intentelo de nuevo');
     }
 };
 
 export const getProducts = async (): Promise<Flower[]> => {
-    const result = await getDocs(query(collection(db,'Flores')));
+    const result = await getDocs(query(collection(db, 'Flores')));
     const products: Flower[] = result.docs.map(doc => {
         const data = doc.data();
         const flower: Flower = {
@@ -218,19 +218,43 @@ export const getProducts = async (): Promise<Flower[]> => {
             imagen: data.imagen,
             precio: data.precio,
             oferta: data.oferta,
-            existencias:data.existencias,
-            tipoflor:data.tipoflor,
-            ocasion:data.ocasion,
+            existencias: data.existencias,
+            tipoflor: data.tipoflor,
+            ocasion: data.ocasion,
             descuento: data.descuento !== undefined ? data.descuento : undefined,
             productosExtra: data.productosExtra !== undefined ? data.productosExtra : []
         };
+
         return flower;
     });
     return products;
 };
 
+export const fetchProducts = async (page:number, productsPerPage:number, lastVisible = null) => {
+    const productsRef = collection(db, 'products');
+    let q;
+
+    if (page === 1) {
+        q = query(productsRef, limit(productsPerPage));
+    } else {
+        q = query(productsRef, startAfter(lastVisible), limit(productsPerPage));
+    }
+
+    const querySnapshot = await getDocs(q);
+    const products = querySnapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+
+    // Obtener el último documento visible para la paginación
+    const newLastVisible = querySnapshot.docs[querySnapshot.docs.length - 1];
+
+    // Obtener el total de productos
+    const totalQuerySnapshot = await getDocs(productsRef);
+    const totalProducts = totalQuerySnapshot.size;
+
+    return { products, newLastVisible, totalProducts };
+};
+
 export const getTipoFlores = async (): Promise<Tipoflores[]> => {
-    const result = await getDocs(query(collection(db,'TipoFlores')));
+    const result = await getDocs(query(collection(db, 'TipoFlores')));
     const products: Tipoflores[] = result.docs.map(doc => {
         const data = doc.data();
         const tipoflores: Tipoflores = {
@@ -243,7 +267,7 @@ export const getTipoFlores = async (): Promise<Tipoflores[]> => {
 };
 
 export const getOcasiones = async (): Promise<Ocasionest[]> => {
-    const result = await getDocs(query(collection(db,'ocasiones')));
+    const result = await getDocs(query(collection(db, 'ocasiones')));
     const products: Ocasionest[] = result.docs.map(doc => {
         const data = doc.data();
         const tipoOcasiones: Ocasionest = {
@@ -301,27 +325,27 @@ export const getexistenciaProductById = async (productId: string): Promise<Flowe
 };
 
 export const getProductsExtraByIds = async (productIds: string[]): Promise<ProductoExtra[]> => {
-        const productsRef = collection(db, 'productosExtra');
-        // Crear una consulta con where para filtrar por los IDs de productos
-        const q = query(productsRef, where('__name__', 'in', productIds));
-        const querySnapshot = await getDocs(q);
+    const productsRef = collection(db, 'productosExtra');
+    // Crear una consulta con where para filtrar por los IDs de productos
+    const q = query(productsRef, where('__name__', 'in', productIds));
+    const querySnapshot = await getDocs(q);
 
-        const productsExtra: ProductoExtra[] = querySnapshot.docs.map(doc => {
-            const data = doc.data();
-            const extra: ProductoExtra = {
-                id: doc.id,
-                nombre: data.nombre,
-                imagen: data.imagen,
-                precio: data.precio,
-                existencia: data.existencia
-            };
-            return extra;
-        });
-        return productsExtra;
+    const productsExtra: ProductoExtra[] = querySnapshot.docs.map(doc => {
+        const data = doc.data();
+        const extra: ProductoExtra = {
+            id: doc.id,
+            nombre: data.nombre,
+            imagen: data.imagen,
+            precio: data.precio,
+            existencia: data.existencia
+        };
+        return extra;
+    });
+    return productsExtra;
 };
 
 
-export const addPedido = async (pedidoData:NuevoPedido) => {
+export const addPedido = async (pedidoData: NuevoPedido) => {
     try {
         const pedidoRef = await addDoc(collection(db, 'pedidos'), pedidoData);
         // console.log("Pedido añadido con ID: ", pedidoRef.id);
@@ -333,7 +357,7 @@ export const addPedido = async (pedidoData:NuevoPedido) => {
 };
 
 
-export const descontarProdcutos = async(docId:string, subtractValue:number)=>{
+export const descontarProdcutos = async (docId: string, subtractValue: number) => {
     const docRef = doc(db, "Flores", docId);
 
     try {

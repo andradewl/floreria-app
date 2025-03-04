@@ -73,7 +73,7 @@ function BarraDeBusqueda(){
         <>
             
 
-            <Grid sx={{...stylesComponents.contenedorPadre, background:'#ffb3e2b3'}}>
+            <Grid sx={{...stylesComponents.contenedorPadre, background:'#ffb3e2b3', paddingBottom:{xs:'3%', md:'1%'}, paddingTop:{xs:'3%', md:'1%'}}}>
                 <Grid container sx={stylesComponents.contenedorHijo}>
                     <Grid item md={6} xs={12} sx={{color:'white'}}>
                         <Typography variant="h2" sx={{
@@ -84,7 +84,7 @@ function BarraDeBusqueda(){
                             fontStyle: "normal",
                             fontSize:{md:'30px', xs:'23px'}}} >Encuentra las flores de la mejor calidad que estabas buscando</Typography>
                     </Grid>
-                    <Grid item md={6}  xs={12} sx={{textAlign:'center', marginTop:{xs:'40px', md:'0px'}}}>
+                    <Grid item md={6}  xs={12} sx={{textAlign:'center', marginTop:{xs:'3%', md:'0%'}}}>
                         <TextField
                             label="buscar"
                             variant="outlined"

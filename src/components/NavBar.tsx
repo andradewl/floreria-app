@@ -23,6 +23,7 @@ import ShopingCarNav from './ShopingCarNav';
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import LogoutIcon from '@mui/icons-material/Logout';
 import { UserLogin } from '../interfaces/interfaces';
+import { endAt } from 'firebase/firestore';
 
 type Anchor = 'top' | 'left' | 'bottom' | 'right';
 
@@ -240,149 +241,144 @@ function ResponsiveAppBar() {
 
   return (
     <>
-      <Grid sx={isScrolled ? {display:'none'} : stylesComponents.appSubBar} >
-        <Grid sx={{width:'50%', alignSelf:'center', display:'flex'}}>
-          <Typography variant="body2" color="initial" sx={{fontSize:'13px'}}>Flores Rickys Envíos a Monterrey y área metropolitana</Typography>
-        </Grid>
-        <Grid sx={{width:'50%', textAlign:'end' }}>
-          <Button sx={{borderRadius:'30px', backgroundColor:'black', color:'white', paddingLeft:'20px', paddingRight:'20px', fontSize:'10px'}}>WhatsApp →</Button>
-        </Grid>
-      </Grid>
+      
+      <Grid sx={{position: 'fixed', top:'0', width:'100%', zIndex:'1000'}}>
 
-      <AppBar sx={isScrolled ? stylesComponents.appBarScrolled : stylesComponents.appBar}>
-        <Grid sx={isScrolled ? stylesComponents.appSubBar : {display:'none'}}>
-          <Grid sx={{width:'50%', alignSelf:'center', display:'flex'}}>
-            <Typography variant="body2" color="initial" sx={{fontSize:'13px'}}>Flores Rickys Envíos a Monterrey y área metropolitana</Typography>
-          </Grid>
-          <Grid sx={{width:'50%', textAlign:'end' }}>
-            <Button sx={{borderRadius:'30px', backgroundColor:'black', color:'white', paddingLeft:'20px', paddingRight:'20px', fontSize:'10px'}}>WhatsApp →</Button>
-          </Grid>
-        </Grid>
-
-        <Container maxWidth="xl" >
-          <Grid sx={ isScrolled ? {display:'flex', marginTop:'10px', paddingLeft:'5%', paddingRight:'5%'} : {display:'flex', marginTop:'10px', paddingLeft:'5%', paddingRight:'5%', borderBottomStyle:'grove'}  }  >
-
-
-            {/* logo */}
-            <Grid
-              sx={{
-                width:'30%',
-                // display: { xs: 'none', md: 'flex' },
-              }}
-            >
-              <Box onClick={()=>{changeView("/"), navigate('/')}}>
-                <img
-                src={Logo}
-                alt="Logo"
-                style={{ width: '90px' }}/>
-              </Box>
-
+        <Grid sx={{width:'100%', background:'#fff'}}>
+          <Grid sx={{...stylesComponents.contenedorPadre, paddingBottom:'1%', paddingTop:'1%', backgroundImage:'linear-gradient(to right, #ff646461 0%, #bb6e6e52 51%, #d62d9263 100%)'}}>
+            <Grid sx={{...stylesComponents.contenedorHijo}}>
+              <Grid container>
+                <Grid item xs={6} sx={{alignSelf:'center'}}>
+                  <Typography variant="body2" color="initial" sx={{fontSize:'13px'}}>Flores Rickys Envíos a Monterrey y área metropolitana</Typography>
+                </Grid>
+                <Grid item xs={6} sx={{textAlign:'end', alignSelf:'center'}}>
+                  <Button sx={{borderRadius:'30px', backgroundColor:'black', color:'white', paddingLeft:'20px', paddingRight:'20px', fontSize:'10px'}}>WhatsApp →</Button>
+                </Grid>
+              </Grid>
             </Grid>
+          </Grid>
+        </Grid>
+        
+        <Grid>
+          <Grid sx={ isScrolled ? {...stylesComponents.contenedorPadre, paddingBottom:'1%', paddingTop:'1%', backgroundColor:'white'}: {...stylesComponents.contenedorPadre, paddingBottom:'1%', paddingTop:'1%'}}>
+            <Grid sx={{...stylesComponents.contenedorHijo, display:'flex'}}>
 
-            {/* Menu escritorio */}
-            <Grid
-              sx={{width:'70%', display:{xs:'none', md:'flex'}, justifyContent:'end'}}
-            >
-              <Button
-                sx={isScrolled ? stylesComponents.butonMenuScroll : currentView=="/"?stylesComponents.butonMenu:stylesComponents.butonMenu2}
-                onClick={()=>{changeView("/"), navigate('/')}}
-              >Inicio</Button>
-              <Button
-                sx={isScrolled ? stylesComponents.butonMenuScroll : currentView=="/"?stylesComponents.butonMenu:stylesComponents.butonMenu2}
-                id="basic-button"
-                aria-controls={open ? 'basic-menu' : undefined}
-                aria-haspopup="true"
-                aria-expanded={open ? 'true' : undefined}
-                onClick={handleClick}
-              >
-                Ocasiones
-              </Button>
-              <Menu
-                id="basic-menu"
-                anchorEl={anchorEl}
-                open={open}
-                onClose={handleClose}
-                MenuListProps={{
-                  'aria-labelledby': 'basic-button',
+              <Grid
+                sx={{
+                  width:'30%',
                 }}
               >
-                {ocasiones && ocasiones.map((item) => (
-                  <MenuItem onClick={()=>{changeView("ocasion"), navigate("ocasion/"+item.nombre+"/"+item.id)}}>{item.nombre}</MenuItem>
-                ))}
-              </Menu>
-              {/* <Button
-                sx={isScrolled ? stylesComponents.butonMenuScroll : stylesComponents.butonMenu}
-              >Ocasiones</Button> */}
-              <Button
-                sx={isScrolled ? stylesComponents.butonMenuScroll : currentView=="/"?stylesComponents.butonMenu:stylesComponents.butonMenu2}
-                onClick={()=>{changeView("contacto"), navigate('/newContacto')}}
-              >Contacto</Button>
+                <Box onClick={()=>{changeView("/"), navigate('/')}}>
+                  <img
+                  src={Logo}
+                  alt="Logo"
+                  style={{ width: '90px' }}/>
+                </Box>
 
-            {
-              datauser?
-                (
-                  <>
-                  <Button
-                    sx={isScrolled ? stylesComponents.butonMenuScroll : currentView=="/"?stylesComponents.butonMenu:stylesComponents.butonMenu2}
-                    id="basic-button2"
-                    aria-controls={open2 ? 'basic-menu2' : undefined}
-                    aria-haspopup="true"
-                    aria-expanded={open2 ? 'true' : undefined}
-                    onClick={handleClick2}
-                  >
-                    {datauser.name}
-                  </Button>
-                    <Menu
-                      id="basic-menu2"
-                      anchorEl={anchorE2}
-                      open={open2}
-                      onClose={handleClose2}
-                      MenuListProps={{
-                        'aria-labelledby': 'basic-button2',
-                      }}
-                    >
-                      <MenuItem onClick={()=>{changeView("userid"), navigate("/Usuario/"+datauser.id)}}>Perfil</MenuItem>
-                      <MenuItem onClick={handleLogOut}>Logout</MenuItem>
-                    </Menu>
-                  </>
-                )
-                :
-                (
+              </Grid>
+
+              {/* Menu escritorio */}
+              <Grid
+                sx={{width:'70%', display:{xs:'none', md:'flex'}, justifyContent:'end'}}
+              >
+                <Button sx={isScrolled ? stylesComponents.butonMenuScroll : currentView=="/"?stylesComponents.butonMenu:stylesComponents.butonMenu2} onClick={()=>{changeView("/"), navigate('/')}}>
+                  Inicio
+                </Button>
+                <Button
+                  sx={isScrolled ? stylesComponents.butonMenuScroll : currentView=="/"?stylesComponents.butonMenu:stylesComponents.butonMenu2}
+                  id="basic-button"
+                  aria-controls={open ? 'basic-menu' : undefined}
+                  aria-haspopup="true"
+                  aria-expanded={open ? 'true' : undefined}
+                  onClick={handleClick}
+                >
+                  Ocasiones
+                </Button>
+                <Menu
+                  id="basic-menu"
+                  anchorEl={anchorEl}
+                  open={open}
+                  onClose={handleClose}
+                  MenuListProps={{
+                    'aria-labelledby': 'basic-button',
+                  }}
+                >
+                  {ocasiones && ocasiones.map((item) => (
+                    <MenuItem onClick={()=>{changeView("ocasion"), navigate("ocasion/"+item.nombre+"/"+item.id)}}>{item.nombre}</MenuItem>
+                  ))}
+                </Menu>
 
                 <Button
                   sx={isScrolled ? stylesComponents.butonMenuScroll : currentView=="/"?stylesComponents.butonMenu:stylesComponents.butonMenu2}
-                  onClick={()=>{changeView("login"), navigate('/Login')}}
-                >
-                  Login
-                </Button>
+                  onClick={()=>{changeView("contacto"), navigate('/newContacto')}}
+                >Contacto</Button>
 
-                )
-              }
+              {
+                datauser?
+                  (
+                    <>
+                    <Button
+                      sx={isScrolled ? stylesComponents.butonMenuScroll : currentView=="/"?stylesComponents.butonMenu:stylesComponents.butonMenu2}
+                      id="basic-button2"
+                      aria-controls={open2 ? 'basic-menu2' : undefined}
+                      aria-haspopup="true"
+                      aria-expanded={open2 ? 'true' : undefined}
+                      onClick={handleClick2}
+                    >
+                      {datauser.name}
+                    </Button>
+                      <Menu
+                        id="basic-menu2"
+                        anchorEl={anchorE2}
+                        open={open2}
+                        onClose={handleClose2}
+                        MenuListProps={{
+                          'aria-labelledby': 'basic-button2',
+                        }}
+                      >
+                        <MenuItem onClick={()=>{changeView("userid"), navigate("/Usuario/"+datauser.id)}}>Perfil</MenuItem>
+                        <MenuItem onClick={handleLogOut}>Logout</MenuItem>
+                      </Menu>
+                    </>
+                  )
+                  :
+                  (
+
+                  <Button
+                    sx={isScrolled ? stylesComponents.butonMenuScroll : currentView=="/"?stylesComponents.butonMenu:stylesComponents.butonMenu2}
+                    onClick={()=>{changeView("login"), navigate('/Login')}}
+                  >
+                    Login
+                  </Button>
+
+                  )
+                }
+              </Grid>
+
+              {/* Boton carrito */}
+              <Grid sx={{
+                width:{
+                  md:'auto',
+                  xs:'70%'
+                },
+                textAlign:'end'
+              }}>
+                <Button
+                  sx={isScrolled ? stylesComponents.butonMenuCarritoScroll : currentView=="/" ? stylesComponents.butonMenuCarrito:stylesComponents.butonMenuCarrito2}
+                  onClick={toggleDrawer("right", true)}
+                ><ShoppingCartIcon sx={{fontSize:'15px'}}/> Total (${precioAPagar})</Button>
+              </Grid>
+
+              {/* Menu movil */}
+              <Grid sx={isScrolled ? stylesComponents.menuResponsivo2 : currentView=="/"?stylesComponents.menuResponsivo:stylesComponents.menuResponsivo2} onClick={toggleDrawer("left", true)}>
+                <MenuIcon/>
+              </Grid>
+
             </Grid>
-
-            {/* Boton carrito */}
-            <Grid sx={{
-              width:{
-                md:'auto',
-                xs:'70%'
-              },
-              textAlign:'end'
-            }}>
-              <Button
-                sx={isScrolled ? stylesComponents.butonMenuCarritoScroll : currentView=="/" ? stylesComponents.butonMenuCarrito:stylesComponents.butonMenuCarrito2}
-                onClick={toggleDrawer("right", true)}
-              ><ShoppingCartIcon sx={{fontSize:'15px'}}/> Total (${precioAPagar})</Button>
-            </Grid>
-
-            {/* Menu movil */}
-            <Grid sx={isScrolled ? stylesComponents.menuResponsivo2 : currentView=="/"?stylesComponents.menuResponsivo:stylesComponents.menuResponsivo2} onClick={toggleDrawer("left", true)}>
-              <MenuIcon/>
-            </Grid>
-
           </Grid>
-        </Container>
+        </Grid>
 
-      </AppBar>
+      </Grid>
 
 
 
