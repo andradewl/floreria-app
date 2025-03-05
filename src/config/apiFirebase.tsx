@@ -188,7 +188,7 @@ export const productoOcasionId = async (idOcasion: string): Promise<Flower[]> =>
 export const login = async (email: string, password: string) => {
     try {
         const credential = signInWithEmailAndPassword(auth, email, password)
-        const ref = doc(db, "usuarios", (await credential).user.uid);
+        const ref = doc(db, "Flores", (await credential).user.uid);
         const docSnap = await getDoc(ref)
 
         if (docSnap.exists()) {
@@ -230,28 +230,43 @@ export const getProducts = async (): Promise<Flower[]> => {
     return products;
 };
 
-export const fetchProducts = async (page:number, productsPerPage:number, lastVisible = null) => {
-    const productsRef = collection(db, 'products');
+export const fetchProducts = async (page: number, productsPerPage: number, lastVisible: any = null
+  ): Promise<{ products: Flower[]; newLastVisible: any; totalProducts: number }> => {
+    const productsRef = collection(db, 'Flores');
     let q;
-
+  
     if (page === 1) {
-        q = query(productsRef, limit(productsPerPage));
+      q = query(productsRef, limit(productsPerPage));
     } else {
-        q = query(productsRef, startAfter(lastVisible), limit(productsPerPage));
+      q = query(productsRef, startAfter(lastVisible), limit(productsPerPage));
     }
-
+  
     const querySnapshot = await getDocs(q);
-    const products = querySnapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
-
+    const products: Flower[] = querySnapshot.docs.map(doc => ({
+      id: doc.id,
+      sku: doc.data().sku,
+      nombre: doc.data().nombre,
+      descripcion: doc.data().descripcion,
+      imagen: doc.data().imagen,
+      precio: doc.data().precio,
+      oferta: doc.data().oferta,
+      existencias: doc.data().existencias,
+      tipoflor: doc.data().tipoflor,
+      ocasion: doc.data().ocasion,
+      descuento: doc.data().descuento,
+      productosExtra: doc.data().productosExtra,
+    }));
+  
     // Obtener el último documento visible para la paginación
     const newLastVisible = querySnapshot.docs[querySnapshot.docs.length - 1];
-
+  
     // Obtener el total de productos
     const totalQuerySnapshot = await getDocs(productsRef);
     const totalProducts = totalQuerySnapshot.size;
-
+  
     return { products, newLastVisible, totalProducts };
-};
+  };
+  
 
 export const getTipoFlores = async (): Promise<Tipoflores[]> => {
     const result = await getDocs(query(collection(db, 'TipoFlores')));

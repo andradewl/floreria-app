@@ -259,8 +259,9 @@ function ResponsiveAppBar() {
           </Grid>
         </Grid>
         
+        
         <Grid>
-          <Grid sx={ isScrolled ? {...stylesComponents.contenedorPadre, paddingBottom:'1%', paddingTop:'1%', backgroundColor:'white'}: {...stylesComponents.contenedorPadre, paddingBottom:'1%', paddingTop:'1%'}}>
+          <Grid sx={ isScrolled ? {...stylesComponents.contenedorPadre, paddingBottom:'1%', paddingTop:'1%', backgroundColor:'white' }: {...stylesComponents.contenedorPadre, paddingBottom:'1%', paddingTop:'1%'}}>
             <Grid sx={{...stylesComponents.contenedorHijo, display:'flex'}}>
 
               <Grid

@@ -1,11 +1,12 @@
 /* eslint-disable react-refresh/only-export-components */
-import {  Box, Button, Grid, Typography } from "@mui/material";
+import {  Box, Button, Grid, Pagination, Typography } from "@mui/material";
 import { stylesComponents } from "../styles/stylesComponentes"
 import '../styles/fuentes.css'
-import { getOcasiones, getProducts } from "../config/apiFirebase";
+import { fetchProducts, getOcasiones, getProducts } from "../config/apiFirebase";
 import React from "react";
 import { Flower, Ocasionest } from "../interfaces/interfaces"
 import BarraDeBusqueda from "../components/BarraDeBusqueda";
+import { Producto } from "../components/Producto";
 
 
 
@@ -16,9 +17,35 @@ function Home(){
     const [ocasinesDataId, setOcasinesDataId] = React.useState<Ocasionest[]>([]);
     // const history = useHistory();
 
+
+    const [products, setProducts] = React.useState<Flower[]>([]); // Tipar el estado
+
+    const [page, setPage] = React.useState(1);
+    const [lastVisible, setLastVisible] = React.useState<any>(null);
+    const [totalProducts, setTotalProducts] = React.useState(0);
+    const productsPerPage = 12;
+
+
     React.useEffect(()=>{
         fetchFlores()
     },[])
+
+
+    React.useEffect(() => {
+        const loadProducts = async () => {
+          const { products, newLastVisible, totalProducts } = await fetchProducts(page, productsPerPage, lastVisible);
+          console.log(products, newLastVisible, totalProducts)
+          setProducts(products);
+          setLastVisible(newLastVisible);
+          setTotalProducts(totalProducts);
+        };
+    
+        loadProducts();
+      }, [page]);
+    
+      const handlePageChange = (_event: React.ChangeEvent<unknown>, value: number) => {
+        setPage(value);
+      };
 
 
 
@@ -143,138 +170,21 @@ function Home(){
 
                     
                     <Grid container sx={stylesComponents.ContenedorProductos} >
-                        {flores && flores.map((item) => (
-                            <Grid item xs={12} sm={6} md={3}  sx={stylesComponents.contenedorProducto}>
-                                <Box display={'flex'} style={{justifyContent:'center'}}>
-                                    <Grid sx={stylesComponents.contenerdorImagenProducto} onClick={()=>handleRedirectToProductId(item.id)}>
-                                        <img src={item.imagen} alt="" width={'100%'} height={'100%'} style={{ objectFit: 'cover', position:'relative', borderRadius:'7px'}} />
-                                        {item.descuento &&
-                                            <Grid width={'100%'} height={'100%'} sx={{position: 'absolute', textAling:'left' }}>
-                                                <Box sx={{ backgroundColor:'#ef8f61', width:'50%', color:'white', borderRadius:'5px', fontSize:'20px', margin:'5px' }}>
-                                                    !Oferta¡
-                                                </Box>
-                                            </Grid>
-                                        }
-                                    </Grid>
-                                </Box>
-                                {
-                                    item.descuento ?
-                                    (
-                                        <>
-                                            <Grid
-                                                container
-                                                sx={{
-                                                    width: '100%',
-                                                }}
-                                            >
-                                                <Grid
-                                                sx={{
-                                                    width: '100%',
-                                                }}
-                                                >
-                                                    <Box sx={{ paddingTop:'2px' }}>
-                                                        <Box sx={{padding:'2px'}} onClick={()=>handleRedirectToProductId(item.id)}>
-                                                            <Typography variant="body1" color="initial" style={{color:'#404040',
-                                                                fontFamily: "Cormorant",
-                                                                fontOpticalSizing: "auto",
-                                                                fontWeight: "bold",
-                                                                fontStyle: "normal",
-                                                                textAlign:'left',
-                                                                fontSize:'17px',
-                                                                whiteSpace:'nowrap', overflow:'hidden'
-                                                            }}>{item.nombre}</Typography>
-                                                            <Typography variant="body1" color="initial"  style={{color:'#404040',
-                                                                fontFamily: "Cormorant",
-                                                                fontOpticalSizing: "auto",
-                                                                fontWeight: "bold",
-                                                                fontStyle: "normal",
-                                                                textAlign:'left',
-                                                                fontSize:'12px'
-                                                            }}>
-                                                                {ocasinesDataId && ocasinesDataId.map((item2) => (
-                                                                    item2.id === item.ocasion ? item2.nombre : null
-                                                                ))}
-                                                                </Typography>
-                                                        </Box>
-                                                        <Box sx={{display:'flex',padding:'2px',width: '100%',}}>
-                                                            <Typography variant="body2" color="initial"  style={{color:'#404040',textAlign:'left', width:'50%',  textDecorationLine: 'line-through', fontWeight: 'bold', fontSize:'12px' }}>${item.precio}</Typography>
-                                                            <Typography variant="body2" color="initial"  style={{color:'#9c0ba8', textAlign:'right',width:'50%', fontWeight: 'bold',fontSize:'12px' }}>${item.descuento}</Typography>
-                                                        </Box>
-                                                    </Box>
-                                                </Grid>
-
-                                            </Grid>
-                                        </>
-                                    )
-                                    :
-                                    (
-                                        <Grid
-                                            container
-                                            sx={{
-                                                width: '100%',
-                                            }}
-                                        >
-                                            <Grid
-                                                sx={{
-                                                    width: '100%',
-                                                }}
-                                            >
-                                                <Box sx={{ padding: {xs:'10px', lg:'2px'} }}>
-                                                    <Box sx={{ padding: '2px' }}>
-                                                        <Typography variant="body1" color="initial" style={{color:'#404040',
-                                                            fontFamily: "Cormorant",
-                                                            fontOpticalSizing: "auto",
-                                                            fontWeight: "bold",
-                                                            fontStyle: "normal",
-                                                            textAlign:'left',
-                                                            fontSize:'17px',
-                                                            whiteSpace:'nowrap', overflow:'hidden'
-                                                        }}>{item.nombre}</Typography>
-                                                        <Typography variant="body1" color="initial"  style={{color:'#404040',
-                                                            fontFamily: "Cormorant",
-                                                            fontOpticalSizing: "auto",
-                                                            fontWeight: "bold",
-                                                            fontStyle: "normal",
-                                                            textAlign:'left',
-                                                            fontSize:'12px'
-                                                        }}>
-                                                            {ocasinesDataId && ocasinesDataId.map((item2) => (
-                                                                item2.id === item.ocasion ? item2.nombre : null
-                                                            ))}
-                                                        </Typography>
-                                                        {/* <Typography
-                                                            variant="h6"
-                                                            color="initial"
-                                                            fontSize={16}
-                                                            textAlign="center"
-                                                            style={{ color: '#9c0ba8' }}
-                                                        >
-                                                        ${item.precio}
-                                                        </Typography> */}
-                                                    </Box>
-                                                    <Box
-                                                    >
-                                                        {/* <Typography
-                                                            variant="h6"
-                                                            color="initial"
-                                                            fontSize={16}
-                                                            style={{ color: '#404040' }}
-                                                        >
-                                                        {item.nombre} */}
-                                                        {/* </Typography> */}
-                                                        <Typography variant="body2" color="initial"  style={{color:'#9c0ba8', textAlign:'left', fontWeight: 'bold',fontSize:'12px' }}>${item.precio }</Typography>
-                                                    </Box>
-                                                </Box>
-                                            </Grid>
-                                        </Grid>
-
-                                    )
-
-                                }
-
-                            </Grid>
+                        {products && products.map((item) => (
+                            <Producto key={item.id} flower={item} ocasinesDataId={ocasinesDataId}/>
                         ))}
+                        
                     </Grid>
+                    <Grid sx={{placeItem:'center', placeSelf:'center', paddingTop:'3%', paddingBottom:'3%'}}>
+                        <Pagination
+                            count={Math.ceil(totalProducts / productsPerPage)}
+                            page={page}
+                            onChange={handlePageChange}
+                            color="primary"
+                        />
+                    </Grid>
+
+                    
                 </Grid>
             </Grid>            
         </>
