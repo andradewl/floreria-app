@@ -6,7 +6,7 @@ import { stylesComponents } from '../styles/stylesComponentes';
 export const Producto = ({ flower, ocasinesDataId }: { flower: Flower; ocasinesDataId: Ocasionest[] }) => {
 
     const handleRedirectToProductId = (id:string) => {
-        const redireccion = "Producto/"+id
+        const redireccion = "/Producto/"+id
         window.location.href = redireccion
         // navigate('/Producto/'+redireccion);
     };

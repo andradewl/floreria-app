@@ -69,7 +69,7 @@ function NewContacto() {
     <>
       <Grid>
         <Grid sx={{...stylesComponents.contenedorPadre, background:'#FCE4E5'}}>
-          <Grid  sx={{...stylesComponents.contenedorHijo, textAlign:'center', paddingTop:'7%', paddingBottom:'7%'  }}>
+          <Grid  sx={{...stylesComponents.contenedorHijo, textAlign:'center', paddingTop:{xs:'40%', md:'20%', lg:'15%'}, paddingBottom:'7%'  }}>
             <Typography 
               variant="h1"
               sx={{

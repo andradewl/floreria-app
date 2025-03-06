@@ -1,5 +1,5 @@
 /* eslint-disable react-refresh/only-export-components */
-import {  Box, Button, Grid, Pagination, Typography } from "@mui/material";
+import {  Box, Button, Grid, Pagination, Paper, Typography } from "@mui/material";
 import { stylesComponents } from "../styles/stylesComponentes"
 import '../styles/fuentes.css'
 import { fetchProducts, getOcasiones, getProducts } from "../config/apiFirebase";
@@ -39,7 +39,6 @@ function Home(){
           setLastVisible(newLastVisible);
           setTotalProducts(totalProducts);
         };
-    
         loadProducts();
       }, [page]);
     
@@ -49,13 +48,10 @@ function Home(){
 
 
 
-    //const redireccionConRefresh = (nombre:string, id:string)=>{
-        //const redireccion = "ocasion/"+nombre+"/"+id
-        // history.push(redireccion);
-
-        // this.props.history.push(redireccion)
-       // window.location.href= redireccion
-    //}
+    const redireccionConRefresh = (nombre:string, id:string)=>{
+        const redireccion = "ocasion/"+nombre+"/"+id
+        window.location.href= redireccion
+    }
 
 
     const fetchFlores = async () => {
@@ -69,11 +65,7 @@ function Home(){
         }
     };
 
-    const handleRedirectToProductId = (id:string) => {
-        const redireccion = "Producto/"+id
-        window.location.href = redireccion
-        // navigate('/Producto/'+redireccion);
-    };
+    
 
     return(
         <>
@@ -141,6 +133,25 @@ function Home(){
                             fontSize:{md:'25px'}}} >
                         En Flores Rickys encontrarás lo que necesitas para cada ocasión.
                     </Typography>
+                </Grid>
+            </Grid>
+            <Grid sx={{...stylesComponents.contenedorPadre, background:'#fbf8f4'}}>
+                <Grid sx={{...stylesComponents.contenedorHijo, paddingTop:'30px', paddingBottom:'30px'} }>
+                    <Grid container display={'flex'}>
+
+                        {ocasinesDataId && ocasinesDataId.map((item) => (
+                            <Grid item xs={6} md={4} sx={stylesComponents.contenedorOcasiones} p={'8px'}>
+                                <Box sx={stylesComponents.cajaDatosOcasioners}>
+                                    <Grid sx={stylesComponents.contenedorImagen}>
+                                        <img src={item.imagen} alt="" width={'100%'} height={'100%'} style={{ objectFit: 'cover'}}/>
+                                    </Grid>
+                                    <Paper sx={stylesComponents.animacionTextoSobreImagenOcasiones} onClick={()=>redireccionConRefresh(item.nombre, item.id)}>
+                                        <Typography variant="h4" color="initial" sx={stylesComponents.letraSobreImagen}>{item.nombre}</Typography>
+                                    </Paper>
+                                </Box>
+                            </Grid>
+                        ))}
+                    </Grid>
                 </Grid>
             </Grid>
 

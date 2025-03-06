@@ -94,9 +94,9 @@ export default function Login() {
     <>
       <Container
         maxWidth="sm"
-        sx={{ backgroundColor: "#f8f9fa", py: 3, marginTop: "4%" }}
+        sx={{ backgroundColor: "#f8f9fa", py: 3, paddingTop:{xs:'40%', md:'20%', lg:'15%'}}}
       >
-        <Grid container spacing={2} pt={2} pb={8}>
+        <Grid container spacing={2} >
           <Grid item xs={12} sx={{ textAlign: "center" }}>
             <img src={logoFR} alt="Logo" height="100" />
           </Grid>
