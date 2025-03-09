@@ -13,7 +13,7 @@ const PerfilUsuario = () => {
         const storedUserName = sessionStorage.getItem("userlogIn");
         if (storedUserName) {
             const userCredential = JSON.parse(storedUserName);
-            userCredential.tipoUsuario ==  "vedendor" ? setShowPassword(true):setShowPassword(false);
+            userCredential.tipoUsuario ==  "admin" ? setShowPassword(true):setShowPassword(false);
         }
     }, []);
 

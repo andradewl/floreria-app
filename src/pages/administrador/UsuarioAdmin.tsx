@@ -10,6 +10,7 @@ import Ocasiones from "./Ocasiones";
 import CodigosPostales from "./CodigosPostales";
 import ProductosAdmin from "./ProductosAdmin";
 import MensajeContacto from "./MensajesContacto";
+import { stylesComponents } from "../../styles/stylesComponentes";
 const UsuarioAdmin = () => {
   const [tabValue, setTabValue] = useState<number>(0);
 
@@ -26,146 +27,154 @@ const UsuarioAdmin = () => {
       case 2:
         return <ProductosAdmin />; // Renderiza el componente de Productos para el caso 2
       case 3:
-        return <ProductosExtra/>;
+        return <ProductosExtra />;
       case 4:
-        return <Ocasiones/>;
+        return <Ocasiones />;
       case 5:
-        return <CodigosPostales/>;
+        return <CodigosPostales />;
       case 6:
-        return <MensajeContacto/>;
+        return <MensajeContacto />;
       default:
         return null;
     }
   };
 
   return (
-    <Grid container spacing={4} justifyContent="center" sx={{ py: 12 }}>
-      <Grid item xs={12} md={3}>
-        <Paper
-          elevation={3}
-          sx={{ p: 2, backgroundColor: "#F3F3F3", borderRadius: 2 }}
-        >
-          <Typography
-            variant="h5"
-            align="center"
-            gutterBottom
-            sx={{
-              fontWeight: "600",
-              paddingBottom: "1%",
-              fontFamily: "Cormorant",
-            }}
-          >
-            Opciones Administrador
-          </Typography>
-          <Tabs
-            value={tabValue}
-            onChange={handleChange}
-            orientation="vertical"
-            variant="scrollable"
-            scrollButtons="auto"
-            sx={{ "& .MuiTabs-indicator": { backgroundColor: "#C81987" } }}
-          >
-            <Tab
-              icon={
-                <LocalFloristIcon fontSize="medium" sx={{ color: "#C81987" }} />
-              }
-              iconPosition="start"
-              label="Historial de pedidos"
-              sx={{
-                alignSelf: "start",
-                textAlign: "left",
-                fontWeight: "600",
-                paddingBottom: "2%",
-                fontFamily: "Cormorant",
-              }}
-            />
-            <Tab
-              icon={<LoyaltyIcon fontSize="medium" sx={{ color: "#C81987" }} />}
-              iconPosition="start"
-              label="Estatus de envío"
-              sx={{
-                alignSelf: "start",
-                textAlign: "left",
-                fontWeight: "600",
-                paddingBottom: "2%",
-                fontFamily: "Cormorant",
-              }}
-            />
-            <Tab
-            icon={
-              <DescriptionIcon fontSize="medium" sx={{ color: "#C81987" }} />
-            }
-              label="Productos"
-              iconPosition="start"
-              sx={{
-                alignSelf: "start",
-                textAlign: "left",
-                fontWeight: "600",
-                paddingBottom: "2%",
-                fontFamily: "Cormorant",
-              }}
-            />
-            <Tab
-              icon={<LoyaltyIcon fontSize="medium" sx={{ color: "#C81987" }} />}
-              iconPosition="start"
-              label="Productos Extras"
-              sx={{
-                alignSelf: "start",
-                textAlign: "left",
-                fontWeight: "600",
-                paddingBottom: "2%",
-                fontFamily: "Cormorant",
-              }}
-            />
-            <Tab
-            icon={
-              <DescriptionIcon fontSize="medium" sx={{ color: "#C81987" }} />
-            }
-              label="Ocasiones"
-              iconPosition="start"
-              sx={{
-                alignSelf: "start",
-                textAlign: "left",
-                fontWeight: "600",
-                paddingBottom: "2%",
-                fontFamily: "Cormorant",
-              }}
-            />
-            <Tab
-            icon={
-              <DescriptionIcon fontSize="medium" sx={{ color: "#C81987" }} />
-            }
-              label="Códigos Postales"
-              iconPosition="start"
-              sx={{
-                alignSelf: "start",
-                textAlign: "left",
-                fontWeight: "600",
-                paddingBottom: "2%",
-                fontFamily: "Cormorant",
-              }}
-            />
-            <Tab
-            icon={
-              <DescriptionIcon fontSize="medium" sx={{ color: "#C81987" }} />
-            }
-              label="Mensajes de contacto"
-              iconPosition="start"
-              sx={{
-                alignSelf: "start",
-                textAlign: "left",
-                fontWeight: "600",
-                paddingBottom: "2%",
-                fontFamily: "Cormorant",
-              }}
-            />
-          </Tabs>
-        </Paper>
+    <>
+      <Grid sx={{ ...stylesComponents.contenedorPadre, background: '#fbf8f4', paddingTop:'10%' }}>
+        <Grid sx={{ ...stylesComponents.contenedorHijo, paddingTop: '30px', paddingBottom: '30px' }}>
+          <Grid container>
+            <Grid item xs={12} md={3}>
+              <Paper
+                elevation={3}
+                sx={{ p: 2, backgroundColor: "#F3F3F3", borderRadius: 2 }}
+              >
+                <Typography
+                  variant="h5"
+                  align="center"
+                  gutterBottom
+                  sx={{
+                    fontWeight: "600",
+                    paddingBottom: "1%",
+                    fontFamily: "Cormorant",
+                  }}
+                >
+                  Opciones Administrador
+                </Typography>
+                <Tabs
+                  value={tabValue}
+                  onChange={handleChange}
+                  orientation="vertical"
+                  variant="scrollable"
+                  scrollButtons="auto"
+                  sx={{ "& .MuiTabs-indicator": { backgroundColor: "#C81987" } }}
+                >
+                  <Tab
+                    icon={
+                      <LocalFloristIcon fontSize="medium" sx={{ color: "#C81987" }} />
+                    }
+                    iconPosition="start"
+                    label="Historial de pedidos"
+                    sx={{
+                      alignSelf: "start",
+                      textAlign: "left",
+                      fontWeight: "600",
+                      paddingBottom: "2%",
+                      fontFamily: "Cormorant",
+                    }}
+                  />
+                  <Tab
+                    icon={<LoyaltyIcon fontSize="medium" sx={{ color: "#C81987" }} />}
+                    iconPosition="start"
+                    label="Estatus de envío"
+                    sx={{
+                      alignSelf: "start",
+                      textAlign: "left",
+                      fontWeight: "600",
+                      paddingBottom: "2%",
+                      fontFamily: "Cormorant",
+                    }}
+                  />
+                  <Tab
+                    icon={
+                      <DescriptionIcon fontSize="medium" sx={{ color: "#C81987" }} />
+                    }
+                    label="Productos"
+                    iconPosition="start"
+                    sx={{
+                      alignSelf: "start",
+                      textAlign: "left",
+                      fontWeight: "600",
+                      paddingBottom: "2%",
+                      fontFamily: "Cormorant",
+                    }}
+                  />
+                  <Tab
+                    icon={<LoyaltyIcon fontSize="medium" sx={{ color: "#C81987" }} />}
+                    iconPosition="start"
+                    label="Productos Extras"
+                    sx={{
+                      alignSelf: "start",
+                      textAlign: "left",
+                      fontWeight: "600",
+                      paddingBottom: "2%",
+                      fontFamily: "Cormorant",
+                    }}
+                  />
+                  <Tab
+                    icon={
+                      <DescriptionIcon fontSize="medium" sx={{ color: "#C81987" }} />
+                    }
+                    label="Ocasiones"
+                    iconPosition="start"
+                    sx={{
+                      alignSelf: "start",
+                      textAlign: "left",
+                      fontWeight: "600",
+                      paddingBottom: "2%",
+                      fontFamily: "Cormorant",
+                    }}
+                  />
+                  <Tab
+                    icon={
+                      <DescriptionIcon fontSize="medium" sx={{ color: "#C81987" }} />
+                    }
+                    label="Códigos Postales"
+                    iconPosition="start"
+                    sx={{
+                      alignSelf: "start",
+                      textAlign: "left",
+                      fontWeight: "600",
+                      paddingBottom: "2%",
+                      fontFamily: "Cormorant",
+                    }}
+                  />
+                  <Tab
+                    icon={
+                      <DescriptionIcon fontSize="medium" sx={{ color: "#C81987" }} />
+                    }
+                    label="Mensajes de contacto"
+                    iconPosition="start"
+                    sx={{
+                      alignSelf: "start",
+                      textAlign: "left",
+                      fontWeight: "600",
+                      paddingBottom: "2%",
+                      fontFamily: "Cormorant",
+                    }}
+                  />
+                </Tabs>
+              </Paper>
+            </Grid>
+            <Grid item xs={12} md={9}>
+              {renderContent()}
+            </Grid>
+          </Grid>
+
+        </Grid>
       </Grid>
-      <Grid item xs={12} md={9}>
-        {renderContent()}
-      </Grid>
-    </Grid>
+      
+    </>
   );
 };
 
